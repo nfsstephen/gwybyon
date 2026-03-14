@@ -1,0 +1,751 @@
+/* Construction Companies BYON Page Styles */
+
+.construction-page {
+  margin-top: 80px;
+}
+
+/* Hero Section */
+.cn-hero {
+  background: linear-gradient(135deg, #E20074 0%, #b8005c 100%);
+  padding: 100px 20px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.cn-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.5;
+}
+
+.cn-hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.cn-hero-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cn-hero h1 {
+  color: #fff;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.cn-hero-subtitle {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+/* Container */
+.cn-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Problem Section */
+.cn-problem-section {
+  padding: 80px 20px;
+  background: #f8f9fa;
+}
+
+.cn-problem-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.cn-alert-icon {
+  width: 50px;
+  height: 50px;
+  background: #fff3cd;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cn-alert-icon svg {
+  width: 28px;
+  height: 28px;
+  stroke: #856404;
+}
+
+.cn-problem-header h2 {
+  font-size: 2rem;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.cn-problem-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.cn-problem-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.cn-card-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.cn-card-icon svg {
+  width: 30px;
+  height: 30px;
+  stroke: #dc2626;
+}
+
+.cn-problem-card h3 {
+  font-size: 1.3rem;
+  color: #1a1a2e;
+  margin-bottom: 15px;
+}
+
+.cn-problem-card p {
+  color: #666;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.cn-stat-highlight {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+}
+
+.cn-stat-number {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #E20074;
+  margin-bottom: 5px;
+}
+
+.cn-stat-text {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.cn-problem-text {
+  background: #fff;
+  border-left: 4px solid #E20074;
+  padding: 25px 30px;
+  border-radius: 0 12px 12px 0;
+}
+
+.cn-problem-text p {
+  margin: 0;
+  color: #444;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+/* Solution Section */
+.cn-solution-section {
+  padding: 80px 20px;
+  background: #1a1a2e;
+}
+
+.cn-solution-section h2 {
+  color: #fff;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.cn-solution-subtitle {
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  font-size: 1.1rem;
+  margin-bottom: 50px;
+}
+
+.cn-phone-demo {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.cn-phone-mockup {
+  text-align: center;
+}
+
+.cn-phone-frame {
+  background: #000;
+  border-radius: 40px;
+  padding: 15px;
+  width: 280px;
+  margin: 0 auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.cn-phone-notch {
+  width: 120px;
+  height: 25px;
+  background: #000;
+  border-radius: 0 0 15px 15px;
+  margin: 0 auto 15px;
+}
+
+.cn-phone-screen {
+  background: linear-gradient(180deg, #1e3a5f 0%, #0d1b2a 100%);
+  border-radius: 25px;
+  padding: 20px 15px;
+  min-height: 400px;
+}
+
+.cn-phone-header {
+  color: #fff;
+  font-size: 0.85rem;
+  text-align: center;
+  margin-bottom: 20px;
+  opacity: 0.8;
+}
+
+.cn-work-mode-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(226, 0, 116, 0.3);
+  border: 1px solid #E20074;
+  border-radius: 25px;
+  padding: 10px 15px;
+  margin-bottom: 25px;
+}
+
+.cn-work-mode-badge svg {
+  width: 20px;
+  height: 20px;
+  fill: #E20074;
+}
+
+.cn-work-mode-badge span {
+  color: #E20074;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.cn-zone-info {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.cn-zone-name {
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.cn-zone-status {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.85rem;
+}
+
+.cn-allowed-apps {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 15px;
+}
+
+.cn-apps-label {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.8rem;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.cn-apps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.cn-app-icon {
+  text-align: center;
+}
+
+.cn-app-icon svg {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 5px;
+}
+
+.cn-app-icon span {
+  display: block;
+  font-size: 0.7rem;
+}
+
+.cn-app-icon.cn-active svg {
+  stroke: #4ade80;
+}
+
+.cn-app-icon.cn-active span {
+  color: #4ade80;
+}
+
+.cn-app-icon.cn-disabled svg {
+  stroke: #666;
+}
+
+.cn-app-icon.cn-disabled span {
+  color: #666;
+}
+
+.cn-phone-label {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.85rem;
+  margin-top: 20px;
+}
+
+.cn-features-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cn-feature-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 25px;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.cn-feature-icon {
+  width: 50px;
+  height: 50px;
+  background: rgba(226, 0, 116, 0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cn-feature-icon svg {
+  width: 26px;
+  height: 26px;
+  stroke: #E20074;
+}
+
+.cn-feature-card h4 {
+  color: #fff;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.cn-feature-card p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Features Detail Section */
+.cn-features-section {
+  padding: 80px 20px;
+  background: #fff;
+}
+
+.cn-features-section h2 {
+  font-size: 2rem;
+  color: #1a1a2e;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.cn-features-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.cn-feature-detail {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  padding: 30px;
+  background: #f8f9fa;
+  border-radius: 16px;
+}
+
+.cn-feature-number {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #E20074;
+  opacity: 0.3;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.cn-feature-content h3 {
+  font-size: 1.3rem;
+  color: #1a1a2e;
+  margin-bottom: 15px;
+}
+
+.cn-feature-content p {
+  color: #666;
+  line-height: 1.7;
+  margin-bottom: 15px;
+}
+
+.cn-feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.cn-feature-list li {
+  color: #444;
+  font-size: 0.95rem;
+  padding-left: 25px;
+  position: relative;
+}
+
+.cn-feature-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #E20074;
+  font-weight: 600;
+}
+
+/* Benefits Section */
+.cn-benefits-section {
+  padding: 80px 20px;
+  background: #f8f9fa;
+}
+
+.cn-benefits-section h2 {
+  font-size: 2rem;
+  color: #1a1a2e;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.cn-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.cn-benefit-column {
+  background: #fff;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.cn-benefit-column.cn-safety {
+  border: 2px solid #E20074;
+}
+
+.cn-benefit-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.cn-benefit-header svg {
+  width: 40px;
+  height: 40px;
+  stroke: #E20074;
+}
+
+.cn-benefit-header h3 {
+  font-size: 1.2rem;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.cn-benefit-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cn-benefit-list li {
+  padding: 10px 0;
+  padding-left: 25px;
+  position: relative;
+  color: #444;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.cn-benefit-list li:last-child {
+  border-bottom: none;
+}
+
+.cn-benefit-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: #E20074;
+}
+
+/* Partnership Section */
+.cn-partnership-section {
+  padding: 80px 20px;
+  background: linear-gradient(135deg, #E20074 0%, #b8005c 100%);
+}
+
+.cn-partnership-content {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 60px;
+  align-items: center;
+}
+
+.cn-partnership-text h2 {
+  color: #fff;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.cn-partnership-text p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 25px;
+}
+
+.cn-partnership-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.cn-partnership-features li {
+  color: #fff;
+  padding-left: 25px;
+  position: relative;
+}
+
+.cn-partnership-features li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #fff;
+}
+
+.cn-network-icon {
+  width: 150px;
+  height: 150px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cn-network-icon svg {
+  width: 80px;
+  height: 80px;
+  stroke: #fff;
+}
+
+/* CTA Section */
+.cn-cta-section {
+  padding: 80px 20px;
+  background: #1a1a2e;
+  text-align: center;
+}
+
+.cn-cta-section h2 {
+  color: #fff;
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+}
+
+.cn-cta-section p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+}
+
+.cn-cta-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.cn-btn {
+  padding: 15px 35px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.cn-btn-primary {
+  background: #E20074;
+  color: #fff;
+}
+
+.cn-btn-primary:hover {
+  background: #ff1a8c;
+  transform: translateY(-2px);
+}
+
+.cn-btn-secondary {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.cn-btn-secondary:hover {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .cn-phone-demo {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .cn-phone-mockup {
+    order: -1;
+  }
+  
+  .cn-features-info {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .cn-feature-card {
+    flex: 1 1 calc(50% - 10px);
+  }
+  
+  .cn-partnership-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  
+  .cn-partnership-features {
+    justify-content: center;
+  }
+  
+  .cn-network-icon {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .cn-hero {
+    padding: 60px 20px;
+  }
+  
+  .cn-hero h1 {
+    font-size: 2rem;
+  }
+  
+  .cn-problem-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .cn-feature-detail {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .cn-feature-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .cn-benefits-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .cn-feature-card {
+    flex: 1 1 100%;
+  }
+  
+  .cn-cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .cn-btn {
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .cn-hero h1 {
+    font-size: 1.75rem;
+  }
+  
+  .cn-problem-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .cn-problem-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .cn-phone-frame {
+    width: 100%;
+    max-width: 280px;
+  }
+  
+  .cn-partnership-features {
+    grid-template-columns: 1fr;
+  }
+}

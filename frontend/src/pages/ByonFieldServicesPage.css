@@ -1,0 +1,969 @@
+/* Field Services Page Styles */
+
+.field-services-page {
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+/* Hero Section - T-Mobile Magenta */
+.fs-hero {
+  background: linear-gradient(135deg, #1a1a2e 0%, #4a1942 50%, #E20074 100%);
+  padding: 6rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.fs-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.fs-hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.fs-hero-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.fs-hero h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.fs-hero-subtitle {
+  font-size: 1.3rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+}
+
+/* Container */
+.fs-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Problem Section */
+.fs-problem-section {
+  padding: 5rem 0;
+  background: #fef2f2;
+}
+
+.fs-problem-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.fs-alert-icon {
+  width: 50px;
+  height: 50px;
+  background: #dc2626;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fs-alert-icon svg {
+  width: 28px;
+  height: 28px;
+  color: #ffffff;
+}
+
+.fs-problem-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.fs-problem-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.fs-problem-card {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.fs-problem-card.fs-trust {
+  border-top: 4px solid #f59e0b;
+}
+
+.fs-problem-card.fs-fraud {
+  border-top: 4px solid #dc2626;
+}
+
+.fs-card-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.fs-problem-card.fs-trust .fs-card-icon {
+  background: #fffbeb;
+}
+
+.fs-problem-card.fs-trust .fs-card-icon svg {
+  width: 32px;
+  height: 32px;
+  color: #f59e0b;
+}
+
+.fs-problem-card.fs-fraud .fs-card-icon {
+  background: #fef2f2;
+}
+
+.fs-problem-card.fs-fraud .fs-card-icon svg {
+  width: 32px;
+  height: 32px;
+  color: #dc2626;
+}
+
+.fs-problem-card h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 1rem;
+}
+
+.fs-problem-card p {
+  font-size: 1rem;
+  color: #4b5563;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.fs-stat-highlight {
+  background: #f8f9fa;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.fs-stat-number {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #f59e0b;
+}
+
+.fs-problem-card.fs-fraud .fs-stat-number {
+  color: #dc2626;
+}
+
+.fs-stat-text {
+  font-size: 0.9rem;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+.fs-problem-text {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.fs-problem-text p {
+  font-size: 1.1rem;
+  color: #4b5563;
+  line-height: 1.8;
+}
+
+/* Solution Section */
+.fs-solution-section {
+  padding: 5rem 0;
+  background: #ffffff;
+}
+
+.fs-solution-section h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.fs-solution-subtitle {
+  font-size: 1.2rem;
+  color: #6b7280;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.fs-phone-demo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  flex-wrap: wrap;
+}
+
+/* Phone Mockup */
+.fs-phone-mockup {
+  text-align: center;
+}
+
+.fs-phone-frame {
+  width: 280px;
+  height: 560px;
+  background: #1a1a2e;
+  border-radius: 40px;
+  padding: 12px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.fs-phone-notch {
+  width: 120px;
+  height: 25px;
+  background: #000;
+  border-radius: 0 0 20px 20px;
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.fs-phone-screen {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+  border-radius: 30px;
+  padding: 50px 15px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fs-phone-header {
+  color: #ffffff;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  opacity: 0.8;
+}
+
+.fs-verified-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  margin-bottom: 1.5rem;
+}
+
+.fs-verified-badge svg {
+  width: 18px;
+  height: 18px;
+  color: #ffffff;
+}
+
+.fs-verified-badge span {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.fs-phone-caller {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.fs-caller-avatar {
+  width: 70px;
+  height: 70px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 0.75rem;
+}
+
+.fs-caller-avatar svg {
+  width: 40px;
+  height: 40px;
+  color: #ffffff;
+}
+
+.fs-caller-name {
+  display: block;
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.fs-caller-status {
+  display: block;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+}
+
+.fs-eta-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0.6rem 1.2rem;
+  border-radius: 25px;
+  margin-bottom: auto;
+}
+
+.fs-eta-badge svg {
+  width: 16px;
+  height: 16px;
+  color: #ffffff;
+}
+
+.fs-eta-badge span {
+  font-size: 0.8rem;
+  color: #ffffff;
+}
+
+.fs-phone-actions {
+  display: flex;
+  gap: 3rem;
+  margin-top: 1.5rem;
+}
+
+.fs-action-btn {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fs-action-btn svg {
+  width: 26px;
+  height: 26px;
+  color: #ffffff;
+}
+
+.fs-action-btn.fs-decline {
+  background: #dc2626;
+}
+
+.fs-action-btn.fs-accept {
+  background: #ffffff;
+}
+
+.fs-action-btn.fs-accept svg {
+  color: #10b981;
+}
+
+.fs-phone-label {
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+/* Verification Info */
+.fs-verification-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.fs-verify-card {
+  background: #f8f9fa;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  width: 320px;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.fs-verify-card:hover {
+  transform: translateX(5px);
+}
+
+.fs-verify-icon {
+  width: 45px;
+  height: 45px;
+  background: #E20074;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.fs-verify-icon svg {
+  width: 22px;
+  height: 22px;
+  color: #ffffff;
+}
+
+.fs-verify-card h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 0.3rem;
+}
+
+.fs-verify-card p {
+  font-size: 0.9rem;
+  color: #6b7280;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* How It Works Section */
+.fs-how-it-works {
+  padding: 5rem 0;
+  background: #f8f9fa;
+}
+
+.fs-how-it-works h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.fs-section-subtitle {
+  font-size: 1.2rem;
+  color: #6b7280;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.fs-flow-diagram {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+.fs-flow-step {
+  text-align: center;
+  max-width: 180px;
+}
+
+.fs-flow-number {
+  width: 30px;
+  height: 30px;
+  background: #E20074;
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  margin: 0 auto 1rem;
+}
+
+.fs-flow-icon {
+  width: 70px;
+  height: 70px;
+  background: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.fs-flow-icon svg {
+  width: 32px;
+  height: 32px;
+  color: #1a1a2e;
+}
+
+.fs-flow-icon.fs-verified {
+  background: #E20074;
+}
+
+.fs-flow-icon.fs-verified svg {
+  color: #ffffff;
+}
+
+.fs-flow-icon.fs-success {
+  background: #10b981;
+}
+
+.fs-flow-icon.fs-success svg {
+  color: #ffffff;
+}
+
+.fs-flow-step h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 0.5rem;
+}
+
+.fs-flow-step p {
+  font-size: 0.9rem;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.fs-flow-arrow {
+  font-size: 2rem;
+  color: #E20074;
+  margin-top: 3rem;
+}
+
+.fs-trust-callout {
+  max-width: 700px;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  border-left: 4px solid #10b981;
+}
+
+.fs-trust-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.fs-trust-header svg {
+  width: 24px;
+  height: 24px;
+  color: #10b981;
+}
+
+.fs-trust-header h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.fs-trust-callout p {
+  font-size: 1rem;
+  color: #4b5563;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Results Section */
+.fs-results-section {
+  padding: 5rem 0;
+  background: #1a1a2e;
+}
+
+.fs-results-section h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.fs-results-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.fs-result-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2.5rem 2rem;
+  border-radius: 16px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.fs-result-icon {
+  width: 60px;
+  height: 60px;
+  background: rgba(226, 0, 116, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+.fs-result-icon svg {
+  width: 28px;
+  height: 28px;
+  color: #E20074;
+}
+
+.fs-result-number {
+  display: block;
+  font-size: 3rem;
+  font-weight: 800;
+  color: #E20074;
+  margin-bottom: 0.5rem;
+}
+
+.fs-result-label {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.fs-result-card p {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+}
+
+/* Benefits Section */
+.fs-benefits-section {
+  padding: 5rem 0;
+  background: #ffffff;
+}
+
+.fs-benefits-section h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.fs-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
+}
+
+.fs-benefit-column {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 16px;
+}
+
+.fs-benefit-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.fs-benefit-header svg {
+  width: 40px;
+  height: 40px;
+  color: #E20074;
+}
+
+.fs-benefit-header h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.fs-benefit-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.fs-benefit-list li {
+  padding: 0.75rem 0;
+  padding-left: 2rem;
+  position: relative;
+  color: #4b5563;
+  font-size: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.fs-benefit-list li:last-child {
+  border-bottom: none;
+}
+
+.fs-benefit-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #84ad06;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* Partnership Section - T-Mobile Magenta */
+.fs-partnership-section {
+  padding: 5rem 0;
+  background: linear-gradient(135deg, #E20074 0%, #4a1942 100%);
+}
+
+.fs-partnership-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.fs-partnership-text h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+}
+
+.fs-partnership-text p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.fs-partnership-features {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.fs-partnership-features li {
+  color: #ffffff;
+  font-size: 1rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.fs-partnership-features li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #ffffff;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.fs-partnership-visual {
+  display: flex;
+  justify-content: center;
+}
+
+.fs-network-icon {
+  width: 200px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.fs-network-icon svg {
+  width: 100px;
+  height: 100px;
+  color: #ffffff;
+}
+
+/* CTA Section */
+.fs-cta-section {
+  padding: 4rem 0;
+  background: #1a1a2e;
+  text-align: center;
+}
+
+.fs-cta-section h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.fs-cta-section p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+.fs-cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.fs-btn {
+  display: inline-block;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.fs-btn-primary {
+  background: #E20074;
+  color: #ffffff;
+}
+
+.fs-btn-primary:hover {
+  background: #c40064;
+  transform: translateY(-2px);
+}
+
+.fs-btn-secondary {
+  background: transparent;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+}
+
+.fs-btn-secondary:hover {
+  background: #ffffff;
+  color: #1a1a2e;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .fs-results-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .fs-results-grid .fs-result-card:last-child {
+    grid-column: span 2;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .fs-partnership-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .fs-hero {
+    padding: 4rem 1.5rem;
+  }
+  
+  .fs-hero h1 {
+    font-size: 2rem;
+  }
+  
+  .fs-hero-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .fs-container {
+    padding: 0 1.5rem;
+  }
+  
+  .fs-problem-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .fs-phone-demo {
+    flex-direction: column;
+  }
+  
+  .fs-verify-card {
+    width: 100%;
+  }
+  
+  .fs-flow-diagram {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .fs-flow-arrow {
+    transform: rotate(90deg);
+    margin: 0;
+  }
+  
+  .fs-results-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .fs-results-grid .fs-result-card:last-child {
+    grid-column: span 1;
+    max-width: none;
+  }
+  
+  .fs-benefits-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .fs-problem-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .fs-problem-header h2 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .fs-hero h1 {
+    font-size: 1.6rem;
+  }
+  
+  .fs-phone-frame {
+    width: 260px;
+    height: 520px;
+  }
+  
+  .fs-cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .fs-btn {
+    width: 100%;
+    max-width: 280px;
+  }
+  
+  .fs-stat-highlight {
+    flex-direction: column;
+    text-align: center;
+  }
+}

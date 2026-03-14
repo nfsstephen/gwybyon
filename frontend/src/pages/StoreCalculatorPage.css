@@ -1,0 +1,102 @@
+/* Store Calculator Page Styles - Extends Corporate Calculator */
+
+/* Blue theme overrides */
+.calc-hero-blue {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+.store-calculator .calc-inputs-header {
+  border-bottom-color: #3b82f6;
+}
+
+.store-calculator .calc-save-btn {
+  background: #3b82f6;
+}
+
+.store-calculator .calc-save-btn:hover {
+  background: #2563eb;
+}
+
+.store-calculator .calc-save-message {
+  background: #eff6ff;
+  color: #2563eb;
+  border-color: #bfdbfe;
+}
+
+.store-calculator .calc-inputs h2 {
+  border-bottom-color: #3b82f6;
+}
+
+.store-calculator .calc-results h2 {
+  border-bottom-color: #3b82f6;
+}
+
+.store-calculator .calc-input-group input:focus {
+  border-color: #3b82f6;
+}
+
+.store-calculator .calc-occupancy-info {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+}
+
+.store-calculator .calc-occupancy-info h3 {
+  color: #2563eb;
+}
+
+.store-calculator .calc-roi-features li::before {
+  color: #3b82f6;
+}
+
+.calc-highlight-blue {
+  background: #eff6ff;
+  font-weight: 600;
+}
+
+.calc-highlight-blue span:not(:first-child) {
+  color: #2563eb;
+}
+
+.calc-summary-blue {
+  border-color: #3b82f6;
+}
+
+.calc-summary-blue h3 {
+  color: #2563eb;
+}
+
+.calc-highlight-blue-dark {
+  background: #3b82f6;
+  font-weight: 700;
+}
+
+.calc-highlight-blue-dark span {
+  color: #fff !important;
+}
+
+.store-calculator .calc-request-btn {
+  background: #3b82f6;
+}
+
+.store-calculator .calc-request-btn:hover {
+  background: #2563eb;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+
+.store-calculator .calc-modal-field input:focus {
+  border-color: #3b82f6;
+}
+
+.store-calculator .calc-modal-submit {
+  background: #3b82f6;
+}
+
+.store-calculator .calc-modal-submit:hover {
+  background: #2563eb;
+}
+
+.store-calculator .calc-submit-success {
+  background: #eff6ff;
+  color: #2563eb;
+  border-color: #bfdbfe;
+}

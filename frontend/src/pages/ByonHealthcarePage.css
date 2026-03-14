@@ -1,0 +1,1053 @@
+/* Healthcare Page Styles */
+
+.healthcare-page {
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+/* Hero Section - T-Mobile Magenta */
+.hc-hero {
+  background: linear-gradient(135deg, #1a1a2e 0%, #4a1942 50%, #E20074 100%);
+  padding: 6rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hc-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.hc-hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hc-hero-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.hc-hero h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.hc-hero-subtitle {
+  font-size: 1.3rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+}
+
+/* Container */
+.hc-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Problem Section */
+.hc-problem-section {
+  padding: 5rem 0;
+  background: #fef2f2;
+}
+
+.hc-problem-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.hc-alert-icon {
+  width: 50px;
+  height: 50px;
+  background: #dc2626;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hc-alert-icon svg {
+  width: 28px;
+  height: 28px;
+  color: #ffffff;
+}
+
+.hc-problem-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.hc-problem-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.hc-problem-card {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.hc-problem-card.hc-evv {
+  border-top: 4px solid #dc2626;
+}
+
+.hc-problem-card.hc-privacy {
+  border-top: 4px solid #f59e0b;
+}
+
+.hc-card-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.hc-problem-card.hc-evv .hc-card-icon {
+  background: #fef2f2;
+}
+
+.hc-problem-card.hc-evv .hc-card-icon svg {
+  width: 32px;
+  height: 32px;
+  color: #dc2626;
+}
+
+.hc-problem-card.hc-privacy .hc-card-icon {
+  background: #fffbeb;
+}
+
+.hc-problem-card.hc-privacy .hc-card-icon svg {
+  width: 32px;
+  height: 32px;
+  color: #f59e0b;
+}
+
+.hc-problem-card h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 1rem;
+}
+
+.hc-problem-card p {
+  font-size: 1rem;
+  color: #4b5563;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.hc-stat-highlight {
+  background: #f8f9fa;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hc-stat-number {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #dc2626;
+}
+
+.hc-problem-card.hc-privacy .hc-stat-number {
+  color: #f59e0b;
+}
+
+.hc-stat-text {
+  font-size: 0.9rem;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+.hc-problem-text {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hc-problem-text p {
+  font-size: 1.1rem;
+  color: #4b5563;
+  line-height: 1.8;
+}
+
+/* Solution Section */
+.hc-solution-section {
+  padding: 5rem 0;
+  background: #ffffff;
+}
+
+.hc-solution-section h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.hc-solution-subtitle {
+  font-size: 1.2rem;
+  color: #6b7280;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.hc-phone-demo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  flex-wrap: wrap;
+}
+
+/* Phone Mockup */
+.hc-phone-mockup {
+  text-align: center;
+}
+
+.hc-phone-frame {
+  width: 280px;
+  height: 560px;
+  background: #1a1a2e;
+  border-radius: 40px;
+  padding: 12px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.hc-phone-notch {
+  width: 120px;
+  height: 25px;
+  background: #000;
+  border-radius: 0 0 20px 20px;
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.hc-phone-screen {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #0891b2 0%, #0e7490 100%);
+  border-radius: 30px;
+  padding: 50px 15px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hc-phone-header {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.hc-compliance-badges {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.hc-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.hc-badge.hc-hipaa {
+  background: rgba(16, 185, 129, 0.3);
+  color: #10b981;
+}
+
+.hc-badge.hc-evv-badge {
+  background: rgba(59, 130, 246, 0.3);
+  color: #60a5fa;
+}
+
+.hc-badge svg {
+  width: 14px;
+  height: 14px;
+}
+
+.hc-visit-card {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.hc-visit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.hc-visit-label {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.hc-visit-status {
+  font-size: 0.75rem;
+  color: #10b981;
+  font-weight: 600;
+}
+
+.hc-patient-info {
+  margin-bottom: 0.75rem;
+}
+
+.hc-patient-name {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 0.2rem;
+}
+
+.hc-patient-address {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.hc-location-verify {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(16, 185, 129, 0.2);
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+
+.hc-location-verify svg {
+  width: 16px;
+  height: 16px;
+  color: #10b981;
+}
+
+.hc-location-verify span {
+  font-size: 0.7rem;
+  color: #10b981;
+}
+
+.hc-quick-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: auto;
+}
+
+.hc-action-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+}
+
+.hc-action-item svg {
+  width: 24px;
+  height: 24px;
+  color: #ffffff;
+}
+
+.hc-action-item span {
+  font-size: 0.75rem;
+  color: #ffffff;
+}
+
+.hc-phone-label {
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+/* Dual Line Info */
+.hc-dual-line-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.hc-line-card {
+  background: #f8f9fa;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  width: 320px;
+  transition: transform 0.3s ease;
+}
+
+.hc-line-card:hover {
+  transform: translateY(-3px);
+}
+
+.hc-line-card.hc-personal {
+  border-left: 4px solid #6b7280;
+}
+
+.hc-line-card.hc-healthcare {
+  border-left: 4px solid #0891b2;
+}
+
+.hc-line-icon {
+  width: 50px;
+  height: 50px;
+  background: #1a1a2e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.hc-line-icon svg {
+  width: 24px;
+  height: 24px;
+  color: #ffffff;
+}
+
+.hc-line-card h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 0.5rem;
+}
+
+.hc-line-card p {
+  font-size: 0.95rem;
+  color: #6b7280;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.hc-line-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.hc-status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.hc-status-dot.hc-private {
+  background: #6b7280;
+}
+
+.hc-status-dot.hc-compliant {
+  background: #10b981;
+}
+
+.hc-line-status span {
+  color: #4b5563;
+}
+
+.hc-line-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #0891b2;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.hc-divider-line {
+  width: 40px;
+  height: 2px;
+  background: #e5e7eb;
+}
+
+/* EVV Section */
+.hc-evv-section {
+  padding: 5rem 0;
+  background: #f0f9ff;
+}
+
+.hc-evv-section h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.hc-section-subtitle {
+  font-size: 1.2rem;
+  color: #6b7280;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.hc-evv-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.hc-evv-card {
+  background: #ffffff;
+  padding: 2rem 1.5rem;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.hc-evv-card:hover {
+  transform: translateY(-5px);
+}
+
+.hc-evv-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+.hc-evv-icon svg {
+  width: 28px;
+  height: 28px;
+  color: #ffffff;
+}
+
+.hc-evv-card h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 0.75rem;
+}
+
+.hc-evv-card p {
+  font-size: 0.95rem;
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.hc-cures-act {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: #ffffff;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  border-left: 4px solid #10b981;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hc-cures-icon {
+  width: 50px;
+  height: 50px;
+  background: #d1fae5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.hc-cures-icon svg {
+  width: 24px;
+  height: 24px;
+  color: #10b981;
+}
+
+.hc-cures-content h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 0.3rem;
+}
+
+.hc-cures-content p {
+  font-size: 0.95rem;
+  color: #6b7280;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* HIPAA Section */
+.hc-hipaa-section {
+  padding: 5rem 0;
+  background: #1a1a2e;
+}
+
+.hc-hipaa-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.hc-hipaa-text h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.hc-hipaa-text > p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.hc-hipaa-features {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.hc-hipaa-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+}
+
+.hc-hipaa-item svg {
+  width: 24px;
+  height: 24px;
+  color: #10b981;
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+}
+
+.hc-hipaa-item h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.2rem;
+}
+
+.hc-hipaa-item p {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+}
+
+.hc-hipaa-visual {
+  display: flex;
+  justify-content: center;
+}
+
+.hc-shield-container {
+  text-align: center;
+}
+
+.hc-shield {
+  width: 180px;
+  height: 180px;
+  background: rgba(16, 185, 129, 0.2);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  border: 3px solid rgba(16, 185, 129, 0.4);
+  position: relative;
+}
+
+.hc-shield svg {
+  width: 80px;
+  height: 80px;
+  color: #10b981;
+}
+
+.hc-shield-text {
+  position: absolute;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #10b981;
+  bottom: 45px;
+}
+
+.hc-shield-container > span {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+}
+
+/* Benefits Section */
+.hc-benefits-section {
+  padding: 5rem 0;
+  background: #ffffff;
+}
+
+.hc-benefits-section h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.hc-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.hc-benefit-column {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 16px;
+}
+
+.hc-benefit-column.hc-patients {
+  background: #f0f9ff;
+}
+
+.hc-benefit-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.hc-benefit-column.hc-patients .hc-benefit-header {
+  border-bottom-color: #bae6fd;
+}
+
+.hc-benefit-header svg {
+  width: 36px;
+  height: 36px;
+  color: #E20074;
+}
+
+.hc-benefit-column.hc-patients .hc-benefit-header svg {
+  color: #0891b2;
+}
+
+.hc-benefit-header h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.hc-benefit-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.hc-benefit-list li {
+  padding: 0.6rem 0;
+  padding-left: 1.75rem;
+  position: relative;
+  color: #4b5563;
+  font-size: 0.95rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.hc-benefit-column.hc-patients .hc-benefit-list li {
+  border-bottom-color: #bae6fd;
+}
+
+.hc-benefit-list li:last-child {
+  border-bottom: none;
+}
+
+.hc-benefit-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #10b981;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+/* Partnership Section - T-Mobile Magenta */
+.hc-partnership-section {
+  padding: 5rem 0;
+  background: linear-gradient(135deg, #E20074 0%, #4a1942 100%);
+}
+
+.hc-partnership-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.hc-partnership-text h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+}
+
+.hc-partnership-text p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.hc-partnership-features {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.hc-partnership-features li {
+  color: #ffffff;
+  font-size: 1rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.hc-partnership-features li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #ffffff;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.hc-partnership-visual {
+  display: flex;
+  justify-content: center;
+}
+
+.hc-network-icon {
+  width: 200px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.hc-network-icon svg {
+  width: 100px;
+  height: 100px;
+  color: #ffffff;
+}
+
+/* CTA Section */
+.hc-cta-section {
+  padding: 4rem 0;
+  background: #1a1a2e;
+  text-align: center;
+}
+
+.hc-cta-section h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.hc-cta-section p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+.hc-cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hc-btn {
+  display: inline-block;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.hc-btn-primary {
+  background: #E20074;
+  color: #ffffff;
+}
+
+.hc-btn-primary:hover {
+  background: #c40064;
+  transform: translateY(-2px);
+}
+
+.hc-btn-secondary {
+  background: transparent;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+}
+
+.hc-btn-secondary:hover {
+  background: #ffffff;
+  color: #1a1a2e;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .hc-evv-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .hc-benefits-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .hc-hipaa-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  
+  .hc-hipaa-visual {
+    order: -1;
+  }
+  
+  .hc-partnership-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .hc-hero {
+    padding: 4rem 1.5rem;
+  }
+  
+  .hc-hero h1 {
+    font-size: 2rem;
+  }
+  
+  .hc-hero-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .hc-container {
+    padding: 0 1.5rem;
+  }
+  
+  .hc-problem-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .hc-phone-demo {
+    flex-direction: column;
+  }
+  
+  .hc-line-card {
+    width: 100%;
+  }
+  
+  .hc-evv-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .hc-cures-act {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .hc-problem-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .hc-problem-header h2 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hc-hero h1 {
+    font-size: 1.6rem;
+  }
+  
+  .hc-phone-frame {
+    width: 260px;
+    height: 520px;
+  }
+  
+  .hc-cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .hc-btn {
+    width: 100%;
+    max-width: 280px;
+  }
+  
+  .hc-stat-highlight {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .hc-quick-actions {
+    flex-direction: column;
+  }
+}

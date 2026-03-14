@@ -1,0 +1,408 @@
+/* Fuel Lane Control Page Styles */
+
+.fuel-lane-control-page {
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+/* Hero Section */
+.flc-hero {
+  background-image: url('https://gatewayaisystems.com/wp-content/uploads/2024/04/Banner-new-updated-1.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 8rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flc-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.35) 0%, rgba(15, 52, 96, 0.3) 100%);
+}
+
+.flc-hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.flc-hero h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.flc-hero-subtitle {
+  font-size: 1.3rem;
+  color: #ffffff;
+  max-width: 600px;
+  margin: 0 auto;
+  text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.7), 0 0 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Container */
+.flc-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Key Points Section */
+.flc-key-points {
+  padding: 2rem 0 2rem;
+  background: #f8f9fa;
+}
+
+.flc-key-points-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #0f3460;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.flc-points-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.flc-point-card {
+  background: #ffffff;
+  padding: 2.5rem 2rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.flc-point-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.flc-point-number {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #0f3460;
+  margin-bottom: 1rem;
+  line-height: 1;
+}
+
+.flc-point-card p {
+  font-size: 1.1rem;
+  color: #4b5563;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Monitors Section */
+.flc-monitors-section {
+  padding: 2.5rem 0;
+  background: #ffffff;
+}
+
+.flc-monitors-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.flc-monitors-text h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 1.5rem;
+}
+
+.flc-monitors-text p {
+  font-size: 1.1rem;
+  color: #4b5563;
+  line-height: 1.8;
+}
+
+.flc-monitors-visual {
+  display: flex;
+  justify-content: center;
+}
+
+.flc-monitors-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Lane Image Section */
+.flc-lane-section {
+  padding: 3rem 0;
+  background: #ffffff;
+}
+
+.flc-lane-image-wrapper {
+  text-align: center;
+}
+
+.flc-lane-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Benefits Section */
+.flc-benefits-section {
+  padding: 2.5rem 0;
+  background: #ffffff;
+  text-align: center;
+}
+
+.flc-benefits-section h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 1.5rem;
+}
+
+.flc-benefits-image-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.flc-benefits-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.flc-benefit-overlay {
+  position: absolute;
+  background: #ffffff;
+  padding: 0.5rem 1.5rem;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #1a1a2e;
+  line-height: 1.3;
+  display: flex;
+  flex-direction: column;
+}
+
+.flc-benefit-1 {
+  top: 0%;
+  left: 0%;
+}
+
+.flc-benefit-2 {
+  top: 0%;
+  left: 37%;
+}
+
+.flc-benefit-3 {
+  top: 0%;
+  right: 0%;
+}
+
+.flc-benefit-4 {
+  bottom: -1%;
+  left: 28%;
+  transform: translateX(-50%);
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
+.flc-benefit-5 {
+  bottom: -1%;
+  left: 70%;
+  transform: translateX(-50%);
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
+/* Key Features Section */
+.flc-features-section {
+  padding: 3rem 0 2rem;
+  background: #f8f9fa;
+  text-align: center;
+}
+
+.flc-features-section h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 0.5rem;
+}
+
+.flc-features-subtitle {
+  font-size: 1.2rem;
+  color: #0f3460;
+  margin-bottom: 3rem;
+}
+
+.flc-features-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5rem;
+}
+
+.flc-feature-item {
+  background: #ffffff;
+  padding: 2rem 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.flc-feature-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.flc-feature-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 1rem;
+  background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flc-feature-icon svg {
+  width: 28px;
+  height: 28px;
+  color: #ffffff;
+}
+
+.flc-feature-item h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* CTA Section */
+.flc-cta-section {
+  padding: 2.5rem 0;
+  background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+  text-align: center;
+}
+
+.flc-cta-section h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.flc-cta-section p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+.flc-btn-cta {
+  display: inline-block;
+  background: #ffffff;
+  color: #1a1a2e;
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.flc-btn-cta:hover {
+  background: #f0f0f0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .flc-features-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .flc-hero {
+    padding: 3rem 1.5rem;
+    min-height: 300px;
+  }
+  
+  .flc-hero h1 {
+    font-size: 2.2rem;
+  }
+  
+  .flc-hero-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .flc-container {
+    padding: 0 1.5rem;
+  }
+  
+  .flc-points-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .flc-monitors-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .flc-monitors-visual {
+    order: -1;
+  }
+  
+  .flc-features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .flc-benefits-section h2,
+  .flc-features-section h2,
+  .flc-monitors-text h2,
+  .flc-cta-section h2 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .flc-hero h1 {
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+  }
+  
+  .flc-hero-subtitle {
+    font-size: 1rem;
+  }
+  
+  .flc-features-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .flc-point-number {
+    font-size: 2.5rem;
+  }
+}

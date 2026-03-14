@@ -1,0 +1,21 @@
+/* Patent Banner Component */
+.patent-banner-home {
+  background: linear-gradient(135deg, #2d5016 0%, #4a7c23 50%, #2d5016 100%);
+  padding: 15px 20px;
+  text-align: center;
+}
+
+.patent-banner-home .patent-text {
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .patent-banner-home .patent-text {
+    font-size: 0.95rem;
+  }
+}

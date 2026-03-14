@@ -1,0 +1,452 @@
+/* ===== GeoGrid Industry Page ===== */
+.ggi-page {
+  --ggi-teal: #0D9488;
+  --ggi-teal-light: #14B8A6;
+  --ggi-amber: #F59E0B;
+  --ggi-dark: #0F172A;
+  --ggi-dark-mid: #1E293B;
+  --ggi-slate: #334155;
+  --ggi-muted: #64748B;
+  --ggi-light: #94A3B8;
+  --ggi-surface: #F8FAFC;
+  --ggi-red: #EF4444;
+}
+
+/* Hero */
+.ggi-hero {
+  position: relative;
+  background: var(--ggi-dark);
+  padding: 140px 20px 80px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.ggi-hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, var(--ggi-dark) 0%, var(--ggi-dark-mid) 100%),
+    radial-gradient(ellipse at 40% 60%, rgba(13, 148, 136, 0.1) 0%, transparent 60%);
+}
+
+.ggi-hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+.ggi-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(13, 148, 136, 0.12);
+  border: 1px solid rgba(13, 148, 136, 0.3);
+  padding: 8px 20px;
+  border-radius: 50px;
+  color: var(--ggi-teal);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.ggi-hero-title {
+  color: #F1F5F9;
+  font-size: 2.8rem;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 20px;
+  letter-spacing: -0.5px;
+}
+
+.ggi-hero-subtitle {
+  color: var(--ggi-light);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.ggi-hero-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.ggi-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ggi-teal);
+  color: #fff;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.ggi-btn-primary:hover {
+  background: var(--ggi-teal-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(13, 148, 136, 0.3);
+}
+
+.ggi-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--ggi-light);
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.15);
+  transition: all 0.3s ease;
+}
+
+.ggi-btn-ghost:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.3);
+  color: #fff;
+}
+
+/* Container */
+.ggi-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.ggi-section-label {
+  display: inline-block;
+  color: var(--ggi-teal);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.ggi-section-title {
+  color: var(--ggi-dark);
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 40px;
+  letter-spacing: -0.5px;
+}
+
+/* Pain Points */
+.ggi-pain {
+  background: var(--ggi-surface);
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.ggi-pain-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.ggi-pain-card {
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 28px 24px;
+  text-align: left;
+  transition: all 0.3s ease;
+}
+
+.ggi-pain-card:hover {
+  border-color: var(--ggi-red);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.06);
+}
+
+.ggi-pain-number {
+  color: var(--ggi-red);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.ggi-pain-card h3 {
+  color: var(--ggi-dark);
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.ggi-pain-card p {
+  color: var(--ggi-muted);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+/* Local Example */
+.ggi-example {
+  background: var(--ggi-dark);
+  padding: 80px 20px;
+}
+
+.ggi-example-card {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.ggi-example-content .ggi-section-label {
+  color: var(--ggi-teal);
+}
+
+.ggi-example-content h2 {
+  color: #F1F5F9;
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 14px;
+}
+
+.ggi-example-content p {
+  color: var(--ggi-light);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.ggi-example-quote blockquote {
+  color: var(--ggi-amber);
+  font-size: 1rem;
+  font-style: italic;
+  font-weight: 500;
+  padding-left: 16px;
+  border-left: 3px solid var(--ggi-amber);
+}
+
+.ggi-example-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ggi-mini-heatmap {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  margin-bottom: 12px;
+  width: 100%;
+  max-width: 240px;
+}
+
+.ggi-map-cell {
+  aspect-ratio: 1;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ggi-map-high { background: rgba(13, 148, 136, 0.45); }
+.ggi-map-medium { background: rgba(245, 158, 11, 0.3); }
+.ggi-map-low { background: rgba(239, 68, 68, 0.2); }
+.ggi-map-none { background: rgba(255,255,255,0.04); }
+.ggi-map-center { background: var(--ggi-teal) !important; color: #fff; }
+
+.ggi-map-caption {
+  color: var(--ggi-muted);
+  font-size: 0.75rem;
+  font-style: italic;
+}
+
+/* Solutions */
+.ggi-solutions {
+  background: #fff;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.ggi-solutions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.ggi-solution-card {
+  background: var(--ggi-surface);
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 28px 24px;
+  text-align: left;
+  transition: all 0.3s ease;
+}
+
+.ggi-solution-card:hover {
+  border-color: var(--ggi-teal);
+  box-shadow: 0 6px 20px rgba(13, 148, 136, 0.08);
+}
+
+.ggi-solution-icon {
+  color: var(--ggi-teal);
+  margin-bottom: 14px;
+}
+
+.ggi-solution-card h3 {
+  color: var(--ggi-dark);
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.ggi-solution-card p {
+  color: var(--ggi-muted);
+  font-size: 0.88rem;
+  line-height: 1.65;
+  margin-bottom: 14px;
+}
+
+.ggi-solution-features {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ggi-solution-features li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ggi-slate);
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.ggi-solution-features li svg {
+  color: var(--ggi-teal);
+  flex-shrink: 0;
+}
+
+/* Stats */
+.ggi-stats {
+  background: var(--ggi-surface);
+  padding: 60px 20px;
+}
+
+.ggi-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.ggi-stat-card {
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+}
+
+.ggi-stat-number {
+  display: block;
+  color: var(--ggi-teal);
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.ggi-stat-label {
+  color: var(--ggi-muted);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+/* CTA */
+.ggi-cta {
+  background: var(--ggi-dark);
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.ggi-cta h2 {
+  color: #F1F5F9;
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 14px;
+  max-width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ggi-cta p {
+  color: var(--ggi-light);
+  font-size: 1rem;
+  margin-bottom: 28px;
+}
+
+.ggi-cta-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+  .ggi-example-card {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ggi-hero {
+    padding: 120px 20px 60px;
+  }
+
+  .ggi-hero-title {
+    font-size: 2rem;
+  }
+
+  .ggi-section-title {
+    font-size: 1.6rem;
+  }
+
+  .ggi-pain-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ggi-solutions-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ggi-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ggi-pain, .ggi-example, .ggi-solutions, .ggi-stats, .ggi-cta {
+    padding: 60px 20px;
+  }
+
+  .ggi-cta h2 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ggi-hero-title {
+    font-size: 1.6rem;
+  }
+
+  .ggi-stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .ggi-cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+}
