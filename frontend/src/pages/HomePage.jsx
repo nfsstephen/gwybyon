@@ -1,16 +1,14 @@
 import React from 'react';
-import Hero from '../components/Hero';
 import ByonShowcase from '../components/ByonShowcase';
-import GeoGridShowcase from '../components/GeoGridShowcase';
 import PatentBanner from '../components/PatentBanner';
-import FocusAreas from '../components/FocusAreas';
+import Hero from '../components/Hero';
 import IndustriesBanner from '../components/IndustriesBanner';
+import FocusAreas from '../components/FocusAreas';
 
 const HomePage = () => {
   return (
     <>
       <ByonShowcase />
-      <GeoGridShowcase />
       <PatentBanner />
       <Hero />
       <IndustriesBanner />
