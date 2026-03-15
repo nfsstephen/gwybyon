@@ -4,7 +4,7 @@ import './CrossSellStrategy.css';
 
 const CrossSellStrategy = () => {
   return (
-    <section className="cross-sell">
+    <section id="section-crosssell" className="cross-sell">
       {/* Header */}
       <div className="cs-header">
         <div className="cs-badge">STRATEGY 2: CROSS SELLING</div>

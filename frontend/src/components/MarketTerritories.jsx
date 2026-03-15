@@ -4,7 +4,7 @@ import './MarketTerritories.css';
 
 const MarketTerritories = () => {
   return (
-    <section className="market-territories">
+    <section id="section-territories" className="market-territories">
       {/* Hero */}
       <div className="mt-hero">
         <div className="mt-badge">STRATEGY 3: MARKET TERRITORIES</div>

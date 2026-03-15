@@ -4,7 +4,7 @@ import './TruckingStrategy.css';
 
 const TruckingStrategy = () => {
   return (
-    <section className="trucking-strategy">
+    <section id="section-trucking" className="trucking-strategy">
       {/* Hero */}
       <div className="ts-hero">
         <div className="ts-hero-badge">MARKET STRATEGY</div>
