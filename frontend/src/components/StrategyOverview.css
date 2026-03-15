@@ -1,7 +1,7 @@
 .strategy-overview {
-  background: #0f172a;
-  color: #e2e8f0;
-  border-bottom: 1px solid #1e293b;
+  background: #f8f9fb;
+  color: #1e293b;
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .so-content {
@@ -17,25 +17,25 @@
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 4px;
-  color: #f8fafc;
-  border: 1px solid #334155;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
   border-radius: 2px;
   margin-bottom: 28px;
-  background: #1e293b;
+  background: #fff;
 }
 
 .so-title {
   font-size: 2.6rem;
   font-weight: 800;
   line-height: 1.15;
-  color: #f8fafc;
+  color: #0f172a;
   margin-bottom: 18px;
 }
 
 .so-subtitle {
   font-size: 1.05rem;
   line-height: 1.7;
-  color: #94a3b8;
+  color: #475569;
   max-width: 660px;
   margin: 0 auto 48px;
 }
@@ -48,17 +48,18 @@
 }
 
 .so-prong {
-  background: #1e293b;
-  border: 1px solid #334155;
+  background: #fff;
+  border: 1px solid #e2e8f0;
   border-radius: 16px;
   padding: 36px 28px 32px;
   text-align: left;
   position: relative;
-  transition: transform 0.2s, border-color 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
 }
 
 .so-prong:hover {
   transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
 .so-prong-1:hover { border-color: #e11d9066; }
@@ -92,13 +93,13 @@
 .so-prong h3 {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: #0f172a;
   margin-bottom: 10px;
 }
 
 .so-prong p {
   font-size: 0.88rem;
-  color: #94a3b8;
+  color: #475569;
   line-height: 1.6;
   margin-bottom: 20px;
 }
@@ -123,15 +124,15 @@
   border-color: #e11d9044;
 }
 .so-btn-1:hover {
-  background: #e11d9015;
+  background: #e11d900d;
 }
 
 .so-btn-2 {
-  color: #0ea5e9;
-  border-color: #0ea5e944;
+  color: #0369a1;
+  border-color: #0369a144;
 }
 .so-btn-2:hover {
-  background: #0ea5e915;
+  background: #0369a10d;
 }
 
 .so-btn-3 {
@@ -139,7 +140,7 @@
   border-color: #0d948844;
 }
 .so-btn-3:hover {
-  background: #0d948815;
+  background: #0d94880d;
 }
 
 /* Responsive */
