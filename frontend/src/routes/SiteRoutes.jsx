@@ -12,6 +12,13 @@ import ByonHealthcarePage from '../pages/ByonHealthcarePage';
 import ByonFieldServicesPage from '../pages/ByonFieldServicesPage';
 import ByonGovernmentPage from '../pages/ByonGovernmentPage';
 import ByonConstructionPage from '../pages/ByonConstructionPage';
+import GeoGridLandingPage from '../pages/GeoGridLandingPage';
+import GeoGridRestaurantsPage from '../pages/GeoGridRestaurantsPage';
+import GeoGridHomeServicesPage from '../pages/GeoGridHomeServicesPage';
+import GeoGridMedicalPage from '../pages/GeoGridMedicalPage';
+import GeoGridLawFirmsPage from '../pages/GeoGridLawFirmsPage';
+import GeoGridFitnessPage from '../pages/GeoGridFitnessPage';
+import GeoGridAutoRepairPage from '../pages/GeoGridAutoRepairPage';
 import AboutPage from '../pages/AboutPage';
 import ContactPage from '../pages/ContactPage';
 
@@ -29,6 +36,13 @@ export default function SiteRoutes({ scrolled }) {
         <Route path="/byon-field-services" element={<ByonFieldServicesPage />} />
         <Route path="/byon-government" element={<ByonGovernmentPage />} />
         <Route path="/byon-construction" element={<ByonConstructionPage />} />
+        <Route path="/geogrid" element={<GeoGridLandingPage />} />
+        <Route path="/geogrid/restaurants" element={<GeoGridRestaurantsPage />} />
+        <Route path="/geogrid/home-services" element={<GeoGridHomeServicesPage />} />
+        <Route path="/geogrid/medical" element={<GeoGridMedicalPage />} />
+        <Route path="/geogrid/law-firms" element={<GeoGridLawFirmsPage />} />
+        <Route path="/geogrid/fitness" element={<GeoGridFitnessPage />} />
+        <Route path="/geogrid/auto-repair" element={<GeoGridAutoRepairPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
       </Routes>
