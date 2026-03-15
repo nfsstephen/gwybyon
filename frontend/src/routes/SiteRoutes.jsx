@@ -4,6 +4,7 @@ import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import ChatWidget from '../components/ChatWidget';
 import HomePage from '../pages/HomePage';
+import ByonOverviewPage from '../pages/ByonOverviewPage';
 import ByonLastMilePage from '../pages/ByonLastMilePage';
 import ByonFinancePage from '../pages/ByonFinancePage';
 import ByonHealthcarePage from '../pages/ByonHealthcarePage';
@@ -40,6 +41,7 @@ export default function SiteRoutes({ scrolled }) {
         <Route path="/big-market/hvac" element={<BigMarketHVACPage />} />
         <Route path="/big-market/pest-control" element={<BigMarketPestControlPage />} />
         <Route path="/big-market/real-estate" element={<BigMarketRealEstatePage />} />
+        <Route path="/byon" element={<ByonOverviewPage />} />
         <Route path="/byon-last-mile" element={<ByonLastMilePage />} />
         <Route path="/byon-finance" element={<ByonFinancePage />} />
         <Route path="/byon-healthcare" element={<ByonHealthcarePage />} />
