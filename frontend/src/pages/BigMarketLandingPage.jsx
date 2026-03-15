@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Droplets, Wrench, Zap, Thermometer, Bug, Home, ArrowRight, Shield, MapPin, Phone } from 'lucide-react';
+import FiveToolsSection from '../components/FiveToolsSection';
 import './BigMarketLanding.css';
 
 const industries = [
@@ -55,6 +56,12 @@ const BigMarketLandingPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Five Tools We Are Building */}
+      <FiveToolsSection
+        title="These Are the Five Tools We Are Building"
+        subtitle="The tech team is building these five GeoGrid tools to power every industry in this division. This is what we sell alongside BYON."
+      />
 
       {/* Industry Grid */}
       <section className="bml-industries">
