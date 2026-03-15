@@ -4,14 +4,10 @@ import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import ChatWidget from '../components/ChatWidget';
 import HomePage from '../pages/HomePage';
-import ByonTruckingCompaniesPage from '../pages/ByonTruckingCompaniesPage';
 import ByonLastMilePage from '../pages/ByonLastMilePage';
-import ByonRealEstatePage from '../pages/ByonRealEstatePage';
 import ByonFinancePage from '../pages/ByonFinancePage';
 import ByonHealthcarePage from '../pages/ByonHealthcarePage';
-import ByonFieldServicesPage from '../pages/ByonFieldServicesPage';
 import ByonGovernmentPage from '../pages/ByonGovernmentPage';
-import ByonConstructionPage from '../pages/ByonConstructionPage';
 import GeoGridLandingPage from '../pages/GeoGridLandingPage';
 import GeoGridRestaurantsPage from '../pages/GeoGridRestaurantsPage';
 import GeoGridHomeServicesPage from '../pages/GeoGridHomeServicesPage';
@@ -44,14 +40,10 @@ export default function SiteRoutes({ scrolled }) {
         <Route path="/big-market/hvac" element={<BigMarketHVACPage />} />
         <Route path="/big-market/pest-control" element={<BigMarketPestControlPage />} />
         <Route path="/big-market/real-estate" element={<BigMarketRealEstatePage />} />
-        <Route path="/byon-trucking-companies" element={<ByonTruckingCompaniesPage />} />
         <Route path="/byon-last-mile" element={<ByonLastMilePage />} />
-        <Route path="/byon-real-estate" element={<ByonRealEstatePage />} />
         <Route path="/byon-finance" element={<ByonFinancePage />} />
         <Route path="/byon-healthcare" element={<ByonHealthcarePage />} />
-        <Route path="/byon-field-services" element={<ByonFieldServicesPage />} />
         <Route path="/byon-government" element={<ByonGovernmentPage />} />
-        <Route path="/byon-construction" element={<ByonConstructionPage />} />
         <Route path="/geogrid" element={<GeoGridLandingPage />} />
         <Route path="/geogrid/restaurants" element={<GeoGridRestaurantsPage />} />
         <Route path="/geogrid/home-services" element={<GeoGridHomeServicesPage />} />

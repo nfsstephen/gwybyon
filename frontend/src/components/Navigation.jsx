@@ -100,10 +100,6 @@ const Navigation = ({ scrolled }) => {
                 BYON Applications <ChevronDown size={16} />
               </button>
               <ul className={`dropdown-menu ${byonDropdownOpen ? 'show' : ''}`}>
-                <li><Link to="/byon-trucking-companies" onClick={closeMobileMenu}>Trucking Companies</Link></li>
-                <li><Link to="/byon-construction" onClick={closeMobileMenu}>Construction Companies</Link></li>
-                <li><Link to="/byon-real-estate" onClick={closeMobileMenu}>Real Estate</Link></li>
-                <li><Link to="/byon-field-services" onClick={closeMobileMenu}>Field Services (Plumbers, Electricians, HVAC)</Link></li>
                 <li><Link to="/byon-finance" onClick={closeMobileMenu}>Finance & Wealth Management</Link></li>
                 <li><Link to="/byon-last-mile" onClick={closeMobileMenu}>Last-Mile Delivery & Gig Economy</Link></li>
                 <li><Link to="/byon-healthcare" onClick={closeMobileMenu}>Healthcare (Home Health & Visiting Nurses)</Link></li>
