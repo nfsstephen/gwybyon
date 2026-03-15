@@ -1,5 +1,6 @@
 import React from 'react';
-import { Truck, RefreshCw, MapPin, ArrowDown } from 'lucide-react';
+import { Truck, RefreshCw, MapPin, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import './StrategyOverview.css';
 
 const StrategyOverview = () => {
@@ -28,9 +29,9 @@ const StrategyOverview = () => {
               Target large carriers with massive driver fleets. One enterprise deal activates 
               hundreds of BYON lines overnight. Volume-first, high-impact sales.
             </p>
-            <button className="so-prong-btn so-btn-1" onClick={() => scrollTo('section-trucking')}>
-              Explore Strategy <ArrowDown size={16} />
-            </button>
+            <Link to="/trucking-division" className="so-prong-btn so-btn-1">
+              Explore Strategy <ArrowRight size={16} />
+            </Link>
           </div>
 
           <div className="so-prong so-prong-2">
@@ -42,7 +43,7 @@ const StrategyOverview = () => {
               One vendor, two solutions. Double the revenue per customer without doubling the effort.
             </p>
             <button className="so-prong-btn so-btn-2" onClick={() => scrollTo('section-crosssell')}>
-              Explore Strategy <ArrowDown size={16} />
+              Explore Strategy <ArrowRight size={16} />
             </button>
           </div>
 
@@ -55,7 +56,7 @@ const StrategyOverview = () => {
               We fight for them, not between them. Scarcity creates urgency and loyalty.
             </p>
             <button className="so-prong-btn so-btn-3" onClick={() => scrollTo('section-territories')}>
-              Explore Strategy <ArrowDown size={16} />
+              Explore Strategy <ArrowRight size={16} />
             </button>
           </div>
         </div>

@@ -19,6 +19,7 @@ import GeoGridMedicalPage from '../pages/GeoGridMedicalPage';
 import GeoGridLawFirmsPage from '../pages/GeoGridLawFirmsPage';
 import GeoGridFitnessPage from '../pages/GeoGridFitnessPage';
 import GeoGridAutoRepairPage from '../pages/GeoGridAutoRepairPage';
+import TruckingDivisionPage from '../pages/TruckingDivisionPage';
 import AboutPage from '../pages/AboutPage';
 import ContactPage from '../pages/ContactPage';
 
@@ -43,6 +44,7 @@ export default function SiteRoutes({ scrolled }) {
         <Route path="/geogrid/law-firms" element={<GeoGridLawFirmsPage />} />
         <Route path="/geogrid/fitness" element={<GeoGridFitnessPage />} />
         <Route path="/geogrid/auto-repair" element={<GeoGridAutoRepairPage />} />
+        <Route path="/trucking-division" element={<TruckingDivisionPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
       </Routes>
