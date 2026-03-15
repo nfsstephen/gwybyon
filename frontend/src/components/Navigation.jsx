@@ -126,8 +126,6 @@ const Navigation = ({ scrolled }) => {
               </ul>
             </li>
 
-            <li><Link to="/about" className={isActive('/about')} onClick={closeMobileMenu}>About</Link></li>
-            <li><Link to="/contact" className={isActive('/contact')} onClick={closeMobileMenu}>Contact Us</Link></li>
           </ul>
         </div>
       </div>

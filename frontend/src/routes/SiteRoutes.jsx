@@ -24,8 +24,6 @@ import BigMarketElectriciansPage from '../pages/BigMarketElectriciansPage';
 import BigMarketHVACPage from '../pages/BigMarketHVACPage';
 import BigMarketPestControlPage from '../pages/BigMarketPestControlPage';
 import BigMarketRealEstatePage from '../pages/BigMarketRealEstatePage';
-import AboutPage from '../pages/AboutPage';
-import ContactPage from '../pages/ContactPage';
 
 export default function SiteRoutes({ scrolled }) {
   return (
@@ -53,8 +51,6 @@ export default function SiteRoutes({ scrolled }) {
         <Route path="/geogrid/law-firms" element={<GeoGridLawFirmsPage />} />
         <Route path="/geogrid/fitness" element={<GeoGridFitnessPage />} />
         <Route path="/geogrid/auto-repair" element={<GeoGridAutoRepairPage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/contact" element={<ContactPage />} />
       </Routes>
       <Footer />
       <ChatWidget />
