@@ -1,0 +1,265 @@
+.bmi-page {
+  background: #f8f9fb;
+  color: #1e293b;
+}
+
+/* Hero */
+.bmi-hero {
+  padding: 60px 24px 48px;
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+  border-top: 4px solid;
+}
+
+.bmi-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: #64748b;
+  text-decoration: none;
+  margin-bottom: 28px;
+  transition: color 0.2s;
+}
+
+.bmi-back:hover { color: #0f172a; }
+
+.bmi-hero-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  border: 1px solid;
+}
+
+.bmi-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 16px;
+}
+
+.bmi-subtitle {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #475569;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+/* Section Titles */
+.bmi-section-title {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.bmi-section-desc {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #64748b;
+  margin-bottom: 32px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Problems */
+.bmi-problems {
+  padding: 48px 24px;
+  background: #fff;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.bmi-problem-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.bmi-problem-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 28px;
+  background: #fafafa;
+}
+
+.bmi-problem-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.bmi-problem-search .bmi-problem-header { color: #0369a1; }
+.bmi-problem-team .bmi-problem-header { color: #7c3aed; }
+
+.bmi-problem-card h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.bmi-problem-card > p {
+  font-size: 0.88rem;
+  color: #475569;
+  line-height: 1.6;
+  margin: 0 0 16px;
+}
+
+.bmi-solution-tag {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.bmi-solution-tag strong {
+  color: #0f172a;
+}
+
+/* Benefits */
+.bmi-geogrid, .bmi-byon {
+  padding: 48px 24px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.bmi-byon {
+  background: #fff;
+  max-width: 100%;
+  border-top: 1px solid #e2e8f0;
+}
+
+.bmi-byon .bmi-benefit-grid,
+.bmi-byon .bmi-section-title,
+.bmi-byon .bmi-section-desc {
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.bmi-benefit-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.bmi-benefit-card {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.bmi-byon .bmi-benefit-card {
+  background: #fafafa;
+}
+
+.bmi-benefit-card svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.bmi-benefit-card strong {
+  display: block;
+  font-size: 0.9rem;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.bmi-benefit-card p {
+  font-size: 0.82rem;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Territory */
+.bmi-territory {
+  padding: 48px 24px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.bmi-territory-card {
+  text-align: center;
+  padding: 40px;
+  background: #f0fdfa;
+  border: 2px solid #0d948822;
+  border-radius: 16px;
+}
+
+.bmi-territory-icon {
+  color: #0d9488;
+  margin-bottom: 16px;
+}
+
+.bmi-territory-card h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.bmi-territory-card p {
+  font-size: 0.95rem;
+  color: #475569;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Pitch */
+.bmi-pitch {
+  padding: 0 24px 64px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.bmi-pitch-card {
+  background: #fff;
+  border: 2px solid #0369a122;
+  border-radius: 16px;
+  padding: 36px;
+  position: relative;
+}
+
+.bmi-pitch-label {
+  position: absolute;
+  top: -12px;
+  left: 28px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #0369a1;
+  background: #f8f9fb;
+  padding: 0 12px;
+}
+
+.bmi-pitch-card blockquote {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #334155;
+  font-style: italic;
+  margin: 0;
+  border-left: 3px solid #0369a1;
+  padding-left: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .bmi-title { font-size: 1.6rem; }
+  .bmi-problem-grid { grid-template-columns: 1fr; }
+  .bmi-benefit-grid { grid-template-columns: 1fr; }
+}

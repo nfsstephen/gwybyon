@@ -1,0 +1,247 @@
+.big-market-landing {
+  background: #f8f9fb;
+  color: #1e293b;
+}
+
+/* Hero */
+.bml-hero {
+  padding: 80px 24px 56px;
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.bml-badge {
+  display: inline-block;
+  padding: 8px 22px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: #7c3aed;
+  border: 1px solid #7c3aed33;
+  border-radius: 2px;
+  margin-bottom: 24px;
+  background: #7c3aed08;
+}
+
+.bml-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 18px;
+}
+
+.bml-subtitle {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #475569;
+  max-width: 680px;
+  margin: 0 auto 32px;
+}
+
+.bml-subtitle em {
+  color: #0f172a;
+  font-style: italic;
+}
+
+.bml-strategy-tags {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.bml-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 99px;
+  border: 1px solid;
+}
+
+.bml-tag-cross {
+  color: #0369a1;
+  border-color: #0369a130;
+  background: #0369a108;
+}
+
+.bml-tag-territory {
+  color: #0d9488;
+  border-color: #0d948830;
+  background: #0d948808;
+}
+
+.bml-tag-local {
+  color: #7c3aed;
+  border-color: #7c3aed30;
+  background: #7c3aed08;
+}
+
+/* How It Works */
+.bml-how {
+  padding: 56px 24px;
+  background: #fff;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.bml-section-title {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.bml-section-desc {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #64748b;
+  margin-bottom: 36px;
+}
+
+.bml-how-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.bml-how-card {
+  flex: 1;
+  padding: 32px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #fafafa;
+}
+
+.bml-how-card h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+
+.bml-how-card p {
+  font-size: 0.88rem;
+  color: #475569;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.bml-how-card strong {
+  color: #0f172a;
+}
+
+.bml-how-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.bml-how-geogrid {
+  background: #0369a10f;
+  color: #0369a1;
+  border: 1px solid #0369a125;
+}
+
+.bml-how-byon {
+  background: #7c3aed0f;
+  color: #7c3aed;
+  border: 1px solid #7c3aed25;
+}
+
+.bml-how-plus {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+
+/* Industry Grid */
+.bml-industries {
+  padding: 56px 24px 72px;
+}
+
+.bml-industry-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.bml-industry-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 28px 24px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.bml-industry-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.bml-ind-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  border: 1px solid;
+}
+
+.bml-industry-card h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.bml-industry-card p {
+  font-size: 0.82rem;
+  color: #475569;
+  line-height: 1.55;
+  margin: 0 0 16px;
+  flex: 1;
+}
+
+.bml-ind-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .bml-title {
+    font-size: 2rem;
+  }
+
+  .bml-how-grid {
+    flex-direction: column;
+  }
+
+  .bml-industry-grid {
+    grid-template-columns: 1fr;
+  }
+}

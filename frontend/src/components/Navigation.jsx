@@ -62,6 +62,8 @@ const Navigation = ({ scrolled }) => {
           </button>
           <ul className={`nav-menu ${mobileMenuOpen ? 'active' : ''}`}>
             <li><Link to="/" className={isActive('/')} onClick={closeMobileMenu}>Home</Link></li>
+            <li><Link to="/trucking-division" className={isActive('/trucking-division')} onClick={closeMobileMenu}>Trucking Division — Soumya</Link></li>
+            <li><Link to="/big-market" className={isActive('/big-market')} onClick={closeMobileMenu}>BIG Market — Shrad</Link></li>
             
             <li className="dropdown">
               <button 
@@ -100,7 +102,6 @@ const Navigation = ({ scrolled }) => {
               </ul>
             </li>
 
-            <li><Link to="/trucking-division" className={isActive('/trucking-division')} onClick={closeMobileMenu}>Trucking Division — Soumya</Link></li>
             <li><Link to="/about" className={isActive('/about')} onClick={closeMobileMenu}>About</Link></li>
             <li><Link to="/contact" className={isActive('/contact')} onClick={closeMobileMenu}>Contact Us</Link></li>
           </ul>
