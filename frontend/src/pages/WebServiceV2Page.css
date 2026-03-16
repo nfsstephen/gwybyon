@@ -117,6 +117,128 @@
   background: rgba(167, 139, 250, 0.08);
 }
 
+/* ===== GeoGrid Search Hero (Light Theme) ===== */
+.v2-geohero {
+  background: #F8FAFC;
+  padding: 80px 20px;
+  text-align: center;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.v2-geohero-content {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.v2-geohero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(13, 148, 136, 0.08);
+  border: 1px solid rgba(13, 148, 136, 0.2);
+  color: var(--v2-teal);
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.v2-geohero-title {
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: var(--v2-dark);
+  line-height: 1.15;
+  margin-bottom: 20px;
+  letter-spacing: -0.5px;
+}
+
+.v2-geohero-accent {
+  color: #DC2626;
+}
+
+.v2-geohero-subtitle {
+  font-size: 1.08rem;
+  color: var(--v2-muted);
+  line-height: 1.7;
+  margin-bottom: 32px;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.v2-geohero-ctas {
+  margin-bottom: 40px;
+}
+
+.v2-geohero-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--v2-teal);
+  color: #fff;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.v2-geohero-btn-primary:hover {
+  background: var(--v2-teal-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(13, 148, 136, 0.2);
+}
+
+.v2-geohero-proof {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.v2-geohero-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.v2-geohero-num {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--v2-teal);
+}
+
+.v2-geohero-label {
+  font-size: 0.82rem;
+  color: var(--v2-muted);
+  font-weight: 500;
+}
+
+.v2-geohero-divider {
+  width: 1px;
+  height: 40px;
+  background: #CBD5E1;
+}
+
+@media (max-width: 768px) {
+  .v2-geohero {
+    padding: 60px 16px;
+  }
+  .v2-geohero-title {
+    font-size: 1.8rem;
+  }
+  .v2-geohero-divider {
+    display: none;
+  }
+  .v2-geohero-proof {
+    gap: 20px;
+  }
+}
+
 /* ===== Shared ===== */
 .v2-container {
   max-width: 1100px;

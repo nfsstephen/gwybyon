@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {
   Droplets, Wrench, Zap, Thermometer, Bug, Home, ArrowRight, Check,
-  Globe, Code, RefreshCw, Shield, MapPin, Phone, Layers
+  Globe, Code, RefreshCw, Shield, MapPin, Phone, Layers, Search
 } from 'lucide-react';
 import FiveToolsSection from '../components/FiveToolsSection';
 import './WebServiceV2Page.css';
@@ -42,6 +42,44 @@ const WebServiceV2Page = () => {
             <div className="v2-pill v2-pill-web"><Globe size={15} /> Website Services</div>
             <div className="v2-pill v2-pill-geo"><MapPin size={15} /> Search Engine (GeoGrid)</div>
             <div className="v2-pill v2-pill-byon"><Phone size={15} /> Field Team (BYON)</div>
+          </div>
+        </div>
+      </section>
+
+      {/* GeoGrid Search Hero */}
+      <section className="v2-geohero" data-testid="v2-geohero">
+        <div className="v2-geohero-content">
+          <div className="v2-geohero-badge">
+            <MapPin size={14} />
+            <span>The Geographic Search Solution</span>
+          </div>
+          <h2 className="v2-geohero-title">
+            Is Your Business <span className="v2-geohero-accent">Invisible</span> to People Three Blocks Away?
+          </h2>
+          <p className="v2-geohero-subtitle">
+            97% of consumers search online for local businesses. If you're not dominating your 
+            geographic zone, your competitors are stealing customers who should be walking through your door.
+          </p>
+          <div className="v2-geohero-ctas">
+            <Link to="/geogrid" className="v2-geohero-btn-primary" data-testid="v2-geohero-cta">
+              Explore GeoGrid <ArrowRight size={18} />
+            </Link>
+          </div>
+          <div className="v2-geohero-proof">
+            <div className="v2-geohero-stat">
+              <span className="v2-geohero-num">46%</span>
+              <span className="v2-geohero-label">of all Google searches are local</span>
+            </div>
+            <div className="v2-geohero-divider"></div>
+            <div className="v2-geohero-stat">
+              <span className="v2-geohero-num">78%</span>
+              <span className="v2-geohero-label">convert within 24 hours</span>
+            </div>
+            <div className="v2-geohero-divider"></div>
+            <div className="v2-geohero-stat">
+              <span className="v2-geohero-num">200ft</span>
+              <span className="v2-geohero-label">can change your ranking</span>
+            </div>
           </div>
         </div>
       </section>
