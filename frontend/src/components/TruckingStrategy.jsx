@@ -72,11 +72,6 @@ const TruckingStrategy = () => {
         </div>
         <div className="ts-stat-divider" />
         <div className="ts-stat">
-          <span className="ts-stat-number">$XX</span>
-          <span className="ts-stat-label">Monthly Revenue Per Driver Line</span>
-        </div>
-        <div className="ts-stat-divider" />
-        <div className="ts-stat">
           <span className="ts-stat-number">92%</span>
           <span className="ts-stat-label">Drivers Using Personal Phones for Work</span>
         </div>
