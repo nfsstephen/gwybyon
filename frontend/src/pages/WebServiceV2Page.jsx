@@ -29,7 +29,8 @@ const WebServiceV2Page = () => {
             <span>Complete Market Solution</span>
           </div>
           <h1 className="v2-hero-title" data-testid="v2-hero-title">
-            One Vendor. <span className="v2-highlight">Three Solutions.</span><br />
+            One Vendor.<br />
+            <span className="v2-highlight">Three Solutions.</span><br />
             Six Industries.
           </h1>
           <p className="v2-hero-subtitle">
