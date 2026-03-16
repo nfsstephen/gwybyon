@@ -6,6 +6,7 @@ import './Navigation.css';
 const Navigation = ({ scrolled }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [byonDropdownOpen, setByonDropdownOpen] = useState(false);
+  const [webServicesDropdownOpen, setWebServicesDropdownOpen] = useState(false);
   const [geogridDropdownOpen, setGeogridDropdownOpen] = useState(false);
   const location = useLocation();
 
@@ -16,11 +17,16 @@ const Navigation = ({ scrolled }) => {
   const closeMobileMenu = () => {
     setMobileMenuOpen(false);
     setByonDropdownOpen(false);
+    setWebServicesDropdownOpen(false);
     setGeogridDropdownOpen(false);
   };
 
   const toggleByonDropdown = () => {
     setByonDropdownOpen(!byonDropdownOpen);
+  };
+
+  const toggleWebServicesDropdown = () => {
+    setWebServicesDropdownOpen(!webServicesDropdownOpen);
   };
 
   const toggleGeogridDropdown = () => {
@@ -37,6 +43,10 @@ const Navigation = ({ scrolled }) => {
 
   const isGeogridActive = () => {
     return location.pathname.includes('geogrid') ? 'active' : '';
+  };
+
+  const isWebServicesActive = () => {
+    return (location.pathname.includes('web-service') || location.pathname.includes('big-market')) ? 'active' : '';
   };
 
   return (
@@ -63,7 +73,24 @@ const Navigation = ({ scrolled }) => {
           <ul className={`nav-menu ${mobileMenuOpen ? 'active' : ''}`}>
             <li><Link to="/" className={isActive('/')} onClick={closeMobileMenu}>Home</Link></li>
             <li><Link to="/trucking-division" className={isActive('/trucking-division')} onClick={closeMobileMenu}>Trucking (BYON) Soumya</Link></li>
-            <li><Link to="/web-service-v2" className={isActive('/web-service-v2')} onClick={closeMobileMenu}>Web Services — Shrad</Link></li>
+            
+            <li className="dropdown">
+              <button 
+                className={`dropdown-toggle ${isWebServicesActive()}`}
+                onClick={toggleWebServicesDropdown}
+              >
+                Web Services — Shrad <ChevronDown size={16} />
+              </button>
+              <ul className={`dropdown-menu ${webServicesDropdownOpen ? 'show' : ''}`}>
+                <li><Link to="/web-service-v2" onClick={closeMobileMenu}>Overview</Link></li>
+                <li><Link to="/big-market/well-septic" onClick={closeMobileMenu}>Well & Septic Companies</Link></li>
+                <li><Link to="/big-market/plumbers" onClick={closeMobileMenu}>Plumbers</Link></li>
+                <li><Link to="/big-market/electricians" onClick={closeMobileMenu}>Electricians</Link></li>
+                <li><Link to="/big-market/hvac" onClick={closeMobileMenu}>Air & Heating Companies</Link></li>
+                <li><Link to="/big-market/pest-control" onClick={closeMobileMenu}>Pest Control Services</Link></li>
+                <li><Link to="/big-market/real-estate" onClick={closeMobileMenu}>Real Estate</Link></li>
+              </ul>
+            </li>
             
             <li className="dropdown">
               <button 
