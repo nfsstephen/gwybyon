@@ -7,7 +7,6 @@ const Navigation = ({ scrolled }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [byonDropdownOpen, setByonDropdownOpen] = useState(false);
   const [geogridDropdownOpen, setGeogridDropdownOpen] = useState(false);
-  const [bigMarketDropdownOpen, setBigMarketDropdownOpen] = useState(false);
   const location = useLocation();
 
   const toggleMobileMenu = () => {
@@ -18,7 +17,6 @@ const Navigation = ({ scrolled }) => {
     setMobileMenuOpen(false);
     setByonDropdownOpen(false);
     setGeogridDropdownOpen(false);
-    setBigMarketDropdownOpen(false);
   };
 
   const toggleByonDropdown = () => {
@@ -27,10 +25,6 @@ const Navigation = ({ scrolled }) => {
 
   const toggleGeogridDropdown = () => {
     setGeogridDropdownOpen(!geogridDropdownOpen);
-  };
-
-  const toggleBigMarketDropdown = () => {
-    setBigMarketDropdownOpen(!bigMarketDropdownOpen);
   };
 
   const isActive = (path) => {
@@ -43,10 +37,6 @@ const Navigation = ({ scrolled }) => {
 
   const isGeogridActive = () => {
     return location.pathname.includes('geogrid') ? 'active' : '';
-  };
-
-  const isBigMarketActive = () => {
-    return location.pathname.includes('big-market') ? 'active' : '';
   };
 
   return (
@@ -73,27 +63,8 @@ const Navigation = ({ scrolled }) => {
           <ul className={`nav-menu ${mobileMenuOpen ? 'active' : ''}`}>
             <li><Link to="/" className={isActive('/')} onClick={closeMobileMenu}>Home</Link></li>
             <li><Link to="/trucking-division" className={isActive('/trucking-division')} onClick={closeMobileMenu}>Trucking (BYON) Soumya</Link></li>
-            <li><Link to="/website-services" className={isActive('/website-services')} onClick={closeMobileMenu}>Website Services</Link></li>
-            <li><Link to="/web-service-v2" className={isActive('/web-service-v2')} onClick={closeMobileMenu}>Web Service v2</Link></li>
+            <li><Link to="/web-service-v2" className={isActive('/web-service-v2')} onClick={closeMobileMenu}>Web Services — Shrad</Link></li>
             
-            <li className="dropdown">
-              <button 
-                className={`dropdown-toggle ${isBigMarketActive()}`}
-                onClick={toggleBigMarketDropdown}
-              >
-                BIG Market — Shrad <ChevronDown size={16} />
-              </button>
-              <ul className={`dropdown-menu ${bigMarketDropdownOpen ? 'show' : ''}`}>
-                <li><Link to="/big-market" onClick={closeMobileMenu}>Overview</Link></li>
-                <li><Link to="/big-market/well-septic" onClick={closeMobileMenu}>Well & Septic Companies</Link></li>
-                <li><Link to="/big-market/plumbers" onClick={closeMobileMenu}>Plumbers</Link></li>
-                <li><Link to="/big-market/electricians" onClick={closeMobileMenu}>Electricians</Link></li>
-                <li><Link to="/big-market/hvac" onClick={closeMobileMenu}>Air & Heating Companies</Link></li>
-                <li><Link to="/big-market/pest-control" onClick={closeMobileMenu}>Pest Control Services</Link></li>
-                <li><Link to="/big-market/real-estate" onClick={closeMobileMenu}>Real Estate</Link></li>
-              </ul>
-            </li>
-
             <li className="dropdown">
               <button 
                 className={`dropdown-toggle ${isByonActive()}`}
