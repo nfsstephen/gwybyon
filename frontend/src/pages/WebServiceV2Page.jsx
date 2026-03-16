@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {
   Droplets, Wrench, Zap, Thermometer, Bug, Home, ArrowRight, Check,
-  Globe, Code, RefreshCw, Shield, MapPin, Phone, Layers, Search
+  Globe, Code, RefreshCw, Shield, MapPin, Phone, Layers, Search, BarChart3, X
 } from 'lucide-react';
 import FiveToolsSection from '../components/FiveToolsSection';
 import './WebServiceV2Page.css';
@@ -81,6 +81,87 @@ const WebServiceV2Page = () => {
               <span className="v2-geohero-label">can change your ranking</span>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* The Problem */}
+      <section className="v2-problem" data-testid="v2-problem">
+        <div className="v2-container">
+          <div className="v2-label">The Problem</div>
+          <h2 className="v2-title">The Geographic Search Gap Is Costing You Money</h2>
+          <p className="v2-desc">
+            When someone searches "coffee shop near me" or "best plumber in [neighborhood]," 
+            Google uses a complex algorithm that weighs proximity, relevance, and prominence. 
+            Most small businesses lose this battle without even knowing it.
+          </p>
+          <div className="v2-problem-grid">
+            <div className="v2-problem-card">
+              <div className="v2-problem-icon"><Search size={28} /></div>
+              <h3>Fragmented Data</h3>
+              <p>Your business name, address, and phone number are inconsistent across Google, Apple Maps, Bing, and dozens of directories. Each mismatch kills your ranking.</p>
+            </div>
+            <div className="v2-problem-card">
+              <div className="v2-problem-icon"><MapPin size={28} /></div>
+              <h3>Invisible Radius</h3>
+              <p>You might rank #1 at your front door but disappear by Block 3. Your competitors own the search results just a few streets away from you.</p>
+            </div>
+            <div className="v2-problem-card">
+              <div className="v2-problem-icon"><BarChart3 size={28} /></div>
+              <h3>Zero Visibility</h3>
+              <p>Traditional analytics show "website clicks" — meaningless for a local business. You need to know how many people saw you on the MAP and asked for DIRECTIONS.</p>
+            </div>
+            <div className="v2-problem-card">
+              <div className="v2-problem-icon"><Globe size={28} /></div>
+              <h3>The Zero-Click World</h3>
+              <p>Google now answers most local searches in the Map Pack or AI Overviews — users find what they need without ever clicking a website. If you're still optimizing for "website traffic," you're playing yesterday's game.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* The Shift */}
+      <section className="v2-shift" data-testid="v2-shift">
+        <div className="v2-container">
+          <div className="v2-label">The Shift</div>
+          <h2 className="v2-title">Google Stopped Matching Words. Now It Matches <em>Things</em>.</h2>
+          <p className="v2-desc">
+            The search algorithm that built the internet is dead. Understanding the new one is the difference
+            between being found and being forgotten.
+          </p>
+          <div className="v2-shift-comparison">
+            <div className="v2-shift-card v2-shift-old">
+              <div className="v2-shift-header">
+                <X size={18} />
+                <span>The Old Way</span>
+              </div>
+              <h3>"Word-Driven" Search</h3>
+              <ul>
+                <li><span className="v2-shift-label">Logic:</span> Matching letters and words</li>
+                <li><span className="v2-shift-label">Priority:</span> Keyword density & backlinks</li>
+                <li><span className="v2-shift-label">Context:</span> Ignored — same results for everyone</li>
+                <li><span className="v2-shift-label">Winner:</span> Whoever has the best SEO team</li>
+              </ul>
+            </div>
+            <div className="v2-shift-vs">VS</div>
+            <div className="v2-shift-card v2-shift-new">
+              <div className="v2-shift-header">
+                <Check size={18} />
+                <span>The New Reality</span>
+              </div>
+              <h3>"Geographic Entity" Search</h3>
+              <ul>
+                <li><span className="v2-shift-label">Logic:</span> Matching intent, location & trust</li>
+                <li><span className="v2-shift-label">Priority:</span> Proximity, relevance & prominence</li>
+                <li><span className="v2-shift-label">Context:</span> Hyper-personalized — results change by block</li>
+                <li><span className="v2-shift-label">Winner:</span> Most trusted local authority</li>
+              </ul>
+            </div>
+          </div>
+          <p className="v2-shift-bottom">
+            Small businesses still spending money on SEO agencies writing keyword-stuffed blogs
+            are optimizing for an algorithm that no longer exists. Meanwhile, their Google Business Profile
+            is outdated, their map pins are wrong, and their reviews are stagnant.
+          </p>
         </div>
       </section>
 
