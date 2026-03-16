@@ -24,6 +24,7 @@ import BigMarketElectriciansPage from '../pages/BigMarketElectriciansPage';
 import BigMarketHVACPage from '../pages/BigMarketHVACPage';
 import BigMarketPestControlPage from '../pages/BigMarketPestControlPage';
 import BigMarketRealEstatePage from '../pages/BigMarketRealEstatePage';
+import WebsiteServicesPage from '../pages/WebsiteServicesPage';
 
 export default function SiteRoutes({ scrolled }) {
   return (
@@ -39,6 +40,7 @@ export default function SiteRoutes({ scrolled }) {
         <Route path="/big-market/hvac" element={<BigMarketHVACPage />} />
         <Route path="/big-market/pest-control" element={<BigMarketPestControlPage />} />
         <Route path="/big-market/real-estate" element={<BigMarketRealEstatePage />} />
+        <Route path="/website-services" element={<WebsiteServicesPage />} />
         <Route path="/byon" element={<ByonOverviewPage />} />
         <Route path="/byon-last-mile" element={<ByonLastMilePage />} />
         <Route path="/byon-finance" element={<ByonFinancePage />} />
