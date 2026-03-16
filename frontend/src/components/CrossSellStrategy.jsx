@@ -28,8 +28,8 @@ const CrossSellStrategy = () => {
             <h3>The Google Problem</h3>
             <p>
               Google's algorithm changes have made local search optimization critical. 
-              Large local businesses — HVAC companies, medical practices, law firms, home service 
-              providers — are losing visibility to competitors who optimize. If your customers 
+              Large local businesses — well & septic companies, plumbers, electricians, air & heating 
+              companies, pest control services, and real estate firms — are losing visibility to competitors who optimize. If your customers 
               can't find you, you don't exist.
             </p>
           </div>
@@ -37,8 +37,8 @@ const CrossSellStrategy = () => {
             <Phone size={32} className="cs-problem-icon" />
             <h3>The Field Team Problem</h3>
             <p>
-              These same businesses deploy teams into the field daily — technicians, nurses, 
-              agents, installers. They use personal phones for company business with zero 
+              These same businesses deploy teams into the field daily — technicians, contractors, 
+              plumbers, electricians, and agents. They use personal phones for company business with zero 
               oversight. No call control. No tracking. No separation between work and personal life.
             </p>
           </div>
