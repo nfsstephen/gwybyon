@@ -275,6 +275,25 @@
   margin: 0;
 }
 
+.mt-industry-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.mt-industry-list li {
+  background: #f0fdfa;
+  color: #0d9488;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid #ccfbf1;
+}
+
 .mt-step-connector {
   color: #0d9488;
   padding: 8px 0;
