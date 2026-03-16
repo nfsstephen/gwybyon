@@ -56,14 +56,12 @@ const CrossSellStrategy = () => {
             <h4>Target Customer</h4>
             <p>Large local businesses with<br />field employees</p>
             <div className="cs-target-examples">
-              <span>HVAC Companies</span>
-              <span>Medical Practices</span>
-              <span>Law Firms</span>
-              <span>Home Services</span>
-              <span>Dental Offices</span>
-              <span>Property Management</span>
+              <span>Well & Septic</span>
+              <span>Plumbers</span>
+              <span>Electricians</span>
+              <span>Air & Heating</span>
               <span>Pest Control</span>
-              <span>Landscaping</span>
+              <span>Real Estate</span>
             </div>
           </div>
 
