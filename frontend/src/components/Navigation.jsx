@@ -72,7 +72,7 @@ const Navigation = ({ scrolled }) => {
           </button>
           <ul className={`nav-menu ${mobileMenuOpen ? 'active' : ''}`}>
             <li><Link to="/" className={isActive('/')} onClick={closeMobileMenu}>Home</Link></li>
-            <li><Link to="/trucking-division" className={isActive('/trucking-division')} onClick={closeMobileMenu}>Trucking Division — Soumya</Link></li>
+            <li><Link to="/trucking-division" className={isActive('/trucking-division')} onClick={closeMobileMenu}>Trucking (BYON) Soumya</Link></li>
             
             <li className="dropdown">
               <button 
@@ -113,7 +113,7 @@ const Navigation = ({ scrolled }) => {
                 className={`dropdown-toggle ${isGeogridActive()}`}
                 onClick={toggleGeogridDropdown}
               >
-                GeoGrid <ChevronDown size={16} />
+                Search Engine (GeoGrid) <ChevronDown size={16} />
               </button>
               <ul className={`dropdown-menu ${geogridDropdownOpen ? 'show' : ''}`}>
                 <li><Link to="/geogrid" onClick={closeMobileMenu}>Overview</Link></li>
