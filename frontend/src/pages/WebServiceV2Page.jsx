@@ -46,6 +46,60 @@ const WebServiceV2Page = () => {
         </div>
       </section>
 
+      {/* Three Solutions Overview */}
+      <section className="v2-solutions" data-testid="v2-three-solutions">
+        <div className="v2-container">
+          <div className="v2-label">The Complete Solution</div>
+          <h2 className="v2-title">Three Problems. Three Solutions. One Vendor.</h2>
+          <p className="v2-desc">
+            Every business in these industries faces the same three challenges. 
+            We solve all of them so they don't have to juggle multiple vendors.
+          </p>
+          <div className="v2-solutions-grid">
+            <div className="v2-solution-card">
+              <div className="v2-solution-num">01</div>
+              <div className="v2-solution-icon v2-sol-web"><Globe size={28} /></div>
+              <h3>Their Website Doesn't Work</h3>
+              <p>
+                99% of service companies have a website — but most were built for the old web. 
+                They're slow, not mobile-first, and invisible to Google's entity-based algorithm. 
+                We either <strong>build a new one</strong> or <strong>rebuild and optimize</strong> what they have.
+              </p>
+              <a href="#site-construction" className="v2-solution-link">
+                See Website Services <ArrowRight size={14} />
+              </a>
+            </div>
+            <div className="v2-solution-card">
+              <div className="v2-solution-num">02</div>
+              <div className="v2-solution-icon v2-sol-geo"><MapPin size={28} /></div>
+              <h3>Customers Can't Find Them</h3>
+              <p>
+                Google changed how local search works. If they're not optimized for geographic 
+                entity search, their competitors get the calls. <strong>GeoGrid</strong> puts them 
+                at the top of local results — and our territory guarantee means we won't help 
+                their competitors do the same.
+              </p>
+              <a href="#five-tools" className="v2-solution-link">
+                See GeoGrid Tools <ArrowRight size={14} />
+              </a>
+            </div>
+            <div className="v2-solution-card">
+              <div className="v2-solution-num">03</div>
+              <div className="v2-solution-icon v2-sol-byon"><Phone size={28} /></div>
+              <h3>They Can't Manage Their Teams</h3>
+              <p>
+                They have technicians, contractors, plumbers, electricians, and agents using personal 
+                phones for business. No oversight. No separation. <strong>BYON</strong> gives every 
+                team member a managed second line — call control, tracking, and scam protection.
+              </p>
+              <Link to="/byon" className="v2-solution-link">
+                See BYON Overview <ArrowRight size={14} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* GeoGrid Search Hero */}
       <section className="v2-geohero" data-testid="v2-geohero">
         <div className="v2-geohero-content">
@@ -187,60 +241,6 @@ const WebServiceV2Page = () => {
                 </span>
               </Link>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Three Solutions Overview */}
-      <section className="v2-solutions" data-testid="v2-three-solutions">
-        <div className="v2-container">
-          <div className="v2-label">The Complete Solution</div>
-          <h2 className="v2-title">Three Problems. Three Solutions. One Vendor.</h2>
-          <p className="v2-desc">
-            Every business in these industries faces the same three challenges. 
-            We solve all of them so they don't have to juggle multiple vendors.
-          </p>
-          <div className="v2-solutions-grid">
-            <div className="v2-solution-card">
-              <div className="v2-solution-num">01</div>
-              <div className="v2-solution-icon v2-sol-web"><Globe size={28} /></div>
-              <h3>Their Website Doesn't Work</h3>
-              <p>
-                99% of service companies have a website — but most were built for the old web. 
-                They're slow, not mobile-first, and invisible to Google's entity-based algorithm. 
-                We either <strong>build a new one</strong> or <strong>rebuild and optimize</strong> what they have.
-              </p>
-              <a href="#site-construction" className="v2-solution-link">
-                See Website Services <ArrowRight size={14} />
-              </a>
-            </div>
-            <div className="v2-solution-card">
-              <div className="v2-solution-num">02</div>
-              <div className="v2-solution-icon v2-sol-geo"><MapPin size={28} /></div>
-              <h3>Customers Can't Find Them</h3>
-              <p>
-                Google changed how local search works. If they're not optimized for geographic 
-                entity search, their competitors get the calls. <strong>GeoGrid</strong> puts them 
-                at the top of local results — and our territory guarantee means we won't help 
-                their competitors do the same.
-              </p>
-              <a href="#five-tools" className="v2-solution-link">
-                See GeoGrid Tools <ArrowRight size={14} />
-              </a>
-            </div>
-            <div className="v2-solution-card">
-              <div className="v2-solution-num">03</div>
-              <div className="v2-solution-icon v2-sol-byon"><Phone size={28} /></div>
-              <h3>They Can't Manage Their Teams</h3>
-              <p>
-                They have technicians, contractors, plumbers, electricians, and agents using personal 
-                phones for business. No oversight. No separation. <strong>BYON</strong> gives every 
-                team member a managed second line — call control, tracking, and scam protection.
-              </p>
-              <Link to="/byon" className="v2-solution-link">
-                See BYON Overview <ArrowRight size={14} />
-              </Link>
-            </div>
           </div>
         </div>
       </section>
