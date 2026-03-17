@@ -2,9 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {
   Shield, MapPin, Phone, Globe, Check, ArrowRight, Zap,
-  Crown, Lock, TrendingUp, BarChart3, Search, Users, Layers
+  Crown, Lock, TrendingUp, BarChart3, Search, Users, Layers,
+  Code, RefreshCw
 } from 'lucide-react';
 import './ServicesAndPricingPage.css';
+import '../pages/WebServiceV2Page.css';
 
 const ServicesAndPricingPage = () => {
   return (
@@ -42,6 +44,68 @@ const ServicesAndPricingPage = () => {
             <div className="sp-stat">
               <span className="sp-stat-num">1</span>
               <span className="sp-stat-label">Territory Per Industry</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Website Services — New Build or Rebuild */}
+      <section className="v2-construction" id="site-construction" data-testid="v2-site-construction">
+        <div className="v2-container">
+          <div className="v2-label">Website Services</div>
+          <h2 className="v2-title">Two Paths to a High-Performance Website</h2>
+          <p className="v2-desc">
+            Whether they're starting fresh or have an existing site, we meet them where they are 
+            and build something that drives local customers to their door.
+          </p>
+          <div className="v2-construction-grid">
+            <div className="v2-build-card" data-testid="v2-new-build">
+              <div className="v2-build-header v2-build-new">
+                <Code size={32} />
+                <span className="v2-build-option">Option 1</span>
+              </div>
+              <h3>New Build</h3>
+              <p className="v2-build-tagline">Start from scratch. Built right from day one.</p>
+              <p className="v2-build-desc">
+                A brand-new website purpose-built for local search dominance. Every page, 
+                every element is optimized for geographic entity search from the ground up.
+              </p>
+              <ul className="v2-build-features">
+                <li><Check size={16} /> Custom design tailored to brand and industry</li>
+                <li><Check size={16} /> Mobile-first, fast-loading architecture</li>
+                <li><Check size={16} /> LocalBusiness schema markup built in</li>
+                <li><Check size={16} /> Geographic content strategy for service area</li>
+                <li><Check size={16} /> Google Business Profile integration</li>
+                <li><Check size={16} /> Review display and trust signals</li>
+              </ul>
+              <div className="v2-build-ideal">
+                <Zap size={14} />
+                <span><strong>Ideal for:</strong> New businesses, outdated sites beyond repair, or companies ready for a complete rebrand.</span>
+              </div>
+            </div>
+            <div className="v2-build-card" data-testid="v2-rebuild">
+              <div className="v2-build-header v2-build-rebuild">
+                <RefreshCw size={32} />
+                <span className="v2-build-option">Option 2</span>
+              </div>
+              <h3>Rebuild & Optimize</h3>
+              <p className="v2-build-tagline">Keep what works. Fix everything else.</p>
+              <p className="v2-build-desc">
+                We scrape the existing site, preserve content and brand identity, then rebuild 
+                the entire structure for performance and local search. Same brand, dramatically better results.
+              </p>
+              <ul className="v2-build-features">
+                <li><Check size={16} /> Full audit and scrape of current site</li>
+                <li><Check size={16} /> Content migration with SEO improvements</li>
+                <li><Check size={16} /> Performance optimization (speed, mobile, Core Web Vitals)</li>
+                <li><Check size={16} /> Schema markup and structured data</li>
+                <li><Check size={16} /> Local search optimization layered in</li>
+                <li><Check size={16} /> Redirect mapping to preserve existing rankings</li>
+              </ul>
+              <div className="v2-build-ideal">
+                <Zap size={14} />
+                <span><strong>Ideal for:</strong> Established businesses with good content but poor technical performance.</span>
+              </div>
             </div>
           </div>
         </div>
