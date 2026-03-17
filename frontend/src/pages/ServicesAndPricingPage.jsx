@@ -171,36 +171,6 @@ const ServicesAndPricingPage = () => {
         </div>
       </section>
 
-      {/* Territory Protection */}
-      <section className="sp-territory" data-testid="sp-territory">
-        <div className="sp-container">
-          <div className="sp-section-badge"><Lock size={14} /> Core Differentiator</div>
-          <h2 className="sp-section-title">Exclusive Territory Protection</h2>
-          <p className="sp-section-desc">
-            Every plan includes something our competitors can't offer: a protected geographic territory. 
-            We work with <strong>one business per industry per territory</strong>. Once you claim yours, 
-            no competitor in your industry gets our services in your area. Period.
-          </p>
-          <div className="sp-territory-grid">
-            <div className="sp-territory-card">
-              <Crown size={28} />
-              <h3>Your Market. Protected.</h3>
-              <p>We fight for you, not between you and your competitors. Your investment in local dominance is structurally protected.</p>
-            </div>
-            <div className="sp-territory-card">
-              <Shield size={28} />
-              <h3>Scarcity Creates Value</h3>
-              <p>Territories are finite and first-come, first-served. Early adopters lock out their competitors permanently.</p>
-            </div>
-            <div className="sp-territory-card">
-              <TrendingUp size={28} />
-              <h3>Aligned Incentives</h3>
-              <p>We succeed when you dominate your local market. We never profit from selling the same tools to your competition.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Pricing Tiers */}
       <section className="sp-pricing" data-testid="sp-pricing">
         <div className="sp-container">
@@ -320,6 +290,36 @@ const ServicesAndPricingPage = () => {
               <div className="sp-all-item"><Search size={16} /> GeoGrid Search Tools</div>
               <div className="sp-all-item"><Lock size={16} /> SSL & Security Monitoring</div>
               <div className="sp-all-item"><TrendingUp size={16} /> ROI Performance Tracking</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Territory Protection */}
+      <section className="sp-territory" data-testid="sp-territory">
+        <div className="sp-container">
+          <div className="sp-section-badge"><Lock size={14} /> Core Differentiator</div>
+          <h2 className="sp-section-title">Exclusive Territory Protection</h2>
+          <p className="sp-section-desc">
+            Every plan includes something our competitors can't offer: a protected geographic territory. 
+            We work with <strong>one business per industry per territory</strong>. Once you claim yours, 
+            no competitor in your industry gets our services in your area. Period.
+          </p>
+          <div className="sp-territory-grid">
+            <div className="sp-territory-card">
+              <Crown size={28} />
+              <h3>Your Market. Protected.</h3>
+              <p>We fight for you, not between you and your competitors. Your investment in local dominance is structurally protected.</p>
+            </div>
+            <div className="sp-territory-card">
+              <Shield size={28} />
+              <h3>Scarcity Creates Value</h3>
+              <p>Territories are finite and first-come, first-served. Early adopters lock out their competitors permanently.</p>
+            </div>
+            <div className="sp-territory-card">
+              <TrendingUp size={28} />
+              <h3>Aligned Incentives</h3>
+              <p>We succeed when you dominate your local market. We never profit from selling the same tools to your competition.</p>
             </div>
           </div>
         </div>
