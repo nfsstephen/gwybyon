@@ -111,36 +111,6 @@ const ServicesAndPricingPage = () => {
         </div>
       </section>
 
-      {/* Territory Protection */}
-      <section className="sp-territory" data-testid="sp-territory">
-        <div className="sp-container">
-          <div className="sp-section-badge"><Lock size={14} /> Core Differentiator</div>
-          <h2 className="sp-section-title">Exclusive Territory Protection</h2>
-          <p className="sp-section-desc">
-            Every plan includes something our competitors can't offer: a protected geographic territory. 
-            We work with <strong>one business per industry per territory</strong>. Once you claim yours, 
-            no competitor in your industry gets our services in your area. Period.
-          </p>
-          <div className="sp-territory-grid">
-            <div className="sp-territory-card">
-              <Crown size={28} />
-              <h3>Your Market. Protected.</h3>
-              <p>We fight for you, not between you and your competitors. Your investment in local dominance is structurally protected.</p>
-            </div>
-            <div className="sp-territory-card">
-              <Shield size={28} />
-              <h3>Scarcity Creates Value</h3>
-              <p>Territories are finite and first-come, first-served. Early adopters lock out their competitors permanently.</p>
-            </div>
-            <div className="sp-territory-card">
-              <TrendingUp size={28} />
-              <h3>Aligned Incentives</h3>
-              <p>We succeed when you dominate your local market. We never profit from selling the same tools to your competition.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* What's Included — The Three Solutions */}
       <section className="sp-solutions" data-testid="sp-three-solutions">
         <div className="sp-container">
@@ -192,6 +162,36 @@ const ServicesAndPricingPage = () => {
                 <li><Check size={14} /> Call control & whitelisting</li>
                 <li><Check size={14} /> Scam protection for employees</li>
               </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Territory Protection */}
+      <section className="sp-territory" data-testid="sp-territory">
+        <div className="sp-container">
+          <div className="sp-section-badge"><Lock size={14} /> Core Differentiator</div>
+          <h2 className="sp-section-title">Exclusive Territory Protection</h2>
+          <p className="sp-section-desc">
+            Every plan includes something our competitors can't offer: a protected geographic territory. 
+            We work with <strong>one business per industry per territory</strong>. Once you claim yours, 
+            no competitor in your industry gets our services in your area. Period.
+          </p>
+          <div className="sp-territory-grid">
+            <div className="sp-territory-card">
+              <Crown size={28} />
+              <h3>Your Market. Protected.</h3>
+              <p>We fight for you, not between you and your competitors. Your investment in local dominance is structurally protected.</p>
+            </div>
+            <div className="sp-territory-card">
+              <Shield size={28} />
+              <h3>Scarcity Creates Value</h3>
+              <p>Territories are finite and first-come, first-served. Early adopters lock out their competitors permanently.</p>
+            </div>
+            <div className="sp-territory-card">
+              <TrendingUp size={28} />
+              <h3>Aligned Incentives</h3>
+              <p>We succeed when you dominate your local market. We never profit from selling the same tools to your competition.</p>
             </div>
           </div>
         </div>
@@ -317,26 +317,6 @@ const ServicesAndPricingPage = () => {
               <div className="sp-all-item"><Lock size={16} /> SSL & Security Monitoring</div>
               <div className="sp-all-item"><TrendingUp size={16} /> ROI Performance Tracking</div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Industries We Serve */}
-      <section className="sp-industries" data-testid="sp-industries">
-        <div className="sp-container">
-          <div className="sp-section-badge"><Users size={14} /> Who We Serve</div>
-          <h2 className="sp-section-title">Six High-Value Industries</h2>
-          <p className="sp-section-desc">
-            We've identified six industries where local businesses need all three solutions — 
-            and where exclusive territory protection creates the most value.
-          </p>
-          <div className="sp-industry-grid">
-            <Link to="/big-market/well-septic" className="sp-industry-pill">Well & Septic</Link>
-            <Link to="/big-market/plumbers" className="sp-industry-pill">Plumbers</Link>
-            <Link to="/big-market/electricians" className="sp-industry-pill">Electricians</Link>
-            <Link to="/big-market/hvac" className="sp-industry-pill">Air & Heating</Link>
-            <Link to="/big-market/pest-control" className="sp-industry-pill">Pest Control</Link>
-            <Link to="/big-market/real-estate" className="sp-industry-pill">Real Estate</Link>
           </div>
         </div>
       </section>
