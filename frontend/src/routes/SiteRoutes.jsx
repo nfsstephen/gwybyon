@@ -9,7 +9,6 @@ import ByonLastMilePage from '../pages/ByonLastMilePage';
 import ByonFinancePage from '../pages/ByonFinancePage';
 import ByonHealthcarePage from '../pages/ByonHealthcarePage';
 import ByonGovernmentPage from '../pages/ByonGovernmentPage';
-import GeoGridLandingPage from '../pages/GeoGridLandingPage';
 import GeoGridRestaurantsPage from '../pages/GeoGridRestaurantsPage';
 import GeoGridHomeServicesPage from '../pages/GeoGridHomeServicesPage';
 import GeoGridMedicalPage from '../pages/GeoGridMedicalPage';
@@ -46,7 +45,6 @@ export default function SiteRoutes({ scrolled }) {
         <Route path="/byon-finance" element={<ByonFinancePage />} />
         <Route path="/byon-healthcare" element={<ByonHealthcarePage />} />
         <Route path="/byon-government" element={<ByonGovernmentPage />} />
-        <Route path="/geogrid" element={<GeoGridLandingPage />} />
         <Route path="/geogrid/restaurants" element={<GeoGridRestaurantsPage />} />
         <Route path="/geogrid/home-services" element={<GeoGridHomeServicesPage />} />
         <Route path="/geogrid/medical" element={<GeoGridMedicalPage />} />

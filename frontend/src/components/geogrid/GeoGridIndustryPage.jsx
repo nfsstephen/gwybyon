@@ -28,7 +28,7 @@ const GeoGridIndustryPage = ({ config }) => {
           <h1 className="ggi-hero-title" data-testid="ggi-page-title">{heroTitle}</h1>
           <p className="ggi-hero-subtitle">{heroSubtitle}</p>
           <div className="ggi-hero-actions">
-            <Link to="/geogrid#free-scan" className="ggi-btn-primary" data-testid="ggi-hero-scan-cta">
+            <Link to="/services-pricing" className="ggi-btn-primary" data-testid="ggi-hero-scan-cta">
               Get Your Free Geo-Health Scan <ArrowRight size={18} />
             </Link>
           </div>
@@ -127,7 +127,7 @@ const GeoGridIndustryPage = ({ config }) => {
           <h2>{ctaText || `Stop Losing ${industry} Customers to the Business Down the Street`}</h2>
           <p>Get your free Geo-Health Scan and see exactly where you stand in your neighborhood.</p>
           <div className="ggi-cta-buttons">
-            <Link to="/geogrid#free-scan" className="ggi-btn-primary" data-testid="ggi-cta-scan">
+            <Link to="/services-pricing" className="ggi-btn-primary" data-testid="ggi-cta-scan">
               Get Your Free Scan <ArrowRight size={18} />
             </Link>
             <Link to="/contact" className="ggi-btn-ghost" data-testid="ggi-cta-contact">

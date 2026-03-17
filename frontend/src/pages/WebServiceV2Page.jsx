@@ -115,7 +115,7 @@ const WebServiceV2Page = () => {
             geographic zone, your competitors are stealing customers who should be walking through your door.
           </p>
           <div className="v2-geohero-ctas">
-            <Link to="/geogrid" className="v2-geohero-btn-primary" data-testid="v2-geohero-cta">
+            <Link to="/services-pricing" className="v2-geohero-btn-primary" data-testid="v2-geohero-cta">
               Explore GeoGrid <ArrowRight size={18} />
             </Link>
           </div>
@@ -265,7 +265,7 @@ const WebServiceV2Page = () => {
               Everything a local service company needs to win.
             </p>
             <div className="v2-cta-btns">
-              <Link to="/geogrid" className="v2-btn-primary" data-testid="v2-cta-geogrid">
+              <Link to="/services-pricing" className="v2-btn-primary" data-testid="v2-cta-geogrid">
                 Explore GeoGrid <ArrowRight size={18} />
               </Link>
               <Link to="/byon" className="v2-btn-ghost" data-testid="v2-cta-byon">

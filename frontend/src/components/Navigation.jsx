@@ -118,7 +118,6 @@ const Navigation = ({ scrolled }) => {
                 Search Engine (GeoGrid) <ChevronDown size={16} />
               </button>
               <ul className={`dropdown-menu ${geogridDropdownOpen ? 'show' : ''}`}>
-                <li><Link to="/geogrid" onClick={closeMobileMenu}>Overview</Link></li>
                 <li><Link to="/geogrid/restaurants" onClick={closeMobileMenu}>Restaurants & Cafes</Link></li>
                 <li><Link to="/geogrid/home-services" onClick={closeMobileMenu}>Home Services</Link></li>
                 <li><Link to="/geogrid/medical" onClick={closeMobileMenu}>Medical & Dental</Link></li>

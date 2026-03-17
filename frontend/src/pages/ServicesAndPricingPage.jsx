@@ -340,7 +340,7 @@ const ServicesAndPricingPage = () => {
               <Link to="/web-service-v2" className="sp-btn-primary" data-testid="sp-cta-overview">
                 See Full Service Details <ArrowRight size={18} />
               </Link>
-              <Link to="/geogrid" className="sp-btn-ghost" data-testid="sp-cta-geogrid">
+              <Link to="/services-pricing" className="sp-btn-ghost" data-testid="sp-cta-geogrid">
                 Explore GeoGrid
               </Link>
             </div>
