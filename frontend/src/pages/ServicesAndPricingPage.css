@@ -281,37 +281,34 @@
   flex-shrink: 0;
 }
 
-/* ===== Comparison Matrix ===== */
+/* ===== Comparison Matrix (Light Theme) ===== */
 .sp-matrix {
   padding: 80px 20px;
-  background: var(--sp-dark);
+  background: #fff;
 }
 
 .sp-matrix-title {
   font-size: 2.2rem;
   font-weight: 800;
-  color: #fff;
+  color: var(--sp-dark);
   margin-bottom: 16px;
   letter-spacing: -0.5px;
 }
 
 .sp-matrix-desc {
   font-size: 1.05rem;
-  color: var(--sp-light);
+  color: var(--sp-muted);
   line-height: 1.7;
   max-width: 700px;
   margin-bottom: 48px;
-}
-
-.sp-matrix .sp-section-badge {
-  color: var(--sp-teal-light);
 }
 
 .sp-matrix-wrapper {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--sp-border);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
 }
 
 .sp-matrix-table {
@@ -322,7 +319,7 @@
 
 /* Header */
 .sp-matrix-table thead tr {
-  background: var(--sp-dark-mid);
+  background: var(--sp-surface);
 }
 
 .sp-matrix-feature-col {
@@ -336,12 +333,12 @@
   padding: 24px 16px;
   text-align: center;
   vertical-align: bottom;
-  border-left: 1px solid rgba(255, 255, 255, 0.06);
+  border-left: 1px solid var(--sp-border);
   position: relative;
 }
 
 .sp-matrix-tier-popular {
-  background: rgba(13, 148, 136, 0.1);
+  background: rgba(13, 148, 136, 0.06);
   border-left-color: rgba(13, 148, 136, 0.2);
   border-right: 1px solid rgba(13, 148, 136, 0.2);
 }
@@ -367,21 +364,21 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  color: var(--sp-teal-light);
+  color: var(--sp-teal);
   margin-bottom: 4px;
 }
 
 .sp-matrix-tier-name {
   font-size: 1.3rem;
   font-weight: 800;
-  color: #fff;
+  color: var(--sp-dark);
   margin-bottom: 8px;
 }
 
 .sp-matrix-tier-price {
   font-size: 1.8rem;
   font-weight: 800;
-  color: #fff;
+  color: var(--sp-dark);
   letter-spacing: -0.5px;
 }
 
@@ -393,15 +390,15 @@
 
 /* Group Header Rows */
 .sp-matrix-group-header td {
-  background: rgba(13, 148, 136, 0.06);
+  background: var(--sp-surface);
   padding: 12px 24px;
   font-size: 0.78rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1.2px;
-  color: var(--sp-teal-light);
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--sp-teal);
+  border-top: 1px solid var(--sp-border);
+  border-bottom: 1px solid var(--sp-border);
 }
 
 .sp-matrix-group-header td span {
@@ -416,19 +413,19 @@
 
 /* Body Rows */
 .sp-matrix-table tbody tr {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   transition: background 0.2s ease;
 }
 
 .sp-matrix-table tbody tr:not(.sp-matrix-group-header):not(.sp-matrix-tool-count):hover {
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(13, 148, 136, 0.03);
 }
 
 .sp-matrix-feature {
   padding: 14px 24px;
   font-size: 0.92rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--sp-dark);
   text-align: left;
 }
 
@@ -446,31 +443,31 @@
 .sp-matrix-text {
   padding: 14px 16px;
   text-align: center;
-  border-left: 1px solid rgba(255, 255, 255, 0.04);
+  border-left: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .sp-matrix-check svg {
-  color: var(--sp-teal-light);
+  color: var(--sp-teal);
 }
 
 .sp-matrix-x svg {
-  color: rgba(255, 255, 255, 0.15);
+  color: #D1D5DB;
 }
 
 .sp-matrix-text {
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--sp-light);
+  color: var(--sp-slate);
 }
 
 .sp-matrix-text-highlight {
-  color: var(--sp-teal-light);
+  color: var(--sp-teal);
 }
 
 /* Tool Count Row */
 .sp-matrix-tool-count {
-  border-top: 1px solid rgba(13, 148, 136, 0.2) !important;
-  border-bottom: 1px solid rgba(13, 148, 136, 0.2) !important;
+  border-top: 2px solid rgba(13, 148, 136, 0.2) !important;
+  border-bottom: 2px solid rgba(13, 148, 136, 0.2) !important;
   background: rgba(13, 148, 136, 0.04);
 }
 
@@ -480,11 +477,11 @@
   font-size: 1rem;
   font-weight: 800;
   color: var(--sp-muted);
-  border-left: 1px solid rgba(255, 255, 255, 0.04);
+  border-left: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .sp-matrix-count-highlight {
-  color: var(--sp-teal-light);
+  color: var(--sp-teal);
 }
 
 .sp-matrix-count-full {
@@ -498,11 +495,11 @@
   gap: 14px;
   margin-top: 28px;
   padding: 18px 24px;
-  background: rgba(245, 158, 11, 0.08);
+  background: rgba(245, 158, 11, 0.06);
   border: 1px solid rgba(245, 158, 11, 0.2);
   border-radius: 10px;
   font-size: 0.9rem;
-  color: var(--sp-light);
+  color: var(--sp-slate);
   line-height: 1.55;
 }
 
@@ -512,12 +509,12 @@
 }
 
 .sp-matrix-activation strong {
-  color: var(--sp-amber);
+  color: #B45309;
 }
 
 /* Growth column highlight on body rows */
 .sp-matrix-table tbody tr:not(.sp-matrix-group-header) td:nth-child(3) {
-  background: rgba(13, 148, 136, 0.03);
+  background: rgba(13, 148, 136, 0.02);
 }
 
 /* ===== Responsive — Matrix ===== */
@@ -563,234 +560,6 @@
   .sp-matrix-feature .sp-matrix-detail {
     display: none;
   }
-}
-
-/* ===== Pricing Section ===== */
-.sp-pricing {
-  padding: 80px 20px;
-  background: var(--sp-dark);
-}
-
-.sp-pricing .sp-section-badge {
-  color: var(--sp-teal-light);
-}
-
-.sp-pricing .sp-section-title {
-  color: #fff;
-}
-
-.sp-pricing .sp-section-desc {
-  color: var(--sp-light);
-}
-
-/* Activation Banner */
-.sp-activation-banner {
-  display: flex;
-  align-items: flex-start;
-  gap: 20px;
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.03));
-  border: 1px solid rgba(245, 158, 11, 0.25);
-  border-radius: 12px;
-  padding: 28px 32px;
-  margin-bottom: 48px;
-}
-
-.sp-activation-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 10px;
-  background: rgba(245, 158, 11, 0.15);
-  color: var(--sp-amber);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.sp-activation-text h3 {
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--sp-amber);
-  margin-bottom: 6px;
-}
-
-.sp-activation-text p {
-  font-size: 0.92rem;
-  color: var(--sp-light);
-  line-height: 1.65;
-  margin: 0;
-}
-
-/* Pricing Grid */
-.sp-pricing-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-bottom: 40px;
-}
-
-.sp-pricing-card {
-  background: var(--sp-dark-mid);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 16px;
-  padding: 36px 28px;
-  position: relative;
-  transition: all 0.3s ease;
-}
-
-.sp-pricing-card:hover {
-  border-color: rgba(13, 148, 136, 0.3);
-  transform: translateY(-4px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-}
-
-.sp-pricing-popular {
-  border-color: var(--sp-teal);
-  background: linear-gradient(180deg, rgba(13, 148, 136, 0.08) 0%, var(--sp-dark-mid) 40%);
-}
-
-.sp-popular-badge {
-  position: absolute;
-  top: -12px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--sp-teal);
-  color: #fff;
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 5px 18px;
-  border-radius: 50px;
-  white-space: nowrap;
-}
-
-.sp-tier-label {
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: var(--sp-teal-light);
-  margin-bottom: 8px;
-}
-
-.sp-tier-name {
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: #fff;
-  margin-bottom: 8px;
-}
-
-.sp-tier-tagline {
-  font-size: 0.88rem;
-  color: var(--sp-muted);
-  line-height: 1.5;
-  margin-bottom: 24px;
-}
-
-.sp-tier-price {
-  display: flex;
-  align-items: baseline;
-  gap: 4px;
-  margin-bottom: 28px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.sp-price-amount {
-  font-size: 2.8rem;
-  font-weight: 800;
-  color: #fff;
-  letter-spacing: -1px;
-}
-
-.sp-price-period {
-  font-size: 1rem;
-  color: var(--sp-muted);
-  font-weight: 500;
-}
-
-.sp-tier-includes {
-  margin-bottom: 24px;
-}
-
-.sp-includes-label {
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--sp-light);
-  margin-bottom: 14px;
-}
-
-.sp-tier-includes ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.sp-tier-includes li {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  font-size: 0.88rem;
-  color: rgba(255, 255, 255, 0.8);
-  padding: 6px 0;
-  line-height: 1.4;
-}
-
-.sp-tier-includes li svg {
-  color: var(--sp-teal-light);
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.sp-tier-ideal {
-  font-size: 0.82rem;
-  color: var(--sp-muted);
-  line-height: 1.55;
-  padding-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.sp-tier-ideal strong {
-  color: var(--sp-teal-light);
-}
-
-/* All Plans Include */
-.sp-all-include {
-  background: rgba(13, 148, 136, 0.06);
-  border: 1px solid rgba(13, 148, 136, 0.15);
-  border-radius: 12px;
-  padding: 32px;
-  text-align: center;
-}
-
-.sp-all-include h3 {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #fff;
-  margin-bottom: 20px;
-}
-
-.sp-all-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 16px 28px;
-}
-
-.sp-all-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.88rem;
-  color: var(--sp-light);
-  font-weight: 500;
-}
-
-.sp-all-item svg {
-  color: var(--sp-teal-light);
 }
 
 /* ===== Industries ===== */
@@ -913,8 +682,7 @@
   }
 
   .sp-territory-grid,
-  .sp-solutions-grid,
-  .sp-pricing-grid {
+  .sp-solutions-grid {
     grid-template-columns: 1fr;
     max-width: 500px;
     margin-left: auto;
@@ -925,23 +693,12 @@
     font-size: 1.7rem;
   }
 
-  .sp-activation-banner {
-    flex-direction: column;
-    text-align: center;
-    align-items: center;
-  }
-
   .sp-hero-stats {
     gap: 20px;
   }
 
   .sp-stat-divider {
     display: none;
-  }
-
-  .sp-all-grid {
-    flex-direction: column;
-    align-items: center;
   }
 }
 
@@ -961,7 +718,6 @@
 
   .sp-territory,
   .sp-solutions,
-  .sp-pricing,
   .sp-industries,
   .sp-cta {
     padding: 60px 16px;
@@ -969,10 +725,6 @@
 
   .sp-section-title {
     font-size: 1.4rem;
-  }
-
-  .sp-price-amount {
-    font-size: 2.2rem;
   }
 
   .sp-cta-btns {
