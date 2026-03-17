@@ -7,7 +7,6 @@ const Navigation = ({ scrolled }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [byonDropdownOpen, setByonDropdownOpen] = useState(false);
   const [webServicesDropdownOpen, setWebServicesDropdownOpen] = useState(false);
-  const [geogridDropdownOpen, setGeogridDropdownOpen] = useState(false);
   const location = useLocation();
 
   const toggleMobileMenu = () => {
@@ -18,7 +17,6 @@ const Navigation = ({ scrolled }) => {
     setMobileMenuOpen(false);
     setByonDropdownOpen(false);
     setWebServicesDropdownOpen(false);
-    setGeogridDropdownOpen(false);
   };
 
   const toggleByonDropdown = () => {
@@ -29,20 +27,12 @@ const Navigation = ({ scrolled }) => {
     setWebServicesDropdownOpen(!webServicesDropdownOpen);
   };
 
-  const toggleGeogridDropdown = () => {
-    setGeogridDropdownOpen(!geogridDropdownOpen);
-  };
-
   const isActive = (path) => {
     return location.pathname === path ? 'active' : '';
   };
 
   const isByonActive = () => {
     return location.pathname.includes('byon') ? 'active' : '';
-  };
-
-  const isGeogridActive = () => {
-    return location.pathname.includes('geogrid') ? 'active' : '';
   };
 
   const isWebServicesActive = () => {
@@ -107,23 +97,6 @@ const Navigation = ({ scrolled }) => {
                 <li><Link to="/byon-last-mile" onClick={closeMobileMenu}>Last-Mile Delivery & Gig Economy</Link></li>
                 <li><Link to="/byon-healthcare" onClick={closeMobileMenu}>Healthcare (Home Health & Visiting Nurses)</Link></li>
                 <li><Link to="/byon-government" onClick={closeMobileMenu}>Government & Defense Contractors</Link></li>
-              </ul>
-            </li>
-
-            <li className="dropdown">
-              <button 
-                className={`dropdown-toggle ${isGeogridActive()}`}
-                onClick={toggleGeogridDropdown}
-              >
-                Search Engine (GeoGrid) <ChevronDown size={16} />
-              </button>
-              <ul className={`dropdown-menu ${geogridDropdownOpen ? 'show' : ''}`}>
-                <li><Link to="/geogrid/restaurants" onClick={closeMobileMenu}>Restaurants & Cafes</Link></li>
-                <li><Link to="/geogrid/home-services" onClick={closeMobileMenu}>Home Services</Link></li>
-                <li><Link to="/geogrid/medical" onClick={closeMobileMenu}>Medical & Dental</Link></li>
-                <li><Link to="/geogrid/law-firms" onClick={closeMobileMenu}>Law Firms</Link></li>
-                <li><Link to="/geogrid/fitness" onClick={closeMobileMenu}>Fitness & Wellness</Link></li>
-                <li><Link to="/geogrid/auto-repair" onClick={closeMobileMenu}>Auto Repair & Service</Link></li>
               </ul>
             </li>
 
