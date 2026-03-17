@@ -117,9 +117,12 @@ const ServicesAndPricingPage = () => {
           <div className="sp-section-badge"><Layers size={14} /> What Every Plan Includes</div>
           <h2 className="sp-section-title">Three Solutions. One Monthly Investment.</h2>
           <p className="sp-section-desc">
-            All tiers solve your website, search, and communication needs. You just choose the level 
-            of search dominance you want. Check 'The GeoGrid Advantage' to see how many tools we use 
-            to scale your results.
+            One package, three levels of service, designed to create the level of service that fits 
+            your needs and your budget. Solve your website, search results, and team communication 
+            needs all in one package from one vendor.
+            <br /><br />
+            You just choose the level of search dominance you want. Check 'The GeoGrid Advantage' 
+            to see how many tools we use to scale your results.
           </p>
           <div className="sp-solutions-grid">
             <div className="sp-solution-card sp-sol-web">
