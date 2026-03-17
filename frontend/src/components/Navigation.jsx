@@ -5,7 +5,7 @@ import './Navigation.css';
 
 const Navigation = ({ scrolled }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [byonDropdownOpen, setByonDropdownOpen] = useState(false);
+  const [truckingDropdownOpen, setTruckingDropdownOpen] = useState(false);
   const [webServicesDropdownOpen, setWebServicesDropdownOpen] = useState(false);
   const location = useLocation();
 
@@ -15,12 +15,12 @@ const Navigation = ({ scrolled }) => {
 
   const closeMobileMenu = () => {
     setMobileMenuOpen(false);
-    setByonDropdownOpen(false);
+    setTruckingDropdownOpen(false);
     setWebServicesDropdownOpen(false);
   };
 
-  const toggleByonDropdown = () => {
-    setByonDropdownOpen(!byonDropdownOpen);
+  const toggleTruckingDropdown = () => {
+    setTruckingDropdownOpen(!truckingDropdownOpen);
   };
 
   const toggleWebServicesDropdown = () => {
@@ -31,8 +31,8 @@ const Navigation = ({ scrolled }) => {
     return location.pathname === path ? 'active' : '';
   };
 
-  const isByonActive = () => {
-    return location.pathname.includes('byon') ? 'active' : '';
+  const isTruckingActive = () => {
+    return (location.pathname.includes('trucking') || location.pathname === '/byon') ? 'active' : '';
   };
 
   const isWebServicesActive = () => {
@@ -62,7 +62,18 @@ const Navigation = ({ scrolled }) => {
           </button>
           <ul className={`nav-menu ${mobileMenuOpen ? 'active' : ''}`}>
             <li><Link to="/" className={isActive('/')} onClick={closeMobileMenu}>Home</Link></li>
-            <li><Link to="/trucking-division" className={isActive('/trucking-division')} onClick={closeMobileMenu}>Trucking (BYON) Soumya</Link></li>
+            <li className="dropdown">
+              <button 
+                className={`dropdown-toggle ${isTruckingActive()}`}
+                onClick={toggleTruckingDropdown}
+              >
+                Trucking (BYON) Soumya <ChevronDown size={16} />
+              </button>
+              <ul className={`dropdown-menu ${truckingDropdownOpen ? 'show' : ''}`}>
+                <li><Link to="/trucking-division" onClick={closeMobileMenu}>Trucking Division</Link></li>
+                <li><Link to="/byon" onClick={closeMobileMenu}>Overview</Link></li>
+              </ul>
+            </li>
             
             <li className="dropdown">
               <button 
@@ -83,22 +94,6 @@ const Navigation = ({ scrolled }) => {
             </li>
 
             <li><Link to="/services-pricing" className={isActive('/services-pricing')} onClick={closeMobileMenu}>Services & Pricing</Link></li>
-            
-            <li className="dropdown">
-              <button 
-                className={`dropdown-toggle ${isByonActive()}`}
-                onClick={toggleByonDropdown}
-              >
-                BYON Applications <ChevronDown size={16} />
-              </button>
-              <ul className={`dropdown-menu ${byonDropdownOpen ? 'show' : ''}`}>
-                <li><Link to="/byon" onClick={closeMobileMenu}>Overview</Link></li>
-                <li><Link to="/byon-finance" onClick={closeMobileMenu}>Finance & Wealth Management</Link></li>
-                <li><Link to="/byon-last-mile" onClick={closeMobileMenu}>Last-Mile Delivery & Gig Economy</Link></li>
-                <li><Link to="/byon-healthcare" onClick={closeMobileMenu}>Healthcare (Home Health & Visiting Nurses)</Link></li>
-                <li><Link to="/byon-government" onClick={closeMobileMenu}>Government & Defense Contractors</Link></li>
-              </ul>
-            </li>
 
           </ul>
         </div>

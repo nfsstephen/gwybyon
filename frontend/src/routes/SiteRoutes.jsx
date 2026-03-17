@@ -5,10 +5,6 @@ import Footer from '../components/Footer';
 import ChatWidget from '../components/ChatWidget';
 import HomePage from '../pages/HomePage';
 import ByonOverviewPage from '../pages/ByonOverviewPage';
-import ByonLastMilePage from '../pages/ByonLastMilePage';
-import ByonFinancePage from '../pages/ByonFinancePage';
-import ByonHealthcarePage from '../pages/ByonHealthcarePage';
-import ByonGovernmentPage from '../pages/ByonGovernmentPage';
 import TruckingDivisionPage from '../pages/TruckingDivisionPage';
 import BigMarketWellSepticPage from '../pages/BigMarketWellSepticPage';
 import BigMarketPlumbersPage from '../pages/BigMarketPlumbersPage';
@@ -35,10 +31,6 @@ export default function SiteRoutes({ scrolled }) {
         <Route path="/web-service-v2" element={<WebServiceV2Page />} />
         <Route path="/services-pricing" element={<ServicesAndPricingPage />} />
         <Route path="/byon" element={<ByonOverviewPage />} />
-        <Route path="/byon-last-mile" element={<ByonLastMilePage />} />
-        <Route path="/byon-finance" element={<ByonFinancePage />} />
-        <Route path="/byon-healthcare" element={<ByonHealthcarePage />} />
-        <Route path="/byon-government" element={<ByonGovernmentPage />} />
       </Routes>
       <Footer />
       <ChatWidget />
