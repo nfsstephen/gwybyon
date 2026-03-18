@@ -8,8 +8,8 @@ import ByonShowcase from '../components/ByonShowcase';
 const HomePage = () => {
   return (
     <>
-      <StrategyOverview />
       <MarketingMission />
+      <StrategyOverview />
       <CrossSellStrategy />
       <MarketTerritories />
       <ByonShowcase />

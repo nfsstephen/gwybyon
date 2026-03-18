@@ -27,7 +27,7 @@ const MarketingMission = () => {
                 Websites are a technology born from the digital revolution — first with personal computers, 
                 then reshaped by mobile phones and responsive design. But somewhere along the way, the people 
                 building websites started selling the wrong things. Design trends. Color palettes. Domain names. 
-                Features that had nothing to do with the actual purpose of a website, but everything to do with 
+                Features that had little to do with the actual purpose of a website, but everything to do with 
                 the amount of labor and expertise it took to build one.
               </p>
               <p>
