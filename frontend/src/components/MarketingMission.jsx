@@ -64,7 +64,7 @@ const MarketingMission = () => {
               <p>
                 Here's what the industry won't tell you: getting your website to the top of search results 
                 is <strong>significantly easier in small markets</strong>. Less competition. Fewer businesses 
-                fighting for the same keywords. The work required to produce results — actual customers walking 
+                fighting for the same results — placing your business at the top of the page. The work required to produce results — actual customers walking 
                 through your door — is simply less.
               </p>
               <p>
