@@ -1,0 +1,231 @@
+/* ===== Marketing Mission Section ===== */
+.mm-section {
+  padding: 80px 20px;
+  background: #fff;
+}
+
+.mm-container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.mm-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #0D9488;
+  margin-bottom: 16px;
+}
+
+.mm-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.2;
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
+}
+
+.mm-accent {
+  color: #0D9488;
+}
+
+.mm-subtitle {
+  font-size: 1.1rem;
+  color: #64748B;
+  line-height: 1.7;
+  max-width: 720px;
+  margin-bottom: 56px;
+}
+
+/* ===== Narrative Blocks ===== */
+.mm-narrative {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-bottom: 56px;
+}
+
+.mm-narrative-block {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.mm-narrative-icon {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: rgba(13, 148, 136, 0.08);
+  color: #0D9488;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+
+.mm-narrative-content h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 10px;
+}
+
+.mm-narrative-content p {
+  font-size: 0.95rem;
+  color: #475569;
+  line-height: 1.75;
+  margin-bottom: 12px;
+}
+
+.mm-narrative-content p:last-child {
+  margin-bottom: 0;
+}
+
+.mm-narrative-content strong {
+  color: #0F172A;
+  font-weight: 700;
+}
+
+/* ===== Approach Section ===== */
+.mm-approach {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 40px;
+  margin-bottom: 40px;
+}
+
+.mm-approach-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #0D9488;
+  margin-bottom: 28px;
+}
+
+.mm-approach-header h3 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+}
+
+.mm-approach-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.mm-approach-card {
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 28px 24px;
+  transition: all 0.25s ease;
+}
+
+.mm-approach-card:hover {
+  border-color: #0D9488;
+  box-shadow: 0 8px 24px rgba(13, 148, 136, 0.08);
+  transform: translateY(-2px);
+}
+
+.mm-approach-step {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #0D9488;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.mm-approach-card h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 10px;
+}
+
+.mm-approach-card p {
+  font-size: 0.88rem;
+  color: #64748B;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.mm-approach-card strong {
+  color: #0F172A;
+}
+
+/* ===== Bottom Line ===== */
+.mm-bottom-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px 28px;
+  background: rgba(13, 148, 136, 0.05);
+  border-left: 4px solid #0D9488;
+  border-radius: 0 10px 10px 0;
+}
+
+.mm-bottom-line svg {
+  color: #0D9488;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.mm-bottom-line p {
+  font-size: 0.95rem;
+  color: #334155;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.mm-bottom-line strong {
+  color: #0F172A;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+  .mm-title {
+    font-size: 1.7rem;
+  }
+
+  .mm-approach-grid {
+    grid-template-columns: 1fr;
+    max-width: 440px;
+  }
+
+  .mm-approach {
+    padding: 28px 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .mm-section {
+    padding: 60px 16px;
+  }
+
+  .mm-title {
+    font-size: 1.4rem;
+  }
+
+  .mm-narrative-block {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .mm-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 40px;
+  }
+
+  .mm-bottom-line {
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+  }
+}
