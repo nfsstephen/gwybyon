@@ -67,7 +67,7 @@ const Navigation = ({ scrolled }) => {
                 className={`dropdown-toggle ${isTruckingActive()}`}
                 onClick={toggleTruckingDropdown}
               >
-                Trucking (BYON) Soumya <ChevronDown size={16} />
+                Trucking (BYON) <ChevronDown size={16} />
               </button>
               <ul className={`dropdown-menu ${truckingDropdownOpen ? 'show' : ''}`}>
                 <li><Link to="/trucking-division" onClick={closeMobileMenu}>Trucking Division</Link></li>
@@ -80,7 +80,7 @@ const Navigation = ({ scrolled }) => {
                 className={`dropdown-toggle ${isWebServicesActive()}`}
                 onClick={toggleWebServicesDropdown}
               >
-                Web Services — Shrad <ChevronDown size={16} />
+                Web Services <ChevronDown size={16} />
               </button>
               <ul className={`dropdown-menu ${webServicesDropdownOpen ? 'show' : ''}`}>
                 <li><Link to="/web-service-v2" onClick={closeMobileMenu}>Overview</Link></li>
