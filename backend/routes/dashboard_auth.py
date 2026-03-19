@@ -119,18 +119,13 @@ async def register(req: RegisterRequest, db: AsyncSession = Depends(get_db)):
 
 @router.post("/login", response_model=TokenResponse)
 async def login(req: LoginRequest, db: AsyncSession = Depends(get_db)):
-    try:
-        result = await db.execute(select(User).where(User.email == req.email))
-        user = result.scalar_one_or_none()
-        if not user or not verify_password(req.password, user.password_hash):
-            raise HTTPException(status_code=401, detail="Invalid email or password")
+    result = await db.execute(select(User).where(User.email == req.email))
+    user = result.scalar_one_or_none()
+    if not user or not verify_password(req.password, user.password_hash):
+        raise HTTPException(status_code=401, detail="Invalid email or password")
 
-        token = create_token(user.id, user.role)
-        return TokenResponse(token=token, user=user_to_dict(user))
-    except HTTPException:
-        raise
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Login error: {type(e).__name__}: {str(e)}")
+    token = create_token(user.id, user.role)
+    return TokenResponse(token=token, user=user_to_dict(user))
 
 
 @router.get("/me")
