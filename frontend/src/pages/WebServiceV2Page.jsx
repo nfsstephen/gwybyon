@@ -142,32 +142,32 @@ const WebServiceV2Page = () => {
       <section className="v2-problem" data-testid="v2-problem">
         <div className="v2-container">
           <div className="v2-label">The Problem</div>
-          <h2 className="v2-title">The Geographic Search Gap Is Costing You Money</h2>
+          <h2 className="v2-title">Google Changed. Your Visibility Didn't.</h2>
           <p className="v2-desc">
-            When someone searches "coffee shop near me" or "best plumber in [neighborhood]," 
-            Google uses a complex algorithm that weighs proximity, relevance, and prominence. 
-            Most small businesses lose this battle without even knowing it.
+            Google no longer matches keywords — it matches <strong>locations first</strong>. 
+            When someone searches "plumber near me," Google looks at WHERE they are, then decides WHO to show. 
+            If you're not optimized for this new reality, you're invisible to customers standing three blocks away.
           </p>
           <div className="v2-problem-grid">
             <div className="v2-problem-card">
-              <div className="v2-problem-icon"><Search size={28} /></div>
-              <h3>Fragmented Data</h3>
-              <p>Your business name, address, and phone number are inconsistent across Google, Apple Maps, Bing, and dozens of directories. Each mismatch kills your ranking.</p>
+              <div className="v2-problem-icon"><MapPin size={28} /></div>
+              <h3>Location Is Now #1</h3>
+              <p>Google prioritizes proximity over everything else. A customer 500 feet away might see your competitor instead of you — not because they're better, but because Google thinks they're closer.</p>
             </div>
             <div className="v2-problem-card">
-              <div className="v2-problem-icon"><MapPin size={28} /></div>
-              <h3>Invisible Radius</h3>
-              <p>You might rank #1 at your front door but disappear by Block 3. Your competitors own the search results just a few streets away from you.</p>
+              <div className="v2-problem-icon"><Search size={28} /></div>
+              <h3>Keywords Don't Matter Like They Used To</h3>
+              <p>You can stuff your website with "best plumber in Austin" all day — Google ignores it. What matters now is your geographic footprint: your address, your service area, and whether Google trusts you're actually THERE.</p>
             </div>
             <div className="v2-problem-card">
               <div className="v2-problem-icon"><BarChart3 size={28} /></div>
-              <h3>Zero Visibility</h3>
-              <p>Traditional analytics show "website clicks" — meaningless for a local business. You need to know how many people saw you on the MAP and asked for DIRECTIONS.</p>
+              <h3>Your Ranking Changes Every Block</h3>
+              <p>You might be #1 at your office, #5 two streets over, and invisible a mile away. Most business owners have no idea their rankings shift based on where the searcher is standing.</p>
             </div>
             <div className="v2-problem-card">
               <div className="v2-problem-icon"><Globe size={28} /></div>
-              <h3>The Zero-Click World</h3>
-              <p>Google now answers most local searches in the Map Pack or AI Overviews — users find what they need without ever clicking a website. If you're still optimizing for "website traffic," you're playing yesterday's game.</p>
+              <h3>Customers Never Click Your Website</h3>
+              <p>Google answers local searches directly in the Map Pack — showing your phone number, directions, and reviews. Users call or navigate without ever visiting your site. If you're measuring "website traffic," you're measuring the wrong thing.</p>
             </div>
           </div>
         </div>
