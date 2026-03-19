@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import './App.css';
 import PasswordGate from './components/PasswordGate';
 import AdminChatPage from './pages/AdminChatPage';
+import AdminPreviewPage from './pages/AdminPreviewPage';
 import { DashboardAuthProvider } from './contexts/DashboardAuthContext';
 import DashboardRoutes from './routes/DashboardRoutes';
 import SiteRoutes from './routes/SiteRoutes';
@@ -20,6 +21,7 @@ function AppContent({ scrolled }) {
     return (
       <Routes>
         <Route path="/admin/chat" element={<AdminChatPage />} />
+        <Route path="/admin/preview" element={<AdminPreviewPage />} />
       </Routes>
     );
   }

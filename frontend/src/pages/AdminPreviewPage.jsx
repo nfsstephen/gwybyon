@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { useDashboardAuth } from '../../contexts/DashboardAuthContext';
-import { useDashboardTheme } from '../../contexts/DashboardThemeContext';
 import { 
   MapPin, Users, Mail, MessageSquare, UserCheck, 
-  ExternalLink, LogOut, Eye, Clock, CheckCircle, XCircle, Send
+  ExternalLink, LogOut, Eye, Send, Sun, Moon
 } from 'lucide-react';
 
 // Mock data for UI demonstration - will be replaced with real API calls
@@ -43,8 +41,31 @@ const mockFeedback = [
   { id: 2, date: 'Mar 8, 2026', client: 'Lisa Chen', business: 'Chen Electric', rating: 4, message: 'Great concept. Would love to see more detailed analytics.' },
 ];
 
-function StatCard({ label, value, color, icon: Icon }) {
-  const { theme } = useDashboardTheme();
+// Light theme
+const lightTheme = {
+  bg: '#f3f4f6',
+  cardBg: '#ffffff',
+  cardBorder: '#e5e7eb',
+  text: '#111827',
+  textSecondary: '#4b5563',
+  textMuted: '#9ca3af',
+  tableBorder: '#e5e7eb',
+  badgeBg: '#f3f4f6',
+};
+
+// Dark theme  
+const darkTheme = {
+  bg: '#0f172a',
+  cardBg: '#1e293b',
+  cardBorder: '#334155',
+  text: '#f1f5f9',
+  textSecondary: '#94a3b8',
+  textMuted: '#64748b',
+  tableBorder: '#334155',
+  badgeBg: '#334155',
+};
+
+function StatCard({ label, value, color, icon: Icon, theme }) {
   return (
     <div style={{
       background: theme.cardBg,
@@ -62,8 +83,7 @@ function StatCard({ label, value, color, icon: Icon }) {
   );
 }
 
-function TabButton({ active, children, onClick }) {
-  const { theme } = useDashboardTheme();
+function TabButton({ active, children, onClick, theme }) {
   return (
     <button
       onClick={onClick}
@@ -111,8 +131,7 @@ function StatusBadge({ status }) {
   );
 }
 
-function TerritoryTokensTab() {
-  const { theme } = useDashboardTheme();
+function TerritoryTokensTab({ theme }) {
   return (
     <div style={{ overflowX: 'auto' }}>
       <table style={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -147,8 +166,7 @@ function TerritoryTokensTab() {
   );
 }
 
-function InvitationsTab() {
-  const { theme } = useDashboardTheme();
+function InvitationsTab({ theme }) {
   return (
     <div style={{ overflowX: 'auto' }}>
       <table style={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -188,8 +206,7 @@ function InvitationsTab() {
   );
 }
 
-function ClientsTab() {
-  const { theme } = useDashboardTheme();
+function ClientsTab({ theme }) {
   return (
     <div style={{ overflowX: 'auto' }}>
       <table style={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -223,8 +240,7 @@ function ClientsTab() {
   );
 }
 
-function ContactRequestsTab() {
-  const { theme } = useDashboardTheme();
+function ContactRequestsTab({ theme }) {
   return (
     <div style={{ overflowX: 'auto' }}>
       <table style={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -258,8 +274,7 @@ function ContactRequestsTab() {
   );
 }
 
-function FeedbackTab() {
-  const { theme } = useDashboardTheme();
+function FeedbackTab({ theme }) {
   return (
     <div style={{ overflowX: 'auto' }}>
       <table style={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -293,10 +308,10 @@ function FeedbackTab() {
   );
 }
 
-export default function AdminDashboard() {
-  const { logout } = useDashboardAuth();
-  const { theme } = useDashboardTheme();
+export default function AdminPreviewPage() {
   const [activeTab, setActiveTab] = useState('tokens');
+  const [isDark, setIsDark] = useState(false);
+  const theme = isDark ? darkTheme : lightTheme;
 
   const tabs = [
     { id: 'tokens', label: 'Territory Tokens' },
@@ -307,97 +322,137 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div data-testid="admin-dashboard" style={{ maxWidth: 1400, margin: '0 auto' }}>
-      {/* Header */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginBottom: 32,
-        paddingBottom: 20,
-        borderBottom: `1px solid ${theme.cardBorder}`,
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <div style={{
-            width: 44,
-            height: 44,
-            borderRadius: 12,
-            background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-            <MapPin size={22} color="#fff" />
-          </div>
-          <span style={{ color: theme.text, fontSize: 20, fontWeight: 700 }}>Gateway AI Admin</span>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <a href="/" style={{ color: theme.textSecondary, fontSize: 13, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 4 }}>
-            <ExternalLink size={14} /> View Site
-          </a>
-          <button
-            onClick={logout}
-            style={{
-              background: 'none',
-              border: 'none',
-              color: '#ef4444',
-              fontSize: 13,
-              cursor: 'pointer',
+    <div style={{ 
+      minHeight: '100vh', 
+      background: theme.bg, 
+      padding: 24,
+      fontFamily: "'Inter', -apple-system, sans-serif",
+      transition: 'background 0.3s ease',
+    }}>
+      <div style={{ maxWidth: 1400, margin: '0 auto' }}>
+        {/* Header */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginBottom: 32,
+          paddingBottom: 20,
+          borderBottom: `1px solid ${theme.cardBorder}`,
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <div style={{
+              width: 44,
+              height: 44,
+              borderRadius: 12,
+              background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
               display: 'flex',
               alignItems: 'center',
-              gap: 4,
-            }}
-          >
-            <LogOut size={14} /> Logout
-          </button>
-        </div>
-      </div>
-
-      {/* Stats Cards */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-        gap: 16,
-        marginBottom: 32,
-      }}>
-        <StatCard label="Territory Tokens" value={mockStats.territoryTokens} icon={MapPin} />
-        <StatCard label="Territories Claimed" value={mockStats.territoriesClaimed} color="#059669" icon={CheckCircle} />
-        <StatCard label="Pending Invitations" value={mockStats.pendingInvitations} icon={Mail} />
-        <StatCard label="Contact Requests" value={mockStats.contactRequests} icon={MessageSquare} />
-        <StatCard label="Active Clients" value={mockStats.activeClients} icon={UserCheck} />
-      </div>
-
-      {/* Tabs Section */}
-      <div style={{
-        background: theme.cardBg,
-        border: `1px solid ${theme.cardBorder}`,
-        borderRadius: 12,
-        overflow: 'hidden',
-      }}>
-        {/* Tab Headers */}
-        <div style={{ 
-          display: 'flex', 
-          borderBottom: `1px solid ${theme.tableBorder}`,
-          overflowX: 'auto',
-        }}>
-          {tabs.map(tab => (
-            <TabButton
-              key={tab.id}
-              active={activeTab === tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              justifyContent: 'center',
+            }}>
+              <MapPin size={22} color="#fff" />
+            </div>
+            <span style={{ color: theme.text, fontSize: 20, fontWeight: 700 }}>Gateway AI Admin</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <button
+              onClick={() => setIsDark(!isDark)}
+              style={{
+                background: theme.cardBg,
+                border: `1px solid ${theme.cardBorder}`,
+                borderRadius: 8,
+                padding: '8px 12px',
+                color: theme.textSecondary,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+                fontSize: 13,
+              }}
             >
-              {tab.label}
-            </TabButton>
-          ))}
+              {isDark ? <Sun size={14} /> : <Moon size={14} />}
+              {isDark ? 'Light' : 'Dark'}
+            </button>
+            <a href="/" style={{ color: theme.textSecondary, fontSize: 13, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 4 }}>
+              <ExternalLink size={14} /> View Site
+            </a>
+            <button
+              style={{
+                background: 'none',
+                border: 'none',
+                color: '#ef4444',
+                fontSize: 13,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 4,
+              }}
+            >
+              <LogOut size={14} /> Logout
+            </button>
+          </div>
         </div>
 
-        {/* Tab Content */}
-        <div style={{ minHeight: 300 }}>
-          {activeTab === 'tokens' && <TerritoryTokensTab />}
-          {activeTab === 'invitations' && <InvitationsTab />}
-          {activeTab === 'clients' && <ClientsTab />}
-          {activeTab === 'contacts' && <ContactRequestsTab />}
-          {activeTab === 'feedback' && <FeedbackTab />}
+        {/* Stats Cards */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+          gap: 16,
+          marginBottom: 32,
+        }}>
+          <StatCard label="Territory Tokens" value={mockStats.territoryTokens} icon={MapPin} theme={theme} />
+          <StatCard label="Territories Claimed" value={mockStats.territoriesClaimed} color="#059669" icon={UserCheck} theme={theme} />
+          <StatCard label="Pending Invitations" value={mockStats.pendingInvitations} icon={Mail} theme={theme} />
+          <StatCard label="Contact Requests" value={mockStats.contactRequests} icon={MessageSquare} theme={theme} />
+          <StatCard label="Active Clients" value={mockStats.activeClients} icon={Users} theme={theme} />
+        </div>
+
+        {/* Tabs Section */}
+        <div style={{
+          background: theme.cardBg,
+          border: `1px solid ${theme.cardBorder}`,
+          borderRadius: 12,
+          overflow: 'hidden',
+        }}>
+          {/* Tab Headers */}
+          <div style={{ 
+            display: 'flex', 
+            borderBottom: `1px solid ${theme.tableBorder}`,
+            overflowX: 'auto',
+          }}>
+            {tabs.map(tab => (
+              <TabButton
+                key={tab.id}
+                active={activeTab === tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                theme={theme}
+              >
+                {tab.label}
+              </TabButton>
+            ))}
+          </div>
+
+          {/* Tab Content */}
+          <div style={{ minHeight: 300 }}>
+            {activeTab === 'tokens' && <TerritoryTokensTab theme={theme} />}
+            {activeTab === 'invitations' && <InvitationsTab theme={theme} />}
+            {activeTab === 'clients' && <ClientsTab theme={theme} />}
+            {activeTab === 'contacts' && <ContactRequestsTab theme={theme} />}
+            {activeTab === 'feedback' && <FeedbackTab theme={theme} />}
+          </div>
+        </div>
+
+        {/* Preview Notice */}
+        <div style={{ 
+          marginTop: 24, 
+          padding: 16, 
+          background: '#fef3c7', 
+          borderRadius: 8, 
+          border: '1px solid #fcd34d',
+          color: '#92400e',
+          fontSize: 13,
+          textAlign: 'center',
+        }}>
+          <strong>UI Preview Mode</strong> - This is a preview of the admin dashboard UI with mock data. Backend infrastructure will be connected next.
         </div>
       </div>
     </div>

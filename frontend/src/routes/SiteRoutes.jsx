@@ -15,6 +15,7 @@ import BigMarketRealEstatePage from '../pages/BigMarketRealEstatePage';
 import WebServiceV2Page from '../pages/WebServiceV2Page';
 import ServicesAndPricingPage from '../pages/ServicesAndPricingPage';
 import SubscribePage from '../pages/SubscribePage';
+import AdminPreviewPage from '../pages/AdminPreviewPage';
 
 export default function SiteRoutes({ scrolled }) {
   return (
@@ -33,6 +34,7 @@ export default function SiteRoutes({ scrolled }) {
         <Route path="/services-pricing" element={<ServicesAndPricingPage />} />
         <Route path="/subscribe" element={<SubscribePage />} />
         <Route path="/byon" element={<ByonOverviewPage />} />
+        <Route path="/admin-preview" element={<AdminPreviewPage />} />
       </Routes>
       <Footer />
       <ChatWidget />
