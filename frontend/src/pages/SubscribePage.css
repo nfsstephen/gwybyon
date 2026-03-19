@@ -57,6 +57,80 @@
   margin-bottom: 20px;
 }
 
+/* ===== Website Choice Cards ===== */
+.sub-website-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.sub-website-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 18px 20px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.sub-website-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.sub-website-card.selected {
+  border-color: #0d9488;
+  background: rgba(13, 148, 136, 0.03);
+  box-shadow: 0 4px 16px rgba(13, 148, 136, 0.1);
+}
+
+.sub-website-check {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  border: 2px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #fff;
+  transition: all 0.2s;
+}
+
+.sub-website-card.selected .sub-website-check {
+  background: #0d9488;
+  border-color: #0d9488;
+}
+
+.sub-website-icon {
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.sub-website-card.selected .sub-website-icon {
+  color: #0d9488;
+}
+
+.sub-website-name {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 2px;
+}
+
+.sub-website-desc {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
 /* ===== Tier Selection Cards ===== */
 .sub-tiers {
   display: flex;
@@ -167,41 +241,11 @@
   color: #94a3b8;
 }
 
-.sub-tier-tagline {
-  font-size: 0.85rem;
-  color: #64748b;
-  margin: 0 0 12px;
-  padding-left: 42px;
-}
-
-.sub-tier-features {
-  list-style: none;
-  padding: 0 0 0 42px;
-  margin: 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4px 16px;
-}
-
-.sub-tier-features li {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.82rem;
-  color: #475569;
-  line-height: 1.5;
-}
-
-.sub-tier-features li svg {
-  color: #0d9488;
-  flex-shrink: 0;
-}
-
-.sub-tier-inherits {
-  color: #0d9488;
-  font-weight: 600;
-  font-size: 0.8rem;
-  grid-column: 1 / -1;
+/* Included label */
+.sub-line-included {
+  color: #0d9488 !important;
+  font-weight: 600 !important;
+  font-size: 0.85rem !important;
 }
 
 /* Territory Note */
@@ -505,7 +549,7 @@
     font-size: 1.7rem;
   }
 
-  .sub-tier-features {
+  .sub-website-options {
     grid-template-columns: 1fr;
   }
 }
