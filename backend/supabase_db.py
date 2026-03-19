@@ -1,6 +1,7 @@
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+import uuid
 
 load_dotenv(Path(__file__).parent / '.env')
 
@@ -19,8 +20,8 @@ engine = create_async_engine(
     pool_pre_ping=False,
     echo=False,
     connect_args={
+        "prepared_statement_name_func": lambda: f"stmt_{uuid.uuid4().hex[:12]}",
         "statement_cache_size": 0,
-        "prepared_statement_cache_size": 0,
         "command_timeout": 30,
     }
 )
