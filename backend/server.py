@@ -7,7 +7,12 @@ load_dotenv(ROOT_DIR / '.env')
 from fastapi import FastAPI, APIRouter
 from starlette.middleware.cors import CORSMiddleware
 from database import client
-from routes import chat_router, auth_router, status_router
+from routes import (
+    chat_router, auth_router, status_router,
+    dashboard_auth_router, dashboard_client_router,
+    dashboard_admin_router, dashboard_technical_router,
+    dashboard_config_router,
+)
 import os
 import logging
 
@@ -23,6 +28,11 @@ api_router = APIRouter(prefix="/api")
 api_router.include_router(status_router)
 api_router.include_router(chat_router)
 api_router.include_router(auth_router)
+api_router.include_router(dashboard_auth_router)
+api_router.include_router(dashboard_client_router)
+api_router.include_router(dashboard_admin_router)
+api_router.include_router(dashboard_technical_router)
+api_router.include_router(dashboard_config_router)
 
 app.include_router(api_router)
 

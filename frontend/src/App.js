@@ -3,11 +3,14 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import './App.css';
 import PasswordGate from './components/PasswordGate';
 import AdminChatPage from './pages/AdminChatPage';
+import { DashboardAuthProvider } from './contexts/DashboardAuthContext';
+import DashboardRoutes from './routes/DashboardRoutes';
 import SiteRoutes from './routes/SiteRoutes';
 
 function AppContent({ scrolled }) {
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/admin');
+  const isDashboard = location.pathname.startsWith('/dashboard');
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -18,6 +21,14 @@ function AppContent({ scrolled }) {
       <Routes>
         <Route path="/admin/chat" element={<AdminChatPage />} />
       </Routes>
+    );
+  }
+
+  if (isDashboard) {
+    return (
+      <DashboardAuthProvider>
+        <DashboardRoutes />
+      </DashboardAuthProvider>
     );
   }
 
