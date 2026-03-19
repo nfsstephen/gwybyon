@@ -7,7 +7,7 @@ const MarketTerritories = () => {
     <section id="section-territories" className="market-territories">
       {/* Hero */}
       <div className="mt-hero">
-        <div className="mt-badge">STRATEGY 3: MARKET TERRITORIES</div>
+        <div className="mt-badge">STRATEGY 1: MARKET TERRITORIES</div>
         <h2 className="mt-title">
           We Compete <em>For</em> Our Customers.<br />
           <span className="mt-title-accent">Never Against Them.</span>
