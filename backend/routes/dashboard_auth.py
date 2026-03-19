@@ -2,10 +2,14 @@ import os
 import jwt
 import bcrypt
 from datetime import datetime, timezone, timedelta
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 from pydantic import BaseModel, EmailStr
-from database import db
+
+from supabase_db import get_db
+from models.dashboard import User
 
 router = APIRouter(prefix="/dashboard/auth", tags=["dashboard-auth"])
 security = HTTPBearer()
@@ -15,16 +19,21 @@ JWT_ALGORITHM = "HS256"
 JWT_EXPIRATION_HOURS = 24
 
 
-class LoginRequest(BaseModel):
-    email: EmailStr
-    password: str
-
-
 class RegisterRequest(BaseModel):
     email: EmailStr
     password: str
     full_name: str
     role: str = "client"
+
+
+class LoginRequest(BaseModel):
+    email: EmailStr
+    password: str
+
+
+class TokenResponse(BaseModel):
+    token: str
+    user: dict
 
 
 def hash_password(password: str) -> str:
@@ -56,70 +65,69 @@ def decode_token(token: str) -> dict:
 
 async def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security),
-) -> dict:
+    db: AsyncSession = Depends(get_db)
+) -> User:
     payload = decode_token(credentials.credentials)
-    user = await db.dashboard_users.find_one(
-        {"id": payload["sub"]}, {"_id": 0}
-    )
+    result = await db.execute(select(User).where(User.id == payload["sub"]))
+    user = result.scalar_one_or_none()
     if not user:
         raise HTTPException(status_code=401, detail="User not found")
     return user
 
 
 def require_role(*roles):
-    async def role_checker(user: dict = Depends(get_current_user)):
-        if user.get("role") not in roles:
+    async def role_checker(user: User = Depends(get_current_user)):
+        if user.role not in roles:
             raise HTTPException(status_code=403, detail="Insufficient permissions")
         return user
     return role_checker
 
 
-def user_to_dict(user: dict) -> dict:
+def user_to_dict(user: User) -> dict:
     return {
-        "id": user["id"],
-        "email": user["email"],
-        "full_name": user["full_name"],
-        "role": user["role"],
-        "is_active": user.get("is_active", True),
-        "created_at": user.get("created_at"),
+        "id": user.id,
+        "email": user.email,
+        "full_name": user.full_name,
+        "role": user.role,
+        "is_active": user.is_active,
+        "created_at": user.created_at.isoformat() if user.created_at else None,
     }
 
 
-@router.post("/register")
-async def register(req: RegisterRequest):
-    existing = await db.dashboard_users.find_one({"email": req.email})
-    if existing:
+@router.post("/register", response_model=TokenResponse)
+async def register(req: RegisterRequest, db: AsyncSession = Depends(get_db)):
+    existing = await db.execute(select(User).where(User.email == req.email))
+    if existing.scalar_one_or_none():
         raise HTTPException(status_code=400, detail="Email already registered")
 
     if req.role not in ("admin", "client", "technical"):
         raise HTTPException(status_code=400, detail="Invalid role")
 
-    import uuid
-    user = {
-        "id": str(uuid.uuid4()),
-        "email": req.email,
-        "password_hash": hash_password(req.password),
-        "full_name": req.full_name,
-        "role": req.role,
-        "is_active": True,
-        "created_at": datetime.now(timezone.utc).isoformat(),
-    }
-    await db.dashboard_users.insert_one(user)
+    user = User(
+        email=req.email,
+        password_hash=hash_password(req.password),
+        full_name=req.full_name,
+        role=req.role,
+    )
+    db.add(user)
+    await db.commit()
+    await db.refresh(user)
 
-    token = create_token(user["id"], user["role"])
-    return {"token": token, "user": user_to_dict(user)}
+    token = create_token(user.id, user.role)
+    return TokenResponse(token=token, user=user_to_dict(user))
 
 
-@router.post("/login")
-async def login(req: LoginRequest):
-    user = await db.dashboard_users.find_one({"email": req.email})
-    if not user or not verify_password(req.password, user["password_hash"]):
+@router.post("/login", response_model=TokenResponse)
+async def login(req: LoginRequest, db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(User).where(User.email == req.email))
+    user = result.scalar_one_or_none()
+    if not user or not verify_password(req.password, user.password_hash):
         raise HTTPException(status_code=401, detail="Invalid email or password")
 
-    token = create_token(user["id"], user["role"])
-    return {"token": token, "user": user_to_dict(user)}
+    token = create_token(user.id, user.role)
+    return TokenResponse(token=token, user=user_to_dict(user))
 
 
 @router.get("/me")
-async def get_me(user: dict = Depends(get_current_user)):
+async def get_me(user: User = Depends(get_current_user)):
     return user_to_dict(user)

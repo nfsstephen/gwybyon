@@ -1,25 +1,52 @@
 import random
 from fastapi import APIRouter, Depends
+from sqlalchemy import select, desc
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 from pydantic import BaseModel
-from database import db
+
+from supabase_db import get_db
+from models.dashboard import User, BusinessProfile
 from routes.dashboard_auth import require_role
 
 router = APIRouter(prefix="/dashboard", tags=["dashboard-admin"])
 
 
 @router.get("/admin/clients")
-async def admin_list_clients(user: dict = Depends(require_role("admin"))):
-    clients = await db.dashboard_users.find(
-        {"role": "client"}, {"_id": 0, "password_hash": 0}
-    ).sort("created_at", -1).to_list(100)
-
-    for c in clients:
-        profiles = await db.business_profiles.find(
-            {"user_id": c["id"]}, {"_id": 0}
-        ).to_list(10)
-        c["business_profiles"] = profiles
-
-    return {"clients": clients}
+async def admin_list_clients(
+    user: User = Depends(require_role("admin")),
+    db: AsyncSession = Depends(get_db)
+):
+    result = await db.execute(
+        select(User)
+        .options(selectinload(User.business_profiles))
+        .where(User.role == "client")
+        .order_by(desc(User.created_at))
+    )
+    clients = result.scalars().all()
+    return {
+        "clients": [
+            {
+                "id": c.id,
+                "email": c.email,
+                "full_name": c.full_name,
+                "is_active": c.is_active,
+                "created_at": c.created_at.isoformat() if c.created_at else None,
+                "business_profiles": [
+                    {
+                        "id": bp.id,
+                        "business_name": bp.business_name,
+                        "local_authority_score": bp.local_authority_score,
+                        "subscription_tier": bp.subscription_tier,
+                        "subscription_status": bp.subscription_status,
+                        "city": bp.city,
+                        "state": bp.state,
+                        "category": bp.category,
+                    } for bp in c.business_profiles
+                ]
+            } for c in clients
+        ]
+    }
 
 
 class QuickScanRequest(BaseModel):
@@ -32,7 +59,8 @@ class QuickScanRequest(BaseModel):
 @router.post("/admin/quick-scan")
 async def admin_quick_scan(
     req: QuickScanRequest,
-    user: dict = Depends(require_role("admin")),
+    user: User = Depends(require_role("admin")),
+    db: AsyncSession = Depends(get_db)
 ):
     score = random.randint(15, 85)
     grid_data = []
@@ -40,7 +68,12 @@ async def admin_quick_scan(
         grid_row = []
         for col in range(5):
             rank = random.randint(1, 20)
-            color = "green" if rank <= 3 else ("yellow" if rank <= 7 else "red")
+            if rank <= 3:
+                color = "green"
+            elif rank <= 7:
+                color = "yellow"
+            else:
+                color = "red"
             grid_row.append({"rank": rank, "color": color})
         grid_data.append(grid_row)
 
