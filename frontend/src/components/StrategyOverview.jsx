@@ -23,15 +23,15 @@ const StrategyOverview = () => {
         <div className="so-prongs">
           <div className="so-prong so-prong-1">
             <div className="so-prong-number">01</div>
-            <div className="so-prong-icon"><Truck size={32} /></div>
-            <h3>Trucking Industry</h3>
+            <div className="so-prong-icon"><MapPin size={32} /></div>
+            <h3>Market Territories</h3>
             <p>
-              Target large carriers with massive driver fleets. One enterprise deal activates 
-              hundreds of BYON lines overnight. Volume-first, high-impact sales.
+              Assign exclusive territories so our customers never compete against each other. 
+              We fight for them, not between them. Scarcity creates urgency and loyalty.
             </p>
-            <Link to="/trucking-division" className="so-prong-btn so-btn-1">
+            <button className="so-prong-btn so-btn-1" onClick={() => scrollTo('section-territories')}>
               Explore Strategy <ArrowRight size={16} />
-            </Link>
+            </button>
           </div>
 
           <div className="so-prong so-prong-2">
@@ -49,15 +49,15 @@ const StrategyOverview = () => {
 
           <div className="so-prong so-prong-3">
             <div className="so-prong-number">03</div>
-            <div className="so-prong-icon"><MapPin size={32} /></div>
-            <h3>Market Territories</h3>
+            <div className="so-prong-icon"><Truck size={32} /></div>
+            <h3>Trucking Industry</h3>
             <p>
-              Assign exclusive territories so our customers never compete against each other. 
-              We fight for them, not between them. Scarcity creates urgency and loyalty.
+              Target large carriers with massive driver fleets. One enterprise deal activates 
+              hundreds of BYON lines overnight. Volume-first, high-impact sales.
             </p>
-            <button className="so-prong-btn so-btn-3" onClick={() => scrollTo('section-territories')}>
+            <Link to="/trucking-division" className="so-prong-btn so-btn-3">
               Explore Strategy <ArrowRight size={16} />
-            </button>
+            </Link>
           </div>
         </div>
       </div>

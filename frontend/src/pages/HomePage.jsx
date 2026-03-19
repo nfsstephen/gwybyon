@@ -10,8 +10,8 @@ const HomePage = () => {
     <>
       <MarketingMission />
       <StrategyOverview />
-      <CrossSellStrategy />
       <MarketTerritories />
+      <CrossSellStrategy />
       <ByonShowcase />
     </>
   );
