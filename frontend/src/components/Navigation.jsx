@@ -62,18 +62,6 @@ const Navigation = ({ scrolled }) => {
           </button>
           <ul className={`nav-menu ${mobileMenuOpen ? 'active' : ''}`}>
             <li><Link to="/" className={isActive('/')} onClick={closeMobileMenu}>Home</Link></li>
-            <li className="dropdown">
-              <button 
-                className={`dropdown-toggle ${isTruckingActive()}`}
-                onClick={toggleTruckingDropdown}
-              >
-                Trucking (BYON) <ChevronDown size={16} />
-              </button>
-              <ul className={`dropdown-menu ${truckingDropdownOpen ? 'show' : ''}`}>
-                <li><Link to="/trucking-division" onClick={closeMobileMenu}>Trucking Division</Link></li>
-                <li><Link to="/byon" onClick={closeMobileMenu}>Overview</Link></li>
-              </ul>
-            </li>
             
             <li className="dropdown">
               <button 
@@ -94,6 +82,19 @@ const Navigation = ({ scrolled }) => {
             </li>
 
             <li><Link to="/services-pricing" className={isActive('/services-pricing')} onClick={closeMobileMenu}>Services & Pricing</Link></li>
+
+            <li className="dropdown">
+              <button 
+                className={`dropdown-toggle ${isTruckingActive()}`}
+                onClick={toggleTruckingDropdown}
+              >
+                Trucking (BYON) <ChevronDown size={16} />
+              </button>
+              <ul className={`dropdown-menu ${truckingDropdownOpen ? 'show' : ''}`}>
+                <li><Link to="/trucking-division" onClick={closeMobileMenu}>Trucking Division</Link></li>
+                <li><Link to="/byon" onClick={closeMobileMenu}>Overview</Link></li>
+              </ul>
+            </li>
 
             <li className="nav-subscribe">
               <Link to="/subscribe" className="subscribe-btn" onClick={closeMobileMenu} data-testid="nav-subscribe-btn">
