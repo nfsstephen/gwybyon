@@ -95,6 +95,11 @@ const Navigation = ({ scrolled }) => {
 
             <li><Link to="/services-pricing" className={isActive('/services-pricing')} onClick={closeMobileMenu}>Services & Pricing</Link></li>
 
+            <li className="nav-subscribe">
+              <Link to="/subscribe" className="subscribe-btn" onClick={closeMobileMenu} data-testid="nav-subscribe-btn">
+                Subscribe
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

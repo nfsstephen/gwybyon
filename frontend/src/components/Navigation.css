@@ -238,6 +238,36 @@
   letter-spacing: 0.5px;
 }
 
+
+/* Subscribe Button */
+.nav-subscribe {
+  margin-left: auto;
+}
+
+.subscribe-btn {
+  display: inline-block;
+  padding: 9px 22px !important;
+  background: #059669 !important;
+  color: #fff !important;
+  border-radius: 8px;
+  font-weight: 600 !important;
+  font-size: 0.88rem !important;
+  letter-spacing: 0.3px;
+  transition: all 0.2s ease !important;
+  white-space: nowrap;
+}
+
+.subscribe-btn:hover {
+  background: #047857 !important;
+  color: #fff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+}
+
+.subscribe-btn::after {
+  display: none !important;
+}
+
 @media (max-width: 968px) {
   .nav-menu {
     position: fixed;
