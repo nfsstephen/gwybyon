@@ -1,6 +1,5 @@
 import React from 'react';
 import { Shield, MapPin, Crown, Mail, Clock, Users, Ban, TrendingUp, CheckCircle, XCircle, ArrowDown, Lock, AlertTriangle } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import './MarketTerritories.css';
 
 const MarketTerritories = () => {
@@ -82,13 +81,6 @@ const MarketTerritories = () => {
               <span>One customer per territory per industry. Your investment is protected.</span>
             </div>
           </div>
-        </div>
-
-        {/* CTA */}
-        <div className="mt-cta-container">
-          <Link to="/subscribe" className="mt-cta-button" data-testid="check-availability-btn">
-            Is your territory still open? <strong>Check Local Availability</strong>
-          </Link>
         </div>
       </div>
 
