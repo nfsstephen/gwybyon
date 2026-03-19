@@ -23,3 +23,4 @@ yarn-error.log*
 
 # Cache
 .cache/
+backend/.env

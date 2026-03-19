@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useDashboardAuth } from '../contexts/DashboardAuthContext';
+import { DashboardThemeProvider } from '../contexts/DashboardThemeContext';
 import DashboardLogin from '../pages/dashboard/DashboardLogin';
 import DashboardLayout from '../pages/dashboard/DashboardLayout';
 import ClientDashboard from '../pages/dashboard/ClientDashboard';
@@ -9,7 +10,7 @@ import TechnicalDashboard from '../pages/dashboard/TechnicalDashboard';
 
 function ProtectedDashboard({ allowedRoles }) {
   const { user, loading } = useDashboardAuth();
-  if (loading) return <div style={{ color: '#94a3b8', textAlign: 'center', padding: 60, background: '#0a0e1a', minHeight: '100vh' }}>Loading...</div>;
+  if (loading) return <div style={{ color: '#94a3b8', textAlign: 'center', padding: 60, minHeight: '100vh' }}>Loading...</div>;
   if (!user) return <Navigate to="/dashboard/login" replace />;
   if (allowedRoles && !allowedRoles.includes(user.role)) {
     const roleRoutes = { admin: '/dashboard/admin', client: '/dashboard/client', technical: '/dashboard/technical' };
@@ -20,6 +21,7 @@ function ProtectedDashboard({ allowedRoles }) {
 
 export default function DashboardRoutes() {
   return (
+    <DashboardThemeProvider>
     <Routes>
       <Route path="/dashboard/login" element={<DashboardLogin />} />
       <Route element={<ProtectedDashboard allowedRoles={['client', 'admin']} />}>
@@ -40,5 +42,6 @@ export default function DashboardRoutes() {
       </Route>
       <Route path="/dashboard" element={<Navigate to="/dashboard/login" replace />} />
     </Routes>
+    </DashboardThemeProvider>
   );
 }

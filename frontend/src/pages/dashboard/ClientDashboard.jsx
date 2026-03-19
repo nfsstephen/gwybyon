@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { useDashboardAuth } from '../../contexts/DashboardAuthContext';
+import { useDashboardTheme } from '../../contexts/DashboardThemeContext';
 import { MapPin, Activity, Phone, Navigation, Eye, Globe, Lock, TrendingUp, Zap, ArrowUp, ArrowDown } from 'lucide-react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -8,10 +9,11 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 const API = process.env.REACT_APP_BACKEND_URL;
 
 function StatCard({ icon: Icon, label, value, color, testId }) {
+  const { theme } = useDashboardTheme();
   return (
     <div data-testid={testId} style={{
-      background: 'rgba(255,255,255,0.04)',
-      border: '1px solid rgba(255,255,255,0.08)',
+      background: theme.cardBg,
+      border: `1px solid ${theme.cardBorder}`,
       borderRadius: 12,
       padding: '18px 20px',
       flex: '1 1 200px',
@@ -20,32 +22,34 @@ function StatCard({ icon: Icon, label, value, color, testId }) {
         <div style={{ width: 32, height: 32, borderRadius: 8, background: `${color}18`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <Icon size={16} style={{ color }} />
         </div>
-        <span style={{ color: '#94a3b8', fontSize: 12, fontWeight: 500 }}>{label}</span>
+        <span style={{ color: theme.textSecondary, fontSize: 12, fontWeight: 500 }}>{label}</span>
       </div>
-      <div style={{ color: '#fff', fontSize: 28, fontWeight: 700, letterSpacing: '-1px' }}>{value}</div>
+      <div style={{ color: theme.text, fontSize: 28, fontWeight: 700, letterSpacing: '-1px' }}>{value}</div>
     </div>
   );
 }
 
 function ScoreGauge({ score }) {
+  const { theme } = useDashboardTheme();
   const color = score >= 70 ? '#10b981' : score >= 40 ? '#f59e0b' : '#ef4444';
   const pct = (score / 100) * 283;
   return (
     <div data-testid="authority-score" style={{ position: 'relative', width: 120, height: 120 }}>
       <svg viewBox="0 0 100 100" style={{ transform: 'rotate(-90deg)' }}>
-        <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="8" />
+        <circle cx="50" cy="50" r="45" fill="none" stroke={theme.cardBorder} strokeWidth="8" />
         <circle cx="50" cy="50" r="45" fill="none" stroke={color} strokeWidth="8"
           strokeDasharray={`${pct} 283`} strokeLinecap="round" style={{ transition: 'stroke-dasharray 1s ease' }} />
       </svg>
       <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-        <span style={{ color: '#fff', fontSize: 28, fontWeight: 700 }}>{score}</span>
-        <span style={{ color: '#94a3b8', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Authority</span>
+        <span style={{ color: theme.text, fontSize: 28, fontWeight: 700 }}>{score}</span>
+        <span style={{ color: theme.textSecondary, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Authority</span>
       </div>
     </div>
   );
 }
 
 function HeatMapGrid({ gridData, mapboxToken }) {
+  const { mode, theme } = useDashboardTheme();
   const mapContainer = useRef(null);
   const mapRef = useRef(null);
 
@@ -58,7 +62,7 @@ function HeatMapGrid({ gridData, mapboxToken }) {
 
     const map = new mapboxgl.Map({
       container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/dark-v11',
+      style: mode === 'dark' ? 'mapbox://styles/mapbox/dark-v11' : 'mapbox://styles/mapbox/light-v11',
       center: [centerLng, centerLat],
       zoom: 13,
       interactive: true,
@@ -93,7 +97,7 @@ function HeatMapGrid({ gridData, mapboxToken }) {
           'circle-color': ['get', 'color'],
           'circle-opacity': 0.85,
           'circle-stroke-width': 2,
-          'circle-stroke-color': 'rgba(255,255,255,0.3)',
+          'circle-stroke-color': mode === 'dark' ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.2)',
         },
       });
 
@@ -110,7 +114,6 @@ function HeatMapGrid({ gridData, mapboxToken }) {
         paint: { 'text-color': '#000' },
       });
 
-      // Add center marker
       new mapboxgl.Marker({ color: '#3b82f6' })
         .setLngLat([centerLng, centerLat])
         .setPopup(new mapboxgl.Popup().setHTML('<strong>Your Business</strong>'))
@@ -119,25 +122,25 @@ function HeatMapGrid({ gridData, mapboxToken }) {
 
     mapRef.current = map;
     return () => { map.remove(); mapRef.current = null; };
-  }, [mapboxToken, gridData]);
+  }, [mapboxToken, gridData, mode]);
 
   return (
     <div data-testid="heat-map" style={{
-      background: 'rgba(255,255,255,0.04)',
-      border: '1px solid rgba(255,255,255,0.08)',
+      background: theme.cardBg,
+      border: `1px solid ${theme.cardBorder}`,
       borderRadius: 12,
       overflow: 'hidden',
     }}>
-      <div style={{ padding: '16px 20px', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div style={{ padding: '16px 20px', borderBottom: `1px solid ${theme.tableBorder}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div>
-          <h3 style={{ color: '#fff', fontSize: 15, fontWeight: 600, margin: 0 }}>Neighborhood Ranking Map</h3>
-          <p style={{ color: '#94a3b8', fontSize: 12, margin: '4px 0 0' }}>5x5 grid showing your ranking in nearby searches</p>
+          <h3 style={{ color: theme.text, fontSize: 15, fontWeight: 600, margin: 0 }}>Neighborhood Ranking Map</h3>
+          <p style={{ color: theme.textSecondary, fontSize: 12, margin: '4px 0 0' }}>5x5 grid showing your ranking in nearby searches</p>
         </div>
         <div style={{ display: 'flex', gap: 12 }}>
           {[{ color: '#00FF00', label: 'Top 3' }, { color: '#FFFF00', label: '4-7' }, { color: '#FF0000', label: '8+' }].map(l => (
             <div key={l.label} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
               <div style={{ width: 10, height: 10, borderRadius: '50%', background: l.color }} />
-              <span style={{ color: '#94a3b8', fontSize: 11 }}>{l.label}</span>
+              <span style={{ color: theme.textSecondary, fontSize: 11 }}>{l.label}</span>
             </div>
           ))}
         </div>
@@ -148,28 +151,19 @@ function HeatMapGrid({ gridData, mapboxToken }) {
 }
 
 function ActionFeed({ actions }) {
-  const iconMap = {
-    sync: Zap,
-    content: Globe,
-    review: Activity,
-    optimization: TrendingUp,
-  };
-  const colorMap = {
-    sync: '#3b82f6',
-    content: '#8b5cf6',
-    review: '#f59e0b',
-    optimization: '#10b981',
-  };
+  const { theme } = useDashboardTheme();
+  const iconMap = { sync: Zap, content: Globe, review: Activity, optimization: TrendingUp };
+  const colorMap = { sync: '#3b82f6', content: '#8b5cf6', review: '#f59e0b', optimization: '#10b981' };
 
   return (
     <div data-testid="action-feed" style={{
-      background: 'rgba(255,255,255,0.04)',
-      border: '1px solid rgba(255,255,255,0.08)',
+      background: theme.cardBg,
+      border: `1px solid ${theme.cardBorder}`,
       borderRadius: 12,
     }}>
-      <div style={{ padding: '16px 20px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-        <h3 style={{ color: '#fff', fontSize: 15, fontWeight: 600, margin: 0 }}>Automated AI Tasks</h3>
-        <p style={{ color: '#94a3b8', fontSize: 12, margin: '4px 0 0' }}>Recent actions taken on your behalf</p>
+      <div style={{ padding: '16px 20px', borderBottom: `1px solid ${theme.tableBorder}` }}>
+        <h3 style={{ color: theme.text, fontSize: 15, fontWeight: 600, margin: 0 }}>Automated AI Tasks</h3>
+        <p style={{ color: theme.textSecondary, fontSize: 12, margin: '4px 0 0' }}>Recent actions taken on your behalf</p>
       </div>
       <div style={{ maxHeight: 400, overflowY: 'auto', padding: '8px 0' }}>
         {actions.map((a, i) => {
@@ -179,7 +173,7 @@ function ActionFeed({ actions }) {
           return (
             <div key={a.id || i} style={{
               display: 'flex', gap: 12, padding: '12px 20px',
-              borderBottom: i < actions.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none',
+              borderBottom: i < actions.length - 1 ? `1px solid ${theme.tableBorder}` : 'none',
             }}>
               <div style={{
                 width: 32, height: 32, borderRadius: 8, flexShrink: 0,
@@ -188,13 +182,13 @@ function ActionFeed({ actions }) {
                 <Icon size={14} style={{ color: c }} />
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <p style={{ color: '#e2e8f0', fontSize: 13, margin: 0, lineHeight: 1.4 }}>{a.description}</p>
+                <p style={{ color: theme.text, fontSize: 13, margin: 0, lineHeight: 1.4 }}>{a.description}</p>
                 <div style={{ display: 'flex', gap: 8, marginTop: 4 }}>
-                  <span style={{ color: '#64748b', fontSize: 11 }}>{a.platform}</span>
-                  <span style={{ color: '#475569', fontSize: 11 }}>|</span>
-                  <span style={{ color: '#64748b', fontSize: 11 }}>{timeAgo}</span>
+                  <span style={{ color: theme.textMuted, fontSize: 11 }}>{a.platform}</span>
+                  <span style={{ color: theme.textMuted, fontSize: 11 }}>|</span>
+                  <span style={{ color: theme.textMuted, fontSize: 11 }}>{timeAgo}</span>
                   {a.status === 'pending' && (
-                    <span style={{ color: '#f59e0b', fontSize: 11, fontWeight: 500 }}>Pending</span>
+                    <span style={{ color: theme.yellow, fontSize: 11, fontWeight: 500 }}>Pending</span>
                   )}
                 </div>
               </div>
@@ -207,10 +201,11 @@ function ActionFeed({ actions }) {
 }
 
 function LockedFeature({ title, description, testId }) {
+  const { theme } = useDashboardTheme();
   return (
     <div data-testid={testId} style={{
-      background: 'rgba(255,255,255,0.02)',
-      border: '1px dashed rgba(255,255,255,0.12)',
+      background: theme.cardBg,
+      border: `1px dashed ${theme.cardBorder}`,
       borderRadius: 12,
       padding: 24,
       textAlign: 'center',
@@ -219,17 +214,17 @@ function LockedFeature({ title, description, testId }) {
     }}>
       <div style={{
         position: 'absolute', top: 12, right: 12,
-        background: 'rgba(245,158,11,0.15)',
-        border: '1px solid rgba(245,158,11,0.3)',
+        background: theme.yellowBg,
+        border: `1px solid ${theme.yellow}50`,
         borderRadius: 6, padding: '4px 10px',
         display: 'flex', alignItems: 'center', gap: 4,
       }}>
-        <Lock size={12} style={{ color: '#f59e0b' }} />
-        <span style={{ color: '#f59e0b', fontSize: 11, fontWeight: 600 }}>PRO</span>
+        <Lock size={12} style={{ color: theme.yellow }} />
+        <span style={{ color: theme.yellow, fontSize: 11, fontWeight: 600 }}>PRO</span>
       </div>
       <div style={{ opacity: 0.4 }}>
-        <h3 style={{ color: '#fff', fontSize: 16, fontWeight: 600, margin: '0 0 8px' }}>{title}</h3>
-        <p style={{ color: '#94a3b8', fontSize: 13, margin: 0 }}>{description}</p>
+        <h3 style={{ color: theme.text, fontSize: 16, fontWeight: 600, margin: '0 0 8px' }}>{title}</h3>
+        <p style={{ color: theme.textSecondary, fontSize: 13, margin: 0 }}>{description}</p>
       </div>
       <button style={{
         marginTop: 16,
@@ -247,6 +242,7 @@ function LockedFeature({ title, description, testId }) {
 }
 
 function GrowthTracker({ scans }) {
+  const { mode, theme } = useDashboardTheme();
   if (!scans || scans.length < 2) return null;
 
   const sorted = [...scans].sort((a, b) => new Date(a.scan_date) - new Date(b.scan_date));
@@ -262,7 +258,6 @@ function GrowthTracker({ scans }) {
   const totalGain = currentScore - firstScore;
   const recentChange = currentScore - prevScore;
 
-  // Build SVG sparkline path
   const width = 600;
   const height = 80;
   const padding = 4;
@@ -278,8 +273,8 @@ function GrowthTracker({ scans }) {
 
   return (
     <div data-testid="growth-tracker" style={{
-      background: 'rgba(255,255,255,0.04)',
-      border: '1px solid rgba(255,255,255,0.08)',
+      background: theme.cardBg,
+      border: `1px solid ${theme.cardBorder}`,
       borderRadius: 12,
       padding: '20px 24px',
       marginBottom: 24,
@@ -287,43 +282,41 @@ function GrowthTracker({ scans }) {
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 16, flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-            <TrendingUp size={18} style={{ color: '#10b981' }} />
-            <h3 style={{ color: '#fff', fontSize: 15, fontWeight: 600, margin: 0 }}>Growth Tracker</h3>
+            <TrendingUp size={18} style={{ color: theme.green }} />
+            <h3 style={{ color: theme.text, fontSize: 15, fontWeight: 600, margin: 0 }}>Growth Tracker</h3>
           </div>
-          <p style={{ color: '#94a3b8', fontSize: 12, margin: 0 }}>
+          <p style={{ color: theme.textSecondary, fontSize: 12, margin: 0 }}>
             Your Local Authority Score over the last {sorted.length} scans ({formatDate(dates[0])} - {formatDate(dates[dates.length - 1])})
           </p>
         </div>
         <div style={{ display: 'flex', gap: 16 }}>
           <div style={{ textAlign: 'center' }}>
-            <div style={{ color: '#64748b', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 2 }}>Total Growth</div>
+            <div style={{ color: theme.textMuted, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 2 }}>Total Growth</div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 4, justifyContent: 'center' }}>
-              {totalGain >= 0 ? <ArrowUp size={14} style={{ color: '#10b981' }} /> : <ArrowDown size={14} style={{ color: '#ef4444' }} />}
-              <span style={{ color: totalGain >= 0 ? '#10b981' : '#ef4444', fontSize: 18, fontWeight: 700 }}>+{totalGain}</span>
+              {totalGain >= 0 ? <ArrowUp size={14} style={{ color: theme.green }} /> : <ArrowDown size={14} style={{ color: theme.red }} />}
+              <span style={{ color: totalGain >= 0 ? theme.green : theme.red, fontSize: 18, fontWeight: 700 }}>+{totalGain}</span>
             </div>
           </div>
-          <div style={{ width: 1, background: 'rgba(255,255,255,0.08)' }} />
+          <div style={{ width: 1, background: theme.cardBorder }} />
           <div style={{ textAlign: 'center' }}>
-            <div style={{ color: '#64748b', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 2 }}>Last Scan</div>
+            <div style={{ color: theme.textMuted, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 2 }}>Last Scan</div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 4, justifyContent: 'center' }}>
-              {recentChange >= 0 ? <ArrowUp size={14} style={{ color: '#10b981' }} /> : <ArrowDown size={14} style={{ color: '#ef4444' }} />}
-              <span style={{ color: recentChange >= 0 ? '#10b981' : '#ef4444', fontSize: 18, fontWeight: 700 }}>
+              {recentChange >= 0 ? <ArrowUp size={14} style={{ color: theme.green }} /> : <ArrowDown size={14} style={{ color: theme.red }} />}
+              <span style={{ color: recentChange >= 0 ? theme.green : theme.red, fontSize: 18, fontWeight: 700 }}>
                 {recentChange >= 0 ? '+' : ''}{recentChange}
               </span>
             </div>
           </div>
-          <div style={{ width: 1, background: 'rgba(255,255,255,0.08)' }} />
+          <div style={{ width: 1, background: theme.cardBorder }} />
           <div style={{ textAlign: 'center' }}>
-            <div style={{ color: '#64748b', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 2 }}>Started At</div>
-            <span style={{ color: '#f59e0b', fontSize: 18, fontWeight: 700 }}>{firstScore}</span>
+            <div style={{ color: theme.textMuted, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 2 }}>Started At</div>
+            <span style={{ color: theme.yellow, fontSize: 18, fontWeight: 700 }}>{firstScore}</span>
           </div>
         </div>
       </div>
 
-      {/* Sparkline Chart */}
       <div style={{ position: 'relative' }}>
         <svg viewBox={`0 0 ${width} ${height}`} style={{ width: '100%', height: 100 }}>
-          {/* Gradient fill under line */}
           <defs>
             <linearGradient id="growthGrad" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#10b981" stopOpacity="0.3" />
@@ -332,16 +325,12 @@ function GrowthTracker({ scans }) {
           </defs>
           <path d={areaPath} fill="url(#growthGrad)" />
           <path d={linePath} fill="none" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-          {/* Endpoint dot */}
-          <circle cx={points[points.length - 1].x} cy={points[points.length - 1].y} r="4" fill="#10b981" stroke="#0a0e1a" strokeWidth="2" />
-          {/* Start dot */}
-          <circle cx={points[0].x} cy={points[0].y} r="3" fill="#f59e0b" stroke="#0a0e1a" strokeWidth="2" />
+          <circle cx={points[points.length - 1].x} cy={points[points.length - 1].y} r="4" fill="#10b981" stroke={theme.bg} strokeWidth="2" />
+          <circle cx={points[0].x} cy={points[0].y} r="3" fill="#f59e0b" stroke={theme.bg} strokeWidth="2" />
         </svg>
-
-        {/* Labels */}
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4 }}>
-          <span style={{ color: '#64748b', fontSize: 10 }}>{formatDate(dates[0])} (Score: {firstScore})</span>
-          <span style={{ color: '#10b981', fontSize: 10, fontWeight: 600 }}>Now: {currentScore}</span>
+          <span style={{ color: theme.textMuted, fontSize: 10 }}>{formatDate(dates[0])} (Score: {firstScore})</span>
+          <span style={{ color: theme.green, fontSize: 10, fontWeight: 600 }}>Now: {currentScore}</span>
         </div>
       </div>
     </div>
@@ -360,6 +349,7 @@ function getTimeAgo(dateStr) {
 
 export default function ClientDashboard() {
   const { token } = useDashboardAuth();
+  const { theme } = useDashboardTheme();
   const [data, setData] = useState(null);
   const [scanHistory, setScanHistory] = useState([]);
   const [mapboxToken, setMapboxToken] = useState('');
@@ -379,38 +369,35 @@ export default function ClientDashboard() {
     }).catch(() => setLoading(false));
   }, [token]);
 
-  if (loading) return <div style={{ color: '#94a3b8', textAlign: 'center', padding: 60 }}>Loading dashboard...</div>;
-  if (!data?.profile) return <div style={{ color: '#94a3b8', textAlign: 'center', padding: 60 }}>No business profile found.</div>;
+  if (loading) return <div style={{ color: theme.textSecondary, textAlign: 'center', padding: 60 }}>Loading dashboard...</div>;
+  if (!data?.profile) return <div style={{ color: theme.textSecondary, textAlign: 'center', padding: 60 }}>No business profile found.</div>;
 
   const { profile, latest_scan, recent_actions, gbp_summary } = data;
 
   return (
     <div data-testid="client-dashboard" style={{ maxWidth: 1200, margin: '0 auto' }}>
-      {/* Header */}
       <div style={{ marginBottom: 24, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
         <div>
-          <h2 style={{ color: '#fff', fontSize: 22, fontWeight: 700, margin: 0 }}>{profile.business_name}</h2>
-          <p style={{ color: '#94a3b8', fontSize: 13, margin: '4px 0 0' }}>
+          <h2 style={{ color: theme.text, fontSize: 22, fontWeight: 700, margin: 0 }}>{profile.business_name}</h2>
+          <p style={{ color: theme.textSecondary, fontSize: 13, margin: '4px 0 0' }}>
             {profile.address}, {profile.city}, {profile.state} {profile.zip_code}
           </p>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <span style={{
             padding: '4px 12px',
-            background: profile.subscription_status === 'active' ? 'rgba(16,185,129,0.15)' : 'rgba(245,158,11,0.15)',
-            border: `1px solid ${profile.subscription_status === 'active' ? 'rgba(16,185,129,0.3)' : 'rgba(245,158,11,0.3)'}`,
+            background: profile.subscription_status === 'active' ? theme.greenBg : theme.yellowBg,
+            border: `1px solid ${profile.subscription_status === 'active' ? theme.green + '50' : theme.yellow + '50'}`,
             borderRadius: 20,
-            color: profile.subscription_status === 'active' ? '#34d399' : '#fbbf24',
+            color: profile.subscription_status === 'active' ? theme.green : theme.yellow,
             fontSize: 12, fontWeight: 500,
           }}>Tier {profile.subscription_tier} - {profile.subscription_status}</span>
           <ScoreGauge score={profile.local_authority_score} />
         </div>
       </div>
 
-      {/* Growth Tracker */}
       <GrowthTracker scans={scanHistory} />
 
-      {/* GBP Stats Row */}
       <div style={{ display: 'flex', gap: 16, marginBottom: 24, flexWrap: 'wrap' }}>
         <StatCard icon={Phone} label="Calls (30d)" value={gbp_summary.calls} color="#3b82f6" testId="stat-calls" />
         <StatCard icon={Navigation} label="Directions (30d)" value={gbp_summary.directions} color="#8b5cf6" testId="stat-directions" />
@@ -418,14 +405,12 @@ export default function ClientDashboard() {
         <StatCard icon={Globe} label="Website Clicks (30d)" value={gbp_summary.website_clicks} color="#f59e0b" testId="stat-website-clicks" />
       </div>
 
-      {/* Map */}
       {latest_scan?.grid_data && (
         <div style={{ marginBottom: 24 }}>
           <HeatMapGrid gridData={latest_scan.grid_data} mapboxToken={mapboxToken} />
         </div>
       )}
 
-      {/* Action Feed + Locked Features */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
         <ActionFeed actions={recent_actions} />
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
