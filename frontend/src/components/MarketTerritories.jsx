@@ -23,37 +23,37 @@ const MarketTerritories = () => {
       <div className="mt-problem">
         <h3 className="mt-section-title">The Dirty Secret of Our Competitors</h3>
         <p className="mt-bidding-war-caption">
-          Traditional agencies profit by making you outbid your own neighbors for the same keywords. 
-          <strong> We profit by making sure you own them.</strong>
+          Traditional agencies profit by over-saturating your territory and selling your zip code to your competitors.
+          <strong> We profit by making sure you own it.</strong>
         </p>
         <div className="mt-problem-visual">
           <div className="mt-problem-scenario">
-            <div className="mt-scenario-label mt-scenario-them">How They Do It</div>
-            <div className="mt-competitor-grid">
+            <div className="mt-scenario-label mt-scenario-them">How They Do It: Over-Saturation</div>
+            <div className="mt-competitor-grid mt-oversaturated-bg">
               <div className="mt-competitor-slot mt-slot-losing">
                 <XCircle size={20} />
                 <span>Business A</span>
-                <small>Paying for #1</small>
+                <small>Active in Territory</small>
               </div>
               <div className="mt-competitor-slot mt-slot-losing">
                 <XCircle size={20} />
                 <span>Business B</span>
-                <small>Paying for #1</small>
+                <small>Active in Territory</small>
               </div>
               <div className="mt-competitor-slot mt-slot-winning">
                 <CheckCircle size={20} />
                 <span>Business C</span>
-                <small>Gets #1 (luck)</small>
+                <small>Gets Lead (Luck)</small>
               </div>
               <div className="mt-competitor-slot mt-slot-losing">
                 <XCircle size={20} />
                 <span>Business D</span>
-                <small>Paying for #1</small>
+                <small>Active in Territory</small>
               </div>
             </div>
             <div className="mt-scenario-result mt-result-bad">
               <Ban size={16} />
-              <span>Same vendor. Same area. Same industry. 3 out of 4 customers lose.</span>
+              <span>Same area. Same industry. The agency gets paid 4x to crowd your market.</span>
             </div>
           </div>
 
@@ -61,7 +61,7 @@ const MarketTerritories = () => {
 
           <div className="mt-problem-scenario">
             <div className="mt-scenario-label mt-scenario-us">How We Do It</div>
-            <div className="mt-territory-visual">
+            <div className="mt-territory-visual mt-protected-zone-bg">
               <div className="mt-territory-slot mt-territory-premium">
                 <div className="mt-territory-badge">
                   <Lock size={12} />
@@ -69,7 +69,7 @@ const MarketTerritories = () => {
                 </div>
                 <Crown size={24} />
                 <span>Your Business</span>
-                <small>Exclusive territory</small>
+                <small>Exclusive Zone</small>
               </div>
               <div className="mt-territory-shield">
                 <Shield size={32} />
