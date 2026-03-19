@@ -18,13 +18,16 @@ async def technical_api_usage(
     user: User = Depends(require_role("technical", "admin")),
     db: AsyncSession = Depends(get_db)
 ):
-    start_date = date.today() - timedelta(days=days)
-    result = await db.execute(
-        select(APIUsage)
-        .where(APIUsage.date >= start_date)
-        .order_by(APIUsage.date)
-    )
-    records = result.scalars().all()
+    try:
+        start_date = date.today() - timedelta(days=days)
+        result = await db.execute(
+            select(APIUsage)
+            .where(APIUsage.date >= start_date)
+            .order_by(APIUsage.date)
+        )
+        records = result.scalars().all()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"api-usage error: {type(e).__name__}: {str(e)}")
 
     by_service = {}
     for r in records:
