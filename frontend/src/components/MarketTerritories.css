@@ -73,6 +73,19 @@
   border-bottom: 1px solid #e2e8f0;
 }
 
+.mt-bidding-war-caption {
+  text-align: center;
+  font-size: 1rem;
+  color: #475569;
+  max-width: 680px;
+  margin: 0 auto 32px;
+  line-height: 1.7;
+}
+
+.mt-bidding-war-caption strong {
+  color: #0d9488;
+}
+
 .mt-problem-visual {
   display: flex;
   align-items: center;
@@ -180,6 +193,65 @@
   border-radius: 10px;
   border: 2px solid #0d948844;
   background: #f0fdfa;
+}
+
+/* Premium "Your Business" styling */
+.mt-territory-slot.mt-territory-premium {
+  padding: 28px 48px;
+  border: 3px solid #1e3a5f;
+  background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
+  box-shadow: 0 8px 32px rgba(30, 58, 95, 0.3), 0 0 0 4px #d4af3720;
+  position: relative;
+}
+
+.mt-territory-slot.mt-territory-premium span {
+  color: #ffd700;
+  font-size: 1.1rem;
+}
+
+.mt-territory-slot.mt-territory-premium small {
+  color: #94a3b8;
+}
+
+.mt-territory-slot.mt-territory-premium svg {
+  color: #ffd700;
+}
+
+/* Territory Locked Badge */
+.mt-territory-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+  color: #1e3a5f;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
+}
+
+.mt-territory-badge svg {
+  color: #1e3a5f !important;
+}
+
+/* Premium result styling */
+.mt-result-good.mt-result-premium {
+  background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
+  color: #ffd700;
+  border: 2px solid #d4af3740;
+  font-weight: 600;
+}
+
+.mt-result-good.mt-result-premium svg {
+  color: #ffd700;
 }
 
 .mt-territory-slot svg { color: #0d9488; }
@@ -395,4 +467,107 @@
   .mt-value-grid {
     grid-template-columns: 1fr;
   }
+
+  .mt-cta-button {
+    font-size: 0.9rem;
+    padding: 14px 24px;
+  }
+
+  .mt-conflict-card {
+    padding: 24px;
+  }
+}
+
+/* CTA Button */
+.mt-cta-container {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.mt-cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
+  color: #fff;
+  font-size: 1rem;
+  padding: 16px 32px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(30, 58, 95, 0.3);
+  border: 2px solid transparent;
+}
+
+.mt-cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(30, 58, 95, 0.4);
+  border-color: #d4af37;
+}
+
+.mt-cta-button strong {
+  color: #ffd700;
+}
+
+/* Conflict of Interest Section */
+.mt-conflict {
+  padding: 48px 24px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.mt-conflict-card {
+  background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%);
+  border: 2px solid #d4af37;
+  border-radius: 16px;
+  padding: 32px;
+  text-align: center;
+  position: relative;
+}
+
+.mt-conflict-icon {
+  color: #d4af37;
+  margin-bottom: 16px;
+}
+
+.mt-conflict-card h4 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1e3a5f;
+  margin-bottom: 12px;
+}
+
+.mt-conflict-card p {
+  font-size: 0.95rem;
+  color: #475569;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.mt-conflict-card strong {
+  color: #1e3a5f;
+  font-weight: 700;
+}
+
+.mt-scarcity-notice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 12px 20px;
+  background: #1e3a5f0a;
+  border-radius: 8px;
+  border: 1px solid #1e3a5f20;
+}
+
+.mt-scarcity-notice svg {
+  color: #d97706;
+  flex-shrink: 0;
+}
+
+.mt-scarcity-notice span {
+  font-size: 0.85rem;
+  color: #475569;
+  font-weight: 500;
 }

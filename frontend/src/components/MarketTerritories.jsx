@@ -1,5 +1,6 @@
 import React from 'react';
-import { Shield, MapPin, Crown, Mail, Clock, Users, Ban, TrendingUp, CheckCircle, XCircle, ArrowDown } from 'lucide-react';
+import { Shield, MapPin, Crown, Mail, Clock, Users, Ban, TrendingUp, CheckCircle, XCircle, ArrowDown, Lock, AlertTriangle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import './MarketTerritories.css';
 
 const MarketTerritories = () => {
@@ -22,6 +23,10 @@ const MarketTerritories = () => {
       {/* The Industry Problem */}
       <div className="mt-problem">
         <h3 className="mt-section-title">The Dirty Secret of Our Competitors</h3>
+        <p className="mt-bidding-war-caption">
+          Traditional agencies profit by making you outbid your own neighbors for the same keywords. 
+          <strong> We profit by making sure you own them.</strong>
+        </p>
         <div className="mt-problem-visual">
           <div className="mt-problem-scenario">
             <div className="mt-scenario-label mt-scenario-them">How They Do It</div>
@@ -58,8 +63,12 @@ const MarketTerritories = () => {
           <div className="mt-problem-scenario">
             <div className="mt-scenario-label mt-scenario-us">How We Do It</div>
             <div className="mt-territory-visual">
-              <div className="mt-territory-slot">
-                <Crown size={20} />
+              <div className="mt-territory-slot mt-territory-premium">
+                <div className="mt-territory-badge">
+                  <Lock size={12} />
+                  <span>Territory Locked</span>
+                </div>
+                <Crown size={24} />
                 <span>Your Business</span>
                 <small>Exclusive territory</small>
               </div>
@@ -68,11 +77,35 @@ const MarketTerritories = () => {
                 <span>Protected Territory</span>
               </div>
             </div>
-            <div className="mt-scenario-result mt-result-good">
+            <div className="mt-scenario-result mt-result-good mt-result-premium">
               <CheckCircle size={16} />
-              <span>One customer per territory per industry. Your investment actually works.</span>
+              <span>One customer per territory per industry. Your investment is protected.</span>
             </div>
           </div>
+        </div>
+
+        {/* CTA */}
+        <div className="mt-cta-container">
+          <Link to="/subscribe" className="mt-cta-button" data-testid="check-availability-btn">
+            Is your territory still open? <strong>Check Local Availability</strong>
+          </Link>
+        </div>
+      </div>
+
+      {/* Conflict of Interest Section */}
+      <div className="mt-conflict">
+        <div className="mt-conflict-card">
+          <AlertTriangle size={28} className="mt-conflict-icon" />
+          <h4>Our Conflict of Interest Guarantee</h4>
+          <p>
+            We <strong>cannot</strong> work for your competitor. It's not just policy — it's in our contract. 
+            Once you claim your territory, we are legally bound to refuse service to any competing business 
+            in your industry within your geographic zone. Your success becomes our only option.
+          </p>
+        </div>
+        <div className="mt-scarcity-notice">
+          <Clock size={18} />
+          <span>Once a territory is locked, it's gone for the duration of the partnership. Early action secures your position.</span>
         </div>
       </div>
 
