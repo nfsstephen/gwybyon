@@ -1,6 +1,5 @@
 import React from 'react';
-import { Truck, RefreshCw, MapPin, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { RefreshCw, MapPin, ArrowRight } from 'lucide-react';
 import './StrategyOverview.css';
 
 const StrategyOverview = () => {
@@ -13,10 +12,10 @@ const StrategyOverview = () => {
     <section className="strategy-overview">
       <div className="so-content">
         <div className="so-badge">OUR MARKETING STRATEGY</div>
-        <h1 className="so-title">A Three-Pronged Approach to Market Dominance</h1>
+        <h1 className="so-title">A Two-Pronged Approach to Market Dominance</h1>
         <p className="so-subtitle">
           We don't rely on a single sales channel. We've built a coordinated strategy 
-          that targets high-value customers from three angles — each reinforcing the others 
+          that targets high-value customers from two angles — each reinforcing the other 
           to create a marketing engine that scales.
         </p>
 
@@ -45,19 +44,6 @@ const StrategyOverview = () => {
             <button className="so-prong-btn so-btn-2" onClick={() => scrollTo('section-crosssell')}>
               Explore Strategy <ArrowRight size={16} />
             </button>
-          </div>
-
-          <div className="so-prong so-prong-3">
-            <div className="so-prong-number">03</div>
-            <div className="so-prong-icon"><Truck size={32} /></div>
-            <h3>Trucking Industry</h3>
-            <p>
-              Target large carriers with massive driver fleets. One enterprise deal activates 
-              hundreds of BYON lines overnight. Volume-first, high-impact sales.
-            </p>
-            <Link to="/trucking-division" className="so-prong-btn so-btn-3">
-              Explore Strategy <ArrowRight size={16} />
-            </Link>
           </div>
         </div>
       </div>
