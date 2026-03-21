@@ -92,9 +92,9 @@ const WebServiceV2Page = () => {
                 phones for business. No oversight. No separation. <strong>BYON</strong> gives every 
                 team member a managed second line — call control, tracking, and scam protection.
               </p>
-              <Link to="/byon" className="v2-solution-link">
+              <a href="https://gatewayaisystems.com/byon-overview" className="v2-solution-link" target="_blank" rel="noopener noreferrer">
                 See BYON Overview <ArrowRight size={14} />
-              </Link>
+              </a>
             </div>
           </div>
         </div>
@@ -268,9 +268,9 @@ const WebServiceV2Page = () => {
               <Link to="/services-pricing" className="v2-btn-primary" data-testid="v2-cta-geogrid">
                 Explore GeoGrid <ArrowRight size={18} />
               </Link>
-              <Link to="/byon" className="v2-btn-ghost" data-testid="v2-cta-byon">
+              <a href="https://gatewayaisystems.com/byon-overview" className="v2-btn-ghost" data-testid="v2-cta-byon" target="_blank" rel="noopener noreferrer">
                 Explore BYON
-              </Link>
+              </a>
             </div>
           </div>
         </div>
