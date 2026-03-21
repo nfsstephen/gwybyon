@@ -108,6 +108,7 @@ Note: 29 UI library components in `/components/ui/` are unused but kept for pote
 - [ ] Build Territory Token backend infrastructure
 - [ ] Token → Email Invite → Map View flow
 - [ ] Sync with India tech team on architecture
+- [ ] **Add "Proprietary Tools" statement to Products/Services page** - "We provide proprietary tools to measure and control your website effectiveness yourself. No more flying blind or depending on someone else to control your advertising - the sign on the front of your business."
 
 ### Medium Priority (P1)
 - [ ] Hide/secure dashboard login credentials (currently displayed for dev)
