@@ -5,7 +5,6 @@ import './Navigation.css';
 
 const Navigation = ({ scrolled }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [truckingDropdownOpen, setTruckingDropdownOpen] = useState(false);
   const [webServicesDropdownOpen, setWebServicesDropdownOpen] = useState(false);
   const location = useLocation();
 
@@ -15,12 +14,7 @@ const Navigation = ({ scrolled }) => {
 
   const closeMobileMenu = () => {
     setMobileMenuOpen(false);
-    setTruckingDropdownOpen(false);
     setWebServicesDropdownOpen(false);
-  };
-
-  const toggleTruckingDropdown = () => {
-    setTruckingDropdownOpen(!truckingDropdownOpen);
   };
 
   const toggleWebServicesDropdown = () => {
@@ -29,10 +23,6 @@ const Navigation = ({ scrolled }) => {
 
   const isActive = (path) => {
     return location.pathname === path ? 'active' : '';
-  };
-
-  const isTruckingActive = () => {
-    return (location.pathname.includes('trucking') || location.pathname === '/byon') ? 'active' : '';
   };
 
   const isWebServicesActive = () => {
@@ -82,19 +72,6 @@ const Navigation = ({ scrolled }) => {
             </li>
 
             <li><Link to="/services-pricing" className={isActive('/services-pricing')} onClick={closeMobileMenu}>Services & Pricing</Link></li>
-
-            <li className="dropdown">
-              <button 
-                className={`dropdown-toggle ${isTruckingActive()}`}
-                onClick={toggleTruckingDropdown}
-              >
-                Trucking (BYON) <ChevronDown size={16} />
-              </button>
-              <ul className={`dropdown-menu ${truckingDropdownOpen ? 'show' : ''}`}>
-                <li><Link to="/trucking-division" onClick={closeMobileMenu}>Trucking Division</Link></li>
-                <li><Link to="/byon" onClick={closeMobileMenu}>Overview</Link></li>
-              </ul>
-            </li>
 
             <li className="nav-subscribe">
               <Link to="/subscribe" className="subscribe-btn" onClick={closeMobileMenu} data-testid="nav-subscribe-btn">

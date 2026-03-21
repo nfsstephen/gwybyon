@@ -4,8 +4,6 @@ import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import ChatWidget from '../components/ChatWidget';
 import HomePage from '../pages/HomePage';
-import ByonOverviewPage from '../pages/ByonOverviewPage';
-import TruckingDivisionPage from '../pages/TruckingDivisionPage';
 import BigMarketWellSepticPage from '../pages/BigMarketWellSepticPage';
 import BigMarketPlumbersPage from '../pages/BigMarketPlumbersPage';
 import BigMarketElectriciansPage from '../pages/BigMarketElectriciansPage';
@@ -23,7 +21,6 @@ export default function SiteRoutes({ scrolled }) {
       <Navigation scrolled={scrolled} />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/trucking-division" element={<TruckingDivisionPage />} />
         <Route path="/big-market/well-septic" element={<BigMarketWellSepticPage />} />
         <Route path="/big-market/plumbers" element={<BigMarketPlumbersPage />} />
         <Route path="/big-market/electricians" element={<BigMarketElectriciansPage />} />
@@ -33,7 +30,6 @@ export default function SiteRoutes({ scrolled }) {
         <Route path="/web-service-v2" element={<WebServiceV2Page />} />
         <Route path="/services-pricing" element={<ServicesAndPricingPage />} />
         <Route path="/subscribe" element={<SubscribePage />} />
-        <Route path="/byon" element={<ByonOverviewPage />} />
         <Route path="/admin-preview" element={<AdminPreviewPage />} />
       </Routes>
       <Footer />
