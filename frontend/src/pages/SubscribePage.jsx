@@ -26,14 +26,24 @@ export default function SubscribePage() {
   const selectedWebsite = WEBSITE_OPTIONS.find(w => w.id === websiteChoice);
 
   const invoice = useMemo(() => {
-    if (!selectedService || !selectedWebsite) return null;
-
     const discountMultiplier = tokenApplied ? 0.5 : 1;
-    const monthlyTotal = selectedService.monthlyPrice * discountMultiplier;
-    const oneTimeTotal = TERRITORY_FEE * discountMultiplier;
-    const dueToday = (selectedService.monthlyPrice + TERRITORY_FEE) * discountMultiplier;
+    
+    let monthlyTotal = 0;
+    let oneTimeTotal = 0;
+    
+    if (selectedService) {
+      monthlyTotal = selectedService.monthlyPrice * discountMultiplier;
+      oneTimeTotal = TERRITORY_FEE * discountMultiplier;
+    }
+    
+    let websiteTotal = 0;
+    if (selectedWebsite) {
+      websiteTotal = selectedWebsite.price;
+    }
+    
+    const dueToday = monthlyTotal + oneTimeTotal + websiteTotal;
 
-    return { discountMultiplier, monthlyTotal, oneTimeTotal, dueToday, tokenApplied };
+    return { discountMultiplier, monthlyTotal, oneTimeTotal, websiteTotal, dueToday, tokenApplied };
   }, [selectedService, selectedWebsite, tokenApplied]);
 
   const handleApplyToken = () => {
@@ -131,16 +141,10 @@ export default function SubscribePage() {
             <h2 className="sub-section-label">Your Invoice</h2>
 
             <div className="sub-invoice">
-              {(!selectedService || !selectedWebsite) ? (
+              {(!selectedService && !selectedWebsite) ? (
                 <div className="sub-invoice-empty">
                   <ShoppingCart size={32} />
-                  <p>
-                    {!selectedWebsite && !selectedService
-                      ? 'Select a website service and tier to see your invoice'
-                      : !selectedWebsite
-                        ? 'Select a website service option above'
-                        : 'Select a service tier above'}
-                  </p>
+                  <p>Select a website service and tier to see your invoice</p>
                 </div>
               ) : (
                 <>
@@ -151,30 +155,46 @@ export default function SubscribePage() {
 
                   {/* Line Items */}
                   <div className="sub-invoice-lines">
-                    <div className="sub-invoice-line" data-testid="invoice-line-website">
-                      <div>
-                        <div className="sub-line-name">{selectedWebsite.label}</div>
-                        <div className="sub-line-type">Website Service</div>
+                    {selectedWebsite && (
+                      <div className="sub-invoice-line" data-testid="invoice-line-website">
+                        <div>
+                          <div className="sub-line-name">{selectedWebsite.label}</div>
+                          <div className="sub-line-type">Website Service (One-Time)</div>
+                        </div>
+                        <div className="sub-line-amount">${selectedWebsite.price}</div>
                       </div>
-                      <div className="sub-line-amount sub-line-included">Included</div>
-                    </div>
+                    )}
 
-                    <div className="sub-invoice-line" data-testid="invoice-line-plan">
-                      <div>
-                        <div className="sub-line-name">{selectedService.name} Plan (Tier {selectedService.tier})</div>
-                        <div className="sub-line-type">Monthly Recurring</div>
-                      </div>
-                      <div className="sub-line-amount">${selectedService.monthlyPrice.toLocaleString()}/mo</div>
-                    </div>
+                    {selectedService && (
+                      <>
+                        <div className="sub-invoice-line" data-testid="invoice-line-plan">
+                          <div>
+                            <div className="sub-line-name">{selectedService.name} Plan (Tier {selectedService.tier})</div>
+                            <div className="sub-line-type">Monthly Recurring</div>
+                          </div>
+                          <div className="sub-line-amount">${selectedService.monthlyPrice.toLocaleString()}/mo</div>
+                        </div>
 
-                    <div className="sub-invoice-line" data-testid="invoice-line-territory">
-                      <div>
-                        <div className="sub-line-name">{TERRITORY_FEE_NAME}</div>
-                        <div className="sub-line-type">One-Time</div>
-                      </div>
-                      <div className="sub-line-amount">${TERRITORY_FEE.toLocaleString()}</div>
-                    </div>
+                        <div className="sub-invoice-line" data-testid="invoice-line-territory">
+                          <div>
+                            <div className="sub-line-name">{TERRITORY_FEE_NAME}</div>
+                            <div className="sub-line-type">One-Time</div>
+                          </div>
+                          <div className="sub-line-amount">${TERRITORY_FEE.toLocaleString()}</div>
+                        </div>
+                      </>
+                    )}
                   </div>
+
+                  {/* Missing selection notice */}
+                  {(!selectedWebsite || !selectedService) && (
+                    <div className="sub-invoice-notice">
+                      <AlertCircle size={14} />
+                      <span>
+                        {!selectedWebsite ? 'Select a website service to continue' : 'Select a service tier to continue'}
+                      </span>
+                    </div>
+                  )}
 
                   {/* Small Market Discount Token */}
                   <div className="sub-token-section" data-testid="discount-token-section">
@@ -212,31 +232,37 @@ export default function SubscribePage() {
                     </div>
                   )}
 
-                  {/* Totals */}
-                  <div className="sub-invoice-totals">
-                    <div className="sub-total-line">
-                      <span>Monthly Recurring</span>
-                      <span className={invoice.tokenApplied ? 'sub-discounted' : ''}>
-                        {invoice.tokenApplied && <s>${selectedService.monthlyPrice.toLocaleString()}</s>}
-                        ${invoice.monthlyTotal.toLocaleString()}/mo
-                      </span>
+                  {/* Totals - only show when both selections made */}
+                  {selectedService && selectedWebsite && (
+                    <div className="sub-invoice-totals">
+                      <div className="sub-total-line">
+                        <span>Website Service</span>
+                        <span>${selectedWebsite.price}</span>
+                      </div>
+                      <div className="sub-total-line">
+                        <span>Monthly Recurring</span>
+                        <span className={invoice.tokenApplied ? 'sub-discounted' : ''}>
+                          {invoice.tokenApplied && <s>${selectedService.monthlyPrice.toLocaleString()}</s>}
+                          ${invoice.monthlyTotal.toLocaleString()}/mo
+                        </span>
+                      </div>
+                      <div className="sub-total-line">
+                        <span>Territory Fee (One-Time)</span>
+                        <span className={invoice.tokenApplied ? 'sub-discounted' : ''}>
+                          {invoice.tokenApplied && <s>${TERRITORY_FEE.toLocaleString()}</s>}
+                          ${invoice.oneTimeTotal.toLocaleString()}
+                        </span>
+                      </div>
+                      <div className="sub-total-line sub-total-due">
+                        <span>Due Today</span>
+                        <span>${invoice.dueToday.toLocaleString()}</span>
+                      </div>
+                      <p className="sub-total-note">
+                        Due today includes website service, first month, plus the one-time territory fee.
+                        Subsequent months will be ${invoice.monthlyTotal.toLocaleString()}/mo.
+                      </p>
                     </div>
-                    <div className="sub-total-line">
-                      <span>One-Time Fee</span>
-                      <span className={invoice.tokenApplied ? 'sub-discounted' : ''}>
-                        {invoice.tokenApplied && <s>${TERRITORY_FEE.toLocaleString()}</s>}
-                        ${invoice.oneTimeTotal.toLocaleString()}
-                      </span>
-                    </div>
-                    <div className="sub-total-line sub-total-due">
-                      <span>Due Today</span>
-                      <span>${invoice.dueToday.toLocaleString()}</span>
-                    </div>
-                    <p className="sub-total-note">
-                      Due today includes your first month plus the one-time territory fee.
-                      Subsequent months will be ${invoice.monthlyTotal.toLocaleString()}/mo.
-                    </p>
-                  </div>
+                  )}
 
                   {/* Pay Button */}
                   <button

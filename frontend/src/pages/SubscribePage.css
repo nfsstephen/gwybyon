@@ -142,6 +142,20 @@
   flex: 1;
 }
 
+/* Invoice notice for missing selections */
+.sub-invoice-notice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+  border-radius: 8px;
+  margin-top: 16px;
+  color: #92400e;
+  font-size: 0.8rem;
+}
+
 /* ===== Tier Selection Cards ===== */
 .sub-tiers {
   display: flex;
