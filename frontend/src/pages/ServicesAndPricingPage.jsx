@@ -55,8 +55,8 @@ const ServicesAndPricingPage = () => {
           <div className="v2-label">Website Services</div>
           <h2 className="v2-title">Two Paths to a High-Performance Website</h2>
           <p className="v2-desc">
-            Whether they're starting fresh or have an existing site, we meet them where they are 
-            and build something that drives local customers to their door.
+            Whether you're starting fresh or have an existing site, we meet you where you are 
+            and build something that drives local customers to your door.
           </p>
           <div className="v2-construction-grid">
             <div className="v2-build-card" data-testid="v2-new-build">
