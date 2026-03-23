@@ -3,8 +3,24 @@ import { Check, ShoppingCart, Tag, AlertCircle, CreditCard, ChevronRight, Globe,
 import './SubscribePage.css';
 
 const WEBSITE_OPTIONS = [
-  { id: 'new-build', label: 'New Website Build', icon: Globe, description: 'Brand new website from scratch', price: 150, upgradePrice: 50 },
-  { id: 'rebuild', label: 'Rebuild & Optimize', icon: RefreshCw, description: 'Rebuild your existing website', price: 300, upgradePrice: 150 },
+  {
+    id: 'new-build',
+    label: 'New Website Build',
+    icon: Globe,
+    description: 'Brand new website from scratch',
+    buildLabel: 'Build',
+    buildPrice: 100,
+    upgradePrice: 50,
+  },
+  {
+    id: 'rebuild',
+    label: 'Rebuild & Optimize',
+    icon: RefreshCw,
+    description: 'Rebuild your existing website',
+    buildLabel: 'Rebuild',
+    buildPrice: 300,
+    upgradePrice: 150,
+  },
 ];
 
 const TIERS = [
@@ -17,13 +33,35 @@ const TERRITORY_FEE = 1497;
 const TERRITORY_FEE_NAME = 'Market Territory Restriction Fee (One-Time)';
 
 export default function SubscribePage() {
-  const [websiteChoice, setWebsiteChoice] = useState(null);
+  const [websiteChoice, setWebsiteChoice] = useState(null); // 'new-build' or 'rebuild'
+  const [serviceType, setServiceType] = useState(null); // 'build' or 'upgrade'
   const [selectedTier, setSelectedTier] = useState(null);
   const [discountToken, setDiscountToken] = useState('');
   const [tokenApplied, setTokenApplied] = useState(false);
 
   const selectedService = TIERS.find(s => s.id === selectedTier);
   const selectedWebsite = WEBSITE_OPTIONS.find(w => w.id === websiteChoice);
+
+  const websitePrice = useMemo(() => {
+    if (!selectedWebsite || !serviceType) return 0;
+    return serviceType === 'build' ? selectedWebsite.buildPrice : selectedWebsite.upgradePrice;
+  }, [selectedWebsite, serviceType]);
+
+  const websiteLineLabel = useMemo(() => {
+    if (!selectedWebsite || !serviceType) return '';
+    if (serviceType === 'build') return selectedWebsite.label;
+    return `${selectedWebsite.label} — Upgrade`;
+  }, [selectedWebsite, serviceType]);
+
+  const handleWebsiteSelect = (optId, type) => {
+    if (websiteChoice === optId && serviceType === type) {
+      setWebsiteChoice(null);
+      setServiceType(null);
+    } else {
+      setWebsiteChoice(optId);
+      setServiceType(type);
+    }
+  };
 
   const invoice = useMemo(() => {
     const discountMultiplier = tokenApplied ? 0.5 : 1;
@@ -36,15 +74,10 @@ export default function SubscribePage() {
       oneTimeTotal = TERRITORY_FEE * discountMultiplier;
     }
     
-    let websiteTotal = 0;
-    if (selectedWebsite) {
-      websiteTotal = selectedWebsite.price;
-    }
-    
-    const dueToday = monthlyTotal + oneTimeTotal + websiteTotal;
+    const dueToday = monthlyTotal + oneTimeTotal + websitePrice;
 
-    return { discountMultiplier, monthlyTotal, oneTimeTotal, websiteTotal, dueToday, tokenApplied };
-  }, [selectedService, selectedWebsite, tokenApplied]);
+    return { discountMultiplier, monthlyTotal, oneTimeTotal, websiteTotal: websitePrice, dueToday, tokenApplied };
+  }, [selectedService, websitePrice, tokenApplied]);
 
   const handleApplyToken = () => {
     // TODO: Validate token against backend
@@ -73,24 +106,52 @@ export default function SubscribePage() {
             <h2 className="sub-section-label">1. Website Service</h2>
             <div className="sub-website-options">
               {WEBSITE_OPTIONS.map(opt => {
-                const isSelected = websiteChoice === opt.id;
+                const isBuildSelected = websiteChoice === opt.id && serviceType === 'build';
+                const isUpgradeSelected = websiteChoice === opt.id && serviceType === 'upgrade';
+                const isCardActive = websiteChoice === opt.id;
                 return (
-                  <button
+                  <div
                     key={opt.id}
                     data-testid={`website-${opt.id}`}
-                    className={`sub-website-card ${isSelected ? 'selected' : ''}`}
-                    onClick={() => setWebsiteChoice(isSelected ? null : opt.id)}
+                    className={`sub-website-card ${isCardActive ? 'selected' : ''}`}
                   >
-                    <div className="sub-website-check">
-                      {isSelected ? <Check size={16} /> : <div className="sub-tier-circle" />}
+                    <div className="sub-website-card-header">
+                      <opt.icon size={20} className="sub-website-icon" />
+                      <div className="sub-website-info">
+                        <div className="sub-website-name">{opt.label}</div>
+                        <div className="sub-website-desc">{opt.description}</div>
+                      </div>
                     </div>
-                    <opt.icon size={20} className="sub-website-icon" />
-                    <div className="sub-website-info">
-                      <div className="sub-website-name">{opt.label}</div>
-                      <div className="sub-website-desc">{opt.description}</div>
-                      <div className="sub-website-price">${opt.price} initial • ${opt.upgradePrice} upgrades</div>
+                    <div className="sub-website-suboptions">
+                      <button
+                        data-testid={`website-${opt.id}-build`}
+                        className={`sub-website-suboption ${isBuildSelected ? 'active' : ''}`}
+                        onClick={() => handleWebsiteSelect(opt.id, 'build')}
+                      >
+                        <div className="sub-suboption-check">
+                          {isBuildSelected ? <Check size={14} /> : <div className="sub-tier-circle" />}
+                        </div>
+                        <span className="sub-suboption-label">{opt.buildLabel}</span>
+                        <span className="sub-suboption-price">${opt.buildPrice}</span>
+                      </button>
+                      <button
+                        data-testid={`website-${opt.id}-upgrade`}
+                        className={`sub-website-suboption ${isUpgradeSelected ? 'active' : ''}`}
+                        onClick={() => handleWebsiteSelect(opt.id, 'upgrade')}
+                      >
+                        <div className="sub-suboption-check">
+                          {isUpgradeSelected ? <Check size={14} /> : <div className="sub-tier-circle" />}
+                        </div>
+                        <span className="sub-suboption-label">Upgrade</span>
+                        <span className="sub-suboption-price">${opt.upgradePrice}</span>
+                      </button>
+                      {isUpgradeSelected && (
+                        <p className="sub-upgrade-note" data-testid={`upgrade-note-${opt.id}`}>
+                          Someone will be in contact with you to learn what upgrades you desire.
+                        </p>
+                      )}
                     </div>
-                  </button>
+                  </div>
                 );
               })}
             </div>
@@ -155,13 +216,13 @@ export default function SubscribePage() {
 
                   {/* Line Items */}
                   <div className="sub-invoice-lines">
-                    {selectedWebsite && (
+                    {selectedWebsite && serviceType && (
                       <div className="sub-invoice-line" data-testid="invoice-line-website">
                         <div>
-                          <div className="sub-line-name">{selectedWebsite.label}</div>
+                          <div className="sub-line-name">{websiteLineLabel}</div>
                           <div className="sub-line-type">Website Service (One-Time)</div>
                         </div>
-                        <div className="sub-line-amount">${selectedWebsite.price}</div>
+                        <div className="sub-line-amount">${websitePrice}</div>
                       </div>
                     )}
 
@@ -187,11 +248,11 @@ export default function SubscribePage() {
                   </div>
 
                   {/* Missing selection notice */}
-                  {(!selectedWebsite || !selectedService) && (
+                  {((!selectedWebsite || !serviceType) || !selectedService) && (
                     <div className="sub-invoice-notice">
                       <AlertCircle size={14} />
                       <span>
-                        {!selectedWebsite ? 'Select a website service to continue' : 'Select a service tier to continue'}
+                        {(!selectedWebsite || !serviceType) ? 'Select a website service to continue' : 'Select a service tier to continue'}
                       </span>
                     </div>
                   )}
@@ -233,11 +294,11 @@ export default function SubscribePage() {
                   )}
 
                   {/* Totals - only show when both selections made */}
-                  {selectedService && selectedWebsite && (
+                  {selectedService && selectedWebsite && serviceType && (
                     <div className="sub-invoice-totals">
                       <div className="sub-total-line">
                         <span>Website Service</span>
-                        <span>${selectedWebsite.price}</span>
+                        <span>${websitePrice}</span>
                       </div>
                       <div className="sub-total-line">
                         <span>Monthly Recurring</span>

@@ -67,15 +67,12 @@
 
 .sub-website-card {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column;
   background: #fff;
   border: 2px solid #e2e8f0;
   border-radius: 12px;
-  padding: 18px 20px;
-  cursor: pointer;
-  text-align: left;
-  font-family: inherit;
+  padding: 0;
+  overflow: hidden;
   transition: all 0.2s ease;
 }
 
@@ -86,15 +83,54 @@
 
 .sub-website-card.selected {
   border-color: #0d9488;
-  background: rgba(13, 148, 136, 0.03);
+  background: rgba(13, 148, 136, 0.02);
   box-shadow: 0 4px 16px rgba(13, 148, 136, 0.1);
 }
 
-.sub-website-check {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
+.sub-website-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 20px 12px;
+}
+
+.sub-website-suboptions {
+  padding: 0 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sub-website-suboption {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  text-align: left;
+  width: 100%;
+}
+
+.sub-website-suboption:hover {
+  border-color: #cbd5e1;
   background: #f1f5f9;
+}
+
+.sub-website-suboption.active {
+  border-color: #0d9488;
+  background: rgba(13, 148, 136, 0.06);
+}
+
+.sub-suboption-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
   border: 2px solid #e2e8f0;
   display: flex;
   align-items: center;
@@ -104,9 +140,32 @@
   transition: all 0.2s;
 }
 
-.sub-website-card.selected .sub-website-check {
+.sub-website-suboption.active .sub-suboption-check {
   background: #0d9488;
   border-color: #0d9488;
+}
+
+.sub-suboption-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #0f172a;
+  flex: 1;
+}
+
+.sub-suboption-price {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #059669;
+  white-space: nowrap;
+}
+
+.sub-upgrade-note {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-style: italic;
+  line-height: 1.5;
+  padding: 4px 14px 0;
+  margin: 0;
 }
 
 .sub-website-icon {

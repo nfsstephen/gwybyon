@@ -154,4 +154,21 @@ Note: 29 UI library components in `/components/ui/` are unused but kept for pote
 
 ---
 
-*Last Updated: March 24, 2026*
+### Session: March 23, 2026 (Fork 2)
+
+#### 7. Subscribe Page — Dual Option Cards
+- Each website service card now has two sub-options: "Build/Rebuild" and "Upgrade"
+- New Website Build: Build = $100, Upgrade = $50
+- Rebuild & Optimize: Rebuild = $300, Upgrade = $150
+- Only one option selectable at a time (radio behavior across all cards)
+- Upgrade note: "Someone will be in contact with you to learn what upgrades you desire"
+- Invoice dynamically reflects selected option and price
+
+#### 8. Services & Pricing Page — Prominent Pricing
+- Prices redesigned to be dramatically larger and eye-catching
+- $100 (New Build) and $300 (Rebuild) shown in large green hero text
+- Labels "INITIAL PRODUCTION" / "REBUILD FEE" below
+- Upgrade prices clearly displayed beneath divider
+- Updated New Build from $150 → $100
+
+*Last Updated: March 23, 2026*

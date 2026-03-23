@@ -79,8 +79,16 @@ const ServicesAndPricingPage = () => {
                 <li><Check size={16} /> Review display and trust signals</li>
               </ul>
               <div className="v2-build-pricing">
-                <div className="v2-price-item"><strong>Initial Production:</strong> $150</div>
-                <div className="v2-price-item"><strong>Upgrades:</strong> $50 per request</div>
+                <div className="v2-price-hero">
+                  <span className="v2-price-dollar">$</span>
+                  <span className="v2-price-amount">100</span>
+                </div>
+                <div className="v2-price-label">Initial Production</div>
+                <div className="v2-price-upgrade-row">
+                  <span className="v2-price-upgrade-tag">Upgrades:</span>
+                  <span className="v2-price-upgrade-val">$50</span>
+                  <span className="v2-price-upgrade-label">per request</span>
+                </div>
               </div>
               <div className="v2-build-ideal">
                 <Zap size={14} />
@@ -107,8 +115,16 @@ const ServicesAndPricingPage = () => {
                 <li><Check size={16} /> Redirect mapping to preserve existing rankings</li>
               </ul>
               <div className="v2-build-pricing">
-                <div className="v2-price-item"><strong>Rebuild:</strong> $300</div>
-                <div className="v2-price-item"><strong>Upgrades (e.g., color scheme change):</strong> $150</div>
+                <div className="v2-price-hero">
+                  <span className="v2-price-dollar">$</span>
+                  <span className="v2-price-amount">300</span>
+                </div>
+                <div className="v2-price-label">Rebuild Fee</div>
+                <div className="v2-price-upgrade-row">
+                  <span className="v2-price-upgrade-tag">Upgrades:</span>
+                  <span className="v2-price-upgrade-val">$150</span>
+                  <span className="v2-price-upgrade-label">e.g., color scheme change</span>
+                </div>
               </div>
               <div className="v2-build-ideal">
                 <Zap size={14} />
