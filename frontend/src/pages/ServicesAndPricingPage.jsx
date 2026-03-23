@@ -81,7 +81,7 @@ const ServicesAndPricingPage = () => {
               <div className="v2-build-pricing">
                 <div className="v2-price-hero">
                   <span className="v2-price-dollar">$</span>
-                  <span className="v2-price-amount">100</span>
+                  <span className="v2-price-amount">150</span>
                 </div>
                 <div className="v2-price-label">Initial Production</div>
                 <div className="v2-price-upgrade-row">

@@ -9,7 +9,7 @@ const WEBSITE_OPTIONS = [
     icon: Globe,
     description: 'Brand new website from scratch',
     buildLabel: 'Build',
-    buildPrice: 100,
+    buildPrice: 150,
     upgradePrice: 50,
   },
   {
@@ -220,7 +220,7 @@ export default function SubscribePage() {
                       <div className="sub-invoice-line" data-testid="invoice-line-website">
                         <div>
                           <div className="sub-line-name">{websiteLineLabel}</div>
-                          <div className="sub-line-type">Website Service (One-Time)</div>
+                          <div className="sub-line-type">Website Service</div>
                         </div>
                         <div className="sub-line-amount">${websitePrice}</div>
                       </div>
