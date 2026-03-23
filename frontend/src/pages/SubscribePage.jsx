@@ -3,8 +3,8 @@ import { Check, ShoppingCart, Tag, AlertCircle, CreditCard, ChevronRight, Globe,
 import './SubscribePage.css';
 
 const WEBSITE_OPTIONS = [
-  { id: 'new-build', label: 'New Website Build', icon: Globe, description: 'Brand new website designed and built from scratch' },
-  { id: 'rebuild', label: 'Rebuild & Optimize', icon: RefreshCw, description: 'Rebuild your existing website for performance and SEO' },
+  { id: 'new-build', label: 'New Website Build', icon: Globe, description: 'Brand new website from scratch', price: 150, upgradePrice: 50 },
+  { id: 'rebuild', label: 'Rebuild & Optimize', icon: RefreshCw, description: 'Rebuild your existing website', price: 300, upgradePrice: 150 },
 ];
 
 const TIERS = [
@@ -75,9 +75,10 @@ export default function SubscribePage() {
                       {isSelected ? <Check size={16} /> : <div className="sub-tier-circle" />}
                     </div>
                     <opt.icon size={20} className="sub-website-icon" />
-                    <div>
+                    <div className="sub-website-info">
                       <div className="sub-website-name">{opt.label}</div>
                       <div className="sub-website-desc">{opt.description}</div>
+                      <div className="sub-website-price">${opt.price} initial • ${opt.upgradePrice} upgrades</div>
                     </div>
                   </button>
                 );

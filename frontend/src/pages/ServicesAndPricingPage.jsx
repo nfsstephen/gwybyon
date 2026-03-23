@@ -78,6 +78,10 @@ const ServicesAndPricingPage = () => {
                 <li><Check size={16} /> Google Business Profile integration</li>
                 <li><Check size={16} /> Review display and trust signals</li>
               </ul>
+              <div className="v2-build-pricing">
+                <div className="v2-price-item"><strong>Initial Production:</strong> $150</div>
+                <div className="v2-price-item"><strong>Upgrades:</strong> $50 per request</div>
+              </div>
               <div className="v2-build-ideal">
                 <Zap size={14} />
                 <span><strong>Ideal for:</strong> New businesses, outdated sites beyond repair, or companies ready for a complete rebrand.</span>
@@ -91,22 +95,41 @@ const ServicesAndPricingPage = () => {
               <h3>Rebuild & Optimize</h3>
               <p className="v2-build-tagline">Keep what works. Fix everything else.</p>
               <p className="v2-build-desc">
-                We scrape the existing site, preserve content and brand identity, then rebuild 
+                We take your existing site, preserve content and brand identity, then rebuild 
                 the entire structure for performance and local search. Same brand, dramatically better results.
               </p>
               <ul className="v2-build-features">
-                <li><Check size={16} /> Full audit and scrape of current site</li>
+                <li><Check size={16} /> Full audit of current site</li>
                 <li><Check size={16} /> Content migration with SEO improvements</li>
                 <li><Check size={16} /> Performance optimization (speed, mobile, Core Web Vitals)</li>
                 <li><Check size={16} /> Schema markup and structured data</li>
                 <li><Check size={16} /> Local search optimization layered in</li>
                 <li><Check size={16} /> Redirect mapping to preserve existing rankings</li>
               </ul>
+              <div className="v2-build-pricing">
+                <div className="v2-price-item"><strong>Rebuild:</strong> $300</div>
+                <div className="v2-price-item"><strong>Upgrades (e.g., color scheme change):</strong> $150</div>
+              </div>
               <div className="v2-build-ideal">
                 <Zap size={14} />
                 <span><strong>Ideal for:</strong> Established businesses with good content but poor technical performance.</span>
               </div>
             </div>
+          </div>
+
+          {/* Transparency Comment Box */}
+          <div className="v2-transparency-box">
+            <h4>A Note on Transparency</h4>
+            <p>
+              We want to begin this process with complete transparency. With the advent of AI, you absolutely 
+              can build your own site — but before you do, ask yourself a few questions:
+            </p>
+            <ol>
+              <li><strong>Where is my time best spent?</strong> Doing something I have no knowledge of, or letting professionals continue to provide the service while I focus on running my business?</li>
+              <li><strong>If this company is offering me a website at half the price of my previous provider, why didn't they call me first and cut their price?</strong></li>
+              <li><strong>What happens when something breaks?</strong> Will I know how to fix it, or will I be searching YouTube at midnight hoping for answers?</li>
+              <li><strong>Is "cheap" really cheaper?</strong> A website that doesn't convert visitors into customers costs you money every day it's live.</li>
+            </ol>
           </div>
         </div>
       </section>
