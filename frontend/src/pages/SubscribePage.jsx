@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Check, ShoppingCart, Tag, AlertCircle, CreditCard, ChevronRight, Globe, RefreshCw, MapPin } from 'lucide-react';
+import { Check, ShoppingCart, AlertCircle, CreditCard, ChevronRight, Globe, RefreshCw, MapPin } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import CountyMap from '../components/CountyMap';
 import './SubscribePage.css';
@@ -59,8 +59,6 @@ export default function SubscribePage() {
   const [serviceType, setServiceType] = useState(saved.serviceType ?? null);
   const [selectedCounties, setSelectedCounties] = useState(saved.selectedCounties ?? []);
   const [selectedTier, setSelectedTier] = useState(saved.selectedTier ?? null);
-  const [discountToken, setDiscountToken] = useState('');
-  const [tokenApplied, setTokenApplied] = useState(false);
 
   useEffect(() => {
     saveState({ websiteChoice, serviceType, selectedCounties, selectedTier });
@@ -106,22 +104,15 @@ export default function SubscribePage() {
   }, [selectedCounties]);
 
   const invoice = useMemo(() => {
-    const discountMultiplier = tokenApplied ? 0.5 : 1;
-
     let monthlyTotal = 0;
     if (selectedService) {
-      monthlyTotal = selectedService.monthlyPrice * discountMultiplier;
+      monthlyTotal = selectedService.monthlyPrice;
     }
 
     const dueToday = monthlyTotal + websitePrice + countyTotal;
 
-    return { discountMultiplier, monthlyTotal, websiteTotal: websitePrice, countyTotal, dueToday, tokenApplied };
-  }, [selectedService, websitePrice, countyTotal, tokenApplied]);
-
-  const handleApplyToken = () => {
-    // TODO: Validate token against backend
-    setTokenApplied(false);
-  };
+    return { monthlyTotal, websiteTotal: websitePrice, countyTotal, dueToday };
+  }, [selectedService, websitePrice, countyTotal]);
 
   const location = useLocation();
   useEffect(() => {
@@ -325,42 +316,6 @@ export default function SubscribePage() {
                     </div>
                   )}
 
-                  {/* Small Market Discount Token */}
-                  <div className="sub-token-section" data-testid="discount-token-section">
-                    <div className="sub-token-label">
-                      <Tag size={14} />
-                      <span>Designated Small Market Discount</span>
-                    </div>
-                    <div className="sub-token-input-row">
-                      <input
-                        data-testid="discount-token-input"
-                        type="text"
-                        placeholder="Enter discount token from invitation"
-                        value={discountToken}
-                        onChange={e => setDiscountToken(e.target.value)}
-                        className="sub-token-input"
-                        disabled
-                      />
-                      <button
-                        data-testid="apply-token-button"
-                        className="sub-token-btn"
-                        onClick={handleApplyToken}
-                        disabled
-                      >
-                        Apply
-                      </button>
-                    </div>
-                    <p className="sub-token-note">Coming Soon — If your invitation designates you as a small market customer, enter your token here for a 50% discount on all services.</p>
-                  </div>
-
-                  {/* Discount applied */}
-                  {invoice.tokenApplied && (
-                    <div className="sub-discount-applied" data-testid="discount-applied">
-                      <Check size={16} />
-                      <span>Small Market Discount Applied: 50% off all services</span>
-                    </div>
-                  )}
-
                   {/* Totals - only show when all selections made */}
                   {selectedService && selectedWebsite && serviceType && selectedCounties.length > 0 && (
                     <div className="sub-invoice-totals">
@@ -374,8 +329,7 @@ export default function SubscribePage() {
                       </div>
                       <div className="sub-total-line">
                         <span>Monthly Recurring</span>
-                        <span className={invoice.tokenApplied ? 'sub-discounted' : ''}>
-                          {invoice.tokenApplied && <s>${selectedService.monthlyPrice.toLocaleString()}</s>}
+                        <span>
                           ${invoice.monthlyTotal.toLocaleString()}/mo
                         </span>
                       </div>
@@ -406,7 +360,6 @@ export default function SubscribePage() {
             </div>
 
             {/* TODO: Integrate Stripe payment processing */}
-            {/* TODO: Validate small market discount tokens against backend */}
             {/* TODO: Auto-populate company info from invitation email */}
             {/* TODO: Post-payment flow — "What happens after user pays for service?" */}
           </div>
