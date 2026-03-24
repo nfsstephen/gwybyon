@@ -68,6 +68,7 @@ const Navigation = ({ scrolled }) => {
                 <li><Link to="/big-market/hvac" onClick={closeMobileMenu}>Air & Heating Companies</Link></li>
                 <li><Link to="/big-market/pest-control" onClick={closeMobileMenu}>Pest Control Services</Link></li>
                 <li><Link to="/big-market/real-estate" onClick={closeMobileMenu}>Real Estate</Link></li>
+                <li><Link to="/big-market/roofing" onClick={closeMobileMenu}>Roofing Companies</Link></li>
               </ul>
             </li>
 

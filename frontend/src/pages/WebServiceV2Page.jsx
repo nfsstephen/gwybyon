@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Droplets, Wrench, Zap, Thermometer, Bug, Home, ArrowRight, Check,
+  Droplets, Wrench, Zap, Thermometer, Bug, Home, HardHat, ArrowRight, Check,
   Globe, Shield, MapPin, Phone, Layers, Search, BarChart3, X
 } from 'lucide-react';
 import FiveToolsSection from '../components/FiveToolsSection';
@@ -14,6 +14,7 @@ const industries = [
   { name: 'Air & Heating Companies', icon: Thermometer, path: '/big-market/hvac', color: '#dc2626', desc: 'Seasonal demand spikes make search rankings critical. Large field teams need scalable phone management.' },
   { name: 'Pest Control Services', icon: Bug, path: '/big-market/pest-control', color: '#16a34a', desc: 'Recurring service model with technicians covering territories daily. Local visibility drives the first appointment.' },
   { name: 'Real Estate', icon: Home, path: '/big-market/real-estate', color: '#0d9488', desc: 'Agents live on their phones. Separating client calls from personal life is essential. Local search drives leads.' },
+  { name: 'Roofing Companies', icon: HardHat, path: '/big-market/roofing', color: '#b45309', desc: 'High-ticket jobs driven by local search and storm events. Field crews need managed communication across job sites.' },
 ];
 
 const WebServiceV2Page = () => {
@@ -31,7 +32,7 @@ const WebServiceV2Page = () => {
           <h1 className="v2-hero-title" data-testid="v2-hero-title">
             One Vendor.<br />
             <span className="v2-highlight">Three Solutions.</span><br />
-            Six Industries.
+            Seven Industries.
           </h1>
           <p className="v2-hero-subtitle">
             Every local service company needs three things: a website built for modern search, 
@@ -223,9 +224,9 @@ const WebServiceV2Page = () => {
       <section className="v2-industries" data-testid="v2-industries">
         <div className="v2-container">
           <div className="v2-label">Who We Serve</div>
-          <h2 className="v2-title">Six High-Value Industries</h2>
+          <h2 className="v2-title">Seven High-Value Industries</h2>
           <p className="v2-desc">
-            We've identified six industries where local businesses need all three solutions. 
+            We've identified seven industries where local businesses need all three solutions. 
             Click into each to see the full strategy.
           </p>
           <div className="v2-industry-grid">

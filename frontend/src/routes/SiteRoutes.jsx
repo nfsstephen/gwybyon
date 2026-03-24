@@ -10,6 +10,7 @@ import BigMarketElectriciansPage from '../pages/BigMarketElectriciansPage';
 import BigMarketHVACPage from '../pages/BigMarketHVACPage';
 import BigMarketPestControlPage from '../pages/BigMarketPestControlPage';
 import BigMarketRealEstatePage from '../pages/BigMarketRealEstatePage';
+import BigMarketRoofingPage from '../pages/BigMarketRoofingPage';
 import WebServiceV2Page from '../pages/WebServiceV2Page';
 import ServicesAndPricingPage from '../pages/ServicesAndPricingPage';
 import SubscribePage from '../pages/SubscribePage';
@@ -27,6 +28,7 @@ export default function SiteRoutes({ scrolled }) {
         <Route path="/big-market/hvac" element={<BigMarketHVACPage />} />
         <Route path="/big-market/pest-control" element={<BigMarketPestControlPage />} />
         <Route path="/big-market/real-estate" element={<BigMarketRealEstatePage />} />
+        <Route path="/big-market/roofing" element={<BigMarketRoofingPage />} />
         <Route path="/web-service-v2" element={<WebServiceV2Page />} />
         <Route path="/services-pricing" element={<ServicesAndPricingPage />} />
         <Route path="/subscribe" element={<SubscribePage />} />
