@@ -442,6 +442,11 @@
   margin-top: 2px;
 }
 
+.sp-matrix-cta {
+  margin-top: 20px;
+  margin-bottom: 8px;
+}
+
 /* Group Header Rows */
 .sp-matrix-group-header td {
   background: var(--sp-surface);
