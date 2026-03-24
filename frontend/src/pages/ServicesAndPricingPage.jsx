@@ -394,7 +394,7 @@ const ServicesAndPricingPage = () => {
                 <tr className="sp-matrix-tool-count">
                   <td className="sp-matrix-feature"><strong>Active GeoGrid Tools</strong></td>
                   <td className="sp-matrix-count">2 of 5</td>
-                  <td className="sp-matrix-count sp-matrix-count-highlight">4 of 5</td>
+                  <td className="sp-matrix-count sp-matrix-count-full">5 of 5</td>
                   <td className="sp-matrix-count sp-matrix-count-full">5 of 5</td>
                 </tr>
 
@@ -438,13 +438,13 @@ const ServicesAndPricingPage = () => {
                 <tr>
                   <td className="sp-matrix-feature">Advanced Local SEO</td>
                   <td className="sp-matrix-x"><X size={18} /></td>
-                  <td className="sp-matrix-x"><X size={18} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
                   <td className="sp-matrix-check"><Check size={22} /></td>
                 </tr>
                 <tr>
                   <td className="sp-matrix-feature">A/B Testing for Conversions</td>
                   <td className="sp-matrix-x"><X size={18} /></td>
-                  <td className="sp-matrix-x"><X size={18} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
                   <td className="sp-matrix-check"><Check size={22} /></td>
                 </tr>
 
