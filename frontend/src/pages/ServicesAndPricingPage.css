@@ -501,6 +501,17 @@
   border-left: 1px solid rgba(0, 0, 0, 0.05);
 }
 
+.sp-matrix-check,
+.sp-matrix-x {
+  line-height: 0;
+}
+
+.sp-matrix-check svg,
+.sp-matrix-x svg {
+  display: inline-block;
+  vertical-align: middle;
+}
+
 .sp-matrix-check svg {
   color: #047857;
   stroke-width: 3;

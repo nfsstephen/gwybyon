@@ -319,6 +319,16 @@ const ServicesAndPricingPage = () => {
             Growth actively builds your rankings. Authority deploys the full arsenal to dominate your market.
           </p>
 
+          <div className="sp-matrix-authority-note" data-testid="authority-note">
+            <div className="sp-matrix-authority-note-icon"><Shield size={18} /></div>
+            <div>
+              <strong>Why Authority?</strong> The Authority tier is designed specifically for businesses operating in 
+              <strong> Large Market territories</strong> ($1,200/area) where higher customer density demands the full 
+              5-tool GeoGrid suite, dedicated account management, and priority support. 
+              Small Market territories ($300/area) are fully served by Foundation or Growth — no need to upgrade.
+            </div>
+          </div>
+
           <div className="sp-matrix-wrapper">
             <table className="sp-matrix-table" data-testid="sp-matrix-table">
               <thead>
@@ -506,15 +516,6 @@ const ServicesAndPricingPage = () => {
           </div>
 
           {/* Activation Fee removed — replaced by per-county pricing */}
-          <div className="sp-matrix-authority-note" data-testid="authority-note">
-            <div className="sp-matrix-authority-note-icon"><Shield size={18} /></div>
-            <div>
-              <strong>Why Authority?</strong> The Authority tier is designed specifically for businesses operating in 
-              <strong> Large Market territories</strong> ($1,200/area) where higher customer density demands the full 
-              5-tool GeoGrid suite, dedicated account management, and priority support. 
-              Small Market territories ($300/area) are fully served by Foundation or Growth — no need to upgrade.
-            </div>
-          </div>
         </div>
       </section>
 
