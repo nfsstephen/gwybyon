@@ -907,8 +907,8 @@
   }
 }
 
-/* ===== Invoice Territory Subsection ===== */
-.sub-invoice-territory-header {
+/* Invoice territory label (no total at top) */
+.sub-invoice-territory-label {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -966,4 +966,50 @@
   font-weight: 700;
   color: #475569;
   font-size: 0.8rem;
+}
+
+
+/* Territory total row — at bottom of county list */
+.sub-invoice-territory-total-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0 4px 22px;
+  margin-top: 6px;
+  border-top: 1px dashed #e2e8f0;
+  font-size: 0.84rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+/* Tier block with free month note */
+.sub-invoice-tier-block {
+  border-top: 1px solid #f1f5f9;
+  margin-top: 4px;
+  padding-top: 4px;
+}
+
+.sub-invoice-free-month {
+  font-size: 0.75rem;
+  color: #059669;
+  font-style: italic;
+  line-height: 1.5;
+  margin: 4px 0 0;
+  padding: 0;
+}
+
+/* Softer Due Today */
+.sub-total-due-soft {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #334155;
+  padding-top: 12px;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* Monthly recurring line under Due Today */
+.sub-total-recurring {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #64748b;
+  padding-top: 8px;
 }

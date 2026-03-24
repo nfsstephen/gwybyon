@@ -109,7 +109,7 @@ export default function SubscribePage() {
       monthlyTotal = selectedService.monthlyPrice;
     }
 
-    const dueToday = monthlyTotal + websitePrice + countyTotal;
+    const dueToday = websitePrice + countyTotal;
 
     return { monthlyTotal, websiteTotal: websitePrice, countyTotal, dueToday };
   }, [selectedService, websitePrice, countyTotal]);
@@ -259,6 +259,7 @@ export default function SubscribePage() {
 
                   {/* Line Items */}
                   <div className="sub-invoice-lines">
+                    {/* 1. Website Service */}
                     {selectedWebsite && serviceType && (
                       <div className="sub-invoice-line" data-testid="invoice-line-website">
                         <div>
@@ -269,22 +270,12 @@ export default function SubscribePage() {
                       </div>
                     )}
 
-                    {selectedService && (
-                      <div className="sub-invoice-line" data-testid="invoice-line-plan">
-                        <div>
-                          <div className="sub-line-name">{selectedService.name} Plan (Tier {selectedService.tier})</div>
-                          <div className="sub-line-type">Monthly Recurring</div>
-                        </div>
-                        <div className="sub-line-amount">${selectedService.monthlyPrice.toLocaleString()}/mo</div>
-                      </div>
-                    )}
-
+                    {/* 2. Market Territories — counties first, then total */}
                     {selectedCounties.length > 0 && (
                       <>
-                        <div className="sub-invoice-territory-header" data-testid="invoice-line-territories">
+                        <div className="sub-invoice-territory-label">
                           <MapPin size={14} />
                           <span>Market Territories ({selectedCounties.length})</span>
-                          <span className="sub-invoice-territory-total">${countyTotal.toLocaleString()}</span>
                         </div>
                         {selectedCounties.map(id => {
                           const c = DEMO_COUNTIES.find(co => co.id === id);
@@ -298,7 +289,25 @@ export default function SubscribePage() {
                             </div>
                           );
                         })}
+                        <div className="sub-invoice-territory-total-row">
+                          <span>Territory Total</span>
+                          <span>${countyTotal.toLocaleString()}</span>
+                        </div>
                       </>
+                    )}
+
+                    {/* 3. Service Tier — at bottom with first month free note */}
+                    {selectedService && (
+                      <div className="sub-invoice-tier-block" data-testid="invoice-line-plan">
+                        <div className="sub-invoice-line">
+                          <div>
+                            <div className="sub-line-name">{selectedService.name} Plan (Tier {selectedService.tier})</div>
+                            <div className="sub-line-type">Monthly Recurring</div>
+                          </div>
+                          <div className="sub-line-amount">${selectedService.monthlyPrice.toLocaleString()}/mo</div>
+                        </div>
+                        <p className="sub-invoice-free-month">First Month Free, to cover the learning curve of using the Tools.</p>
+                      </div>
                     )}
                   </div>
 
@@ -316,31 +325,22 @@ export default function SubscribePage() {
                     </div>
                   )}
 
-                  {/* Totals - only show when all selections made */}
-                  {selectedService && selectedWebsite && serviceType && selectedCounties.length > 0 && (
+                  {/* Totals */}
+                  {selectedWebsite && serviceType && selectedCounties.length > 0 && (
                     <div className="sub-invoice-totals">
-                      <div className="sub-total-line">
-                        <span>Website Service</span>
-                        <span>${websitePrice}</span>
-                      </div>
-                      <div className="sub-total-line">
-                        <span>Market Territories</span>
-                        <span>${countyTotal.toLocaleString()}</span>
-                      </div>
-                      <div className="sub-total-line">
-                        <span>Monthly Recurring</span>
-                        <span>
-                          ${invoice.monthlyTotal.toLocaleString()}/mo
-                        </span>
-                      </div>
-                      <div className="sub-total-line sub-total-due">
+                      <div className="sub-total-line sub-total-due-soft">
                         <span>Due Today</span>
                         <span>${invoice.dueToday.toLocaleString()}</span>
                       </div>
                       <p className="sub-total-note">
-                        Due today includes website service, market territory fees, and first month.
-                        Subsequent months will be ${invoice.monthlyTotal.toLocaleString()}/mo.
+                        Includes website service and market territory fees.
                       </p>
+                      {selectedService && (
+                        <div className="sub-total-line sub-total-recurring">
+                          <span>Monthly Recurring (after free month)</span>
+                          <span>${invoice.monthlyTotal.toLocaleString()}/mo</span>
+                        </div>
+                      )}
                     </div>
                   )}
 
