@@ -892,6 +892,17 @@
   color: #fff;
 }
 
+/* CTA placed below card pairs */
+.v2-cta-below {
+  max-width: 480px;
+  margin: 24px auto 0;
+}
+
+.v2-cta-below .v2-build-cta {
+  width: 100%;
+  margin: 0;
+}
+
 
 /* ===== Single Product Cards ===== */
 .sp-product-card {

@@ -236,10 +236,10 @@ export default function SubscribePage() {
             <h2 className="sub-section-label">Your Invoice</h2>
 
             <div className="sub-invoice">
-              {(!selectedService && !selectedWebsite) ? (
+              {(!selectedService && !selectedWebsite && selectedCounties.length === 0) ? (
                 <div className="sub-invoice-empty">
                   <ShoppingCart size={32} />
-                  <p>Select a website service and tier to see your invoice</p>
+                  <p>Select services or territories to build your invoice</p>
                 </div>
               ) : (
                 <>

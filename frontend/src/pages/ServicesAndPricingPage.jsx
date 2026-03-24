@@ -58,53 +58,81 @@ const ServicesAndPricingPage = () => {
             Whether you're starting fresh or have an existing site, we meet you where you are 
             and build something that drives local customers to your door.
           </p>
-          <div className="sp-product-card" data-testid="v2-website-card">
-            <div className="sp-product-header">
-              <Globe size={28} />
-              <h3>Website Services</h3>
-            </div>
-            <p className="sp-product-desc">
-              Whether you're starting fresh or rebuilding an existing site, we create high-performance 
-              websites optimized for local search dominance. Every page is built to convert visitors into customers.
-            </p>
-            <ul className="v2-build-features">
-              <li><Check size={16} /> Custom design tailored to brand and industry</li>
-              <li><Check size={16} /> Mobile-first, fast-loading architecture</li>
-              <li><Check size={16} /> LocalBusiness schema markup built in</li>
-              <li><Check size={16} /> Geographic content strategy for service area</li>
-              <li><Check size={16} /> Google Business Profile integration</li>
-            </ul>
-            <div className="sp-product-pricing-split">
-              <div className="sp-product-price-option">
-                <div className="sp-product-price-label">New Build</div>
-                <div className="v2-build-pricing">
-                  <div className="v2-price-hero">
-                    <span className="v2-price-dollar">$</span>
-                    <span className="v2-price-amount">150</span>
-                  </div>
-                  <div className="v2-price-label">Initial Production</div>
-                  <div className="v2-price-upgrade-row">
-                    <span className="v2-price-upgrade-tag">Upgrades:</span>
-                    <span className="v2-price-upgrade-val">$50</span>
-                  </div>
+          <div className="v2-construction-grid">
+            <div className="v2-build-card" data-testid="v2-new-build">
+              <div className="v2-build-header v2-build-new">
+                <Code size={32} />
+                <span className="v2-build-option">Option 1</span>
+              </div>
+              <h3>New Build</h3>
+              <p className="v2-build-tagline">Start from scratch. Built right from day one.</p>
+              <p className="v2-build-desc">
+                A brand-new website purpose-built for local search dominance. Every page, 
+                every element is optimized for geographic entity search from the ground up.
+              </p>
+              <ul className="v2-build-features">
+                <li><Check size={16} /> Custom design tailored to brand and industry</li>
+                <li><Check size={16} /> Mobile-first, fast-loading architecture</li>
+                <li><Check size={16} /> LocalBusiness schema markup built in</li>
+                <li><Check size={16} /> Geographic content strategy for service area</li>
+                <li><Check size={16} /> Google Business Profile integration</li>
+                <li><Check size={16} /> Review display and trust signals</li>
+              </ul>
+              <div className="v2-build-pricing">
+                <div className="v2-price-hero">
+                  <span className="v2-price-dollar">$</span>
+                  <span className="v2-price-amount">150</span>
+                </div>
+                <div className="v2-price-label">Initial Production</div>
+                <div className="v2-price-upgrade-row">
+                  <span className="v2-price-upgrade-tag">Upgrades:</span>
+                  <span className="v2-price-upgrade-val">$50</span>
+                  <span className="v2-price-upgrade-label">per request</span>
                 </div>
               </div>
-              <div className="sp-product-price-divider"></div>
-              <div className="sp-product-price-option">
-                <div className="sp-product-price-label">Rebuild & Optimize</div>
-                <div className="v2-build-pricing">
-                  <div className="v2-price-hero">
-                    <span className="v2-price-dollar">$</span>
-                    <span className="v2-price-amount">300</span>
-                  </div>
-                  <div className="v2-price-label">Rebuild Fee</div>
-                  <div className="v2-price-upgrade-row">
-                    <span className="v2-price-upgrade-tag">Upgrades:</span>
-                    <span className="v2-price-upgrade-val">$150</span>
-                  </div>
-                </div>
+              <div className="v2-build-ideal">
+                <Zap size={14} />
+                <span><strong>Ideal for:</strong> New businesses, outdated sites beyond repair, or companies ready for a complete rebrand.</span>
               </div>
             </div>
+            <div className="v2-build-card" data-testid="v2-rebuild">
+              <div className="v2-build-header v2-build-rebuild">
+                <RefreshCw size={32} />
+                <span className="v2-build-option">Option 2</span>
+              </div>
+              <h3>Rebuild & Optimize</h3>
+              <p className="v2-build-tagline">Keep what works. Fix everything else.</p>
+              <p className="v2-build-desc">
+                We take your existing site, preserve content and brand identity, then rebuild 
+                the entire structure for performance and local search. Same brand, dramatically better results.
+              </p>
+              <ul className="v2-build-features">
+                <li><Check size={16} /> Full audit of current site</li>
+                <li><Check size={16} /> Content migration with SEO improvements</li>
+                <li><Check size={16} /> Performance optimization (speed, mobile, Core Web Vitals)</li>
+                <li><Check size={16} /> Schema markup and structured data</li>
+                <li><Check size={16} /> Local search optimization layered in</li>
+                <li><Check size={16} /> Redirect mapping to preserve existing rankings</li>
+              </ul>
+              <div className="v2-build-pricing">
+                <div className="v2-price-hero">
+                  <span className="v2-price-dollar">$</span>
+                  <span className="v2-price-amount">300</span>
+                </div>
+                <div className="v2-price-label">Rebuild Fee</div>
+                <div className="v2-price-upgrade-row">
+                  <span className="v2-price-upgrade-tag">Upgrades:</span>
+                  <span className="v2-price-upgrade-val">$150</span>
+                  <span className="v2-price-upgrade-label">e.g., color scheme change</span>
+                </div>
+              </div>
+              <div className="v2-build-ideal">
+                <Zap size={14} />
+                <span><strong>Ideal for:</strong> Established businesses with good content but poor technical performance.</span>
+              </div>
+            </div>
+          </div>
+          <div className="v2-cta-below">
             <Link to="/subscribe#step-website" className="v2-build-cta" data-testid="cta-website">
               Get Started <ArrowRight size={16} />
             </Link>
@@ -160,46 +188,60 @@ const ServicesAndPricingPage = () => {
             Market size refers to customer density and business opportunity within the county — not geographic area. 
             A "small market" county simply has a more focused customer base, while a "large market" has higher population density and more potential customers.
           </p>
-          <div className="sp-product-card" data-testid="sp-territory-card">
-            <div className="sp-product-header">
-              <MapPin size={28} />
-              <h3>Exclusive Market Territories</h3>
-            </div>
-            <p className="sp-product-desc">
-              Claim exclusive county-level territories where no competitor in your industry receives our services. 
-              Territories are categorized by customer density — more potential customers means a larger market area.
-            </p>
-            <ul className="v2-build-features">
-              <li><Check size={16} /> One business per industry per territory</li>
-              <li><Check size={16} /> First-come, first-served — competitors locked out permanently</li>
-              <li><Check size={16} /> Choose multiple counties to expand your reach</li>
-              <li><Check size={16} /> Territory rights included with every plan</li>
-            </ul>
-            <div className="sp-product-pricing-split">
-              <div className="sp-product-price-option">
-                <div className="sp-product-price-label">Small Market County</div>
-                <div className="v2-build-pricing">
-                  <div className="v2-price-hero">
-                    <span className="v2-price-dollar">$</span>
-                    <span className="v2-price-amount">300</span>
-                  </div>
-                  <div className="v2-price-label">Per Territory Area</div>
-                </div>
-                <p className="sp-product-price-note">Focused communities, lower competition, faster dominance</p>
+          <div className="v2-construction-grid sp-market-pricing-grid">
+            <div className="v2-build-card" data-testid="sp-small-market-card">
+              <div className="v2-build-header v2-build-new">
+                <MapPin size={32} />
+                <span className="v2-build-option">Small Market</span>
               </div>
-              <div className="sp-product-price-divider"></div>
-              <div className="sp-product-price-option">
-                <div className="sp-product-price-label">Large Market County</div>
-                <div className="v2-build-pricing">
-                  <div className="v2-price-hero">
-                    <span className="v2-price-dollar">$</span>
-                    <span className="v2-price-amount">1,200</span>
-                  </div>
-                  <div className="v2-price-label">Per Territory Area</div>
+              <h3>Small Market County</h3>
+              <p className="v2-build-tagline">Targeted reach in focused communities.</p>
+              <p className="v2-build-desc">
+                Small market doesn't mean small opportunity. These counties have a more focused customer base, 
+                making it easier to establish dominance quickly. Lower competition means your investment goes further.
+              </p>
+              <ul className="v2-build-features">
+                <li><Check size={16} /> Fewer competing businesses in your industry</li>
+                <li><Check size={16} /> Faster path to market dominance</li>
+                <li><Check size={16} /> Lower customer acquisition costs</li>
+                <li><Check size={16} /> Perfect for building a strong local foundation</li>
+              </ul>
+              <div className="v2-build-pricing">
+                <div className="v2-price-hero">
+                  <span className="v2-price-dollar">$</span>
+                  <span className="v2-price-amount">300</span>
                 </div>
-                <p className="sp-product-price-note">High-density areas, greater revenue potential, premium positioning</p>
+                <div className="v2-price-label">Per Territory Area</div>
               </div>
             </div>
+            <div className="v2-build-card" data-testid="sp-large-market-card">
+              <div className="v2-build-header v2-build-rebuild">
+                <Users size={32} />
+                <span className="v2-build-option">Large Market</span>
+              </div>
+              <h3>Large Market County</h3>
+              <p className="v2-build-tagline">Maximum exposure in high-density areas.</p>
+              <p className="v2-build-desc">
+                Large market counties have a higher concentration of potential customers. More people means 
+                more opportunity — and a protected territory here gives you access to a larger customer pool 
+                that competitors can't touch.
+              </p>
+              <ul className="v2-build-features">
+                <li><Check size={16} /> Higher concentration of potential customers</li>
+                <li><Check size={16} /> Greater revenue potential per territory</li>
+                <li><Check size={16} /> Premium market positioning</li>
+                <li><Check size={16} /> Exclusive access to high-demand areas</li>
+              </ul>
+              <div className="v2-build-pricing">
+                <div className="v2-price-hero">
+                  <span className="v2-price-dollar">$</span>
+                  <span className="v2-price-amount">1,200</span>
+                </div>
+                <div className="v2-price-label">Per Territory Area</div>
+              </div>
+            </div>
+          </div>
+          <div className="v2-cta-below">
             <Link to="/subscribe#step-market-areas" className="v2-build-cta" data-testid="cta-territory">
               Claim Territory <ArrowRight size={16} />
             </Link>
