@@ -241,10 +241,26 @@ const ServicesAndPricingPage = () => {
               </div>
             </div>
           </div>
-          <div className="v2-cta-below">
-            <Link to="/subscribe#step-market-areas" className="v2-build-cta" data-testid="cta-territory">
-              Claim Territory <ArrowRight size={16} />
-            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Ready to Claim CTA — after territory cards */}
+      <section className="sp-cta" data-testid="sp-cta">
+        <div className="sp-container">
+          <div className="sp-cta-inner">
+            <Shield size={40} className="sp-cta-icon" />
+            <h2>Ready to Claim Your Territory?</h2>
+            <p>
+              Territories are limited and assigned on a first-come, first-served basis. 
+              Once a competitor in your industry claims your area, it's gone. 
+              Don't wait to find out someone else moved first.
+            </p>
+            <div className="sp-cta-btns">
+              <Link to="/subscribe" className="sp-btn-primary" data-testid="sp-cta-claim">
+                Claim your Territory before it is gone <ArrowRight size={18} />
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -519,25 +535,6 @@ const ServicesAndPricingPage = () => {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="sp-cta" data-testid="sp-cta">
-        <div className="sp-container">
-          <div className="sp-cta-inner">
-            <Shield size={40} className="sp-cta-icon" />
-            <h2>Ready to Claim Your Territory?</h2>
-            <p>
-              Territories are limited and assigned on a first-come, first-served basis. 
-              Once a competitor in your industry claims your area, it's gone. 
-              Don't wait to find out someone else moved first.
-            </p>
-            <div className="sp-cta-btns">
-              <Link to="/subscribe" className="sp-btn-primary" data-testid="sp-cta-claim">
-                Claim your Territory before it is gone <ArrowRight size={18} />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 };
