@@ -32,7 +32,7 @@ const ServicesAndPricingPage = () => {
           </p>
           <div className="sp-hero-stats">
             <div className="sp-stat">
-              <span className="sp-stat-num">6</span>
+              <span className="sp-stat-num">7</span>
               <span className="sp-stat-label">Industries Served</span>
             </div>
             <div className="sp-stat-divider"></div>
