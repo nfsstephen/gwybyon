@@ -1,5 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Check, ShoppingCart, Tag, AlertCircle, CreditCard, ChevronRight, Globe, RefreshCw, MapPin } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 import CountyMap from '../components/CountyMap';
 import './SubscribePage.css';
 
@@ -104,6 +105,16 @@ export default function SubscribePage() {
     setTokenApplied(false);
   };
 
+  const location = useLocation();
+  useEffect(() => {
+    if (location.hash) {
+      const el = document.querySelector(location.hash);
+      if (el) {
+        setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+      }
+    }
+  }, [location.hash]);
+
   return (
     <div className="sub-page" data-testid="subscribe-page">
       {/* Header */}
@@ -123,7 +134,7 @@ export default function SubscribePage() {
           <div className="sub-selection" data-testid="service-selection">
 
             {/* Step 1: Website Choice */}
-            <h2 className="sub-section-label">1. Website Service</h2>
+            <h2 className="sub-section-label" id="step-website">1. Website Service</h2>
             <div className="sub-website-options">
               {WEBSITE_OPTIONS.map(opt => {
                 const isBuildSelected = websiteChoice === opt.id && serviceType === 'build';
@@ -177,36 +188,51 @@ export default function SubscribePage() {
             </div>
 
             {/* Step 2: Market Area Selection */}
-            <h2 className="sub-section-label">2. Select Your Market Areas</h2>
+            <h2 className="sub-section-label" id="step-market-areas">2. Select Your Market Areas</h2>
             <p className="sub-market-intro">
               Click on the counties below to claim exclusive territory rights.
               Each county is classified by customer density — not geographic size.
             </p>
-            <CountyMap
-              counties={DEMO_COUNTIES}
-              selectedCounties={selectedCounties}
-              onToggleCounty={handleToggleCounty}
-            />
-            {selectedCounties.length > 0 && (
-              <div className="sub-county-summary" data-testid="county-summary">
-                <div className="sub-county-summary-title">
-                  <MapPin size={16} />
-                  <span>{selectedCounties.length} {selectedCounties.length === 1 ? 'Territory' : 'Territories'} Selected</span>
-                </div>
-                <div className="sub-county-list">
-                  {selectedCounties.map(id => {
-                    const c = DEMO_COUNTIES.find(co => co.id === id);
-                    return (
-                      <div key={id} className="sub-county-chip" data-testid={`county-chip-${id}`}>
-                        <span>{c.name} County</span>
-                        <span className={`sub-county-chip-tag ${c.market}`}>{c.market === 'small' ? 'Small' : 'Large'}</span>
-                        <span className="sub-county-chip-price">${c.price.toLocaleString()}</span>
-                      </div>
-                    );
-                  })}
-                </div>
+            <div className="sub-market-layout">
+              <div className="sub-market-map-col">
+                <CountyMap
+                  counties={DEMO_COUNTIES}
+                  selectedCounties={selectedCounties}
+                  onToggleCounty={handleToggleCounty}
+                />
               </div>
-            )}
+              <div className="sub-market-summary-col">
+                {selectedCounties.length > 0 ? (
+                  <div className="sub-county-summary" data-testid="county-summary">
+                    <div className="sub-county-summary-title">
+                      <MapPin size={16} />
+                      <span>{selectedCounties.length} {selectedCounties.length === 1 ? 'Territory' : 'Territories'} Selected</span>
+                    </div>
+                    <div className="sub-county-list">
+                      {selectedCounties.map(id => {
+                        const c = DEMO_COUNTIES.find(co => co.id === id);
+                        return (
+                          <div key={id} className="sub-county-chip" data-testid={`county-chip-${id}`}>
+                            <span>{c.name} County</span>
+                            <span className={`sub-county-chip-tag ${c.market}`}>{c.market === 'small' ? 'Small' : 'Large'}</span>
+                            <span className="sub-county-chip-price">${c.price.toLocaleString()}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <div className="sub-county-total">
+                      <span>Territory Total</span>
+                      <span>${countyTotal.toLocaleString()}</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="sub-county-empty">
+                    <MapPin size={24} />
+                    <p>Click counties on the map to claim your exclusive territories</p>
+                  </div>
+                )}
+              </div>
+            </div>
 
             {/* Step 3: Tier Selection */}
             <h2 className="sub-section-label">3. Select Your Service Tier</h2>

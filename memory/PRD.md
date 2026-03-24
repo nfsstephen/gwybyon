@@ -190,4 +190,12 @@ Note: 29 UI library components in `/components/ui/` are unused but kept for pote
 - Small Market: Union, Baker, Bradford ($300 each)
 - Large Market: Columbia, Alachua, Clay ($1,200 each)
 
+#### 10. Product CTAs & Layout Fix (March 23, 2026)
+- Added "Get Started" CTA buttons on website New Build and Rebuild cards → links to /subscribe#step-website
+- Added "Claim Territory" CTA buttons on Small/Large Market cards → links to /subscribe#step-market-areas
+- Hash-based scroll: Subscribe page auto-scrolls to the relevant section when arriving from a CTA
+- Territory selection summary moved from below the map to beside it (side-by-side grid layout)
+- Added empty state placeholder when no counties selected
+- Added Territory Total row in the summary panel
+
 *Last Updated: March 23, 2026*

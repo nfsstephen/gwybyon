@@ -94,6 +94,9 @@ const ServicesAndPricingPage = () => {
                 <Zap size={14} />
                 <span><strong>Ideal for:</strong> New businesses, outdated sites beyond repair, or companies ready for a complete rebrand.</span>
               </div>
+              <Link to="/subscribe#step-website" className="v2-build-cta" data-testid="cta-new-build">
+                Get Started <ArrowRight size={16} />
+              </Link>
             </div>
             <div className="v2-build-card" data-testid="v2-rebuild">
               <div className="v2-build-header v2-build-rebuild">
@@ -130,6 +133,9 @@ const ServicesAndPricingPage = () => {
                 <Zap size={14} />
                 <span><strong>Ideal for:</strong> Established businesses with good content but poor technical performance.</span>
               </div>
+              <Link to="/subscribe#step-website" className="v2-build-cta" data-testid="cta-rebuild">
+                Get Started <ArrowRight size={16} />
+              </Link>
             </div>
           </div>
 
@@ -208,6 +214,9 @@ const ServicesAndPricingPage = () => {
                 </div>
                 <div className="v2-price-label">Per Territory Area</div>
               </div>
+              <Link to="/subscribe#step-market-areas" className="v2-build-cta" data-testid="cta-small-market">
+                Claim Territory <ArrowRight size={16} />
+              </Link>
             </div>
             <div className="v2-build-card" data-testid="sp-large-market-card">
               <div className="v2-build-header v2-build-rebuild">
@@ -234,6 +243,9 @@ const ServicesAndPricingPage = () => {
                 </div>
                 <div className="v2-price-label">Per Territory Area</div>
               </div>
+              <Link to="/subscribe#step-market-areas" className="v2-build-cta" data-testid="cta-large-market">
+                Claim Territory <ArrowRight size={16} />
+              </Link>
             </div>
           </div>
         </div>

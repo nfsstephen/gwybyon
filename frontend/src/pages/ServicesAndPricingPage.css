@@ -865,3 +865,29 @@
 .v2-transparency-box li strong {
   color: #92400e;
 }
+
+
+/* ===== Product CTA Buttons ===== */
+.v2-build-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: calc(100% - 48px);
+  margin: 0 24px 24px;
+  padding: 12px 24px;
+  background: var(--sp-teal, #0d9488);
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.v2-build-cta:hover {
+  background: var(--sp-teal-light, #14b8a6);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(13, 148, 136, 0.25);
+  color: #fff;
+}

@@ -671,16 +671,31 @@
   margin-bottom: 20px;
 }
 
+.sub-market-layout {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 20px;
+  align-items: start;
+  margin-bottom: 28px;
+}
+
+.sub-market-map-col {
+  min-width: 0;
+}
+
+.sub-market-summary-col {
+  position: sticky;
+  top: 100px;
+}
+
 /* County Map */
 .county-map-wrapper {
-  margin-bottom: 24px;
+  margin-bottom: 0;
 }
 
 .county-map-svg {
   width: 100%;
-  max-width: 560px;
   height: auto;
-  margin: 0 auto;
   display: block;
 }
 
@@ -848,4 +863,45 @@
   margin-left: auto;
   font-weight: 800;
   color: #059669;
+}
+
+
+/* County Total */
+.sub-county-total {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0 0;
+  margin-top: 12px;
+  border-top: 2px solid #0f172a;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+/* Empty territory state */
+.sub-county-empty {
+  background: #fff;
+  border: 2px dashed #e2e8f0;
+  border-radius: 12px;
+  padding: 32px 20px;
+  text-align: center;
+  color: #94a3b8;
+}
+
+.sub-county-empty svg {
+  margin-bottom: 8px;
+  opacity: 0.4;
+}
+
+.sub-county-empty p {
+  font-size: 0.85rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Responsive: stack on smaller screens */
+@media (max-width: 900px) {
+  .sub-market-layout {
+    grid-template-columns: 1fr;
+  }
 }
