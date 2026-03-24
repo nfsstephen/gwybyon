@@ -891,3 +891,84 @@
   box-shadow: 0 6px 20px rgba(13, 148, 136, 0.25);
   color: #fff;
 }
+
+
+/* ===== Single Product Cards ===== */
+.sp-product-card {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  max-width: 760px;
+  margin: 0 auto 16px;
+}
+
+.sp-product-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 28px 32px 0;
+  color: var(--sp-heading, #0f172a);
+}
+
+.sp-product-header h3 {
+  font-size: 1.35rem;
+  margin: 0;
+}
+
+.sp-product-desc {
+  padding: 12px 32px 0;
+  font-size: 0.92rem;
+  color: var(--sp-muted, #64748b);
+  line-height: 1.7;
+}
+
+.sp-product-card .v2-build-features {
+  padding: 16px 32px 0;
+}
+
+.sp-product-pricing-split {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0;
+  padding: 12px 32px 4px;
+}
+
+.sp-product-price-option {
+  text-align: center;
+}
+
+.sp-product-price-label {
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--sp-heading, #0f172a);
+  margin-bottom: 4px;
+}
+
+.sp-product-price-option .v2-build-pricing {
+  background: transparent;
+  border: none;
+  padding: 8px 0;
+  margin: 0;
+}
+
+.sp-product-price-divider {
+  width: 1px;
+  background: #e2e8f0;
+  margin: 0 16px;
+}
+
+.sp-product-price-note {
+  font-size: 0.75rem;
+  color: var(--sp-muted, #64748b);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.sp-product-card .v2-build-cta {
+  margin: 16px 32px 28px;
+  width: calc(100% - 64px);
+}

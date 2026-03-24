@@ -690,11 +690,12 @@
 
 /* County Map */
 .county-map-wrapper {
-  margin-bottom: 0;
+  margin-bottom: 28px;
 }
 
 .county-map-svg {
   width: 100%;
+  max-width: 520px;
   height: auto;
   display: block;
 }
@@ -904,4 +905,65 @@
   .sub-market-layout {
     grid-template-columns: 1fr;
   }
+}
+
+/* ===== Invoice Territory Subsection ===== */
+.sub-invoice-territory-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 0 8px;
+  border-top: 1px solid #f1f5f9;
+  margin-top: 4px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #0d9488;
+}
+
+.sub-invoice-territory-total {
+  margin-left: auto;
+  font-weight: 800;
+  color: #059669;
+  font-size: 0.88rem;
+}
+
+.sub-invoice-territory-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0 6px 22px;
+  font-size: 0.8rem;
+}
+
+.sub-invoice-county-name {
+  font-weight: 600;
+  color: #334155;
+}
+
+.sub-invoice-county-tag {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 1px 6px;
+  border-radius: 50px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.sub-invoice-county-tag.small {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.sub-invoice-county-tag.large {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.sub-invoice-county-price {
+  font-weight: 700;
+  color: #475569;
+  font-size: 0.8rem;
 }

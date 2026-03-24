@@ -193,46 +193,11 @@ export default function SubscribePage() {
               Click on the counties below to claim exclusive territory rights.
               Each county is classified by customer density — not geographic size.
             </p>
-            <div className="sub-market-layout">
-              <div className="sub-market-map-col">
-                <CountyMap
-                  counties={DEMO_COUNTIES}
-                  selectedCounties={selectedCounties}
-                  onToggleCounty={handleToggleCounty}
-                />
-              </div>
-              <div className="sub-market-summary-col">
-                {selectedCounties.length > 0 ? (
-                  <div className="sub-county-summary" data-testid="county-summary">
-                    <div className="sub-county-summary-title">
-                      <MapPin size={16} />
-                      <span>{selectedCounties.length} {selectedCounties.length === 1 ? 'Territory' : 'Territories'} Selected</span>
-                    </div>
-                    <div className="sub-county-list">
-                      {selectedCounties.map(id => {
-                        const c = DEMO_COUNTIES.find(co => co.id === id);
-                        return (
-                          <div key={id} className="sub-county-chip" data-testid={`county-chip-${id}`}>
-                            <span>{c.name} County</span>
-                            <span className={`sub-county-chip-tag ${c.market}`}>{c.market === 'small' ? 'Small' : 'Large'}</span>
-                            <span className="sub-county-chip-price">${c.price.toLocaleString()}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                    <div className="sub-county-total">
-                      <span>Territory Total</span>
-                      <span>${countyTotal.toLocaleString()}</span>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="sub-county-empty">
-                    <MapPin size={24} />
-                    <p>Click counties on the map to claim your exclusive territories</p>
-                  </div>
-                )}
-              </div>
-            </div>
+            <CountyMap
+              counties={DEMO_COUNTIES}
+              selectedCounties={selectedCounties}
+              onToggleCounty={handleToggleCounty}
+            />
 
             {/* Step 3: Tier Selection */}
             <h2 className="sub-section-label">3. Select Your Service Tier</h2>
@@ -306,15 +271,25 @@ export default function SubscribePage() {
                     )}
 
                     {selectedCounties.length > 0 && (
-                      <div className="sub-invoice-line" data-testid="invoice-line-territories">
-                        <div>
-                          <div className="sub-line-name">Market Territories ({selectedCounties.length})</div>
-                          <div className="sub-line-type">
-                            {selectedCounties.map(id => DEMO_COUNTIES.find(c => c.id === id)?.name).join(', ')}
-                          </div>
+                      <>
+                        <div className="sub-invoice-territory-header" data-testid="invoice-line-territories">
+                          <MapPin size={14} />
+                          <span>Market Territories ({selectedCounties.length})</span>
+                          <span className="sub-invoice-territory-total">${countyTotal.toLocaleString()}</span>
                         </div>
-                        <div className="sub-line-amount">${countyTotal.toLocaleString()}</div>
-                      </div>
+                        {selectedCounties.map(id => {
+                          const c = DEMO_COUNTIES.find(co => co.id === id);
+                          return (
+                            <div key={id} className="sub-invoice-territory-item" data-testid={`invoice-county-${id}`}>
+                              <div>
+                                <span className="sub-invoice-county-name">{c.name} County</span>
+                                <span className={`sub-invoice-county-tag ${c.market}`}>{c.market === 'small' ? 'SM' : 'LG'}</span>
+                              </div>
+                              <span className="sub-invoice-county-price">${c.price.toLocaleString()}</span>
+                            </div>
+                          );
+                        })}
+                      </>
                     )}
                   </div>
 
