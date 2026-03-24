@@ -335,10 +335,11 @@ const ServicesAndPricingPage = () => {
                     <div className="sp-matrix-tier-name">Growth</div>
                     <div className="sp-matrix-tier-price">$797<span>/mo</span></div>
                   </th>
-                  <th className="sp-matrix-tier-col" data-testid="sp-matrix-authority-head">
+                  <th className="sp-matrix-tier-col sp-matrix-tier-authority" data-testid="sp-matrix-authority-head">
                     <div className="sp-matrix-tier-label">Tier 3</div>
                     <div className="sp-matrix-tier-name">Authority</div>
                     <div className="sp-matrix-tier-price">$1,297<span>/mo</span></div>
+                    <div className="sp-matrix-tier-badge-lg">Large Market Territories</div>
                   </th>
                 </tr>
               </thead>
@@ -352,27 +353,27 @@ const ServicesAndPricingPage = () => {
                 </tr>
                 <tr data-testid="sp-matrix-row-scanner">
                   <td className="sp-matrix-feature">Geo-Health Scanner<span className="sp-matrix-detail">Local Authority Score & heat map analysis</span></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
                 </tr>
                 <tr data-testid="sp-matrix-row-entity-sync">
                   <td className="sp-matrix-feature">Entity-Sync Dashboard<span className="sp-matrix-detail">NAP sync across Google, Apple, Bing & 60+ directories</span></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
                 </tr>
                 <tr data-testid="sp-matrix-row-content-engine">
                   <td className="sp-matrix-feature">Neighborhood Content Engine<span className="sp-matrix-detail">AI-powered hyper-local content generation</span></td>
                   <td className="sp-matrix-x"><X size={18} /></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
                 </tr>
                 <tr data-testid="sp-matrix-row-review-magnet">
                   <td className="sp-matrix-feature">Review Magnet<span className="sp-matrix-detail">Automated SMS & email review generation</span></td>
                   <td className="sp-matrix-x"><X size={18} /></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
                 </tr>
                 <tr data-testid="sp-matrix-row-roi-tracker">
                   <td className="sp-matrix-feature">ROI Tracker<span className="sp-matrix-detail">Map Views, Direction Requests, Phone Calls</span></td>
@@ -396,15 +397,15 @@ const ServicesAndPricingPage = () => {
                 </tr>
                 <tr>
                   <td className="sp-matrix-feature">New Build or Rebuild</td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
                 </tr>
                 <tr>
                   <td className="sp-matrix-feature">Managed Hosting, SSL & Security</td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
                 </tr>
                 <tr>
                   <td className="sp-matrix-feature">Content Updates / Month</td>
@@ -415,26 +416,26 @@ const ServicesAndPricingPage = () => {
                 <tr>
                   <td className="sp-matrix-feature">Schema Markup Monitoring</td>
                   <td className="sp-matrix-x"><X size={18} /></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
                 </tr>
                 <tr>
                   <td className="sp-matrix-feature">Core Web Vitals Optimization</td>
                   <td className="sp-matrix-x"><X size={18} /></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
                 </tr>
                 <tr>
                   <td className="sp-matrix-feature">Advanced Local SEO</td>
                   <td className="sp-matrix-x"><X size={18} /></td>
                   <td className="sp-matrix-x"><X size={18} /></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
                 </tr>
                 <tr>
                   <td className="sp-matrix-feature">A/B Testing for Conversions</td>
                   <td className="sp-matrix-x"><X size={18} /></td>
                   <td className="sp-matrix-x"><X size={18} /></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
                 </tr>
 
                 {/* BYON & Communication Group */}
@@ -452,15 +453,15 @@ const ServicesAndPricingPage = () => {
                 </tr>
                 <tr>
                   <td className="sp-matrix-feature">Business/Personal Call Separation</td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
                 </tr>
                 <tr>
                   <td className="sp-matrix-feature">Call Control & Scam Protection</td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
                 </tr>
 
                 {/* Territory & Support Group */}
@@ -472,9 +473,9 @@ const ServicesAndPricingPage = () => {
                 </tr>
                 <tr>
                   <td className="sp-matrix-feature">Exclusive Territory Rights</td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
                 </tr>
                 <tr>
                   <td className="sp-matrix-feature">Performance Reports</td>
@@ -492,19 +493,28 @@ const ServicesAndPricingPage = () => {
                   <td className="sp-matrix-feature">Dedicated Account Manager</td>
                   <td className="sp-matrix-x"><X size={18} /></td>
                   <td className="sp-matrix-x"><X size={18} /></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
                 </tr>
                 <tr>
                   <td className="sp-matrix-feature">Priority Same-Day Support</td>
                   <td className="sp-matrix-x"><X size={18} /></td>
                   <td className="sp-matrix-x"><X size={18} /></td>
-                  <td className="sp-matrix-check"><Check size={18} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
                 </tr>
               </tbody>
             </table>
           </div>
 
           {/* Activation Fee removed — replaced by per-county pricing */}
+          <div className="sp-matrix-authority-note" data-testid="authority-note">
+            <div className="sp-matrix-authority-note-icon"><Shield size={18} /></div>
+            <div>
+              <strong>Why Authority?</strong> The Authority tier is designed specifically for businesses operating in 
+              <strong> Large Market territories</strong> ($1,200/area) where higher customer density demands the full 
+              5-tool GeoGrid suite, dedicated account management, and priority support. 
+              Small Market territories ($300/area) are fully served by Foundation or Growth — no need to upgrade.
+            </div>
+          </div>
         </div>
       </section>
 
