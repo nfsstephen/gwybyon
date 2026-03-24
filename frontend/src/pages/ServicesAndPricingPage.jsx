@@ -531,11 +531,8 @@ const ServicesAndPricingPage = () => {
               Don't wait to find out someone else moved first.
             </p>
             <div className="sp-cta-btns">
-              <Link to="/web-service-v2" className="sp-btn-primary" data-testid="sp-cta-overview">
-                See Full Service Details <ArrowRight size={18} />
-              </Link>
-              <Link to="/services-pricing" className="sp-btn-ghost" data-testid="sp-cta-geogrid">
-                Explore GeoGrid
+              <Link to="/subscribe" className="sp-btn-primary" data-testid="sp-cta-claim">
+                Claim your Territory before it is gone <ArrowRight size={18} />
               </Link>
             </div>
           </div>
