@@ -13,7 +13,7 @@ Gateway AI Systems website and admin platform for BYON (Bring Your Own Number) e
 ## Tech Stack
 - **Frontend**: React, Tailwind CSS, Lucide icons
 - **Backend**: FastAPI (Python), MongoDB
-- **Dashboard DB**: Supabase (planned, not yet connected)
+- **Dashboard DB**: None currently (Supabase removed from plan; Admin Dashboard UI is mocked/retained)
 
 ---
 
@@ -104,40 +104,24 @@ Note: 29 UI library components in `/components/ui/` are unused but kept for pote
 ## To-Do List
 
 ### High Priority (P0)
-- [ ] Connect Admin Dashboard to Supabase database
-- [ ] Build Territory Token backend infrastructure
-- [ ] Token → Email Invite → Map View flow
-- [ ] Sync with India tech team on architecture
+- [ ] **Connect Stripe to Subscribe page payment flow** — backend checkout session, webhooks, frontend Stripe Checkout integration
 - [ ] **Add "Proprietary Tools" statement to Products/Services page** - "We provide proprietary tools to measure and control your website effectiveness yourself. No more flying blind or depending on someone else to control your advertising - the sign on the front of your business."
 
 ### Medium Priority (P1)
+- [ ] Replace demo county map data with real, extensive Florida county data
 - [ ] Hide/secure dashboard login credentials (currently displayed for dev)
-- [ ] Real data integration for all dashboard tabs
-- [ ] Territory map visualization for token recipients
 
 ### Low Priority (P2)
 - [ ] PDF export for territory reports
 - [ ] Email notification system for invitations
 - [ ] Analytics and reporting features
 - [ ] Clean up unused UI library components (optional)
+- [ ] Admin Dashboard — keep UI, may find future use (no DB connection planned currently)
 
----
-
-## Token System Concept
-
-**Flow:**
-1. Admin creates Territory Token (defines geographic zone + industry)
-2. Token attached to email invitation
-3. Recipient clicks link, uses token
-4. Token unlocks map showing their proposed territory
-5. Recipient accepts → Territory claimed and locked
-
-**Database Tables Needed (Supabase):**
-- `territory_tokens` - token_id, territory, zip_codes, industry, status, created_at
-- `invitations` - recipient, email, token_id, sent_at, status (pending/opened/accepted)
-- `clients` - business info, territory_id, subscription status
-- `contact_requests` - inbound inquiries
-- `feedback` - client feedback and ratings
+### Removed from Backlog (Feb 2026)
+- ~~Token infrastructure & backend for territory map claiming~~ — Not needed
+- ~~Connect Admin Dashboard to Supabase~~ — Removed; dashboard UI retained for potential future use
+- **Dormant code audit:** Check for backend routes, models, or frontend components tied to Token system or Supabase that can be flagged/cleaned up
 
 ---
 
@@ -196,4 +180,19 @@ Note: 29 UI library components in `/components/ui/` are unused but kept for pote
 - Subscribe page: county selection details moved into the main invoice panel as a subsection, map gets full width
 - Invoice shows each selected county individually with SM/LG tags and individual prices
 
-*Last Updated: March 23, 2026*
+#### 11. Invoice UX & Persistence (March 23, 2026 — Fork 3)
+- Reordered invoice: Website → Territories → Tier (Free Month note) → Due Today → Monthly Recurring
+- "Due Today" now only shows upfront costs (Website + Territories), excluding monthly fee
+- First month marked "Free" on the service tier line
+- Switched Subscribe page state persistence from `sessionStorage` to `localStorage`
+- All UI/UX spacing and CTA placement refinements completed
+
+---
+
+### Session: Feb 2026 (Fork 4 — Current)
+- Updated backlog: Removed Token infrastructure and Supabase connection tasks
+- Admin Dashboard UI retained for potential future use (no DB wiring planned)
+- Noted need for dormant code audit (Token/Supabase-related code)
+- P0 next task: Stripe payment integration on Subscribe page
+
+*Last Updated: Feb 2026*
