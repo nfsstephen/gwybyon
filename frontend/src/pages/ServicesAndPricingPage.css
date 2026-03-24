@@ -156,7 +156,7 @@
 
 /* ===== Territory Protection ===== */
 .sp-territory {
-  padding: 80px 20px;
+  padding: 80px 20px 32px;
   background: var(--sp-surface);
 }
 
@@ -666,7 +666,7 @@
 
 /* ===== CTA ===== */
 .sp-cta {
-  padding: 80px 20px;
+  padding: 32px 20px 60px;
   background: var(--sp-surface);
 }
 
