@@ -166,9 +166,28 @@ Note: 29 UI library components in `/components/ui/` are unused but kept for pote
 
 #### 8. Services & Pricing Page — Prominent Pricing
 - Prices redesigned to be dramatically larger and eye-catching
-- $100 (New Build) and $300 (Rebuild) shown in large green hero text
+- $150 (New Build) and $300 (Rebuild) shown in large green hero text
 - Labels "INITIAL PRODUCTION" / "REBUILD FEE" below
 - Upgrade prices clearly displayed beneath divider
-- Updated New Build from $150 → $100
+
+#### 9. Territory Pricing & County Map (March 23, 2026)
+**Services & Pricing Page:**
+- Removed both "$1,497 One-Time Territory Activation Fee" banners
+- Moved "Core Differentiator" (Exclusive Territory Protection) section up, right after Transparency box
+- Added Small Market County ($300/area) and Large Market County ($1,200/area) pricing cards
+- Italicized note: market size = customer density, not geographic area
+
+**Subscribe Page:**
+- Removed territory fee from invoice
+- Added Step 2: "Select Your Market Areas" with interactive SVG county map
+- Map shows Union County FL (home) + 5 surrounding counties (Baker, Bradford, Columbia, Alachua, Clay)
+- Counties color-coded: blue = small market ($300), amber = large market ($1,200)
+- Clickable counties toggle selection, add to invoice
+- Territory summary chips show selected counties with market tags and prices
+- Step ordering: 1. Website Service → 2. Market Areas → 3. Service Tier
+
+**County Classification (Demo Data — Union County FL area):**
+- Small Market: Union, Baker, Bradford ($300 each)
+- Large Market: Columbia, Alachua, Clay ($1,200 each)
 
 *Last Updated: March 23, 2026*

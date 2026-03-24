@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { Check, ShoppingCart, Tag, AlertCircle, CreditCard, ChevronRight, Globe, RefreshCw } from 'lucide-react';
+import { Check, ShoppingCart, Tag, AlertCircle, CreditCard, ChevronRight, Globe, RefreshCw, MapPin } from 'lucide-react';
+import CountyMap from '../components/CountyMap';
 import './SubscribePage.css';
 
 const WEBSITE_OPTIONS = [
@@ -23,18 +24,25 @@ const WEBSITE_OPTIONS = [
   },
 ];
 
+const DEMO_COUNTIES = [
+  { id: 'union', name: 'Union', market: 'small', price: 300, isHome: true },
+  { id: 'baker', name: 'Baker', market: 'small', price: 300 },
+  { id: 'bradford', name: 'Bradford', market: 'small', price: 300 },
+  { id: 'columbia', name: 'Columbia', market: 'large', price: 1200 },
+  { id: 'alachua', name: 'Alachua', market: 'large', price: 1200 },
+  { id: 'clay', name: 'Clay', market: 'large', price: 1200 },
+];
+
 const TIERS = [
   { id: 'foundation', tier: 1, name: 'Foundation', monthlyPrice: 497 },
   { id: 'growth', tier: 2, name: 'Growth', monthlyPrice: 797, popular: true },
   { id: 'authority', tier: 3, name: 'Authority', monthlyPrice: 1297 },
 ];
 
-const TERRITORY_FEE = 1497;
-const TERRITORY_FEE_NAME = 'Market Territory Restriction Fee (One-Time)';
-
 export default function SubscribePage() {
-  const [websiteChoice, setWebsiteChoice] = useState(null); // 'new-build' or 'rebuild'
-  const [serviceType, setServiceType] = useState(null); // 'build' or 'upgrade'
+  const [websiteChoice, setWebsiteChoice] = useState(null);
+  const [serviceType, setServiceType] = useState(null);
+  const [selectedCounties, setSelectedCounties] = useState([]);
   const [selectedTier, setSelectedTier] = useState(null);
   const [discountToken, setDiscountToken] = useState('');
   const [tokenApplied, setTokenApplied] = useState(false);
@@ -63,21 +71,33 @@ export default function SubscribePage() {
     }
   };
 
+  const handleToggleCounty = (countyId) => {
+    setSelectedCounties(prev =>
+      prev.includes(countyId)
+        ? prev.filter(id => id !== countyId)
+        : [...prev, countyId]
+    );
+  };
+
+  const countyTotal = useMemo(() => {
+    return selectedCounties.reduce((sum, id) => {
+      const county = DEMO_COUNTIES.find(c => c.id === id);
+      return sum + (county ? county.price : 0);
+    }, 0);
+  }, [selectedCounties]);
+
   const invoice = useMemo(() => {
     const discountMultiplier = tokenApplied ? 0.5 : 1;
-    
+
     let monthlyTotal = 0;
-    let oneTimeTotal = 0;
-    
     if (selectedService) {
       monthlyTotal = selectedService.monthlyPrice * discountMultiplier;
-      oneTimeTotal = TERRITORY_FEE * discountMultiplier;
     }
-    
-    const dueToday = monthlyTotal + oneTimeTotal + websitePrice;
 
-    return { discountMultiplier, monthlyTotal, oneTimeTotal, websiteTotal: websitePrice, dueToday, tokenApplied };
-  }, [selectedService, websitePrice, tokenApplied]);
+    const dueToday = monthlyTotal + websitePrice + countyTotal;
+
+    return { discountMultiplier, monthlyTotal, websiteTotal: websitePrice, countyTotal, dueToday, tokenApplied };
+  }, [selectedService, websitePrice, countyTotal, tokenApplied]);
 
   const handleApplyToken = () => {
     // TODO: Validate token against backend
@@ -156,8 +176,40 @@ export default function SubscribePage() {
               })}
             </div>
 
-            {/* Step 2: Tier Selection */}
-            <h2 className="sub-section-label">2. Select Your Service Tier</h2>
+            {/* Step 2: Market Area Selection */}
+            <h2 className="sub-section-label">2. Select Your Market Areas</h2>
+            <p className="sub-market-intro">
+              Click on the counties below to claim exclusive territory rights.
+              Each county is classified by customer density — not geographic size.
+            </p>
+            <CountyMap
+              counties={DEMO_COUNTIES}
+              selectedCounties={selectedCounties}
+              onToggleCounty={handleToggleCounty}
+            />
+            {selectedCounties.length > 0 && (
+              <div className="sub-county-summary" data-testid="county-summary">
+                <div className="sub-county-summary-title">
+                  <MapPin size={16} />
+                  <span>{selectedCounties.length} {selectedCounties.length === 1 ? 'Territory' : 'Territories'} Selected</span>
+                </div>
+                <div className="sub-county-list">
+                  {selectedCounties.map(id => {
+                    const c = DEMO_COUNTIES.find(co => co.id === id);
+                    return (
+                      <div key={id} className="sub-county-chip" data-testid={`county-chip-${id}`}>
+                        <span>{c.name} County</span>
+                        <span className={`sub-county-chip-tag ${c.market}`}>{c.market === 'small' ? 'Small' : 'Large'}</span>
+                        <span className="sub-county-chip-price">${c.price.toLocaleString()}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Step 3: Tier Selection */}
+            <h2 className="sub-section-label">3. Select Your Service Tier</h2>
             <div className="sub-tiers">
               {TIERS.map(svc => {
                 const isSelected = selectedTier === svc.id;
@@ -186,15 +238,6 @@ export default function SubscribePage() {
               })}
             </div>
 
-            {/* Territory Fee Note */}
-            <div className="sub-territory-note">
-              <AlertCircle size={16} />
-              <p>
-                <strong>${TERRITORY_FEE.toLocaleString()} {TERRITORY_FEE_NAME}</strong> — covers your
-                website build/rebuild, territory setup, initial GeoGrid configuration, and BYON line provisioning.
-                This is a one-time charge included in your first invoice.
-              </p>
-            </div>
           </div>
 
           {/* Right: Invoice */}
@@ -227,32 +270,38 @@ export default function SubscribePage() {
                     )}
 
                     {selectedService && (
-                      <>
-                        <div className="sub-invoice-line" data-testid="invoice-line-plan">
-                          <div>
-                            <div className="sub-line-name">{selectedService.name} Plan (Tier {selectedService.tier})</div>
-                            <div className="sub-line-type">Monthly Recurring</div>
-                          </div>
-                          <div className="sub-line-amount">${selectedService.monthlyPrice.toLocaleString()}/mo</div>
+                      <div className="sub-invoice-line" data-testid="invoice-line-plan">
+                        <div>
+                          <div className="sub-line-name">{selectedService.name} Plan (Tier {selectedService.tier})</div>
+                          <div className="sub-line-type">Monthly Recurring</div>
                         </div>
+                        <div className="sub-line-amount">${selectedService.monthlyPrice.toLocaleString()}/mo</div>
+                      </div>
+                    )}
 
-                        <div className="sub-invoice-line" data-testid="invoice-line-territory">
-                          <div>
-                            <div className="sub-line-name">{TERRITORY_FEE_NAME}</div>
-                            <div className="sub-line-type">One-Time</div>
+                    {selectedCounties.length > 0 && (
+                      <div className="sub-invoice-line" data-testid="invoice-line-territories">
+                        <div>
+                          <div className="sub-line-name">Market Territories ({selectedCounties.length})</div>
+                          <div className="sub-line-type">
+                            {selectedCounties.map(id => DEMO_COUNTIES.find(c => c.id === id)?.name).join(', ')}
                           </div>
-                          <div className="sub-line-amount">${TERRITORY_FEE.toLocaleString()}</div>
                         </div>
-                      </>
+                        <div className="sub-line-amount">${countyTotal.toLocaleString()}</div>
+                      </div>
                     )}
                   </div>
 
                   {/* Missing selection notice */}
-                  {((!selectedWebsite || !serviceType) || !selectedService) && (
+                  {((!selectedWebsite || !serviceType) || selectedCounties.length === 0 || !selectedService) && (
                     <div className="sub-invoice-notice">
                       <AlertCircle size={14} />
                       <span>
-                        {(!selectedWebsite || !serviceType) ? 'Select a website service to continue' : 'Select a service tier to continue'}
+                        {(!selectedWebsite || !serviceType)
+                          ? 'Select a website service to continue'
+                          : selectedCounties.length === 0
+                            ? 'Select at least one market area'
+                            : 'Select a service tier to continue'}
                       </span>
                     </div>
                   )}
@@ -293,12 +342,16 @@ export default function SubscribePage() {
                     </div>
                   )}
 
-                  {/* Totals - only show when both selections made */}
-                  {selectedService && selectedWebsite && serviceType && (
+                  {/* Totals - only show when all selections made */}
+                  {selectedService && selectedWebsite && serviceType && selectedCounties.length > 0 && (
                     <div className="sub-invoice-totals">
                       <div className="sub-total-line">
                         <span>Website Service</span>
                         <span>${websitePrice}</span>
+                      </div>
+                      <div className="sub-total-line">
+                        <span>Market Territories</span>
+                        <span>${countyTotal.toLocaleString()}</span>
                       </div>
                       <div className="sub-total-line">
                         <span>Monthly Recurring</span>
@@ -307,19 +360,12 @@ export default function SubscribePage() {
                           ${invoice.monthlyTotal.toLocaleString()}/mo
                         </span>
                       </div>
-                      <div className="sub-total-line">
-                        <span>Territory Fee (One-Time)</span>
-                        <span className={invoice.tokenApplied ? 'sub-discounted' : ''}>
-                          {invoice.tokenApplied && <s>${TERRITORY_FEE.toLocaleString()}</s>}
-                          ${invoice.oneTimeTotal.toLocaleString()}
-                        </span>
-                      </div>
                       <div className="sub-total-line sub-total-due">
                         <span>Due Today</span>
                         <span>${invoice.dueToday.toLocaleString()}</span>
                       </div>
                       <p className="sub-total-note">
-                        Due today includes website service, first month, plus the one-time territory fee.
+                        Due today includes website service, market territory fees, and first month.
                         Subsequent months will be ${invoice.monthlyTotal.toLocaleString()}/mo.
                       </p>
                     </div>

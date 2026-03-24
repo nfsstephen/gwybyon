@@ -150,6 +150,95 @@ const ServicesAndPricingPage = () => {
         </div>
       </section>
 
+      {/* Territory Protection — Core Differentiator */}
+      <section className="sp-territory" data-testid="sp-territory">
+        <div className="sp-container">
+          <div className="sp-section-badge"><Lock size={14} /> Core Differentiator</div>
+          <h2 className="sp-section-title">Exclusive Territory Protection</h2>
+          <p className="sp-section-desc">
+            Every plan includes something our competitors can't offer: a protected geographic territory. 
+            We work with <strong>one business per industry per territory</strong>. Once you claim yours, 
+            no competitor in your industry gets our services in your area. Period.
+          </p>
+          <div className="sp-territory-grid">
+            <div className="sp-territory-card">
+              <Crown size={28} />
+              <h3>Your Market. Protected.</h3>
+              <p>We fight for you, not between you and your competitors. Your investment in local dominance is structurally protected.</p>
+            </div>
+            <div className="sp-territory-card">
+              <Shield size={28} />
+              <h3>Scarcity Creates Value</h3>
+              <p>Territories are finite and first-come, first-served. Early adopters lock out their competitors permanently.</p>
+            </div>
+            <div className="sp-territory-card">
+              <TrendingUp size={28} />
+              <h3>Aligned Incentives</h3>
+              <p>We succeed when you dominate your local market. We never profit from selling the same tools to your competition.</p>
+            </div>
+          </div>
+
+          {/* Market Area Pricing */}
+          <p className="sp-territory-note">
+            Market size refers to customer density and business opportunity within the county — not geographic area. 
+            A "small market" county simply has a more focused customer base, while a "large market" has higher population density and more potential customers.
+          </p>
+          <div className="v2-construction-grid sp-market-pricing-grid">
+            <div className="v2-build-card" data-testid="sp-small-market-card">
+              <div className="v2-build-header v2-build-new">
+                <MapPin size={32} />
+                <span className="v2-build-option">Small Market</span>
+              </div>
+              <h3>Small Market County</h3>
+              <p className="v2-build-tagline">Targeted reach in focused communities.</p>
+              <p className="v2-build-desc">
+                Small market doesn't mean small opportunity. These counties have a more focused customer base, 
+                making it easier to establish dominance quickly. Lower competition means your investment goes further.
+              </p>
+              <ul className="v2-build-features">
+                <li><Check size={16} /> Fewer competing businesses in your industry</li>
+                <li><Check size={16} /> Faster path to market dominance</li>
+                <li><Check size={16} /> Lower customer acquisition costs</li>
+                <li><Check size={16} /> Perfect for building a strong local foundation</li>
+              </ul>
+              <div className="v2-build-pricing">
+                <div className="v2-price-hero">
+                  <span className="v2-price-dollar">$</span>
+                  <span className="v2-price-amount">300</span>
+                </div>
+                <div className="v2-price-label">Per Territory Area</div>
+              </div>
+            </div>
+            <div className="v2-build-card" data-testid="sp-large-market-card">
+              <div className="v2-build-header v2-build-rebuild">
+                <Users size={32} />
+                <span className="v2-build-option">Large Market</span>
+              </div>
+              <h3>Large Market County</h3>
+              <p className="v2-build-tagline">Maximum exposure in high-density areas.</p>
+              <p className="v2-build-desc">
+                Large market counties have a higher concentration of potential customers. More people means 
+                more opportunity — and a protected territory here gives you access to a larger customer pool 
+                that competitors can't touch.
+              </p>
+              <ul className="v2-build-features">
+                <li><Check size={16} /> Higher concentration of potential customers</li>
+                <li><Check size={16} /> Greater revenue potential per territory</li>
+                <li><Check size={16} /> Premium market positioning</li>
+                <li><Check size={16} /> Exclusive access to high-demand areas</li>
+              </ul>
+              <div className="v2-build-pricing">
+                <div className="v2-price-hero">
+                  <span className="v2-price-dollar">$</span>
+                  <span className="v2-price-amount">1,200</span>
+                </div>
+                <div className="v2-price-label">Per Territory Area</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* What's Included — The Three Solutions */}
       <section className="sp-solutions" data-testid="sp-three-solutions">
         <div className="sp-container">
@@ -405,43 +494,7 @@ const ServicesAndPricingPage = () => {
             </table>
           </div>
 
-          {/* Activation Fee */}
-          <div className="sp-matrix-activation" data-testid="sp-matrix-activation">
-            <Zap size={20} />
-            <div>
-              <strong>$1,497 One-Time Territory Activation Fee</strong> — covers your website build/rebuild, territory setup, initial GeoGrid configuration, and BYON line provisioning.
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Territory Protection */}
-      <section className="sp-territory" data-testid="sp-territory">
-        <div className="sp-container">
-          <div className="sp-section-badge"><Lock size={14} /> Core Differentiator</div>
-          <h2 className="sp-section-title">Exclusive Territory Protection</h2>
-          <p className="sp-section-desc">
-            Every plan includes something our competitors can't offer: a protected geographic territory. 
-            We work with <strong>one business per industry per territory</strong>. Once you claim yours, 
-            no competitor in your industry gets our services in your area. Period.
-          </p>
-          <div className="sp-territory-grid">
-            <div className="sp-territory-card">
-              <Crown size={28} />
-              <h3>Your Market. Protected.</h3>
-              <p>We fight for you, not between you and your competitors. Your investment in local dominance is structurally protected.</p>
-            </div>
-            <div className="sp-territory-card">
-              <Shield size={28} />
-              <h3>Scarcity Creates Value</h3>
-              <p>Territories are finite and first-come, first-served. Early adopters lock out their competitors permanently.</p>
-            </div>
-            <div className="sp-territory-card">
-              <TrendingUp size={28} />
-              <h3>Aligned Incentives</h3>
-              <p>We succeed when you dominate your local market. We never profit from selling the same tools to your competition.</p>
-            </div>
-          </div>
+          {/* Activation Fee removed — replaced by per-county pricing */}
         </div>
       </section>
 
