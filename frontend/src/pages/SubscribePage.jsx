@@ -44,13 +44,13 @@ const STORAGE_KEY = 'gwybyon_subscribe';
 
 function loadState() {
   try {
-    const raw = sessionStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(STORAGE_KEY);
     return raw ? JSON.parse(raw) : {};
   } catch { return {}; }
 }
 
 function saveState(state) {
-  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
 export default function SubscribePage() {
