@@ -40,13 +40,31 @@ const TIERS = [
   { id: 'authority', tier: 3, name: 'Authority', monthlyPrice: 1297 },
 ];
 
+const STORAGE_KEY = 'gwybyon_subscribe';
+
+function loadState() {
+  try {
+    const raw = sessionStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch { return {}; }
+}
+
+function saveState(state) {
+  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
 export default function SubscribePage() {
-  const [websiteChoice, setWebsiteChoice] = useState(null);
-  const [serviceType, setServiceType] = useState(null);
-  const [selectedCounties, setSelectedCounties] = useState([]);
-  const [selectedTier, setSelectedTier] = useState(null);
+  const saved = useMemo(loadState, []);
+  const [websiteChoice, setWebsiteChoice] = useState(saved.websiteChoice ?? null);
+  const [serviceType, setServiceType] = useState(saved.serviceType ?? null);
+  const [selectedCounties, setSelectedCounties] = useState(saved.selectedCounties ?? []);
+  const [selectedTier, setSelectedTier] = useState(saved.selectedTier ?? null);
   const [discountToken, setDiscountToken] = useState('');
   const [tokenApplied, setTokenApplied] = useState(false);
+
+  useEffect(() => {
+    saveState({ websiteChoice, serviceType, selectedCounties, selectedTier });
+  }, [websiteChoice, serviceType, selectedCounties, selectedTier]);
 
   const selectedService = TIERS.find(s => s.id === selectedTier);
   const selectedWebsite = WEBSITE_OPTIONS.find(w => w.id === websiteChoice);
