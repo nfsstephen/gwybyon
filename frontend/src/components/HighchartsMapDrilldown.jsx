@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts/highmaps';
 import { MapPin, Loader, ArrowLeft } from 'lucide-react';
@@ -6,31 +6,16 @@ import usAllTopo from '@highcharts/map-collection/countries/us/us-all.topo.json'
 import './HighchartsMapDrilldown.css';
 
 export default function HighchartsMapDrilldown({ country, selectedCounties, onToggleCounty }) {
-  const chartRef = useRef(null);
   const [drillLevel, setDrillLevel] = useState('country');
   const [activeState, setActiveState] = useState('');
   const [countyMapData, setCountyMapData] = useState(null);
-  const [countySeriesData, setCountySeriesData] = useState([]);
+  const [countyRawFeatures, setCountyRawFeatures] = useState([]);
   const [loadingCounty, setLoadingCounty] = useState(false);
   const countyCache = useRef({});
-  const selectedRef = useRef(selectedCounties);
+  const toggleRef = useRef(onToggleCounty);
+  const drilldownFnRef = useRef(null);
 
-  useEffect(() => {
-    selectedRef.current = selectedCounties;
-  }, [selectedCounties]);
-
-  // Update county colors when selections change
-  useEffect(() => {
-    if (drillLevel !== 'state') return;
-    const chart = chartRef.current?.chart;
-    if (!chart || !chart.series[0]) return;
-    chart.series[0].points?.forEach(point => {
-      const hcKey = point['hc-key'];
-      const isSelected = selectedCounties.includes(hcKey);
-      point.update({ color: isSelected ? '#16a34a' : null }, false);
-    });
-    chart.redraw();
-  }, [selectedCounties, drillLevel]);
+  useEffect(() => { toggleRef.current = onToggleCounty; }, [onToggleCounty]);
 
   const loadCountyMap = useCallback(async (stateCode) => {
     if (countyCache.current[stateCode]) return countyCache.current[stateCode];
@@ -53,41 +38,39 @@ export default function HighchartsMapDrilldown({ country, selectedCounties, onTo
       const features = mapData.objects
         ? Object.values(mapData.objects)[0]?.geometries || []
         : [];
-      const data = features.map(feat => {
+      const rawFeatures = features.map(feat => {
         const props = feat.properties || {};
-        const hcKey = props['hc-key'] || '';
-        const isSelected = selectedRef.current.includes(hcKey);
-        return {
-          'hc-key': hcKey,
-          name: props.name || '',
-          value: isSelected ? 2 : 1,
-          color: isSelected ? '#16a34a' : undefined,
-        };
+        return { hcKey: props['hc-key'] || '', name: props.name || '' };
       });
       setCountyMapData(mapData);
-      setCountySeriesData(data);
+      setCountyRawFeatures(rawFeatures);
       setDrillLevel('state');
     }
     setLoadingCounty(false);
   }, [loadCountyMap]);
 
+  useEffect(() => { drilldownFnRef.current = handleStateDrilldown; }, [handleStateDrilldown]);
+
   const handleDrillUp = useCallback(() => {
     setDrillLevel('country');
     setActiveState('');
     setCountyMapData(null);
-    setCountySeriesData([]);
+    setCountyRawFeatures([]);
   }, []);
 
-  const handleCountyClick = useCallback((hcKey, name) => {
-    onToggleCounty(hcKey, name);
-  }, [onToggleCounty]);
+  // Compute county series data from raw features + current selections
+  const countySeriesData = useMemo(() => {
+    return countyRawFeatures.map(f => ({
+      'hc-key': f.hcKey,
+      name: f.name,
+      value: selectedCounties.includes(f.hcKey) ? 2 : 1,
+      color: selectedCounties.includes(f.hcKey) ? '#16a34a' : undefined,
+    }));
+  }, [countyRawFeatures, selectedCounties]);
 
-  const usOptions = useCallback(() => ({
-    chart: {
-      map: usAllTopo,
-      backgroundColor: '#1e293b',
-      height: 480,
-    },
+  // US map options — stable, no deps
+  const usOptions = useMemo(() => ({
+    chart: { map: usAllTopo, backgroundColor: '#1e293b', height: 480 },
     title: { text: '' },
     subtitle: { text: '' },
     credits: { enabled: false },
@@ -120,12 +103,11 @@ export default function HighchartsMapDrilldown({ country, selectedCounties, onTo
         return features.map(feat => {
           const props = feat.properties || {};
           const hcKey = props['hc-key'] || '';
-          const stateAbbr = hcKey.replace('us-', '');
           return {
             'hc-key': hcKey,
             name: props.name || '',
             value: Math.floor(Math.random() * 100),
-            stateCode: stateAbbr,
+            stateCode: hcKey.replace('us-', ''),
           };
         });
       })(),
@@ -135,26 +117,21 @@ export default function HighchartsMapDrilldown({ country, selectedCounties, onTo
         style: { fontSize: '9px', color: '#e2e8f0', textOutline: '1px #1e293b', fontWeight: 'bold' },
       },
       cursor: 'pointer',
-      point: {
-        events: {
-          click: function () {
-            const code = this.stateCode || this['hc-key']?.replace('us-', '');
-            if (code) handleStateDrilldown(code, this.name);
-          },
+      events: {
+        click: function (e) {
+          const code = e.point.stateCode || e.point['hc-key']?.replace('us-', '');
+          if (code) drilldownFnRef.current(code, e.point.name);
         },
       },
       tooltip: { headerFormat: '', pointFormat: '<b>{point.name}</b><br/>Click to view counties' },
     }],
-  }), [handleStateDrilldown]);
+  }), []);
 
-  const countyOptions = useCallback(() => {
-    if (!countyMapData) return {};
+  // County map options — recompute when county data or selections change
+  const countyOptions = useMemo(() => {
+    if (!countyMapData) return null;
     return {
-      chart: {
-        map: countyMapData,
-        backgroundColor: '#1e293b',
-        height: 480,
-      },
+      chart: { map: countyMapData, backgroundColor: '#1e293b', height: 480 },
       title: { text: '' },
       subtitle: { text: '' },
       credits: { enabled: false },
@@ -188,18 +165,17 @@ export default function HighchartsMapDrilldown({ country, selectedCounties, onTo
           style: { fontSize: '8px', color: '#e2e8f0', textOutline: '1px #0f172a' },
         },
         cursor: 'pointer',
-        point: {
-          events: {
-            click: function () {
-              const key = this['hc-key'];
-              if (key) handleCountyClick(key, this.name);
-            },
+        events: {
+          click: function (e) {
+            const key = e.point['hc-key'];
+            const name = e.point.name;
+            if (key) toggleRef.current(key, name);
           },
         },
         tooltip: { headerFormat: '', pointFormat: '<b>{point.name}</b><br/>Click to select/deselect' },
       }],
     };
-  }, [countyMapData, countySeriesData, activeState, handleCountyClick]);
+  }, [countyMapData, countySeriesData, activeState]);
 
   const isUSA = !country || country.toLowerCase() === 'usa' || country.toLowerCase() === 'us' || country.toLowerCase() === 'united states';
 
@@ -209,7 +185,6 @@ export default function HighchartsMapDrilldown({ country, selectedCounties, onTo
         <div className="hc-map-unsupported">
           <MapPin size={24} />
           <p>Map drilldown is currently available for the <strong>United States</strong> only.</p>
-          <p className="hc-map-hint">Enter &quot;USA&quot; or &quot;US&quot; in the Country field to load the map.</p>
         </div>
       </div>
     );
@@ -217,7 +192,6 @@ export default function HighchartsMapDrilldown({ country, selectedCounties, onTo
 
   return (
     <div className="hc-map-wrapper" data-testid="highcharts-map">
-      {/* Status */}
       <div className="hc-map-status">
         {loadingCounty ? (
           <span className="hc-status-loading">
@@ -227,8 +201,7 @@ export default function HighchartsMapDrilldown({ country, selectedCounties, onTo
         ) : drillLevel === 'state' ? (
           <span className="hc-status-state">
             <button className="hc-back-btn" onClick={handleDrillUp} data-testid="map-back-btn">
-              <ArrowLeft size={14} />
-              Back to USA
+              <ArrowLeft size={14} /> Back to USA
             </button>
             <span>Viewing counties in <strong>{activeState}</strong> — click a county to select it as a territory</span>
           </span>
@@ -240,28 +213,24 @@ export default function HighchartsMapDrilldown({ country, selectedCounties, onTo
         )}
       </div>
 
-      {/* Map */}
       <div className="hc-map-container">
         {drillLevel === 'country' ? (
           <HighchartsReact
             highcharts={Highcharts}
             constructorType="mapChart"
-            options={usOptions()}
-            ref={chartRef}
+            options={usOptions}
             key="us-map"
           />
-        ) : countyMapData ? (
+        ) : countyOptions ? (
           <HighchartsReact
             highcharts={Highcharts}
             constructorType="mapChart"
-            options={countyOptions()}
-            ref={chartRef}
-            key={`county-map-${activeState}`}
+            options={countyOptions}
+            key={`county-${activeState}`}
           />
         ) : null}
       </div>
 
-      {/* Selected territories list */}
       {selectedCounties.length > 0 && (
         <div className="hc-selected-territories" data-testid="selected-territories">
           <div className="hc-selected-header">
