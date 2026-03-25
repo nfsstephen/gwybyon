@@ -1,0 +1,236 @@
+/* ===== Drill-Down Map ===== */
+.drilldown-map-wrapper {
+  margin-bottom: 28px;
+}
+
+/* Status bar */
+.drilldown-status {
+  padding: 10px 16px;
+  border-radius: 10px 10px 0 0;
+  background: #f1f5f9;
+  border: 1.5px solid #e2e8f0;
+  border-bottom: none;
+  font-size: 0.85rem;
+  color: #475569;
+}
+
+.drilldown-status-loading,
+.drilldown-status-found,
+.drilldown-status-hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.drilldown-status-found {
+  color: #16a34a;
+}
+
+.drilldown-status-hint {
+  color: #94a3b8;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.drilldown-spinner {
+  animation: spin 1s linear infinite;
+}
+
+/* Map container */
+.drilldown-map-container {
+  border: 1.5px solid #e2e8f0;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  overflow: hidden;
+}
+
+.drilldown-leaflet-map {
+  width: 100%;
+  height: 400px;
+  z-index: 1;
+}
+
+/* Popup */
+.drilldown-popup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+}
+
+.drilldown-popup-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.drilldown-popup-tag.small {
+  color: #3b82f6;
+}
+
+.drilldown-popup-tag.large {
+  color: #f59e0b;
+}
+
+.drilldown-popup-price {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.drilldown-popup-selected {
+  color: #16a34a;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+/* Territory cards below map */
+.drilldown-territories {
+  margin-top: 16px;
+}
+
+.drilldown-territory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+.drilldown-territory-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  width: 100%;
+}
+
+.drilldown-territory-card:hover {
+  border-color: #cbd5e1;
+  background: #f8fafc;
+}
+
+.drilldown-territory-card.selected.small-market {
+  border-color: #3b82f6;
+  background: #eff6ff;
+}
+
+.drilldown-territory-card.selected.large-market {
+  border-color: #f59e0b;
+  background: #fffbeb;
+}
+
+.drilldown-card-check {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 2px solid #cbd5e1;
+  color: #fff;
+  background: #fff;
+}
+
+.drilldown-territory-card.selected .drilldown-card-check {
+  background: #16a34a;
+  border-color: #16a34a;
+}
+
+.drilldown-card-circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #e2e8f0;
+}
+
+.drilldown-card-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.drilldown-card-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #0f172a;
+}
+
+.drilldown-card-tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.drilldown-card-tag.small {
+  color: #3b82f6;
+}
+
+.drilldown-card-tag.large {
+  color: #f59e0b;
+}
+
+.drilldown-card-price {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #0f172a;
+}
+
+/* Legend */
+.drilldown-legend {
+  display: flex;
+  gap: 20px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.drilldown-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.drilldown-legend-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+
+.drilldown-legend-small {
+  background: #3b82f6;
+}
+
+.drilldown-legend-large {
+  background: #f59e0b;
+}
+
+.drilldown-legend-selected {
+  background: #16a34a;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .drilldown-leaflet-map {
+    height: 300px;
+  }
+
+  .drilldown-territory-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .drilldown-legend {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

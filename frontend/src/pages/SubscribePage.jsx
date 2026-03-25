@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Check, ShoppingCart, AlertCircle, CreditCard, ChevronRight, Globe, RefreshCw, MapPin } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
-import CountyMap from '../components/CountyMap';
+import DrillDownMap from '../components/DrillDownMap';
 import './SubscribePage.css';
 
 const WEBSITE_OPTIONS = [
@@ -266,10 +266,12 @@ export default function SubscribePage() {
             {/* Step 3: Market Area Selection */}
             <h2 className="sub-section-label" id="step-market-areas">3. Select Your Market Areas</h2>
             <p className="sub-market-intro">
-              Click on the counties below to claim exclusive territory rights.
-              Each county is classified by customer density — not geographic size.
+              {businessDetails.city
+                ? `Select exclusive territory rights near ${businessDetails.city}. Click on the map circles or cards below.`
+                : 'Enter your city in Step 2 to load the drill-down map and select your market areas.'}
             </p>
-            <CountyMap
+            <DrillDownMap
+              city={businessDetails.city}
               counties={DEMO_COUNTIES}
               selectedCounties={selectedCounties}
               onToggleCounty={handleToggleCounty}
