@@ -198,14 +198,16 @@ Note: 29 UI library components in `/components/ui/` are unused but kept for pote
 #### 12. Business Details + Highcharts Map Drilldown (Feb 2026)
 - Added Step 2: Business Details form (Name, Address, City, Zip, Phone, Country)
 - All fields persist in localStorage
-- Replaced old SVG county map with Highcharts Map Drilldown in Step 3
+- Built Highcharts Map Drilldown (US states → county drill-down) in Step 3
 - Country field drives map: USA → shows full US states map
-- Click any state → drills down to all counties in that state
-- Click counties to select as exclusive market territories ($300/territory)
-- County maps loaded dynamically from @highcharts/map-collection
+- Click any state → drills down to all that state's counties
+- Click counties to select multiple as exclusive market territories ($300/territory)
+- County maps loaded dynamically from @highcharts/map-collection (no CDN/API key needed)
+- Selected counties turn green; selections persist across state navigation and in localStorage
 - Selected territories shown as removable chips below the map
 - Invoice auto-updates with county names and territory pricing
-- "Back to USA" button to navigate back to state level
+- "Back to USA" button to return to state-level view
 - Renumbered steps: 1. Website → 2. Business Details → 3. Market Areas → 4. Service Tier
+- Tech: Highcharts 12.5 + highmaps, manual chart creation (not HighchartsReact wrapper) for reliable click handling
 
 *Last Updated: Feb 2026*

@@ -1,21 +1,21 @@
-import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
-import HighchartsReact from 'highcharts-react-official';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import Highcharts from 'highcharts/highmaps';
 import { MapPin, Loader, ArrowLeft } from 'lucide-react';
 import usAllTopo from '@highcharts/map-collection/countries/us/us-all.topo.json';
 import './HighchartsMapDrilldown.css';
 
 export default function HighchartsMapDrilldown({ country, selectedCounties, onToggleCounty }) {
+  const containerRef = useRef(null);
+  const chartInstanceRef = useRef(null);
   const [drillLevel, setDrillLevel] = useState('country');
   const [activeState, setActiveState] = useState('');
-  const [countyMapData, setCountyMapData] = useState(null);
-  const [countyRawFeatures, setCountyRawFeatures] = useState([]);
   const [loadingCounty, setLoadingCounty] = useState(false);
   const countyCache = useRef({});
   const toggleRef = useRef(onToggleCounty);
-  const drilldownFnRef = useRef(null);
+  const selectedRef = useRef(selectedCounties);
 
   useEffect(() => { toggleRef.current = onToggleCounty; }, [onToggleCounty]);
+  useEffect(() => { selectedRef.current = selectedCounties; }, [selectedCounties]);
 
   const loadCountyMap = useCallback(async (stateCode) => {
     if (countyCache.current[stateCode]) return countyCache.current[stateCode];
@@ -30,114 +30,123 @@ export default function HighchartsMapDrilldown({ country, selectedCounties, onTo
     }
   }, []);
 
-  const handleStateDrilldown = useCallback(async (stateCode, stateName) => {
-    setLoadingCounty(true);
-    setActiveState(stateName);
-    const mapData = await loadCountyMap(stateCode);
-    if (mapData) {
-      const features = mapData.objects
-        ? Object.values(mapData.objects)[0]?.geometries || []
-        : [];
-      const rawFeatures = features.map(feat => {
-        const props = feat.properties || {};
-        return { hcKey: props['hc-key'] || '', name: props.name || '' };
-      });
-      setCountyMapData(mapData);
-      setCountyRawFeatures(rawFeatures);
-      setDrillLevel('state');
-    }
-    setLoadingCounty(false);
-  }, [loadCountyMap]);
+  // Create US map on mount
+  useEffect(() => {
+    if (!containerRef.current) return;
 
-  useEffect(() => { drilldownFnRef.current = handleStateDrilldown; }, [handleStateDrilldown]);
+    const features = usAllTopo.objects
+      ? Object.values(usAllTopo.objects)[0]?.geometries || []
+      : [];
+    const stateData = features.map(feat => {
+      const props = feat.properties || {};
+      const hcKey = props['hc-key'] || '';
+      return {
+        'hc-key': hcKey,
+        name: props.name || '',
+        value: Math.floor(Math.random() * 100),
+        stateCode: hcKey.replace('us-', ''),
+      };
+    });
 
-  const handleDrillUp = useCallback(() => {
-    setDrillLevel('country');
-    setActiveState('');
-    setCountyMapData(null);
-    setCountyRawFeatures([]);
-  }, []);
-
-  // Compute county series data from raw features + current selections
-  const countySeriesData = useMemo(() => {
-    return countyRawFeatures.map(f => ({
-      'hc-key': f.hcKey,
-      name: f.name,
-      value: selectedCounties.includes(f.hcKey) ? 2 : 1,
-      color: selectedCounties.includes(f.hcKey) ? '#16a34a' : undefined,
-    }));
-  }, [countyRawFeatures, selectedCounties]);
-
-  // US map options — stable, no deps
-  const usOptions = useMemo(() => ({
-    chart: { map: usAllTopo, backgroundColor: '#1e293b', height: 480 },
-    title: { text: '' },
-    subtitle: { text: '' },
-    credits: { enabled: false },
-    accessibility: { enabled: false },
-    mapNavigation: {
-      enabled: true,
-      buttonOptions: {
-        verticalAlign: 'bottom',
-        theme: {
-          fill: '#334155', 'stroke-width': 1, stroke: '#475569',
-          style: { color: '#e2e8f0' },
-          states: { hover: { fill: '#475569' }, select: { fill: '#3b82f6' } },
-        },
+    const chart = Highcharts.mapChart(containerRef.current, {
+      chart: {
+        map: usAllTopo,
+        backgroundColor: '#1e293b',
+        height: 480,
       },
-    },
-    colorAxis: { min: 0, minColor: '#94a3b8', maxColor: '#0ea5e9', visible: false },
-    legend: { enabled: false },
-    plotOptions: {
-      map: {
-        states: { hover: { color: '#3b82f6', borderColor: '#fff', borderWidth: 2 } },
-        borderColor: '#334155', borderWidth: 0.5, nullColor: '#475569',
-      },
-    },
-    series: [{
-      name: 'USA',
-      data: (() => {
-        const features = usAllTopo.objects
-          ? Object.values(usAllTopo.objects)[0]?.geometries || []
-          : [];
-        return features.map(feat => {
-          const props = feat.properties || {};
-          const hcKey = props['hc-key'] || '';
-          return {
-            'hc-key': hcKey,
-            name: props.name || '',
-            value: Math.floor(Math.random() * 100),
-            stateCode: hcKey.replace('us-', ''),
-          };
-        });
-      })(),
-      dataLabels: {
-        enabled: true,
-        format: '{point.properties.postal-code}',
-        style: { fontSize: '9px', color: '#e2e8f0', textOutline: '1px #1e293b', fontWeight: 'bold' },
-      },
-      cursor: 'pointer',
-      events: {
-        click: function (e) {
-          const code = e.point.stateCode || e.point['hc-key']?.replace('us-', '');
-          if (code) drilldownFnRef.current(code, e.point.name);
-        },
-      },
-      tooltip: { headerFormat: '', pointFormat: '<b>{point.name}</b><br/>Click to view counties' },
-    }],
-  }), []);
-
-  // County map options — recompute when county data or selections change
-  const countyOptions = useMemo(() => {
-    if (!countyMapData) return null;
-    return {
-      chart: { map: countyMapData, backgroundColor: '#1e293b', height: 480 },
       title: { text: '' },
-      subtitle: { text: '' },
       credits: { enabled: false },
       accessibility: { enabled: false },
       mapNavigation: {
         enabled: true,
+        buttonOptions: {
+          verticalAlign: 'bottom',
+          theme: {
+            fill: '#334155', 'stroke-width': 1, stroke: '#475569',
+            style: { color: '#e2e8f0' },
+            states: { hover: { fill: '#475569' }, select: { fill: '#3b82f6' } },
+          },
+        },
+      },
+      colorAxis: { min: 0, minColor: '#94a3b8', maxColor: '#0ea5e9', visible: false },
+      legend: { enabled: false },
+      plotOptions: {
+        map: {
+          states: { hover: { color: '#3b82f6', borderColor: '#fff', borderWidth: 2 } },
+          borderColor: '#334155', borderWidth: 0.5, nullColor: '#475569',
+        },
+      },
+      series: [{
+        name: 'USA',
+        data: stateData,
+        cursor: 'pointer',
+        dataLabels: {
+          enabled: true,
+          format: '{point.properties.postal-code}',
+          style: { fontSize: '9px', color: '#e2e8f0', textOutline: '1px #1e293b', fontWeight: 'bold' },
+        },
+        events: {
+          click: function (e) {
+            const code = e.point.stateCode;
+            const name = e.point.name;
+            if (code) drillIntoState(code, name);
+          },
+        },
+        tooltip: { headerFormat: '', pointFormat: '<b>{point.name}</b><br/>Click to view counties' },
+      }],
+    });
+
+    chartInstanceRef.current = chart;
+
+    return () => {
+      if (chartInstanceRef.current) {
+        chartInstanceRef.current.destroy();
+        chartInstanceRef.current = null;
+      }
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const drillIntoState = useCallback(async (stateCode, stateName) => {
+    setLoadingCounty(true);
+    setActiveState(stateName);
+
+    const mapData = await loadCountyMap(stateCode);
+    if (!mapData || !chartInstanceRef.current) {
+      setLoadingCounty(false);
+      return;
+    }
+
+    const features = mapData.objects
+      ? Object.values(mapData.objects)[0]?.geometries || []
+      : [];
+    const countyData = features.map(feat => {
+      const props = feat.properties || {};
+      const hcKey = props['hc-key'] || '';
+      const isSelected = selectedRef.current.includes(hcKey);
+      return {
+        'hc-key': hcKey,
+        name: props.name || '',
+        value: isSelected ? 2 : 1,
+        color: isSelected ? '#16a34a' : undefined,
+      };
+    });
+
+    // Destroy old chart and create county chart
+    chartInstanceRef.current.destroy();
+
+    const countyChart = Highcharts.mapChart(containerRef.current, {
+      chart: {
+        map: mapData,
+        backgroundColor: '#1e293b',
+        height: 480,
+      },
+      title: { text: '' },
+      credits: { enabled: false },
+      accessibility: { enabled: false },
+      mapNavigation: {
+        enabled: true,
+        enableDoubleClickZoom: false,
         buttonOptions: {
           verticalAlign: 'bottom',
           theme: {
@@ -156,26 +165,113 @@ export default function HighchartsMapDrilldown({ country, selectedCounties, onTo
         },
       },
       series: [{
-        name: activeState + ' Counties',
-        data: countySeriesData,
-        mapData: countyMapData,
+        name: stateName + ' Counties',
+        mapData: mapData,
+        data: countyData,
+        cursor: 'pointer',
         dataLabels: {
           enabled: true,
           format: '{point.name}',
           style: { fontSize: '8px', color: '#e2e8f0', textOutline: '1px #0f172a' },
         },
-        cursor: 'pointer',
         events: {
           click: function (e) {
             const key = e.point['hc-key'];
             const name = e.point.name;
-            if (key) toggleRef.current(key, name);
+            if (key) {
+              toggleRef.current(key, name);
+              // Visual feedback: toggle color
+              const nowSelected = !selectedRef.current.includes(key);
+              e.point.update({
+                color: nowSelected ? '#16a34a' : null,
+                value: nowSelected ? 2 : 1,
+              });
+            }
           },
         },
         tooltip: { headerFormat: '', pointFormat: '<b>{point.name}</b><br/>Click to select/deselect' },
       }],
-    };
-  }, [countyMapData, countySeriesData, activeState]);
+    });
+
+    chartInstanceRef.current = countyChart;
+    setDrillLevel('state');
+    setLoadingCounty(false);
+  }, [loadCountyMap]);
+
+  const handleDrillUp = useCallback(() => {
+    if (!containerRef.current) return;
+
+    // Destroy county chart and recreate US chart
+    if (chartInstanceRef.current) {
+      chartInstanceRef.current.destroy();
+    }
+
+    const features = usAllTopo.objects
+      ? Object.values(usAllTopo.objects)[0]?.geometries || []
+      : [];
+    const stateData = features.map(feat => {
+      const props = feat.properties || {};
+      const hcKey = props['hc-key'] || '';
+      return {
+        'hc-key': hcKey,
+        name: props.name || '',
+        value: Math.floor(Math.random() * 100),
+        stateCode: hcKey.replace('us-', ''),
+      };
+    });
+
+    const chart = Highcharts.mapChart(containerRef.current, {
+      chart: {
+        map: usAllTopo,
+        backgroundColor: '#1e293b',
+        height: 480,
+      },
+      title: { text: '' },
+      credits: { enabled: false },
+      accessibility: { enabled: false },
+      mapNavigation: {
+        enabled: true,
+        buttonOptions: {
+          verticalAlign: 'bottom',
+          theme: {
+            fill: '#334155', 'stroke-width': 1, stroke: '#475569',
+            style: { color: '#e2e8f0' },
+            states: { hover: { fill: '#475569' }, select: { fill: '#3b82f6' } },
+          },
+        },
+      },
+      colorAxis: { min: 0, minColor: '#94a3b8', maxColor: '#0ea5e9', visible: false },
+      legend: { enabled: false },
+      plotOptions: {
+        map: {
+          states: { hover: { color: '#3b82f6', borderColor: '#fff', borderWidth: 2 } },
+          borderColor: '#334155', borderWidth: 0.5, nullColor: '#475569',
+        },
+      },
+      series: [{
+        name: 'USA',
+        data: stateData,
+        cursor: 'pointer',
+        dataLabels: {
+          enabled: true,
+          format: '{point.properties.postal-code}',
+          style: { fontSize: '9px', color: '#e2e8f0', textOutline: '1px #1e293b', fontWeight: 'bold' },
+        },
+        events: {
+          click: function (e) {
+            const code = e.point.stateCode;
+            const name = e.point.name;
+            if (code) drillIntoState(code, name);
+          },
+        },
+        tooltip: { headerFormat: '', pointFormat: '<b>{point.name}</b><br/>Click to view counties' },
+      }],
+    });
+
+    chartInstanceRef.current = chart;
+    setDrillLevel('country');
+    setActiveState('');
+  }, [drillIntoState]);
 
   const isUSA = !country || country.toLowerCase() === 'usa' || country.toLowerCase() === 'us' || country.toLowerCase() === 'united states';
 
@@ -214,21 +310,7 @@ export default function HighchartsMapDrilldown({ country, selectedCounties, onTo
       </div>
 
       <div className="hc-map-container">
-        {drillLevel === 'country' ? (
-          <HighchartsReact
-            highcharts={Highcharts}
-            constructorType="mapChart"
-            options={usOptions}
-            key="us-map"
-          />
-        ) : countyOptions ? (
-          <HighchartsReact
-            highcharts={Highcharts}
-            constructorType="mapChart"
-            options={countyOptions}
-            key={`county-${activeState}`}
-          />
-        ) : null}
+        <div ref={containerRef} data-testid="highcharts-container" />
       </div>
 
       {selectedCounties.length > 0 && (
