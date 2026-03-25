@@ -57,12 +57,17 @@ export default function SubscribePage() {
   const saved = useMemo(loadState, []);
   const [websiteChoice, setWebsiteChoice] = useState(saved.websiteChoice ?? null);
   const [serviceType, setServiceType] = useState(saved.serviceType ?? null);
+  const [businessDetails, setBusinessDetails] = useState(saved.businessDetails ?? { name: '', address: '', city: '', zip: '', phone: '' });
   const [selectedCounties, setSelectedCounties] = useState(saved.selectedCounties ?? []);
   const [selectedTier, setSelectedTier] = useState(saved.selectedTier ?? null);
 
   useEffect(() => {
-    saveState({ websiteChoice, serviceType, selectedCounties, selectedTier });
-  }, [websiteChoice, serviceType, selectedCounties, selectedTier]);
+    saveState({ websiteChoice, serviceType, businessDetails, selectedCounties, selectedTier });
+  }, [websiteChoice, serviceType, businessDetails, selectedCounties, selectedTier]);
+
+  const handleBusinessChange = (field, value) => {
+    setBusinessDetails(prev => ({ ...prev, [field]: value }));
+  };
 
   const selectedService = TIERS.find(s => s.id === selectedTier);
   const selectedWebsite = WEBSITE_OPTIONS.find(w => w.id === websiteChoice);
@@ -196,8 +201,70 @@ export default function SubscribePage() {
               })}
             </div>
 
-            {/* Step 2: Market Area Selection */}
-            <h2 className="sub-section-label" id="step-market-areas">2. Select Your Market Areas</h2>
+            {/* Step 2: Business Details */}
+            <h2 className="sub-section-label" id="step-business">2. Business Details</h2>
+            <div className="sub-business-form" data-testid="business-details-form">
+              <div className="sub-business-field">
+                <label htmlFor="biz-name">Business Name</label>
+                <input
+                  id="biz-name"
+                  data-testid="business-name-input"
+                  type="text"
+                  placeholder="Your business name"
+                  value={businessDetails.name}
+                  onChange={e => handleBusinessChange('name', e.target.value)}
+                />
+              </div>
+              <div className="sub-business-field">
+                <label htmlFor="biz-address">Address</label>
+                <input
+                  id="biz-address"
+                  data-testid="business-address-input"
+                  type="text"
+                  placeholder="Street address"
+                  value={businessDetails.address}
+                  onChange={e => handleBusinessChange('address', e.target.value)}
+                />
+              </div>
+              <div className="sub-business-row">
+                <div className="sub-business-field">
+                  <label htmlFor="biz-city">City</label>
+                  <input
+                    id="biz-city"
+                    data-testid="business-city-input"
+                    type="text"
+                    placeholder="City"
+                    value={businessDetails.city}
+                    onChange={e => handleBusinessChange('city', e.target.value)}
+                  />
+                </div>
+                <div className="sub-business-field sub-business-field-zip">
+                  <label htmlFor="biz-zip">Zip Code</label>
+                  <input
+                    id="biz-zip"
+                    data-testid="business-zip-input"
+                    type="text"
+                    placeholder="Zip"
+                    value={businessDetails.zip}
+                    onChange={e => handleBusinessChange('zip', e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="sub-business-field">
+                <label htmlFor="biz-phone">Phone Number</label>
+                <input
+                  id="biz-phone"
+                  data-testid="business-phone-input"
+                  type="tel"
+                  placeholder="(555) 555-5555"
+                  value={businessDetails.phone}
+                  onChange={e => handleBusinessChange('phone', e.target.value)}
+                />
+              </div>
+            </div>
+
+            {/* Step 3: Market Area Selection */}
+            <h2 className="sub-section-label" id="step-market-areas">3. Select Your Market Areas</h2>
             <p className="sub-market-intro">
               Click on the counties below to claim exclusive territory rights.
               Each county is classified by customer density — not geographic size.
@@ -208,8 +275,8 @@ export default function SubscribePage() {
               onToggleCounty={handleToggleCounty}
             />
 
-            {/* Step 3: Tier Selection */}
-            <h2 className="sub-section-label">3. Select Your Service Tier</h2>
+            {/* Step 4: Tier Selection */}
+            <h2 className="sub-section-label">4. Select Your Service Tier</h2>
             <div className="sub-tiers">
               {TIERS.map(svc => {
                 const isSelected = selectedTier === svc.id;
