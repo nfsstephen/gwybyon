@@ -195,4 +195,17 @@ Note: 29 UI library components in `/components/ui/` are unused but kept for pote
 - Noted need for dormant code audit (Token/Supabase-related code)
 - P0 next task: Stripe payment integration on Subscribe page
 
+#### 12. Business Details + Highcharts Map Drilldown (Feb 2026)
+- Added Step 2: Business Details form (Name, Address, City, Zip, Phone, Country)
+- All fields persist in localStorage
+- Replaced old SVG county map with Highcharts Map Drilldown in Step 3
+- Country field drives map: USA → shows full US states map
+- Click any state → drills down to all counties in that state
+- Click counties to select as exclusive market territories ($300/territory)
+- County maps loaded dynamically from @highcharts/map-collection
+- Selected territories shown as removable chips below the map
+- Invoice auto-updates with county names and territory pricing
+- "Back to USA" button to navigate back to state level
+- Renumbered steps: 1. Website → 2. Business Details → 3. Market Areas → 4. Service Tier
+
 *Last Updated: Feb 2026*

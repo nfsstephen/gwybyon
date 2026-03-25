@@ -1,0 +1,150 @@
+/* ===== Highcharts Map Drilldown ===== */
+.hc-map-wrapper {
+  margin-bottom: 28px;
+}
+
+/* Status bar */
+.hc-map-status {
+  padding: 10px 16px;
+  border-radius: 10px 10px 0 0;
+  background: #1e293b;
+  border: 1.5px solid #334155;
+  border-bottom: none;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.hc-status-loading,
+.hc-status-state,
+.hc-status-hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.hc-status-state {
+  color: #e2e8f0;
+}
+
+@keyframes hc-spin {
+  to { transform: rotate(360deg); }
+}
+
+.hc-spinner {
+  animation: hc-spin 1s linear infinite;
+}
+
+.hc-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: #334155;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  color: #e2e8f0;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-right: 8px;
+}
+
+.hc-back-btn:hover {
+  background: #475569;
+}
+
+/* Map container */
+.hc-map-container {
+  border: 1.5px solid #334155;
+  border-radius: 0 0 10px 10px;
+  overflow: hidden;
+  background: #1e293b;
+}
+
+.hc-map-container .highcharts-container {
+  border-radius: 0 0 10px 10px;
+}
+
+/* Unsupported country */
+.hc-map-unsupported {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 60px 24px;
+  text-align: center;
+  color: #64748b;
+  background: #f1f5f9;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+.hc-map-unsupported p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.hc-map-hint {
+  font-size: 0.8rem !important;
+  color: #94a3b8 !important;
+}
+
+/* Selected territories */
+.hc-selected-territories {
+  margin-top: 16px;
+  padding: 16px;
+  background: #fff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+.hc-selected-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.hc-selected-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.hc-selected-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: #eff6ff;
+  border: 1.5px solid #3b82f6;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  color: #1e40af;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.hc-selected-chip:hover {
+  background: #dbeafe;
+  border-color: #2563eb;
+}
+
+.hc-chip-remove {
+  font-size: 1.1rem;
+  line-height: 1;
+  color: #3b82f6;
+  font-weight: 700;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .hc-map-container .highcharts-container {
+    height: 340px !important;
+  }
+}

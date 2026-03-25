@@ -1,7 +1,7 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { Check, ShoppingCart, AlertCircle, CreditCard, ChevronRight, Globe, RefreshCw, MapPin } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
-import DrillDownMap from '../components/DrillDownMap';
+import HighchartsMapDrilldown from '../components/HighchartsMapDrilldown';
 import './SubscribePage.css';
 
 const WEBSITE_OPTIONS = [
@@ -23,15 +23,6 @@ const WEBSITE_OPTIONS = [
     buildPrice: 300,
     upgradePrice: 150,
   },
-];
-
-const DEMO_COUNTIES = [
-  { id: 'union', name: 'Union', market: 'small', price: 300, isHome: true },
-  { id: 'baker', name: 'Baker', market: 'small', price: 300 },
-  { id: 'bradford', name: 'Bradford', market: 'small', price: 300 },
-  { id: 'columbia', name: 'Columbia', market: 'large', price: 1200 },
-  { id: 'alachua', name: 'Alachua', market: 'large', price: 1200 },
-  { id: 'clay', name: 'Clay', market: 'large', price: 1200 },
 ];
 
 const TIERS = [
@@ -57,13 +48,14 @@ export default function SubscribePage() {
   const saved = useMemo(loadState, []);
   const [websiteChoice, setWebsiteChoice] = useState(saved.websiteChoice ?? null);
   const [serviceType, setServiceType] = useState(saved.serviceType ?? null);
-  const [businessDetails, setBusinessDetails] = useState(saved.businessDetails ?? { name: '', address: '', city: '', zip: '', phone: '' });
+  const [businessDetails, setBusinessDetails] = useState(saved.businessDetails ?? { name: '', address: '', city: '', zip: '', phone: '', country: 'USA' });
   const [selectedCounties, setSelectedCounties] = useState(saved.selectedCounties ?? []);
+  const [countyNames, setCountyNames] = useState(saved.countyNames ?? {});
   const [selectedTier, setSelectedTier] = useState(saved.selectedTier ?? null);
 
   useEffect(() => {
-    saveState({ websiteChoice, serviceType, businessDetails, selectedCounties, selectedTier });
-  }, [websiteChoice, serviceType, businessDetails, selectedCounties, selectedTier]);
+    saveState({ websiteChoice, serviceType, businessDetails, selectedCounties, countyNames, selectedTier });
+  }, [websiteChoice, serviceType, businessDetails, selectedCounties, countyNames, selectedTier]);
 
   const handleBusinessChange = (field, value) => {
     setBusinessDetails(prev => ({ ...prev, [field]: value }));
@@ -93,19 +85,21 @@ export default function SubscribePage() {
     }
   };
 
-  const handleToggleCounty = (countyId) => {
+  const handleToggleCounty = useCallback((countyId, countyName) => {
     setSelectedCounties(prev =>
       prev.includes(countyId)
         ? prev.filter(id => id !== countyId)
         : [...prev, countyId]
     );
-  };
+    if (countyName) {
+      setCountyNames(prev => ({ ...prev, [countyId]: countyName }));
+    }
+  }, []);
+
+  const TERRITORY_PRICE = 300;
 
   const countyTotal = useMemo(() => {
-    return selectedCounties.reduce((sum, id) => {
-      const county = DEMO_COUNTIES.find(c => c.id === id);
-      return sum + (county ? county.price : 0);
-    }, 0);
+    return selectedCounties.length * TERRITORY_PRICE;
   }, [selectedCounties]);
 
   const invoice = useMemo(() => {
@@ -261,18 +255,26 @@ export default function SubscribePage() {
                   onChange={e => handleBusinessChange('phone', e.target.value)}
                 />
               </div>
+              <div className="sub-business-field">
+                <label htmlFor="biz-country">Country</label>
+                <input
+                  id="biz-country"
+                  data-testid="business-country-input"
+                  type="text"
+                  placeholder="USA"
+                  value={businessDetails.country}
+                  onChange={e => handleBusinessChange('country', e.target.value)}
+                />
+              </div>
             </div>
 
             {/* Step 3: Market Area Selection */}
             <h2 className="sub-section-label" id="step-market-areas">3. Select Your Market Areas</h2>
             <p className="sub-market-intro">
-              {businessDetails.city
-                ? `Select exclusive territory rights near ${businessDetails.city}. Click on the map circles or cards below.`
-                : 'Enter your city in Step 2 to load the drill-down map and select your market areas.'}
+              Click a state to drill down into its counties. Select counties as your exclusive market territories.
             </p>
-            <DrillDownMap
-              city={businessDetails.city}
-              counties={DEMO_COUNTIES}
+            <HighchartsMapDrilldown
+              country={businessDetails.country}
               selectedCounties={selectedCounties}
               onToggleCounty={handleToggleCounty}
             />
@@ -347,14 +349,13 @@ export default function SubscribePage() {
                           <span>Market Territories ({selectedCounties.length})</span>
                         </div>
                         {selectedCounties.map(id => {
-                          const c = DEMO_COUNTIES.find(co => co.id === id);
+                          const displayName = countyNames[id] || id;
                           return (
                             <div key={id} className="sub-invoice-territory-item" data-testid={`invoice-county-${id}`}>
                               <div>
-                                <span className="sub-invoice-county-name">{c.name} County</span>
-                                <span className={`sub-invoice-county-tag ${c.market}`}>{c.market === 'small' ? 'SM' : 'LG'}</span>
+                                <span className="sub-invoice-county-name">{displayName}</span>
                               </div>
-                              <span className="sub-invoice-county-price">${c.price.toLocaleString()}</span>
+                              <span className="sub-invoice-county-price">${TERRITORY_PRICE.toLocaleString()}</span>
                             </div>
                           );
                         })}
