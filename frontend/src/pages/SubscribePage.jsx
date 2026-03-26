@@ -271,10 +271,11 @@ export default function SubscribePage() {
             {/* Step 3: Market Area Selection */}
             <h2 className="sub-section-label" id="step-market-areas">3. Select Your Market Areas</h2>
             <p className="sub-market-intro">
-              Click a state to drill down into its counties. Select counties as your exclusive market territories.
+              Enter your city in Step 2 to auto-load your state's counties, or click any state on the map. Then select counties as your exclusive market territories.
             </p>
             <HighchartsMapDrilldown
               country={businessDetails.country}
+              city={businessDetails.city}
               selectedCounties={selectedCounties}
               onToggleCounty={handleToggleCounty}
             />

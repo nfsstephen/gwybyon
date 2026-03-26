@@ -209,5 +209,8 @@ Note: 29 UI library components in `/components/ui/` are unused but kept for pote
 - "Back to USA" button to return to state-level view
 - Renumbered steps: 1. Website → 2. Business Details → 3. Market Areas → 4. Service Tier
 - Tech: Highcharts 12.5 + highmaps, manual chart creation (not HighchartsReact wrapper) for reliable click handling
+- Auto-drill: typing a city in Step 2 geocodes it (via Nominatim) → resolves the US state → auto-drills the map into that state's counties
+- Changing the city switches the map to the new state automatically
+- Works with any US city (Jacksonville→FL, Dallas→TX, Denver→CO, etc.)
 
 *Last Updated: Feb 2026*

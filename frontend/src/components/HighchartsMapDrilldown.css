@@ -27,6 +27,12 @@
   color: #e2e8f0;
 }
 
+.hc-auto-info {
+  color: #94a3b8;
+  font-style: italic;
+  font-size: 0.82rem;
+}
+
 @keyframes hc-spin {
   to { transform: rotate(360deg); }
 }

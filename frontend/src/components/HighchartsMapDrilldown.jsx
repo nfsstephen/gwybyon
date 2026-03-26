@@ -4,15 +4,64 @@ import { MapPin, Loader, ArrowLeft } from 'lucide-react';
 import usAllTopo from '@highcharts/map-collection/countries/us/us-all.topo.json';
 import './HighchartsMapDrilldown.css';
 
-export default function HighchartsMapDrilldown({ country, selectedCounties, onToggleCounty }) {
+const STATE_NAME_TO_CODE = {
+  'alabama': 'al', 'alaska': 'ak', 'arizona': 'az', 'arkansas': 'ar',
+  'california': 'ca', 'colorado': 'co', 'connecticut': 'ct', 'delaware': 'de',
+  'florida': 'fl', 'georgia': 'ga', 'hawaii': 'hi', 'idaho': 'id',
+  'illinois': 'il', 'indiana': 'in', 'iowa': 'ia', 'kansas': 'ks',
+  'kentucky': 'ky', 'louisiana': 'la', 'maine': 'me', 'maryland': 'md',
+  'massachusetts': 'ma', 'michigan': 'mi', 'minnesota': 'mn', 'mississippi': 'ms',
+  'missouri': 'mo', 'montana': 'mt', 'nebraska': 'ne', 'nevada': 'nv',
+  'new hampshire': 'nh', 'new jersey': 'nj', 'new mexico': 'nm', 'new york': 'ny',
+  'north carolina': 'nc', 'north dakota': 'nd', 'ohio': 'oh', 'oklahoma': 'ok',
+  'oregon': 'or', 'pennsylvania': 'pa', 'rhode island': 'ri', 'south carolina': 'sc',
+  'south dakota': 'sd', 'tennessee': 'tn', 'texas': 'tx', 'utah': 'ut',
+  'vermont': 'vt', 'virginia': 'va', 'washington': 'wa', 'west virginia': 'wv',
+  'wisconsin': 'wi', 'wyoming': 'wy', 'district of columbia': 'dc',
+};
+
+function resolveStateCode(input) {
+  if (!input) return null;
+  const lower = input.trim().toLowerCase();
+  // Direct state name match
+  if (STATE_NAME_TO_CODE[lower]) return STATE_NAME_TO_CODE[lower];
+  // Check 2-letter abbreviation
+  const abbr = lower.replace(/\s/g, '');
+  if (abbr.length === 2 && Object.values(STATE_NAME_TO_CODE).includes(abbr)) return abbr;
+  return null;
+}
+
+async function geocodeCity(city) {
+  if (!city || city.trim().length < 2) return null;
+  try {
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(city)}&countrycodes=us&limit=1&addressdetails=1`,
+      { headers: { 'Accept-Language': 'en' } }
+    );
+    const data = await res.json();
+    if (data && data.length > 0 && data[0].address) {
+      const state = data[0].address.state;
+      if (state) return { stateName: state, stateCode: resolveStateCode(state), displayName: data[0].display_name };
+    }
+  } catch (e) {
+    console.error('Geocode error:', e);
+  }
+  return null;
+}
+
+export default function HighchartsMapDrilldown({ country, city, selectedCounties, onToggleCounty }) {
   const containerRef = useRef(null);
   const chartInstanceRef = useRef(null);
   const [drillLevel, setDrillLevel] = useState('country');
   const [activeState, setActiveState] = useState('');
+  const [autoStateInfo, setAutoStateInfo] = useState('');
   const [loadingCounty, setLoadingCounty] = useState(false);
   const countyCache = useRef({});
   const toggleRef = useRef(onToggleCounty);
   const selectedRef = useRef(selectedCounties);
+  const geocodeDebounce = useRef(null);
+  const lastGeocodedCity = useRef('');
+  const currentDrilledState = useRef('');
 
   useEffect(() => { toggleRef.current = onToggleCounty; }, [onToggleCounty]);
   useEffect(() => { selectedRef.current = selectedCounties; }, [selectedCounties]);
@@ -194,12 +243,57 @@ export default function HighchartsMapDrilldown({ country, selectedCounties, onTo
     });
 
     chartInstanceRef.current = countyChart;
+    currentDrilledState.current = stateCode;
     setDrillLevel('state');
     setLoadingCounty(false);
   }, [loadCountyMap]);
 
+  // Auto-drill when city changes: geocode city → resolve state → drill into state
+  useEffect(() => {
+    if (geocodeDebounce.current) clearTimeout(geocodeDebounce.current);
+
+    if (!city || city.trim().length < 2) {
+      setAutoStateInfo('');
+      return;
+    }
+
+    const trimmedCity = city.trim();
+    if (trimmedCity === lastGeocodedCity.current) return;
+
+    geocodeDebounce.current = setTimeout(async () => {
+      lastGeocodedCity.current = trimmedCity;
+
+      // First check if the city IS a state name directly
+      const directCode = resolveStateCode(trimmedCity);
+      if (directCode) {
+        const stateName = Object.keys(STATE_NAME_TO_CODE).find(k => STATE_NAME_TO_CODE[k] === directCode) || trimmedCity;
+        const capitalizedName = stateName.replace(/\b\w/g, c => c.toUpperCase());
+        if (currentDrilledState.current !== directCode) {
+          setAutoStateInfo(`Auto-loaded: ${capitalizedName}`);
+          drillIntoState(directCode, capitalizedName);
+        }
+        return;
+      }
+
+      // Geocode the city
+      const result = await geocodeCity(trimmedCity);
+      if (result && result.stateCode) {
+        if (currentDrilledState.current !== result.stateCode) {
+          setAutoStateInfo(`${trimmedCity} → ${result.stateName}`);
+          drillIntoState(result.stateCode, result.stateName);
+        }
+      }
+    }, 900);
+
+    return () => { if (geocodeDebounce.current) clearTimeout(geocodeDebounce.current); };
+  }, [city, drillIntoState]);
+
   const handleDrillUp = useCallback(() => {
     if (!containerRef.current) return;
+
+    currentDrilledState.current = '';
+    lastGeocodedCity.current = '';
+    setAutoStateInfo('');
 
     // Destroy county chart and recreate US chart
     if (chartInstanceRef.current) {
@@ -299,12 +393,15 @@ export default function HighchartsMapDrilldown({ country, selectedCounties, onTo
             <button className="hc-back-btn" onClick={handleDrillUp} data-testid="map-back-btn">
               <ArrowLeft size={14} /> Back to USA
             </button>
-            <span>Viewing counties in <strong>{activeState}</strong> — click a county to select it as a territory</span>
+            <span>
+              {autoStateInfo && <em className="hc-auto-info">{autoStateInfo} — </em>}
+              Viewing counties in <strong>{activeState}</strong> — click a county to select/deselect
+            </span>
           </span>
         ) : (
           <span className="hc-status-hint">
             <MapPin size={14} />
-            Click a state to drill down and select county territories
+            {city ? 'Locating your area...' : 'Enter your city in Step 2 or click a state to drill down'}
           </span>
         )}
       </div>
