@@ -1,21 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Droplets, Wrench, Zap, Thermometer, Bug, Home, HardHat, ArrowRight, Check,
+  ArrowRight, Check,
   Globe, Shield, MapPin, Phone, Search, BarChart3, X
 } from 'lucide-react';
 import FiveToolsSection from '../components/FiveToolsSection';
 import './WebServiceV2Page.css';
-
-const industries = [
-  { name: 'Well & Septic Companies', icon: Droplets, path: '/big-market/well-septic', color: '#0369a1', desc: 'Emergency-driven services where being found first means everything. Field crews need managed communication.' },
-  { name: 'Plumbers', icon: Wrench, path: '/big-market/plumbers', color: '#7c3aed', desc: 'High-intent "near me" searches dominate this industry. Technicians in the field need business/personal separation.' },
-  { name: 'Electricians', icon: Zap, path: '/big-market/electricians', color: '#d97706', desc: 'Safety-critical field work demands controlled communications. Local search visibility drives new customer acquisition.' },
-  { name: 'Air & Heating Companies', icon: Thermometer, path: '/big-market/hvac', color: '#dc2626', desc: 'Seasonal demand spikes make search rankings critical. Large field teams need scalable phone management.' },
-  { name: 'Pest Control Services', icon: Bug, path: '/big-market/pest-control', color: '#16a34a', desc: 'Recurring service model with technicians covering territories daily. Local visibility drives the first appointment.' },
-  { name: 'Real Estate', icon: Home, path: '/big-market/real-estate', color: '#0d9488', desc: 'Agents live on their phones. Separating client calls from personal life is essential. Local search drives leads.' },
-  { name: 'Roofing Companies', icon: HardHat, path: '/big-market/roofing', color: '#b45309', desc: 'High-ticket jobs driven by local search and storm events. Field crews need managed communication across job sites.' },
-];
 
 const WebServiceV2Page = () => {
   return (
@@ -137,32 +127,6 @@ const WebServiceV2Page = () => {
             are optimizing for an algorithm that no longer exists. Meanwhile, their Google Business Profile
             is outdated, their map pins are wrong, and their reviews are stagnant.
           </p>
-        </div>
-      </section>
-
-      {/* Target Industries */}
-      <section className="v2-industries" data-testid="v2-industries">
-        <div className="v2-container">
-          <div className="v2-label">Who We Serve</div>
-          <h2 className="v2-title">Seven High-Value Industries</h2>
-          <p className="v2-desc">
-            We've identified seven industries where local businesses need all three solutions. 
-            Click into each to see the full strategy.
-          </p>
-          <div className="v2-industry-grid">
-            {industries.map((ind) => (
-              <Link to={ind.path} key={ind.path} className="v2-industry-card">
-                <div className="v2-ind-icon" style={{ color: ind.color, borderColor: `${ind.color}33`, background: `${ind.color}0a` }}>
-                  <ind.icon size={28} />
-                </div>
-                <h3>{ind.name}</h3>
-                <p>{ind.desc}</p>
-                <span className="v2-ind-link" style={{ color: ind.color }}>
-                  View Strategy <ArrowRight size={14} />
-                </span>
-              </Link>
-            ))}
-          </div>
         </div>
       </section>
 
