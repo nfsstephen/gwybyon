@@ -156,7 +156,7 @@ export default function HighchartsMapDrilldown({ country, city, selectedCounties
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const drillIntoState = useCallback(async (stateCode, stateName) => {
+  const drillIntoState = useCallback(async (stateCode, stateName, autoSelectCountyName) => {
     setLoadingCounty(true);
     setActiveState(stateName);
 
@@ -169,10 +169,30 @@ export default function HighchartsMapDrilldown({ country, city, selectedCounties
     const features = mapData.objects
       ? Object.values(mapData.objects)[0]?.geometries || []
       : [];
+
+    // Find the county to auto-select (match by name, case-insensitive)
+    let autoSelectKey = null;
+    if (autoSelectCountyName) {
+      const searchName = autoSelectCountyName.toLowerCase().trim();
+      const match = features.find(feat => {
+        const name = (feat.properties?.name || '').toLowerCase();
+        return name === searchName || name.startsWith(searchName) || searchName.startsWith(name);
+      });
+      if (match) {
+        autoSelectKey = match.properties['hc-key'];
+      }
+    }
+
+    // Auto-select the matched county if not already selected
+    if (autoSelectKey && !selectedRef.current.includes(autoSelectKey)) {
+      const countyName = features.find(f => f.properties['hc-key'] === autoSelectKey)?.properties?.name || '';
+      toggleRef.current(autoSelectKey, countyName);
+    }
+
     const countyData = features.map(feat => {
       const props = feat.properties || {};
       const hcKey = props['hc-key'] || '';
-      const isSelected = selectedRef.current.includes(hcKey);
+      const isSelected = selectedRef.current.includes(hcKey) || hcKey === autoSelectKey;
       return {
         'hc-key': hcKey,
         name: props.name || '',
@@ -270,7 +290,7 @@ export default function HighchartsMapDrilldown({ country, city, selectedCounties
         const capitalizedName = stateName.replace(/\b\w/g, c => c.toUpperCase());
         if (currentDrilledState.current !== directCode) {
           setAutoStateInfo(`Auto-loaded: ${capitalizedName}`);
-          drillIntoState(directCode, capitalizedName);
+          drillIntoState(directCode, capitalizedName, trimmedCity);
         }
         return;
       }
@@ -280,7 +300,7 @@ export default function HighchartsMapDrilldown({ country, city, selectedCounties
       if (result && result.stateCode) {
         if (currentDrilledState.current !== result.stateCode) {
           setAutoStateInfo(`${trimmedCity} → ${result.stateName}`);
-          drillIntoState(result.stateCode, result.stateName);
+          drillIntoState(result.stateCode, result.stateName, trimmedCity);
         }
       }
     }, 900);
