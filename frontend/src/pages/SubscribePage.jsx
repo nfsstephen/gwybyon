@@ -446,6 +446,10 @@ export default function SubscribePage() {
                 <div className="sub-invoice-empty">
                   <ShoppingCart size={32} />
                   <p>Select services or territories to build your invoice</p>
+                  <div className="sub-invoice-notice">
+                    <AlertCircle size={14} />
+                    <span>Select a website service to continue</span>
+                  </div>
                 </div>
               ) : (
                 <>
