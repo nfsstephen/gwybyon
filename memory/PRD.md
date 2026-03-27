@@ -1,216 +1,97 @@
-# Gateway AI Systems - Project Requirements Document
+# Gateway AI Systems — PRD
 
-## Project Overview
-Gateway AI Systems website and admin platform for BYON (Bring Your Own Number) eSIM technology and web services. Features a territory-based marketing model where businesses receive exclusive geographic zones.
+## Original Problem Statement
+Modify an existing Gateway AI Systems website to refine marketing copy, pricing UI, and build a robust, interactive subscription checkout flow. Specifically, integrate a Business Details form, implement a Highcharts drill-down map with auto-selection and multi-selection of counties based on user input, and migrate the backend database from MongoDB to Supabase.
 
-## Live Site
-- **Public Website**: gwyai.com
-- **Admin Dashboard**: gwyai.com/admin/preview
-- **GitHub Repo**: https://github.com/nfsstephen/gwybyon.git
+## Architecture
+- **Frontend**: React (CRA) with Highcharts Maps, Lucide icons, Shadcn UI
+- **Backend**: FastAPI with Supabase REST client (primary) + SQLAlchemy/asyncpg (dashboard only)
+- **Database**: Supabase (PostgreSQL) — contracts, deposits, chat, status tables via REST; dashboard users via SQLAlchemy
+- **Deployment**: Railway (frontend + backend)
+- **Map**: Highcharts with @highcharts/map-collection (US State → County drilldown)
 
----
+## Navigation Structure
+Home | Seven Industries | Five Tools | Web Services | Services & Pricing | Subscribe
 
-## Tech Stack
-- **Frontend**: React, Tailwind CSS, Lucide icons
-- **Backend**: FastAPI (Python), MongoDB
-- **Dashboard DB**: None currently (Supabase removed from plan; Admin Dashboard UI is mocked/retained)
+## Key Pages
+1. **Home** — Landing page
+2. **Seven Industries** — Consolidated tabbed page (Well & Septic, Plumbers, Electricians, Air & Heating, Pest Control, Real Estate, Roofing)
+3. **Five Tools** — GeoGrid platform tools (Geo-Health Scanner, Entity-Sync Dashboard, Content Engine, Review Magnet, ROI Tracker)
+4. **Web Services** — Hero: "Is Your Business Invisible across your entire market territory?", GeoGrid explanation, site construction/hosting/maintenance
+5. **Services & Pricing** — Tier plans and pricing
+6. **Subscribe** — 3-step checkout: Website Service → Business Details & Market Areas → Service Tier → Invoice with 25% Deposit flow
 
----
+## Subscribe Page Flow
+- Step 1: Select Website Service (Build or Rebuild)
+- Step 2: Business Details (Name, Address, City, State dropdown — 48 continental states, Zip, Email optional, Industry Type dropdown) & Market Areas (Highcharts map, auto-drills by city)
+- Step 3: Select Service Tier (Starter, Growth, Dominance)
+- Invoice: Shows line items, total, 25% deposit, balance due, independent warning banners per step
+- Deposit: Creates contract in Supabase, records deposit, generates PDF, shows success with download
+
+## Supabase Tables
+- `contracts` — business info, territories, tier, pricing, deposit/balance, status
+- `deposits` — payment records linked to contracts
+- `chat_messages`, `chat_sessions`, `status_checks` — migrated from MongoDB
+- Dashboard tables (via SQLAlchemy): users, business_profiles, etc.
+
+## Admin Dashboard
+- URL: /dashboard/login
+- Credentials: admin@geogrid.com / admin123
+- Tabs: Contracts (real data from Supabase), Territory Tokens, Invitations, Clients, Contact Requests, Feedback
+- Contracts tab shows: contract #, date, business, industry, territories, total, deposit, balance, status, PDF download
+
+## API Endpoints
+- `POST /api/auth/verify-site` — Site password gate (password: 123)
+- `POST /api/auth/verify-admin` — Admin password
+- `GET /api/contracts/` — List all contracts
+- `POST /api/contracts/create` — Create new contract
+- `POST /api/contracts/{id}/deposit` — Record deposit payment
+- `GET /api/contracts/{id}/pdf` — Download contract PDF
+- `POST /api/dashboard/auth/login` — Dashboard login
 
 ## What's Been Implemented
+- [x] Highcharts drill-down map (State → County) with auto-geocoding by city
+- [x] Multi-territory selection on map with dynamic pricing
+- [x] MongoDB → Supabase migration (complete)
+- [x] Business Details form with State dropdown (48 states), Industry Type dropdown (7 industries)
+- [x] Seven Industries consolidated page (tabbed)
+- [x] Five Tools page with hero
+- [x] Web Services page cleanup (removed redundant sections)
+- [x] Updated marketing copy (hero, problem section)
+- [x] 25% Deposit flow (contract creation, Supabase storage, PDF generation)
+- [x] Contracts tab on Admin Dashboard (real data)
+- [x] Independent invoice warning banners
+- [x] Railway deployment fixes (env vars, route prefixes, graceful startup)
+- [x] Refactored: deleted 7 old BigMarket pages, unused components/CSS
 
-### Session: March 19, 2026
+## Backlog (Prioritized)
+### P0
+- Stripe integration — wire real payments to deposit + balance buttons
+- Customer Portal — login, view contract, pay balance, deadline tracking
 
-#### 1. "Dirty Secret of Our Competitors" Section
-- Changed messaging from keywords to **geographic location focus**
-- "Traditional agencies profit by over-saturating your territory"
-- Business boxes: "Active in Territory" (not "Paying for #1")
-- Bottom text: "The agency gets paid 4x to crowd your market"
-- Premium "Your Business" box: navy/gold styling + "Territory Locked" badge
-- Visual map backgrounds (crowded grid vs. protected zone)
-- Added "Conflict of Interest Guarantee" section
-- Added scarcity notice about territory locking
+### P1
+- Migrate dashboard from SQLAlchemy to Supabase REST client (eliminate direct PostgreSQL dependency)
+- Email delivery — send contract PDF to customer + copy to admin (SendGrid/Resend)
+- Real Florida county data — verify Highcharts map accuracy
+- Secure admin dashboard credentials for production
 
-#### 2. Strategy Section Reordering
-- **#1** Market Territories (was #3)
-- **#2** Cross Selling (unchanged)  
-- **#3** Trucking Industry (was #1)
-- Page section order updated: Market Territories appears before Cross Selling
-- Badge updated to "STRATEGY 1: MARKET TERRITORIES"
+### P2
+- PDF exports for territory reports
+- Analytics & reporting
+- Dormant code audit (unused Token backend code)
 
-#### 3. Admin Dashboard UI (Gateway AI Admin)
-- New admin dashboard at `/admin/preview`
-- **Stats Cards**: Territory Tokens, Territories Claimed, Pending Invitations, Contact Requests, Active Clients
-- **Tabs**: Territory Tokens, Invitations, Clients, Contact Requests, Feedback
-- Light/Dark mode toggle
-- Mock data (ready for Supabase connection)
-- Bypasses password gate
+## Credentials
+- Site password: `123`
+- Admin dashboard: admin@geogrid.com / admin123
+- Client dashboard: client@geogrid.com / client123
+- Tech dashboard: tech@geogrid.com / tech123
 
-#### 4. Navigation Reorder
-- Moved "Trucking (BYON)" to far right (before Subscribe)
-- New order: Home | Web Services | Services & Pricing | Trucking (BYON) | Subscribe
-- Signals to team that BYON marketing is lower priority
+## Railway Environment Variables (Backend)
+- SUPABASE_URL
+- SUPABASE_SERVICE_KEY
+- DATABASE_URL (PostgreSQL — for dashboard only)
+- SITE_PASSWORD
+- ADMIN_PASSWORD
+- JWT_SECRET
 
-#### 5. "The Problem" Section Rewrite (Web Services Page)
-- New title: "Google Changed. Your Visibility Didn't."
-- New cards focused on location-first search:
-  - "Location Is Now #1"
-  - "Keywords Don't Matter Like They Used To"
-  - "Your Ranking Changes Every Block"
-  - "Customers Never Click Your Website"
-
-### Session: March 24, 2026
-
-#### 6. Dead Code Cleanup
-Removed unused components:
-- ~~FocusAreas.jsx / .css~~
-- ~~PatentBanner.jsx / .css~~
-- ~~IndustriesBanner.jsx / .css~~
-- ~~Implementation.jsx / .css~~
-
-Note: 29 UI library components in `/components/ui/` are unused but kept for potential future use.
-
----
-
-## Current File Structure (Key Files)
-
-```
-/app/frontend/src/
-├── pages/
-│   ├── HomePage.jsx
-│   ├── WebServiceV2Page.jsx
-│   ├── AdminPreviewPage.jsx (new dashboard UI)
-│   ├── dashboard/ (existing dashboards - need DB connection)
-│   └── [industry pages]
-├── components/
-│   ├── MarketTerritories.jsx (Dirty Secret section)
-│   ├── StrategyOverview.jsx (3-prong strategy)
-│   ├── Navigation.jsx
-│   └── [other components]
-└── routes/
-    ├── SiteRoutes.jsx
-    └── DashboardRoutes.jsx
-
-/app/backend/
-├── server.py (dashboard routes conditional on DATABASE_URL)
-├── routes/
-│   ├── auth.py, chat.py, status.py (active)
-│   └── dashboard_*.py (dormant until Supabase connected)
-└── .env
-```
-
----
-
-## To-Do List
-
-### High Priority (P0)
-- [ ] **Connect Stripe to Subscribe page payment flow** — backend checkout session, webhooks, frontend Stripe Checkout integration
-- [ ] **Add "Proprietary Tools" statement to Products/Services page** - "We provide proprietary tools to measure and control your website effectiveness yourself. No more flying blind or depending on someone else to control your advertising - the sign on the front of your business."
-
-### Medium Priority (P1)
-- [ ] Replace demo county map data with real, extensive Florida county data
-- [ ] Hide/secure dashboard login credentials (currently displayed for dev)
-
-### Low Priority (P2)
-- [ ] PDF export for territory reports
-- [ ] Email notification system for invitations
-- [ ] Analytics and reporting features
-- [ ] Clean up unused UI library components (optional)
-- [ ] Admin Dashboard — keep UI, may find future use (no DB connection planned currently)
-
-### Removed from Backlog (Feb 2026)
-- ~~Token infrastructure & backend for territory map claiming~~ — Not needed
-- ~~Connect Admin Dashboard to Supabase~~ — Removed; dashboard UI retained for potential future use
-- **Dormant code audit:** Check for backend routes, models, or frontend components tied to Token system or Supabase that can be flagged/cleaned up
-
----
-
-## Context Management Notes
-
-**For future sessions:**
-- This PRD.md serves as checkpoint
-- Push code before starting new chat sessions
-- New session = fresh context, re-read this file to get up to speed
-
-**Warning thresholds:**
-- 70% context: "Recommend pushing soon"
-- 85% context: "Critical - push and start fresh"
-
----
-
-### Session: March 23, 2026 (Fork 2)
-
-#### 7. Subscribe Page — Dual Option Cards
-- Each website service card now has two sub-options: "Build/Rebuild" and "Upgrade"
-- New Website Build: Build = $100, Upgrade = $50
-- Rebuild & Optimize: Rebuild = $300, Upgrade = $150
-- Only one option selectable at a time (radio behavior across all cards)
-- Upgrade note: "Someone will be in contact with you to learn what upgrades you desire"
-- Invoice dynamically reflects selected option and price
-
-#### 8. Services & Pricing Page — Prominent Pricing
-- Prices redesigned to be dramatically larger and eye-catching
-- $150 (New Build) and $300 (Rebuild) shown in large green hero text
-- Labels "INITIAL PRODUCTION" / "REBUILD FEE" below
-- Upgrade prices clearly displayed beneath divider
-
-#### 9. Territory Pricing & County Map (March 23, 2026)
-**Services & Pricing Page:**
-- Removed both "$1,497 One-Time Territory Activation Fee" banners
-- Moved "Core Differentiator" (Exclusive Territory Protection) section up, right after Transparency box
-- Added Small Market County ($300/area) and Large Market County ($1,200/area) pricing cards
-- Italicized note: market size = customer density, not geographic area
-
-**Subscribe Page:**
-- Removed territory fee from invoice
-- Added Step 2: "Select Your Market Areas" with interactive SVG county map
-- Map shows Union County FL (home) + 5 surrounding counties (Baker, Bradford, Columbia, Alachua, Clay)
-- Counties color-coded: blue = small market ($300), amber = large market ($1,200)
-- Clickable counties toggle selection, add to invoice
-- Territory summary chips show selected counties with market tags and prices
-- Step ordering: 1. Website Service → 2. Market Areas → 3. Service Tier
-
-**County Classification (Demo Data — Union County FL area):**
-- Small Market: Union, Baker, Bradford ($300 each)
-- Large Market: Columbia, Alachua, Clay ($1,200 each)
-
-#### 10. Product CTAs & Layout Fix (March 23, 2026)
-- Merged 4 product boxes into 2 on Services page: one Website card (New Build $150 / Rebuild $300 side by side) and one Territory card (Small Market $300 / Large Market $1,200 side by side)
-- Each product card has a single CTA: "Get Started" → /subscribe#step-website, "Claim Territory" → /subscribe#step-market-areas
-- Subscribe page: county selection details moved into the main invoice panel as a subsection, map gets full width
-- Invoice shows each selected county individually with SM/LG tags and individual prices
-
-#### 11. Invoice UX & Persistence (March 23, 2026 — Fork 3)
-- Reordered invoice: Website → Territories → Tier (Free Month note) → Due Today → Monthly Recurring
-- "Due Today" now only shows upfront costs (Website + Territories), excluding monthly fee
-- First month marked "Free" on the service tier line
-- Switched Subscribe page state persistence from `sessionStorage` to `localStorage`
-- All UI/UX spacing and CTA placement refinements completed
-
----
-
-### Session: Feb 2026 (Fork 4 — Current)
-- Updated backlog: Removed Token infrastructure and Supabase connection tasks
-- Admin Dashboard UI retained for potential future use (no DB wiring planned)
-- Noted need for dormant code audit (Token/Supabase-related code)
-- P0 next task: Stripe payment integration on Subscribe page
-
-#### 12. Business Details + Highcharts Map Drilldown (Feb 2026)
-- Added Step 2: Business Details form (Name, Address, City, Zip, Phone, Country)
-- All fields persist in localStorage
-- Built Highcharts Map Drilldown (US states → county drill-down) in Step 3
-- Country field drives map: USA → shows full US states map
-- Click any state → drills down to all that state's counties
-- Click counties to select multiple as exclusive market territories ($300/territory)
-- County maps loaded dynamically from @highcharts/map-collection (no CDN/API key needed)
-- Selected counties turn green; selections persist across state navigation and in localStorage
-- Selected territories shown as removable chips below the map
-- Invoice auto-updates with county names and territory pricing
-- "Back to USA" button to return to state-level view
-- Renumbered steps: 1. Website → 2. Business Details → 3. Market Areas → 4. Service Tier
-- Tech: Highcharts 12.5 + highmaps, manual chart creation (not HighchartsReact wrapper) for reliable click handling
-- Auto-drill: typing a city in Step 2 geocodes it (via Nominatim) → resolves the US state → auto-drills the map into that state's counties
-- Changing the city switches the map to the new state automatically
-- Works with any US city (Jacksonville→FL, Dallas→TX, Denver→CO, etc.)
-
-*Last Updated: Feb 2026*
+*Last Updated: Mar 27, 2026*
