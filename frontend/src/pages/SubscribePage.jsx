@@ -511,14 +511,14 @@ export default function SubscribePage() {
                     )}
                   </div>
 
-                  {/* Missing selection notices */}
+                  {/* Missing selection notices - show all that apply */}
                   {(!selectedWebsite || !serviceType) && (
                     <div className="sub-invoice-notice">
                       <AlertCircle size={14} />
                       <span>Select a website service to continue</span>
                     </div>
                   )}
-                  {(selectedWebsite && serviceType) && (!businessReady || selectedCounties.length === 0) && (
+                  {(!businessReady || selectedCounties.length === 0) && (
                     <div className="sub-invoice-notice">
                       <AlertCircle size={14} />
                       <span>
@@ -530,7 +530,7 @@ export default function SubscribePage() {
                       </span>
                     </div>
                   )}
-                  {(selectedWebsite && serviceType && businessReady && selectedCounties.length > 0 && !selectedService) && (
+                  {!selectedService && (
                     <div className="sub-invoice-notice">
                       <AlertCircle size={14} />
                       <span>Select a service tier to continue</span>
