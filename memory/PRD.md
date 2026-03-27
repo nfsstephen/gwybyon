@@ -71,6 +71,7 @@ Home | Seven Industries | Five Tools | Web Services | Services & Pricing | Subsc
 
 ### P1
 - Migrate dashboard from SQLAlchemy to Supabase REST client (eliminate direct PostgreSQL dependency)
+- Automated follow-up system — countdown timer on contracts (e.g., 30 days), balance-due reminders surfaced on admin dashboard
 - Email delivery — send contract PDF to customer + copy to admin (SendGrid/Resend)
 - Real Florida county data — verify Highcharts map accuracy
 - Secure admin dashboard credentials for production
