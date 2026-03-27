@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from typing import List
 from datetime import datetime, timezone
 import asyncio
-from database import db
+from database import supabase
 from models.chat import ChatMessage, ChatMessageCreate, ChatSession
 from email_utils import send_chat_notification
 
@@ -14,24 +14,24 @@ async def create_chat_message(input: ChatMessageCreate):
     msg = ChatMessage(**input.model_dump())
     doc = msg.model_dump()
     doc['timestamp'] = doc['timestamp'].isoformat()
-    await db.chat_messages.insert_one(doc)
+
+    supabase.table('chat_messages').insert({
+        'id': doc['id'],
+        'session_id': doc['session_id'],
+        'sender': doc['sender'],
+        'sender_name': doc.get('sender_name', ''),
+        'message': doc['message'],
+        'timestamp': doc['timestamp'],
+    }).execute()
 
     now = datetime.now(timezone.utc).isoformat()
-    await db.chat_sessions.update_one(
-        {"session_id": input.session_id},
-        {
-            "$set": {
-                "last_message_at": now,
-                "last_message": input.message[:100],
-            },
-            "$setOnInsert": {
-                "session_id": input.session_id,
-                "visitor_name": input.sender_name,
-                "created_at": now,
-            },
-        },
-        upsert=True,
-    )
+    supabase.table('chat_sessions').upsert({
+        'session_id': input.session_id,
+        'visitor_name': input.sender_name or '',
+        'last_message': input.message[:100],
+        'last_message_at': now,
+        'created_at': now,
+    }, on_conflict='session_id').execute()
 
     if input.sender == "user":
         asyncio.create_task(
@@ -45,26 +45,33 @@ async def create_chat_message(input: ChatMessageCreate):
 
 @router.get("/sessions/{session_id}/messages", response_model=List[ChatMessage])
 async def get_session_messages(session_id: str):
-    messages = (
-        await db.chat_messages.find({"session_id": session_id}, {"_id": 0})
-        .sort("timestamp", 1)
-        .to_list(500)
-    )
-    for msg in messages:
-        if isinstance(msg["timestamp"], str):
-            msg["timestamp"] = datetime.fromisoformat(msg["timestamp"])
+    result = supabase.table('chat_messages') \
+        .select('*') \
+        .eq('session_id', session_id) \
+        .order('timestamp', desc=False) \
+        .limit(500) \
+        .execute()
+
+    messages = []
+    for row in result.data:
+        if isinstance(row.get('timestamp'), str):
+            row['timestamp'] = datetime.fromisoformat(row['timestamp'])
+        messages.append(row)
     return messages
 
 
 @router.get("/sessions", response_model=List[ChatSession])
 async def get_chat_sessions():
-    sessions = (
-        await db.chat_sessions.find({}, {"_id": 0})
-        .sort("last_message_at", -1)
-        .to_list(100)
-    )
-    for s in sessions:
-        for field in ["created_at", "last_message_at"]:
-            if isinstance(s.get(field), str):
-                s[field] = datetime.fromisoformat(s[field])
+    result = supabase.table('chat_sessions') \
+        .select('*') \
+        .order('last_message_at', desc=True) \
+        .limit(100) \
+        .execute()
+
+    sessions = []
+    for row in result.data:
+        for field in ['created_at', 'last_message_at']:
+            if isinstance(row.get(field), str):
+                row[field] = datetime.fromisoformat(row[field])
+        sessions.append(row)
     return sessions

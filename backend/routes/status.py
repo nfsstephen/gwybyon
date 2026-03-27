@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from typing import List
 from datetime import datetime
-from database import db
+from database import supabase
 from models.status import StatusCheck, StatusCheckCreate
 
 router = APIRouter(tags=["status"])
@@ -18,14 +18,28 @@ async def create_status_check(input: StatusCheckCreate):
     status_obj = StatusCheck(**status_dict)
     doc = status_obj.model_dump()
     doc['timestamp'] = doc['timestamp'].isoformat()
-    await db.status_checks.insert_one(doc)
+
+    supabase.table('status_checks').insert({
+        'id': doc['id'],
+        'client_name': doc['client_name'],
+        'status': 'ok',
+        'timestamp': doc['timestamp'],
+    }).execute()
+
     return status_obj
 
 
 @router.get("/status", response_model=List[StatusCheck])
 async def get_status_checks():
-    status_checks = await db.status_checks.find({}, {"_id": 0}).to_list(1000)
-    for check in status_checks:
-        if isinstance(check['timestamp'], str):
-            check['timestamp'] = datetime.fromisoformat(check['timestamp'])
-    return status_checks
+    result = supabase.table('status_checks') \
+        .select('*') \
+        .order('timestamp', desc=True) \
+        .limit(1000) \
+        .execute()
+
+    checks = []
+    for row in result.data:
+        if isinstance(row.get('timestamp'), str):
+            row['timestamp'] = datetime.fromisoformat(row['timestamp'])
+        checks.append(row)
+    return checks

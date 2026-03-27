@@ -1,6 +1,6 @@
-from motor.motor_asyncio import AsyncIOMotorClient
+from supabase import create_client
 import os
 
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+supabase_url = os.environ['SUPABASE_URL']
+supabase_key = os.environ['SUPABASE_SERVICE_KEY']
+supabase = create_client(supabase_url, supabase_key)
