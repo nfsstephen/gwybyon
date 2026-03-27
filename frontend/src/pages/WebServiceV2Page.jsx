@@ -24,11 +24,6 @@ const WebServiceV2Page = () => {
             97% of consumers search online for local businesses. If you're not dominating your 
             geographic zone, your competitors are stealing customers who should be walking through your door.
           </p>
-          <div className="v2-geohero-ctas">
-            <Link to="/services-pricing" className="v2-geohero-btn-primary" data-testid="v2-geohero-cta">
-              Explore GeoGrid <ArrowRight size={18} />
-            </Link>
-          </div>
           <div className="v2-geohero-proof">
             <div className="v2-geohero-stat">
               <span className="v2-geohero-num">46%</span>
@@ -80,10 +75,13 @@ const WebServiceV2Page = () => {
               <p>Google answers local searches directly in the Map Pack — showing your phone number, directions, and reviews. Users call or navigate without ever visiting your site. If you're measuring "website traffic," you're measuring the wrong thing.</p>
             </div>
           </div>
+          <div className="v2-problem-cta">
+            <Link to="/subscribe" className="v2-geohero-btn-primary" data-testid="v2-problem-cta">
+              Get Started <ArrowRight size={18} />
+            </Link>
+          </div>
         </div>
       </section>
-
-      {/* The Shift */}
       <section className="v2-shift" data-testid="v2-shift">
         <div className="v2-container">
           <div className="v2-label">The Shift</div>

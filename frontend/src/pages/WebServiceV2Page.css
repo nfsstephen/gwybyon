@@ -186,6 +186,11 @@
   line-height: 1.65;
 }
 
+.v2-problem-cta {
+  text-align: center;
+  margin-top: 40px;
+}
+
 /* ===== The Shift Section ===== */
 .v2-shift {
   background: var(--v2-surface);
