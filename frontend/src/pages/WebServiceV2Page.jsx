@@ -18,7 +18,7 @@ const WebServiceV2Page = () => {
             <span>The Geographic Search Solution</span>
           </div>
           <h2 className="v2-geohero-title">
-            Is Your Business <span className="v2-geohero-accent">Invisible</span> to People Three Blocks Away?
+            Is Your Business <span className="v2-geohero-accent">Invisible</span> across your entire market territory?
           </h2>
           <p className="v2-geohero-subtitle">
             97% of consumers search online for local businesses. If you're not dominating your 
