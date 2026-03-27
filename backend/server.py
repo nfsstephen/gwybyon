@@ -25,15 +25,15 @@ from routes.auth import router as auth_router
 from routes.chat import router as chat_router
 from routes.status import router as status_router
 
-app.include_router(auth_router)
-app.include_router(chat_router)
-app.include_router(status_router)
+app.include_router(auth_router, prefix="/api")
+app.include_router(chat_router, prefix="/api")
+app.include_router(status_router, prefix="/api")
 
 # Dashboard routes require PostgreSQL - only load if DATABASE_URL is configured
 if os.environ.get("DATABASE_URL"):
     try:
         from routes.dashboard import router as dashboard_router
-        app.include_router(dashboard_router)
+        app.include_router(dashboard_router, prefix="/api")
         logger.info("Dashboard routes loaded")
     except Exception as e:
         logger.warning(f"Dashboard routes skipped: {e}")
