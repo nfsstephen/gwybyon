@@ -31,6 +31,25 @@ const TIERS = [
   { id: 'authority', tier: 3, name: 'Authority', monthlyPrice: 1297 },
 ];
 
+const CONTINENTAL_STATES = [
+  { abbr: 'AL', name: 'Alabama' }, { abbr: 'AZ', name: 'Arizona' }, { abbr: 'AR', name: 'Arkansas' },
+  { abbr: 'CA', name: 'California' }, { abbr: 'CO', name: 'Colorado' }, { abbr: 'CT', name: 'Connecticut' },
+  { abbr: 'DE', name: 'Delaware' }, { abbr: 'FL', name: 'Florida' }, { abbr: 'GA', name: 'Georgia' },
+  { abbr: 'ID', name: 'Idaho' }, { abbr: 'IL', name: 'Illinois' }, { abbr: 'IN', name: 'Indiana' },
+  { abbr: 'IA', name: 'Iowa' }, { abbr: 'KS', name: 'Kansas' }, { abbr: 'KY', name: 'Kentucky' },
+  { abbr: 'LA', name: 'Louisiana' }, { abbr: 'ME', name: 'Maine' }, { abbr: 'MD', name: 'Maryland' },
+  { abbr: 'MA', name: 'Massachusetts' }, { abbr: 'MI', name: 'Michigan' }, { abbr: 'MN', name: 'Minnesota' },
+  { abbr: 'MS', name: 'Mississippi' }, { abbr: 'MO', name: 'Missouri' }, { abbr: 'MT', name: 'Montana' },
+  { abbr: 'NE', name: 'Nebraska' }, { abbr: 'NV', name: 'Nevada' }, { abbr: 'NH', name: 'New Hampshire' },
+  { abbr: 'NJ', name: 'New Jersey' }, { abbr: 'NM', name: 'New Mexico' }, { abbr: 'NY', name: 'New York' },
+  { abbr: 'NC', name: 'North Carolina' }, { abbr: 'ND', name: 'North Dakota' }, { abbr: 'OH', name: 'Ohio' },
+  { abbr: 'OK', name: 'Oklahoma' }, { abbr: 'OR', name: 'Oregon' }, { abbr: 'PA', name: 'Pennsylvania' },
+  { abbr: 'RI', name: 'Rhode Island' }, { abbr: 'SC', name: 'South Carolina' }, { abbr: 'SD', name: 'South Dakota' },
+  { abbr: 'TN', name: 'Tennessee' }, { abbr: 'TX', name: 'Texas' }, { abbr: 'UT', name: 'Utah' },
+  { abbr: 'VT', name: 'Vermont' }, { abbr: 'VA', name: 'Virginia' }, { abbr: 'WA', name: 'Washington' },
+  { abbr: 'WV', name: 'West Virginia' }, { abbr: 'WI', name: 'Wisconsin' }, { abbr: 'WY', name: 'Wyoming' },
+];
+
 const STORAGE_KEY = 'gwybyon_subscribe';
 
 function loadState() {
@@ -48,7 +67,7 @@ export default function SubscribePage() {
   const saved = useMemo(loadState, []);
   const [websiteChoice, setWebsiteChoice] = useState(saved.websiteChoice ?? null);
   const [serviceType, setServiceType] = useState(saved.serviceType ?? null);
-  const [businessDetails, setBusinessDetails] = useState(saved.businessDetails ?? { name: '', address: '', city: '', zip: '', phone: '', country: 'USA' });
+  const [businessDetails, setBusinessDetails] = useState(saved.businessDetails ?? { name: '', address: '', city: '', state: '', zip: '', email: '', country: 'USA' });
   const [selectedCounties, setSelectedCounties] = useState(saved.selectedCounties ?? []);
   const [countyNames, setCountyNames] = useState(saved.countyNames ?? {});
   const [selectedTier, setSelectedTier] = useState(saved.selectedTier ?? null);
@@ -220,7 +239,7 @@ export default function SubscribePage() {
                   onChange={e => handleBusinessChange('address', e.target.value)}
                 />
               </div>
-              <div className="sub-business-row">
+              <div className="sub-business-row sub-business-row-3col">
                 <div className="sub-business-field">
                   <label htmlFor="biz-city">City</label>
                   <input
@@ -231,6 +250,20 @@ export default function SubscribePage() {
                     value={businessDetails.city}
                     onChange={e => handleBusinessChange('city', e.target.value)}
                   />
+                </div>
+                <div className="sub-business-field">
+                  <label htmlFor="biz-state">State</label>
+                  <select
+                    id="biz-state"
+                    data-testid="business-state-select"
+                    value={businessDetails.state}
+                    onChange={e => handleBusinessChange('state', e.target.value)}
+                  >
+                    <option value="">Select State</option>
+                    {CONTINENTAL_STATES.map(s => (
+                      <option key={s.abbr} value={s.abbr}>{s.name}</option>
+                    ))}
+                  </select>
                 </div>
                 <div className="sub-business-field sub-business-field-zip">
                   <label htmlFor="biz-zip">Zip Code</label>
@@ -245,14 +278,14 @@ export default function SubscribePage() {
                 </div>
               </div>
               <div className="sub-business-field">
-                <label htmlFor="biz-phone">Phone Number</label>
+                <label htmlFor="biz-email">Email Address <span className="sub-optional-label">(optional)</span></label>
                 <input
-                  id="biz-phone"
-                  data-testid="business-phone-input"
-                  type="tel"
-                  placeholder="(555) 555-5555"
-                  value={businessDetails.phone}
-                  onChange={e => handleBusinessChange('phone', e.target.value)}
+                  id="biz-email"
+                  data-testid="business-email-input"
+                  type="email"
+                  placeholder="you@example.com"
+                  value={businessDetails.email}
+                  onChange={e => handleBusinessChange('email', e.target.value)}
                 />
               </div>
               <div className="sub-business-field">

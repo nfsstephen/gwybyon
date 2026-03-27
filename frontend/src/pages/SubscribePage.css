@@ -253,6 +253,36 @@
   gap: 16px;
 }
 
+.sub-business-row-3col {
+  display: flex;
+  gap: 16px;
+}
+
+.sub-business-field select {
+  padding: 10px 14px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #0f172a;
+  background: #f8fafc;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  appearance: auto;
+}
+
+.sub-business-field select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+  background: #fff;
+}
+
+.sub-optional-label {
+  font-weight: 400;
+  color: #94a3b8;
+  font-size: 0.78rem;
+}
+
 .sub-business-field-zip {
   max-width: 140px;
 }
