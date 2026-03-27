@@ -295,8 +295,11 @@ export default function SubscribePage() {
               })}
             </div>
 
-            {/* Step 2: Business Details */}
-            <h2 className="sub-section-label" id="step-business">2. Business Details</h2>
+            {/* Step 2: Business Details & Market Areas */}
+            <h2 className="sub-section-label" id="step-business">2. Business Details & Market Areas</h2>
+            <p className="sub-market-intro">
+              Enter your business details below. Your city and state will automatically load the territory map where you can select the counties you want to claim as your exclusive market areas.
+            </p>
             <div className="sub-business-form" data-testid="business-details-form">
               <div className="sub-business-field">
                 <label htmlFor="biz-name">Business Name</label>
@@ -395,11 +398,6 @@ export default function SubscribePage() {
               </div>
             </div>
 
-            {/* Step 3: Market Area Selection */}
-            <h2 className="sub-section-label" id="step-market-areas">3. Select Your Market Areas</h2>
-            <p className="sub-market-intro">
-              Enter your city in Step 2 to auto-load your state's counties, or click any state on the map. Then select counties as your exclusive market territories.
-            </p>
             <HighchartsMapDrilldown
               country="USA"
               city={businessDetails.city}
@@ -407,8 +405,8 @@ export default function SubscribePage() {
               onToggleCounty={handleToggleCounty}
             />
 
-            {/* Step 4: Tier Selection */}
-            <h2 className="sub-section-label">4. Select Your Service Tier</h2>
+            {/* Step 3: Tier Selection */}
+            <h2 className="sub-section-label">3. Select Your Service Tier</h2>
             <div className="sub-tiers">
               {TIERS.map(svc => {
                 const isSelected = selectedTier === svc.id;
@@ -509,17 +507,29 @@ export default function SubscribePage() {
                     )}
                   </div>
 
-                  {/* Missing selection notice */}
-                  {((!selectedWebsite || !serviceType) || selectedCounties.length === 0 || !selectedService) && (
+                  {/* Missing selection notices */}
+                  {(!selectedWebsite || !serviceType) && (
+                    <div className="sub-invoice-notice">
+                      <AlertCircle size={14} />
+                      <span>Select a website service to continue</span>
+                    </div>
+                  )}
+                  {(selectedWebsite && serviceType) && (!businessReady || selectedCounties.length === 0) && (
                     <div className="sub-invoice-notice">
                       <AlertCircle size={14} />
                       <span>
-                        {(!selectedWebsite || !serviceType)
-                          ? 'Select a website service to continue'
-                          : selectedCounties.length === 0
-                            ? 'Select at least one market area'
-                            : 'Select a service tier to continue'}
+                        {!businessReady && selectedCounties.length === 0
+                          ? 'Complete your business details and select market territories'
+                          : !businessReady
+                            ? 'Complete your business details to continue'
+                            : 'Select at least one market territory'}
                       </span>
+                    </div>
+                  )}
+                  {(selectedWebsite && serviceType && businessReady && selectedCounties.length > 0 && !selectedService) && (
+                    <div className="sub-invoice-notice">
+                      <AlertCircle size={14} />
+                      <span>Select a service tier to continue</span>
                     </div>
                   )}
 
