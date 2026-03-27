@@ -67,7 +67,7 @@ export default function SubscribePage() {
   const saved = useMemo(loadState, []);
   const [websiteChoice, setWebsiteChoice] = useState(saved.websiteChoice ?? null);
   const [serviceType, setServiceType] = useState(saved.serviceType ?? null);
-  const [businessDetails, setBusinessDetails] = useState(saved.businessDetails ?? { name: '', address: '', city: '', state: '', zip: '', email: '', country: 'USA' });
+  const [businessDetails, setBusinessDetails] = useState(saved.businessDetails ?? { name: '', address: '', city: '', state: '', zip: '', email: '', industry: '' });
   const [selectedCounties, setSelectedCounties] = useState(saved.selectedCounties ?? []);
   const [countyNames, setCountyNames] = useState(saved.countyNames ?? {});
   const [selectedTier, setSelectedTier] = useState(saved.selectedTier ?? null);
@@ -294,16 +294,23 @@ export default function SubscribePage() {
                 />
               </div>
               <div className="sub-business-field">
-                <label htmlFor="biz-country">Country</label>
-                <input
-                  id="biz-country"
-                  data-testid="business-country-input"
-                  type="text"
-                  placeholder="USA"
-                  value={businessDetails.country}
-                  onChange={e => handleBusinessChange('country', e.target.value)}
+                <label htmlFor="biz-industry">Industry Type</label>
+                <select
+                  id="biz-industry"
+                  data-testid="business-industry-select"
+                  value={businessDetails.industry}
+                  onChange={e => handleBusinessChange('industry', e.target.value)}
                   required
-                />
+                >
+                  <option value="">Select Industry</option>
+                  <option value="well-septic">Well &amp; Septic Co.</option>
+                  <option value="plumbers">Plumbers</option>
+                  <option value="electricians">Electricians</option>
+                  <option value="air-heating">Air &amp; Heating Co.</option>
+                  <option value="pest-control">Pest Control Services</option>
+                  <option value="real-estate">Real Estate Brokers</option>
+                  <option value="roofing">Roofing Co.</option>
+                </select>
               </div>
             </div>
 
@@ -313,7 +320,7 @@ export default function SubscribePage() {
               Enter your city in Step 2 to auto-load your state's counties, or click any state on the map. Then select counties as your exclusive market territories.
             </p>
             <HighchartsMapDrilldown
-              country={businessDetails.country}
+              country="USA"
               city={businessDetails.city}
               selectedCounties={selectedCounties}
               onToggleCounty={handleToggleCounty}
