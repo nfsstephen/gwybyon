@@ -13,16 +13,16 @@ ASYNC_DATABASE_URL = DATABASE_URL.replace('postgresql://', 'postgresql+asyncpg:/
 
 engine = create_async_engine(
     ASYNC_DATABASE_URL,
-    pool_size=10,
-    max_overflow=5,
-    pool_timeout=30,
-    pool_recycle=1800,
-    pool_pre_ping=False,
+    pool_size=3,
+    max_overflow=2,
+    pool_timeout=10,
+    pool_recycle=300,
+    pool_pre_ping=True,
     echo=False,
     connect_args={
         "prepared_statement_name_func": lambda: f"stmt_{uuid.uuid4().hex[:12]}",
         "statement_cache_size": 0,
-        "command_timeout": 30,
+        "command_timeout": 10,
     }
 )
 
