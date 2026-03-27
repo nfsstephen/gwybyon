@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
-import { Check, ShoppingCart, AlertCircle, CreditCard, ChevronRight, Globe, RefreshCw, MapPin } from 'lucide-react';
+import { Check, ShoppingCart, AlertCircle, CreditCard, ChevronRight, Globe, RefreshCw, MapPin, FileText, Download } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import HighchartsMapDrilldown from '../components/HighchartsMapDrilldown';
 import './SubscribePage.css';
@@ -128,9 +128,90 @@ export default function SubscribePage() {
     }
 
     const dueToday = websitePrice + countyTotal;
+    const depositAmount = Math.round(dueToday * 0.25 * 100) / 100;
+    const balanceRemaining = Math.round((dueToday - depositAmount) * 100) / 100;
 
-    return { monthlyTotal, websiteTotal: websitePrice, countyTotal, dueToday };
+    return { monthlyTotal, websiteTotal: websitePrice, countyTotal, dueToday, depositAmount, balanceRemaining };
   }, [selectedService, websitePrice, countyTotal]);
+
+  const [depositLoading, setDepositLoading] = useState(false);
+  const [contractResult, setContractResult] = useState(null);
+  const [depositError, setDepositError] = useState(null);
+
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
+
+  const invoiceReady = selectedWebsite && serviceType && selectedCounties.length > 0 && selectedService;
+  const businessReady = businessDetails.name && businessDetails.address && businessDetails.city && businessDetails.state && businessDetails.zip && businessDetails.industry;
+  const canDeposit = invoiceReady && businessReady;
+
+  const handlePayDeposit = async () => {
+    if (!canDeposit) return;
+    setDepositLoading(true);
+    setDepositError(null);
+    try {
+      const industryLabels = {
+        'well-septic': 'Well & Septic Co.',
+        'plumbers': 'Plumbers',
+        'electricians': 'Electricians',
+        'air-heating': 'Air & Heating Co.',
+        'pest-control': 'Pest Control Services',
+        'real-estate': 'Real Estate Brokers',
+        'roofing': 'Roofing Co.',
+      };
+
+      const payload = {
+        business_name: businessDetails.name,
+        business_address: businessDetails.address,
+        business_city: businessDetails.city,
+        business_state: businessDetails.state,
+        business_zip: businessDetails.zip,
+        business_email: businessDetails.email || '',
+        industry: industryLabels[businessDetails.industry] || businessDetails.industry,
+        selected_territories: selectedCounties.map(id => ({ id, name: countyNames[id] || id })),
+        territory_count: selectedCounties.length,
+        tier_id: selectedService.id,
+        tier_name: selectedService.name,
+        tier_monthly_price: selectedService.monthlyPrice,
+        website_service: selectedWebsite.label,
+        website_type: serviceType,
+        website_price: websitePrice,
+        territory_price_each: TERRITORY_PRICE,
+        territory_total: countyTotal,
+        total_due: invoice.dueToday,
+        monthly_recurring: selectedService.monthlyPrice,
+      };
+
+      // Create contract
+      const res = await fetch(`${API_URL}/api/contracts/create`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error('Failed to create contract');
+      const contract = await res.json();
+
+      // Record deposit
+      const depRes = await fetch(`${API_URL}/api/contracts/${contract.id}/deposit`, {
+        method: 'POST',
+      });
+      if (!depRes.ok) throw new Error('Failed to record deposit');
+      const deposit = await depRes.json();
+
+      setContractResult({
+        ...contract,
+        ...deposit,
+      });
+    } catch (err) {
+      setDepositError(err.message || 'Something went wrong');
+    } finally {
+      setDepositLoading(false);
+    }
+  };
+
+  const handleDownloadPdf = () => {
+    if (!contractResult?.id) return;
+    window.open(`${API_URL}/api/contracts/${contractResult.id}/pdf`, '_blank');
+  };
 
   const location = useLocation();
   useEffect(() => {
@@ -445,12 +526,20 @@ export default function SubscribePage() {
                   {/* Totals */}
                   {selectedWebsite && serviceType && selectedCounties.length > 0 && (
                     <div className="sub-invoice-totals">
-                      <div className="sub-total-line sub-total-due-soft">
-                        <span>Due Today</span>
+                      <div className="sub-total-line">
+                        <span>Total Contract Amount</span>
                         <span>${invoice.dueToday.toLocaleString()}</span>
                       </div>
+                      <div className="sub-total-line sub-total-deposit">
+                        <span>Deposit (25%)</span>
+                        <span>${invoice.depositAmount.toLocaleString()}</span>
+                      </div>
+                      <div className="sub-total-line sub-total-balance">
+                        <span>Balance Due Upon Approval</span>
+                        <span>${invoice.balanceRemaining.toLocaleString()}</span>
+                      </div>
                       <p className="sub-total-note">
-                        Includes website service and market territory fees.
+                        Deposit reserves your market territories and initiates website &amp; tool development.
                       </p>
                       {selectedService && (
                         <div className="sub-total-line sub-total-recurring">
@@ -461,17 +550,67 @@ export default function SubscribePage() {
                     </div>
                   )}
 
-                  {/* Pay Button */}
-                  <button
-                    data-testid="pay-now-button"
-                    className="sub-pay-btn"
-                    disabled
-                  >
-                    <CreditCard size={18} />
-                    Proceed to Payment — ${invoice.dueToday.toLocaleString()}
-                    <ChevronRight size={16} />
-                  </button>
-                  <p className="sub-pay-note">Payment processing coming soon. Secure checkout powered by Stripe.</p>
+                  {/* Deposit Result */}
+                  {contractResult ? (
+                    <div className="sub-deposit-success" data-testid="deposit-success">
+                      <div className="sub-deposit-success-icon">
+                        <Check size={24} />
+                      </div>
+                      <h4>Territory Reserved!</h4>
+                      <p>Contract <strong>{contractResult.contract_number}</strong> has been created.</p>
+                      <div className="sub-deposit-summary">
+                        <div className="sub-deposit-summary-line">
+                          <span>Deposit Recorded</span>
+                          <span>${contractResult.deposit_amount?.toLocaleString()}</span>
+                        </div>
+                        <div className="sub-deposit-summary-line">
+                          <span>Balance Remaining</span>
+                          <span>${contractResult.balance_remaining?.toLocaleString()}</span>
+                        </div>
+                      </div>
+                      <button
+                        className="sub-download-btn"
+                        data-testid="download-contract-btn"
+                        onClick={handleDownloadPdf}
+                      >
+                        <Download size={16} />
+                        Download Contract PDF
+                      </button>
+                      <p className="sub-deposit-next">
+                        We will begin building your website and tools. You'll receive credentials to your customer portal once development is complete.
+                      </p>
+                    </div>
+                  ) : (
+                    <>
+                      {/* Pay Deposit Button */}
+                      <button
+                        data-testid="pay-deposit-button"
+                        className="sub-pay-btn"
+                        disabled={!canDeposit || depositLoading}
+                        onClick={handlePayDeposit}
+                      >
+                        {depositLoading ? (
+                          <>Processing...</>
+                        ) : (
+                          <>
+                            <CreditCard size={18} />
+                            Pay 25% Deposit — ${invoice.depositAmount.toLocaleString()}
+                            <ChevronRight size={16} />
+                          </>
+                        )}
+                      </button>
+                      {!businessReady && invoiceReady && (
+                        <p className="sub-pay-note sub-pay-note-warn">Complete your business details above to continue.</p>
+                      )}
+                      {depositError && (
+                        <p className="sub-pay-note sub-pay-note-error" data-testid="deposit-error">{depositError}</p>
+                      )}
+                      <p className="sub-pay-note">
+                        <FileText size={13} style={{ display: 'inline', verticalAlign: '-2px', marginRight: '4px' }} />
+                        Deposit reserves your territories &amp; generates your service contract.
+                      </p>
+                    </>
+                  )}
                 </>
               )}
             </div>

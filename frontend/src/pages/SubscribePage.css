@@ -705,6 +705,111 @@
   margin: 0 24px 20px;
 }
 
+.sub-pay-note-warn {
+  color: #d97706;
+}
+
+.sub-pay-note-error {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+/* Deposit totals */
+.sub-total-deposit {
+  color: #059669;
+  font-weight: 700;
+}
+
+.sub-total-deposit span:last-child {
+  color: #059669;
+}
+
+.sub-total-balance span {
+  color: #64748b;
+}
+
+/* Deposit Success */
+.sub-deposit-success {
+  margin: 0 20px 20px;
+  padding: 24px;
+  background: #f0fdf4;
+  border: 1.5px solid #bbf7d0;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.sub-deposit-success-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #059669;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+}
+
+.sub-deposit-success h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.sub-deposit-success > p {
+  font-size: 0.85rem;
+  color: #475569;
+  margin-bottom: 16px;
+}
+
+.sub-deposit-summary {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+
+.sub-deposit-summary-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #334155;
+  padding: 4px 0;
+}
+
+.sub-deposit-summary-line span:last-child {
+  font-weight: 700;
+}
+
+.sub-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  background: #0f172a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-bottom: 12px;
+}
+
+.sub-download-btn:hover {
+  background: #1e293b;
+}
+
+.sub-deposit-next {
+  font-size: 0.78rem;
+  color: #64748b;
+  line-height: 1.5;
+  margin: 0;
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 900px) {
   .sub-layout {

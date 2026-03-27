@@ -24,10 +24,12 @@ app.add_middleware(
 from routes.auth import router as auth_router
 from routes.chat import router as chat_router
 from routes.status import router as status_router
+from routes.contracts import router as contracts_router
 
 app.include_router(auth_router, prefix="/api")
 app.include_router(chat_router, prefix="/api")
 app.include_router(status_router, prefix="/api")
+app.include_router(contracts_router, prefix="/api")
 
 # Dashboard routes require PostgreSQL - only load if DATABASE_URL is configured
 if os.environ.get("DATABASE_URL"):
