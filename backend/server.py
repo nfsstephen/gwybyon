@@ -46,8 +46,11 @@ if os.environ.get("DATABASE_URL"):
         app.include_router(dashboard_config_router, prefix="/api")
         logger.info("Dashboard routes loaded")
 
+        dashboard_db_ready = False
+
         @app.on_event("startup")
         async def init_dashboard_db():
+            nonlocal dashboard_db_ready
             try:
                 from supabase_db import engine, Base, AsyncSessionLocal
                 from models.dashboard import User
@@ -66,9 +69,11 @@ if os.environ.get("DATABASE_URL"):
                             pw_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
                             session.add(User(email=email, password_hash=pw_hash, full_name=name, role=role))
                     await session.commit()
+                dashboard_db_ready = True
                 logger.info("Dashboard DB initialized and users seeded")
-            except Exception as e:
+            except BaseException as e:
                 logger.warning(f"Dashboard DB init failed (dashboard may not work): {e}")
+                dashboard_db_ready = False
     except Exception as e:
         logger.warning(f"Dashboard routes skipped: {e}")
 else:

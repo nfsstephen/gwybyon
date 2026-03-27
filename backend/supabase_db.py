@@ -9,6 +9,9 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sess
 from sqlalchemy.orm import DeclarativeBase
 
 DATABASE_URL = os.environ.get('DATABASE_URL', 'postgresql://localhost:5432/gwybyon')
+# Strip query params that asyncpg doesn't support
+if '?' in DATABASE_URL:
+    DATABASE_URL = DATABASE_URL.split('?')[0]
 ASYNC_DATABASE_URL = DATABASE_URL.replace('postgresql://', 'postgresql+asyncpg://')
 
 engine = create_async_engine(
