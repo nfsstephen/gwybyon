@@ -4,7 +4,6 @@ import {
   ArrowRight, Check,
   Globe, Shield, MapPin, Phone, Search, BarChart3, X
 } from 'lucide-react';
-import FiveToolsSection from '../components/FiveToolsSection';
 import './WebServiceV2Page.css';
 
 const WebServiceV2Page = () => {
@@ -129,14 +128,6 @@ const WebServiceV2Page = () => {
           </p>
         </div>
       </section>
-
-      {/* Five GeoGrid Tools */}
-      <div id="five-tools">
-        <FiveToolsSection
-          title="The Five GeoGrid Tools We Sell Alongside BYON"
-          subtitle="These are the search engine optimization tools the tech team is building. Combined with website services and BYON, this is the complete package."
-        />
-      </div>
 
       {/* CTA */}
       <section className="v2-cta">
