@@ -226,6 +226,7 @@ export default function SubscribePage() {
                   placeholder="Your business name"
                   value={businessDetails.name}
                   onChange={e => handleBusinessChange('name', e.target.value)}
+                  required
                 />
               </div>
               <div className="sub-business-field">
@@ -237,6 +238,7 @@ export default function SubscribePage() {
                   placeholder="Street address"
                   value={businessDetails.address}
                   onChange={e => handleBusinessChange('address', e.target.value)}
+                  required
                 />
               </div>
               <div className="sub-business-row sub-business-row-3col">
@@ -249,6 +251,7 @@ export default function SubscribePage() {
                     placeholder="City"
                     value={businessDetails.city}
                     onChange={e => handleBusinessChange('city', e.target.value)}
+                    required
                   />
                 </div>
                 <div className="sub-business-field">
@@ -258,6 +261,7 @@ export default function SubscribePage() {
                     data-testid="business-state-select"
                     value={businessDetails.state}
                     onChange={e => handleBusinessChange('state', e.target.value)}
+                    required
                   >
                     <option value="">Select State</option>
                     {CONTINENTAL_STATES.map(s => (
@@ -274,11 +278,12 @@ export default function SubscribePage() {
                     placeholder="Zip"
                     value={businessDetails.zip}
                     onChange={e => handleBusinessChange('zip', e.target.value)}
+                    required
                   />
                 </div>
               </div>
               <div className="sub-business-field">
-                <label htmlFor="biz-email">Email Address <span className="sub-optional-label">(optional)</span></label>
+                <label htmlFor="biz-email">Email Address</label>
                 <input
                   id="biz-email"
                   data-testid="business-email-input"
@@ -297,6 +302,7 @@ export default function SubscribePage() {
                   placeholder="USA"
                   value={businessDetails.country}
                   onChange={e => handleBusinessChange('country', e.target.value)}
+                  required
                 />
               </div>
             </div>
