@@ -605,9 +605,8 @@ export default function SubscribePage() {
                       {depositError && (
                         <p className="sub-pay-note sub-pay-note-error" data-testid="deposit-error">{depositError}</p>
                       )}
-                      <p className="sub-pay-note">
-                        <FileText size={13} style={{ display: 'inline', verticalAlign: '-2px', marginRight: '4px' }} />
-                        Deposit reserves your territories &amp; generates your service contract.
+                      <p className="sub-pay-note sub-deposit-info">
+                        Deposit reserves your territories, generates your service contract, creates a customer portal, and initiates the development of your new or rebuilt website and forwarding of the tools you have subscribed to in the tier plans. All of this for your approval of service and tools before paying the balance of contract. Thank you for the opportunity to grow your business.
                       </p>
                     </>
                   )}
