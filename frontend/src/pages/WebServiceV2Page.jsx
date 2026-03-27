@@ -52,11 +52,11 @@ const WebServiceV2Page = () => {
       <section className="v2-problem" data-testid="v2-problem">
         <div className="v2-container">
           <div className="v2-label">The Problem</div>
-          <h2 className="v2-title">Google Changed. Your Visibility Didn't.</h2>
+          <h2 className="v2-title">Google Moved Forward. You Stayed Behind.</h2>
           <p className="v2-desc">
-            Google no longer matches keywords — it matches <strong>locations first</strong>. 
-            When someone searches "plumber near me," Google looks at WHERE they are, then decides WHO to show. 
-            If you're not optimized for this new reality, you're invisible to customers standing three blocks away.
+            Google has shifted from matching just keywords to prioritizing <strong>Hyper-Local Intent</strong>. 
+            When someone searches "plumber near me," Google looks at WHERE they are before deciding WHO they see. 
+            If you aren't optimized for this proximity shift, you're invisible to customers in your market territory.
           </p>
           <div className="v2-problem-grid">
             <div className="v2-problem-card">
