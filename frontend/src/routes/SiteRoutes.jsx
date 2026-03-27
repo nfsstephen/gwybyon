@@ -1,16 +1,10 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import ChatWidget from '../components/ChatWidget';
 import HomePage from '../pages/HomePage';
-import BigMarketWellSepticPage from '../pages/BigMarketWellSepticPage';
-import BigMarketPlumbersPage from '../pages/BigMarketPlumbersPage';
-import BigMarketElectriciansPage from '../pages/BigMarketElectriciansPage';
-import BigMarketHVACPage from '../pages/BigMarketHVACPage';
-import BigMarketPestControlPage from '../pages/BigMarketPestControlPage';
-import BigMarketRealEstatePage from '../pages/BigMarketRealEstatePage';
-import BigMarketRoofingPage from '../pages/BigMarketRoofingPage';
+import SevenIndustriesPage from '../pages/SevenIndustriesPage';
 import WebServiceV2Page from '../pages/WebServiceV2Page';
 import ServicesAndPricingPage from '../pages/ServicesAndPricingPage';
 import SubscribePage from '../pages/SubscribePage';
@@ -22,17 +16,13 @@ export default function SiteRoutes({ scrolled }) {
       <Navigation scrolled={scrolled} />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/big-market/well-septic" element={<BigMarketWellSepticPage />} />
-        <Route path="/big-market/plumbers" element={<BigMarketPlumbersPage />} />
-        <Route path="/big-market/electricians" element={<BigMarketElectriciansPage />} />
-        <Route path="/big-market/hvac" element={<BigMarketHVACPage />} />
-        <Route path="/big-market/pest-control" element={<BigMarketPestControlPage />} />
-        <Route path="/big-market/real-estate" element={<BigMarketRealEstatePage />} />
-        <Route path="/big-market/roofing" element={<BigMarketRoofingPage />} />
+        <Route path="/seven-industries" element={<SevenIndustriesPage />} />
         <Route path="/web-service-v2" element={<WebServiceV2Page />} />
         <Route path="/services-pricing" element={<ServicesAndPricingPage />} />
         <Route path="/subscribe" element={<SubscribePage />} />
         <Route path="/admin-preview" element={<AdminPreviewPage />} />
+        {/* Redirect old industry routes to consolidated page */}
+        <Route path="/big-market/*" element={<Navigate to="/seven-industries" replace />} />
       </Routes>
       <Footer />
       <ChatWidget />

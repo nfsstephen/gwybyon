@@ -5,7 +5,7 @@ import './Navigation.css';
 
 const Navigation = ({ scrolled }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [webServicesDropdownOpen, setWebServicesDropdownOpen] = useState(false);
+  const [industriesDropdownOpen, setIndustriesDropdownOpen] = useState(false);
   const location = useLocation();
 
   const toggleMobileMenu = () => {
@@ -14,19 +14,19 @@ const Navigation = ({ scrolled }) => {
 
   const closeMobileMenu = () => {
     setMobileMenuOpen(false);
-    setWebServicesDropdownOpen(false);
+    setIndustriesDropdownOpen(false);
   };
 
-  const toggleWebServicesDropdown = () => {
-    setWebServicesDropdownOpen(!webServicesDropdownOpen);
+  const toggleIndustriesDropdown = () => {
+    setIndustriesDropdownOpen(!industriesDropdownOpen);
   };
 
   const isActive = (path) => {
     return location.pathname === path ? 'active' : '';
   };
 
-  const isWebServicesActive = () => {
-    return (location.pathname.includes('web-service') || location.pathname.includes('big-market')) ? 'active' : '';
+  const isIndustriesActive = () => {
+    return (location.pathname.includes('seven-industries') || location.pathname.includes('web-service')) ? 'active' : '';
   };
 
   return (
@@ -55,20 +55,14 @@ const Navigation = ({ scrolled }) => {
             
             <li className="dropdown">
               <button 
-                className={`dropdown-toggle ${isWebServicesActive()}`}
-                onClick={toggleWebServicesDropdown}
+                className={`dropdown-toggle ${isIndustriesActive()}`}
+                onClick={toggleIndustriesDropdown}
               >
-                Web Services <ChevronDown size={16} />
+                Seven Industries <ChevronDown size={16} />
               </button>
-              <ul className={`dropdown-menu ${webServicesDropdownOpen ? 'show' : ''}`}>
-                <li><Link to="/web-service-v2" onClick={closeMobileMenu}>Overview</Link></li>
-                <li><Link to="/big-market/well-septic" onClick={closeMobileMenu}>Well & Septic Companies</Link></li>
-                <li><Link to="/big-market/plumbers" onClick={closeMobileMenu}>Plumbers</Link></li>
-                <li><Link to="/big-market/electricians" onClick={closeMobileMenu}>Electricians</Link></li>
-                <li><Link to="/big-market/hvac" onClick={closeMobileMenu}>Air & Heating Companies</Link></li>
-                <li><Link to="/big-market/pest-control" onClick={closeMobileMenu}>Pest Control Services</Link></li>
-                <li><Link to="/big-market/real-estate" onClick={closeMobileMenu}>Real Estate</Link></li>
-                <li><Link to="/big-market/roofing" onClick={closeMobileMenu}>Roofing Companies</Link></li>
+              <ul className={`dropdown-menu ${industriesDropdownOpen ? 'show' : ''}`}>
+                <li><Link to="/seven-industries" onClick={closeMobileMenu}>All Industries</Link></li>
+                <li><Link to="/web-service-v2" onClick={closeMobileMenu}>Web Services Overview</Link></li>
               </ul>
             </li>
 

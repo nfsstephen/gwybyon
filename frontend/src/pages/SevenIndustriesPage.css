@@ -1,0 +1,376 @@
+.si-page {
+  background: #f8f9fb;
+  color: #1e293b;
+}
+
+/* ===== Hero ===== */
+.si-hero {
+  background: #0b1120;
+  padding: 80px 24px 64px;
+  text-align: center;
+}
+
+.si-hero-inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.si-hero-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #38bdf8;
+  margin-bottom: 20px;
+}
+
+.si-hero-title {
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: #f1f5f9;
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+
+.si-hero-subtitle {
+  font-size: 1.05rem;
+  color: #94a3b8;
+  line-height: 1.7;
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+/* ===== Industry Tabs ===== */
+.si-tabs-section {
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+  position: sticky;
+  top: 64px;
+  z-index: 40;
+}
+
+.si-tabs-wrapper {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 16px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.si-tabs-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.si-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 12px 0;
+  min-width: max-content;
+}
+
+.si-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1.5px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: #64748b;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.si-tab:hover {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+.si-tab.active {
+  background: var(--tab-accent);
+  color: var(--tab-color);
+  border-color: var(--tab-color);
+}
+
+/* ===== Content Area ===== */
+.si-content {
+  padding: 48px 24px 64px;
+}
+
+.si-content-inner {
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+/* Intro card */
+.si-intro {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 28px 32px;
+  background: #fff;
+  border-radius: 12px;
+  border-left: 4px solid;
+  margin-bottom: 48px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.si-intro-icon {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.si-intro-text {
+  font-size: 1.05rem;
+  color: #334155;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Section Heading */
+.si-section-heading {
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 24px;
+}
+
+/* Problems Grid */
+.si-problems-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 48px;
+}
+
+.si-problem-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 28px;
+  background: #fff;
+  position: relative;
+}
+
+.si-problem-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.si-problem-search .si-problem-icon {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.si-problem-team .si-problem-icon {
+  background: #ede9fe;
+  color: #7c3aed;
+}
+
+.si-problem-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+
+.si-problem-card > p {
+  font-size: 0.88rem;
+  color: #475569;
+  line-height: 1.65;
+  margin: 0 0 16px;
+}
+
+.si-solved-by {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  padding-top: 12px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.si-solved-by strong {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+/* Solution Blocks */
+.si-solution-block {
+  margin-bottom: 36px;
+}
+
+.si-solution-block-alt {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 32px;
+  margin-bottom: 48px;
+}
+
+.si-solution-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.si-solution-header h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.si-solution-geogrid {
+  color: #0369a1;
+}
+
+.si-solution-byon {
+  color: #7c3aed;
+}
+
+.si-benefits-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.si-benefit-card {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #fafbfc;
+  transition: box-shadow 0.2s;
+}
+
+.si-solution-block-alt .si-benefit-card {
+  background: #f8fafc;
+  border-color: #eef2f6;
+}
+
+.si-benefit-card:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.si-benefit-check {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.si-check-geogrid {
+  color: #0369a1;
+}
+
+.si-check-byon {
+  color: #7c3aed;
+}
+
+.si-benefit-card strong {
+  display: block;
+  font-size: 0.85rem;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.si-benefit-card p {
+  font-size: 0.8rem;
+  color: #64748b;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Territory */
+.si-territory {
+  text-align: center;
+  padding: 40px 36px;
+  background: #f0fdfa;
+  border: 2px solid #0d948822;
+  border-radius: 16px;
+  margin-bottom: 40px;
+}
+
+.si-territory-shield {
+  color: #0d9488;
+  margin-bottom: 14px;
+}
+
+.si-territory h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.si-territory p {
+  font-size: 0.95rem;
+  color: #475569;
+  line-height: 1.7;
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+/* CTA */
+.si-cta {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.si-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 36px;
+  background: #dc2662;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.si-cta-btn:hover {
+  background: #be1b50;
+  transform: translateY(-1px);
+}
+
+.si-cta-link {
+  font-size: 0.85rem;
+  color: #64748b;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.si-cta-link:hover {
+  color: #0f172a;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .si-hero { padding: 60px 20px 48px; }
+  .si-hero-title { font-size: 1.8rem; }
+  .si-problems-grid { grid-template-columns: 1fr; }
+  .si-benefits-grid { grid-template-columns: 1fr; }
+  .si-intro { flex-direction: column; gap: 14px; padding: 20px; }
+  .si-solution-block-alt { padding: 20px; }
+  .si-tab { padding: 8px 12px; font-size: 0.78rem; }
+}
