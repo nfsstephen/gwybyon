@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDashboardAuth } from '../../contexts/DashboardAuthContext';
 import { useDashboardTheme } from '../../contexts/DashboardThemeContext';
 import { 
   MapPin, Users, Mail, MessageSquare, UserCheck, 
-  ExternalLink, LogOut, Eye, Clock, CheckCircle, XCircle, Send
+  ExternalLink, LogOut, Eye, Clock, CheckCircle, XCircle, Send,
+  FileText, Download, DollarSign
 } from 'lucide-react';
 
 // Mock data for UI demonstration - will be replaced with real API calls
@@ -293,12 +294,87 @@ function FeedbackTab() {
   );
 }
 
+function ContractsTab() {
+  const { theme } = useDashboardTheme();
+  const [contracts, setContracts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchContracts = async () => {
+      try {
+        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/contracts/`);
+        if (res.ok) {
+          const data = await res.json();
+          setContracts(data);
+        }
+      } catch (e) {
+        console.error('Failed to fetch contracts:', e);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchContracts();
+  }, []);
+
+  const handleDownloadPdf = (contractId) => {
+    window.open(`${process.env.REACT_APP_BACKEND_URL}/api/contracts/${contractId}/pdf`, '_blank');
+  };
+
+  if (loading) return <div style={{ padding: 40, textAlign: 'center', color: theme.textMuted }}>Loading contracts...</div>;
+  if (contracts.length === 0) return <div style={{ padding: 40, textAlign: 'center', color: theme.textMuted }}>No contracts yet.</div>;
+
+  return (
+    <div style={{ overflowX: 'auto' }}>
+      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+        <thead>
+          <tr style={{ borderBottom: `1px solid ${theme.tableBorder}` }}>
+            {['CONTRACT #', 'DATE', 'BUSINESS', 'INDUSTRY', 'TERRITORIES', 'TOTAL', 'DEPOSIT', 'BALANCE', 'STATUS', 'ACTIONS'].map(h => (
+              <th key={h} style={{ padding: '12px 16px', color: theme.textMuted, fontSize: 11, fontWeight: 600, textAlign: 'left', textTransform: 'uppercase', letterSpacing: '0.5px', whiteSpace: 'nowrap' }}>{h}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {contracts.map(c => (
+            <tr key={c.id} style={{ borderBottom: `1px solid ${theme.tableBorder}` }}>
+              <td style={{ padding: '14px 16px' }}>
+                <code style={{ background: theme.badgeBg, padding: '4px 8px', borderRadius: 4, fontSize: 12, color: theme.text }}>{c.contract_number}</code>
+              </td>
+              <td style={{ padding: '14px 16px', color: theme.textMuted, fontSize: 12 }}>
+                {new Date(c.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+              </td>
+              <td style={{ padding: '14px 16px' }}>
+                <div style={{ color: theme.text, fontSize: 13, fontWeight: 500 }}>{c.business_name}</div>
+                <div style={{ color: theme.textMuted, fontSize: 11 }}>{c.business_city}, {c.business_state}</div>
+              </td>
+              <td style={{ padding: '14px 16px', color: theme.textSecondary, fontSize: 13 }}>{c.industry}</td>
+              <td style={{ padding: '14px 16px', color: theme.textSecondary, fontSize: 13 }}>{c.territory_count}</td>
+              <td style={{ padding: '14px 16px', color: theme.text, fontSize: 13, fontWeight: 600 }}>${Number(c.total_due).toLocaleString()}</td>
+              <td style={{ padding: '14px 16px', color: '#059669', fontSize: 13, fontWeight: 600 }}>${Number(c.deposit_amount).toLocaleString()}</td>
+              <td style={{ padding: '14px 16px', color: '#d97706', fontSize: 13, fontWeight: 600 }}>${Number(c.balance_remaining).toLocaleString()}</td>
+              <td style={{ padding: '14px 16px' }}><StatusBadge status={c.status === 'deposit_paid' ? 'active' : c.status === 'pending_deposit' ? 'pending' : c.status} /></td>
+              <td style={{ padding: '14px 16px' }}>
+                <button
+                  onClick={() => handleDownloadPdf(c.id)}
+                  style={{ background: 'none', border: 'none', color: '#3b82f6', cursor: 'pointer', fontSize: 13, display: 'flex', alignItems: 'center', gap: 4 }}
+                >
+                  <Download size={14} /> PDF
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 export default function AdminDashboard() {
   const { logout } = useDashboardAuth();
   const { theme } = useDashboardTheme();
-  const [activeTab, setActiveTab] = useState('tokens');
+  const [activeTab, setActiveTab] = useState('contracts');
 
   const tabs = [
+    { id: 'contracts', label: 'Contracts' },
     { id: 'tokens', label: 'Territory Tokens' },
     { id: 'invitations', label: 'Invitations' },
     { id: 'clients', label: 'Clients' },
@@ -393,6 +469,7 @@ export default function AdminDashboard() {
 
         {/* Tab Content */}
         <div style={{ minHeight: 300 }}>
+          {activeTab === 'contracts' && <ContractsTab />}
           {activeTab === 'tokens' && <TerritoryTokensTab />}
           {activeTab === 'invitations' && <InvitationsTab />}
           {activeTab === 'clients' && <ClientsTab />}

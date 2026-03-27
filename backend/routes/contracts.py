@@ -10,6 +10,15 @@ import io
 router = APIRouter(prefix="/contracts", tags=["contracts"])
 
 
+@router.get("/")
+async def list_contracts():
+    result = supabase.table("contracts").select("*").order("created_at", desc=True).execute()
+    contracts = result.data or []
+    for c in contracts:
+        c.pop("_id", None)
+    return contracts
+
+
 class ContractRequest(BaseModel):
     business_name: str
     business_address: str
