@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ChevronDown } from 'lucide-react';
 import './Navigation.css';
 
 const Navigation = ({ scrolled }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [industriesDropdownOpen, setIndustriesDropdownOpen] = useState(false);
   const location = useLocation();
 
   const toggleMobileMenu = () => {
@@ -14,19 +12,10 @@ const Navigation = ({ scrolled }) => {
 
   const closeMobileMenu = () => {
     setMobileMenuOpen(false);
-    setIndustriesDropdownOpen(false);
-  };
-
-  const toggleIndustriesDropdown = () => {
-    setIndustriesDropdownOpen(!industriesDropdownOpen);
   };
 
   const isActive = (path) => {
     return location.pathname === path ? 'active' : '';
-  };
-
-  const isIndustriesActive = () => {
-    return (location.pathname.includes('seven-industries') || location.pathname.includes('web-service')) ? 'active' : '';
   };
 
   return (
@@ -52,20 +41,8 @@ const Navigation = ({ scrolled }) => {
           </button>
           <ul className={`nav-menu ${mobileMenuOpen ? 'active' : ''}`}>
             <li><Link to="/" className={isActive('/')} onClick={closeMobileMenu}>Home</Link></li>
-            
-            <li className="dropdown">
-              <button 
-                className={`dropdown-toggle ${isIndustriesActive()}`}
-                onClick={toggleIndustriesDropdown}
-              >
-                Seven Industries <ChevronDown size={16} />
-              </button>
-              <ul className={`dropdown-menu ${industriesDropdownOpen ? 'show' : ''}`}>
-                <li><Link to="/seven-industries" onClick={closeMobileMenu}>All Industries</Link></li>
-                <li><Link to="/web-service-v2" onClick={closeMobileMenu}>Web Services Overview</Link></li>
-              </ul>
-            </li>
-
+            <li><Link to="/seven-industries" className={isActive('/seven-industries')} onClick={closeMobileMenu}>Seven Industries</Link></li>
+            <li><Link to="/web-service-v2" className={isActive('/web-service-v2')} onClick={closeMobileMenu}>Web Services</Link></li>
             <li><Link to="/services-pricing" className={isActive('/services-pricing')} onClick={closeMobileMenu}>Services & Pricing</Link></li>
 
             <li className="nav-subscribe">
