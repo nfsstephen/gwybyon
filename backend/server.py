@@ -48,24 +48,27 @@ if os.environ.get("DATABASE_URL"):
 
         @app.on_event("startup")
         async def init_dashboard_db():
-            from supabase_db import engine, Base, AsyncSessionLocal
-            from models.dashboard import User
-            from sqlalchemy import select
-            import bcrypt
-            async with engine.begin() as conn:
-                await conn.run_sync(Base.metadata.create_all)
-            async with AsyncSessionLocal() as session:
-                for email, password, name, role in [
-                    ("admin@geogrid.com", "admin123", "Admin User", "admin"),
-                    ("client@geogrid.com", "client123", "Demo Client", "client"),
-                    ("tech@geogrid.com", "tech123", "Tech User", "technical"),
-                ]:
-                    existing = await session.execute(select(User).where(User.email == email))
-                    if not existing.scalar_one_or_none():
-                        pw_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-                        session.add(User(email=email, password_hash=pw_hash, full_name=name, role=role))
-                await session.commit()
-            logger.info("Dashboard DB initialized and users seeded")
+            try:
+                from supabase_db import engine, Base, AsyncSessionLocal
+                from models.dashboard import User
+                from sqlalchemy import select
+                import bcrypt
+                async with engine.begin() as conn:
+                    await conn.run_sync(Base.metadata.create_all)
+                async with AsyncSessionLocal() as session:
+                    for email, password, name, role in [
+                        ("admin@geogrid.com", "admin123", "Admin User", "admin"),
+                        ("client@geogrid.com", "client123", "Demo Client", "client"),
+                        ("tech@geogrid.com", "tech123", "Tech User", "technical"),
+                    ]:
+                        existing = await session.execute(select(User).where(User.email == email))
+                        if not existing.scalar_one_or_none():
+                            pw_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+                            session.add(User(email=email, password_hash=pw_hash, full_name=name, role=role))
+                    await session.commit()
+                logger.info("Dashboard DB initialized and users seeded")
+            except Exception as e:
+                logger.warning(f"Dashboard DB init failed (dashboard may not work): {e}")
     except Exception as e:
         logger.warning(f"Dashboard routes skipped: {e}")
 else:
