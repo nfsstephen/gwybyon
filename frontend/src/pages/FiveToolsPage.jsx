@@ -12,12 +12,13 @@ export default function FiveToolsPage() {
       <section className="ftp-hero">
         <div className="ftp-hero-inner">
           <span className="ftp-hero-badge">GEOGRID PLATFORM</span>
+          <h2 className="ftp-hero-brand">GeoGrid</h2>
           <h1 className="ftp-hero-title">
             Five Proprietary Tools<br />to Dominate Local Search
           </h1>
           <p className="ftp-hero-subtitle">
             Google ranks local businesses on three factors: proximity, relevance, and prominence.
-            Our five GeoGrid tools are engineered to maximize all three — giving you measurable
+            Our five <span className="ftp-geogrid-highlight">GeoGrid</span> tools are engineered to maximize all three — giving you measurable
             control over your local search visibility for the first time.
           </p>
           <div className="ftp-hero-tools">

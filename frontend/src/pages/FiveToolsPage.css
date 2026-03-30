@@ -17,12 +17,20 @@
 
 .ftp-hero-badge {
   display: inline-block;
-  font-size: 0.72rem;
+  font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
   color: #14b8a6;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
+}
+
+.ftp-hero-brand {
+  font-size: 3.4rem;
+  font-weight: 900;
+  color: #ef4444;
+  letter-spacing: -1px;
+  margin-bottom: 8px;
 }
 
 .ftp-hero-title {
@@ -31,6 +39,12 @@
   color: #f1f5f9;
   line-height: 1.15;
   margin-bottom: 20px;
+}
+
+.ftp-geogrid-highlight {
+  color: #ef4444;
+  font-weight: 700;
+  font-size: 1.2em;
 }
 
 .ftp-hero-subtitle {
