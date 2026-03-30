@@ -292,10 +292,9 @@ export default function SevenIndustriesPage() {
 
           {/* CTA */}
           <div className="si-cta">
-            <Link to="/subscribe" className="si-cta-btn" data-testid="industry-subscribe-btn">
-              Claim Your Territory <ChevronRight size={18} />
+            <Link to="/five-tools" className="si-cta-btn" data-testid="industry-subscribe-btn">
+              Learn About Our Five Tools <ChevronRight size={18} />
             </Link>
-            <Link to="/services-pricing" className="si-cta-link">View Services & Pricing</Link>
           </div>
         </div>
       </section>
