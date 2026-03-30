@@ -140,11 +140,8 @@ const WebServiceV2Page = () => {
             </p>
             <div className="v2-cta-btns">
               <Link to="/services-pricing" className="v2-btn-primary" data-testid="v2-cta-geogrid">
-                Explore GeoGrid <ArrowRight size={18} />
+                Let's Get Started <ArrowRight size={18} />
               </Link>
-              <a href="https://gatewayaisystems.com/byon-overview" className="v2-btn-ghost" data-testid="v2-cta-byon" target="_blank" rel="noopener noreferrer">
-                Explore BYON
-              </a>
             </div>
           </div>
         </div>
