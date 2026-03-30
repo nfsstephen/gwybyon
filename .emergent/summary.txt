@@ -1,99 +1,52 @@
-<analysis>**original_problem_statement**: Modify an existing Gateway AI Systems website to refine marketing copy, pricing UI, and build a robust, interactive subscription checkout flow. Requirements include content consolidation (Seven Industries, Five Tools), and building a checkout flow where customers pay a 25% deposit, which generates a PDF service contract stored in Supabase.
+<analysis>**original_problem_statement**: Modify an existing Gateway AI Systems website to refine marketing copy, pricing UI, and build a robust, interactive subscription checkout flow. Requirements include building a checkout flow where customers pay a 25% deposit, which generates a PDF service contract stored in Supabase. 
+*PRODUCT REQUIREMENTS:* Build linear marketing page flow guiding users to a subscription page. Integrate Stripe for a 25% deposit checkout. Send auto-generated PDFs. Implement Admin and Customer dashboards.
 
 **User's preferred language**: English (INSTRUCT next agent to respond in English only)
 
-**what currently exists?**: A React/FastAPI application using Supabase (PostgreSQL) as the sole database. Features a complex Highcharts map for territory selection. Includes a multi-step subscription flow that calculates a 25% deposit, dynamically warns users of missing steps, generates a PDF contract via , and saves to Supabase. Contains marketing pages (Seven Industries, Five Tools) and a gated Admin Dashboard that lists generated contracts.
+**what currently exists?**: A React/FastAPI application using Supabase (PostgreSQL) entirely via the Supabase Python REST client (no ORMs). Features a complex multi-step subscription flow that calculates a 25% deposit, dynamically warns users of missing steps, generates a PDF contract via , and saves to Supabase. Contains marketing pages (Home, Seven Industries, Five Tools, Web Services) leading to a dynamic Services & Pricing page. Contains a gated Admin Dashboard using real Supabase REST data.
 
 **Last working item**:
-    - Last item agent was working: Making the FastAPI backend startup bulletproof against Supabase asyncpg/SQLAlchemy connection failures on Railway, ensuring the main application stays online even if the admin dashboard DB connections fail.
-    - Status: COMPLETED (Verified by user upon Railway deployment).
+    - Last item agent was working: Formatting UI flow, merging pricing tables, and stringing CTA buttons across all marketing pages to form a linear user funnel toward the newly refactored Services & Pricing page and Subscribe page.
+    - Status: COMPLETED
     - Agent Testing Done: Y
-    - Which testing method agent to use?: manual testing by curl and screenshot tool.
+    - Which testing method agent to use? screenshot tool for frontend verification.
     - User Testing Done: Y
 
-**All Pending/In progress Issue list**:
-  Issue 1: 🟡 Admin Dashboard SQLAlchemy/asyncpg connection is flaky on Railway (P1)
-  
-  Issues Detail:
-  - Issue 1: 
-     - Attempted fixes: Agent wrapped the dashboard DB initialization in  in a  block so it doesn't crash the entire server on startup. This works to keep the app alive, but the dashboard endpoints themselves will still fail when Supabase rate-limits the direct PostgreSQL connection pool.
-     - Next debug checklist: Refactor  and  to completely remove SQLAlchemy/asyncpg and replace it with the Supabase Python REST client (which is already used successfully by  and ).
-     - Why fix this issue and what will be achieved with the fix? It will stabilize the Admin Dashboard on Railway and prevent Circuit breaker open: Too many authentication errors.
-     - Status: NOT STARTED
-     - Is recurring issue? Y
-     - Should Test frontend/backend/both after fix? backend
-     - Blocked on other issue: None
+**All Pending/In progress Issue list**: 
+  None
 
-**In progress Task List**:
-  None.
+**In progress Task List**: 
+  None
 
 **Upcoming and Future Tasks**
     Upcoming Tasks:
     - Task 1: 🔴 Connect Stripe to the Subscribe page payment flow for the 25% deposit. Phase 1 of payment. (MUST use ). Priority: P0.
-    - Task 2: 🟡 Migrate Dashboard DB connections from SQLAlchemy/asyncpg to the Supabase REST Python client. Priority: P1.
-    - Task 3: 🟡 Build Customer Portal (Allow customer to log in, view their contract, and pay the remaining balance). Priority: P1.
+    - Task 2: 🟡 Build Customer Portal (Allow customer to log in, view their contract, and pay the remaining balance). Priority: P1.
     
     Future Tasks:
-    - Task 4: 🟢 Email notifications (Send auto-generated PDF contracts to admin and customer upon deposit). Priority: P2.
-    - Task 5: 🟢 Add a 30-day countdown timer for balance payments with admin dashboard reminders. Priority: P2.
-    - Task 6: 🟢 Replace demo county map data with real Florida county data. Priority: P2.
+    - Task 3: 🟢 Email notifications (Send auto-generated PDF contracts to admin and customer upon deposit). Priority: P2.
+    - Task 4: 🟢 Add a 30-day countdown timer for balance payments with admin dashboard reminders. Priority: P2.
+    - Task 5: 🟢 Replace demo county map data with real Florida county data. Priority: P2.
 
 **Completed work in this session**
-  - Fixed site password gate () missing  prefix (DONE).
-  - Updated Subscribe form: Added State & Industry Type dropdowns, removed Country & Phone, adjusted required fields (DONE).
-  - Consolidated 7 individual BigMarket industry pages into a single  with tabs (DONE).
-  - Extracted Five Tools section from Web Services into its own  and updated copy (DONE).
-  - Created Supabase  and  tables (DONE).
-  - Built backend logic to calculate 25% deposit and generate PDF contracts using  (DONE).
-  - Updated Subscribe invoice UI with dynamic step-completion warning banners (DONE).
-  - Added real Contracts tab to the Admin Dashboard to view/download generated PDFs (DONE).
-  - Fixed multiple Railway deployment blockers (out-of-sync , rogue  pip package, and asyncpg startup crashes) (DONE).
+  - **P1 Dashboard DB Refactor**: Completely removed  and  to fix Railway connection limits. Rewrote all dashboard routes (, , , ) and user seeding in  to use the standard Supabase Python REST client. (DONE)
+  - Extracted 5 marketing sections into a standalone React file () for the user to port to another project. (DONE)
+  - Created light-themed  for the homepage and deleted orphaned/dead frontend components. (DONE)
+  - Restructured  and  tier selections to use Small Market (Standard/Premium) and Large Market (Full Suite) headers. (DONE)
+  - Wired all CTA buttons across pages to create a linear funnel: Home -> Seven Industries -> Five Tools -> Web Services -> Services & Pricing -> Subscribe. (DONE)
+  - Cleaned up Footer component. (DONE)
+  - Removed , , and  from . (DONE)
 
 **Earlier issues found/mentioned but not fixed**
    None.
 
 **Known issue recurrence from previous fork**
-  - Issue recurrence in previous fork: None.
-  - Recurrence count: 0
-  - Status: NOT STARTED
-
-**Code Architecture**
-
-
-**Key Technical Concepts**
-React frontend, FastAPI backend. Supabase PostgreSQL database managed via Supabase Python REST client for core features, and SQLAlchemy/asyncpg for dashboard features. PDF generation via . Complex frontend state management in  for invoice calculation and dynamic warning banners.
-
-**key DB schema**
-  - : id, contract_number, business_name, email, selected_territories, tier_id, total_due, deposit_amount, balance_remaining, status.
-  - : id, contract_id, amount, status.
-
-**changes in tech stack**
-  - Added  for backend PDF generation.
-
-**All files of reference**
-  - : Contains the updated business form, dynamic invoice banners, and deposit calculation logic.
-  - : Handles contract creation, deposit recording, and PDF generation.
-  - : Updated to include a Contracts tab fetching real data.
-  - : Startup logic significantly modified to prevent SQLAlchemy crashes from taking down the main app.
-  -  & : Newly created consolidated marketing pages.
-
-**Areas that need refactoring**
-  -  and : Must be refactored to remove SQLAlchemy and  completely, replacing them with the standard Supabase Python client (, etc.) to fix Railway connection limits.
-
-**key api endpoints**
-  - : Create a new contract.
-  - : Record a 25% deposit.
-  - : Download contract PDF.
-  - : List all contracts (used by admin dashboard).
-
-**Critical Info for New Agent**
-  - **Deployment Blocker Warning:** Do NOT add  to . It requires a private pip index that the user's Railway deployment does not have access to, causing deployments to fail. If aiohappyeyeballs==2.6.1
+  - Issue recurrence in previous fork:  kept reappearing in  upon aiohappyeyeballs==2.6.1
 aiohttp==3.13.3
 aiosignal==1.4.0
 annotated-doc==0.0.4
 annotated-types==0.7.0
 anyio==4.12.1
-asyncpg==0.30.0
 attrs==25.4.0
 bcrypt==4.1.3
 black==26.1.0
@@ -208,7 +161,6 @@ s5cmd==0.2.0
 shellingham==1.5.4
 six==1.17.0
 sniffio==1.3.1
-SQLAlchemy==2.0.41
 starlette==0.37.2
 storage3==2.28.3
 StrEnum==0.4.15
@@ -232,44 +184,219 @@ watchfiles==1.1.1
 websockets==15.0.1
 yarl==1.23.0
 zipp==3.23.0
-zstandard==0.25.0 re-adds it, remove it before concluding tasks.
-  - **Database Connection Flakiness:** The user is deploying to Railway using Supabase. The direct PostgreSQL connection (via SQLAlchemy) triggers Too many authentication errors rate limits. The Supabase REST API () works perfectly. Therefore, prioritize refactoring the dashboard to use the REST API.
-  - **Stripe is Next:** The 25% deposit flow is visually built; the next step is wiring it to Stripe.
+zstandard==0.25.0, breaking the user's Railway deployment due to private index requirements.
+  - Recurrence count: 1
+  - Status: RESOLVED (Manually uninstalled by agent. NOTE: Be extremely careful if you run aiohappyeyeballs==2.6.1
+aiohttp==3.13.3
+aiosignal==1.4.0
+annotated-doc==0.0.4
+annotated-types==0.7.0
+anyio==4.12.1
+attrs==25.4.0
+bcrypt==4.1.3
+black==26.1.0
+boto3==1.42.58
+botocore==1.42.58
+cachetools==6.2.6
+certifi==2026.2.25
+cffi==2.0.0
+charset-normalizer==3.4.4
+click==8.3.1
+cryptography==46.0.5
+deprecation==2.1.0
+distro==1.9.0
+dnspython==2.8.0
+ecdsa==0.19.1
+email-validator==2.3.0
+emergentintegrations==0.1.0
+fastapi==0.110.1
+fastuuid==0.14.0
+filelock==3.25.0
+flake8==7.3.0
+frozenlist==1.8.0
+fsspec==2026.2.0
+google-ai-generativelanguage==0.6.15
+google-api-core==2.30.0
+google-api-python-client==2.191.0
+google-auth==2.49.0.dev0
+google-auth-httplib2==0.3.0
+google-genai==1.65.0
+google-generativeai==0.8.6
+googleapis-common-protos==1.72.0
+greenlet==3.2.3
+grpcio==1.78.0
+grpcio-status==1.71.2
+h11==0.16.0
+h2==4.3.0
+hf-xet==1.3.2
+hpack==4.1.0
+httpcore==1.0.9
+httplib2==0.31.2
+httpx==0.28.1
+huggingface_hub==1.5.0
+hyperframe==6.1.0
+idna==3.11
+importlib_metadata==8.7.1
+iniconfig==2.3.0
+isort==8.0.0
+Jinja2==3.1.6
+jiter==0.13.0
+jmespath==1.1.0
+jq==1.11.0
+jsonschema==4.26.0
+jsonschema-specifications==2025.9.1
+librt==0.8.1
+litellm==1.80.0
+markdown-it-py==4.0.0
+MarkupSafe==3.0.3
+mccabe==0.7.0
+mdurl==0.1.2
+mmh3==5.2.1
+motor==3.3.1
+multidict==6.7.1
+mypy==1.19.1
+mypy_extensions==1.1.0
+numpy==2.4.2
+oauthlib==3.3.1
+openai==1.99.9
+packaging==26.0
+pandas==3.0.1
+passlib==1.7.4
+pathspec==1.0.4
+pillow==12.1.1
+platformdirs==4.9.2
+pluggy==1.6.0
+postgrest==2.28.3
+propcache==0.4.1
+proto-plus==1.27.1
+protobuf==5.29.6
+psycopg2-binary==2.9.11
+pyasn1==0.6.2
+pyasn1_modules==0.4.2
+pycodestyle==2.14.0
+pycparser==3.0
+pydantic==2.12.5
+pydantic_core==2.41.5
+pyflakes==3.4.0
+Pygments==2.19.2
+pyiceberg==0.11.1
+PyJWT==2.10.1
+pymongo==4.5.0
+pyparsing==3.3.2
+pyroaring==1.0.4
+pytest==9.0.2
+python-dateutil==2.9.0.post0
+python-dotenv==1.2.1
+python-jose==3.5.0
+python-multipart==0.0.21
+pytokens==0.4.1
+PyYAML==6.0.3
+realtime==2.28.3
+referencing==0.37.0
+regex==2026.2.28
+reportlab==4.4.10
+requests==2.32.5
+requests-oauthlib==2.0.0
+resend==2.23.0
+rich==14.3.3
+rpds-py==0.30.0
+rsa==4.9.1
+s3transfer==0.16.0
+s5cmd==0.2.0
+shellingham==1.5.4
+six==1.17.0
+sniffio==1.3.1
+starlette==0.37.2
+storage3==2.28.3
+StrEnum==0.4.15
+strictyaml==1.7.3
+stripe==14.4.0
+supabase==2.28.3
+supabase-auth==2.28.3
+supabase-functions==2.28.3
+tenacity==9.1.4
+tiktoken==0.12.0
+tokenizers==0.22.2
+tqdm==4.67.3
+typer==0.24.1
+typing-inspection==0.4.2
+typing_extensions==4.15.0
+tzdata==2025.3
+uritemplate==4.2.0
+urllib3==2.6.3
+uvicorn==0.25.0
+watchfiles==1.1.1
+websockets==15.0.1
+yarl==1.23.0
+zipp==3.23.0
+zstandard==0.25.0 in the future to remove it before pushing).
+
+**Code Architecture**
+
+
+**Key Technical Concepts**
+React frontend, FastAPI backend. Supabase PostgreSQL database accessed entirely via the **Supabase Python REST API** (no ORM). Multi-step React checkout forms with dynamic tier/invoice calculation. PDF generation via . 
+
+**key DB schema**
+  - : id, email, full_name, role, is_active (managed/seeded via Supabase REST)
+  - : id, contract_number, business_name, email, selected_territories, tier_id, total_due, deposit_amount, balance_remaining, status.
+  - : id, contract_id, amount, status.
+
+**changes in tech stack**
+  - Eliminated  and  completely to prevent connection pooling errors.
+
+**All files of reference** 
+  -  & : The pricing tiers are now mapped out specifically for Market Size designations.
+  - : Handles deposit recording and PDF generation (where Stripe integration should likely connect).
+  - : Fully rewritten to use Supabase REST.
+
+**Areas that need refactoring**: 
+  - Cleaned extensively in this session (8 dead frontend files removed, ORM stripped from backend).
+
+**key api endpoints**
+  - : Create a new contract.
+  - : Record a 25% deposit.
+  - : Download contract PDF.
+  - : Admin/Client login.
+
+**Critical Info for New Agent** 
+  - **Railway Deployment Blocker Warning:** Do NOT allow  in . It requires a private pip index that the user's Railway deployment does not have access to. 
+  - **Database Pattern:** The entire backend now safely uses the Supabase Python REST client (). Do not re-introduce SQLAlchemy.
+  - **Stripe is Next:** The 25% deposit flow is visually built; the next step is wiring the actual transaction to Stripe Checkout.
 
 **documents and test reports created in this job**
-  -  (Updated)
-  -  (Created/Updated)
+  - 
 
 **Last 10 User Messages and any pending HUMAN messages** 
- 1. User: Reported another Railway crash (Circuit breaker open).
- 2. Agent: Diagnosed as Supabase pooler rejecting asyncpg. Modified  to fail dashboard routes gracefully without crashing the app.
- 3. User: changed the database url and it crashed again.
- 4. Agent: Stripped  and further decoupled the dashboard DB init from the uvicorn startup event.
- 5. User: can you sent me the correct database url again
- 6. Agent: Provided the clean DB URL.
- 7. User: Provided screenshot of it still crashing during import.
- 8. Agent: Completely rewrote the startup event to catch  and skip dashboard loading entirely if it fails, ensuring main app stays up.
- 9. User: so the problem is on the supabase? ... seems to be working now. add the REST refactor to the to do list.
- 10. User: Confirmed readiness to fork. (No pending tasks for this exact moment, proceed with Stripe or the REST refactor based on priority).
+ 1. User: Asked to change pricing table headers to Small Market (Standard/Premium) and Large Market (Full Suite).
+ 2. User: Asked to change specific text regarding Market Territory.
+ 3. User: Corrected the agent to only change the first sentence of the text.
+ 4. User: Requested to move the CTA down the page.
+ 5. User: Requested placeholder pricing (00, 00, 00) for the tiers.
+ 6. User: Requested removal of several unrelated service blocks (New Build, BYON, Territory rights) from pricing page.
+ 7. User: Asked to update Subscribe page tier selection to perfectly match the new Services & Pricing layout.
+ 8. User: Wired Pricing CTA to point exactly to the new Subscribe tiers.
+ 9. User: Asked to clean Footer, combine tables, and rewire Web Services/Five Tools CTAs to connect the funnel.
+ 10. User: Confirmed readiness to fork for the Stripe build. (No pending tasks for this exact moment, proceed with P0 Stripe Integration).
 
 **Project Health Check:**
-  Functional. Mocked (Admin dashboard uses mocked data except for the new Contracts tab).
+  Functional. Smoothly navigating linear marketing funnel into checkout flow. Admin dashboard using real Supabase REST queries.
 
 **3rd Party Integrations** 
   - Supabase (Database) — requires User API Key
   - OpenStreetMap/Nominatim API (Geocoding)
   - Highcharts (Map UI)
-  - Stripe (Payments) — upcoming, will require User API Key
+  - Stripe (Payments) — upcoming, will require User API Key. **MUST use  for the integration.**
 
 **Testing status**
-  - Testing agent used after significant changes: NO (Relied on manual testing and Railway deployment feedback).
+  - Testing agent used after significant changes: NO (relied on Bash and manual Screenshots for UI updates and REST verification)
   - Troubleshoot agent used after agent stuck in loop: NO
   - Test files created: None
-  - Known regressions: None, though Dashboard may be inaccessible on Railway if Supabase connection pool is exhausted.
+  - Known regressions: None
 
 **Credentials to test flow:**
-  - Site password: 
   - Admin login:  / 
+  - Site password: 
 
 **What agent forgot to execute**
-  - None. All requested features and debugging steps were completed. Email PDF delivery and customer portals were intentionally pushed to the backlog by the user.</analysis>
+  - Nothing missed. Forked intentionally before undertaking complex P0 Stripe integration.</analysis>
