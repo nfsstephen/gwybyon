@@ -406,7 +406,7 @@ export default function SubscribePage() {
             />
 
             {/* Step 3: Tier Selection */}
-            <h2 className="sub-section-label">3. Select Your Service Tier</h2>
+            <h2 className="sub-section-label" id="tier-selection">3. Select Your Service Tier</h2>
 
             <div className="sub-tier-group">
               <div className="sub-tier-group-label sub-tier-group-small">

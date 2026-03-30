@@ -411,8 +411,8 @@ const ServicesAndPricingPage = () => {
           </div>
 
           <div className="v2-cta-below sp-matrix-cta">
-            <Link to="/subscribe" className="v2-build-cta" data-testid="cta-matrix-subscribe">
-              Choose Your Territory & Subscribe <ArrowRight size={16} />
+            <Link to="/subscribe#tier-selection" className="v2-build-cta" data-testid="cta-matrix-subscribe">
+              Choose Your Service Tier <ArrowRight size={16} />
             </Link>
           </div>
 
