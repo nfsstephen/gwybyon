@@ -1,78 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { 
   Target, BookOpen, DollarSign, Mail, CheckCircle, 
   RefreshCw, MapPin, ArrowRight, ArrowDown,
   Shield, Crown, Clock, Users, Ban, TrendingUp, 
   XCircle, Lock, AlertTriangle, Search, Phone, 
-  Layers, MessageCircle
+  Layers
 } from 'lucide-react';
 import './GatewayHomePage.css';
 
 /* =============================================
-   GATEWAY AI SYSTEMS — FULL HOMEPAGE
-   Self-contained page with all sections inline.
+   GATEWAY AI SYSTEMS — HOMEPAGE CONTENT
+   5 main sections (no Nav/Footer — use your layout wrapper).
    
    Dependencies: 
-     - react-router-dom (for Link)
+     - react-router-dom (for Link in BYON cards)
      - lucide-react (for icons)
      - GatewayHomePage.css (companion stylesheet)
-     - /public/logo.png (your logo file)
    
    Usage:
      import GatewayHomePage from './GatewayHomePage';
      // In your router: <Route path="/home" element={<GatewayHomePage />} />
-   
-   NOTE: This file includes Navigation + Footer inline. 
-   If your project already has a layout wrapper with Nav/Footer, 
-   you can delete those sections and just keep the 5 main sections.
 ============================================= */
-
-// ─── NAVIGATION ────────────────────────────────────
-const Navigation = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const location = useLocation();
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const closeMobileMenu = () => setMobileMenuOpen(false);
-  const isActive = (path) => (location.pathname === path ? 'active' : '');
-
-  return (
-    <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
-      <div className="container">
-        <div className="nav-wrapper">
-          <div className="logo">
-            <Link to="/">
-              <img src="/logo.png" alt="Gateway AI Systems" className="logo-image" />
-            </Link>
-          </div>
-          <button
-            className={`mobile-menu-toggle ${mobileMenuOpen ? 'active' : ''}`}
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            <span></span><span></span><span></span>
-          </button>
-          <ul className={`nav-menu ${mobileMenuOpen ? 'active' : ''}`}>
-            <li><Link to="/" className={isActive('/')} onClick={closeMobileMenu}>Home</Link></li>
-            <li><Link to="/seven-industries" className={isActive('/seven-industries')} onClick={closeMobileMenu}>Seven Industries</Link></li>
-            <li><Link to="/five-tools" className={isActive('/five-tools')} onClick={closeMobileMenu}>Five Tools</Link></li>
-            <li><Link to="/web-service-v2" className={isActive('/web-service-v2')} onClick={closeMobileMenu}>Web Services</Link></li>
-            <li><Link to="/services-pricing" className={isActive('/services-pricing')} onClick={closeMobileMenu}>Services & Pricing</Link></li>
-            <li className="nav-subscribe">
-              <Link to="/subscribe" className="subscribe-btn" onClick={closeMobileMenu} data-testid="nav-subscribe-btn">Subscribe</Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  );
-};
 
 // ─── SECTION 1: MARKETING MISSION ──────────────────
 const MarketingMission = () => (
@@ -611,52 +560,16 @@ const ByonShowcase = () => {
   );
 };
 
-// ─── FOOTER ────────────────────────────────────────
-const FooterSection = () => (
-  <footer className="footer" id="contact">
-    <div className="container">
-      <div className="footer-grid">
-        <div className="footer-column">
-          <div className="footer-logo">
-            <img src="/logo.png" alt="Gateway AI Systems" className="footer-logo-image" />
-          </div>
-        </div>
-        <div className="footer-column">
-          <h4>Information</h4>
-          <ul className="footer-links">
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Truck Stop</a></li>
-            <li><a href="#">Parking Lot Control</a></li>
-            <li><a href="#">Fuel Lane Control</a></li>
-          </ul>
-        </div>
-        <div className="footer-column">
-          <h4>Contact Us</h4>
-          <ul className="footer-links">
-            <li><a href="tel:(386)266-0925">(386)266-0925</a></li>
-            <li><a href="mailto:stephen@gatewayaisystems.com">stephen@gatewayaisystems.com</a></li>
-          </ul>
-        </div>
-      </div>
-      <div className="footer-bottom">
-        <p>&copy; 2026 Gateway AI Systems. All Rights Reserved</p>
-      </div>
-    </div>
-  </footer>
-);
-
 // ─── MAIN PAGE COMPONENT ───────────────────────────
 const GatewayHomePage = () => {
   return (
-    <div className="App">
-      <Navigation />
+    <>
       <MarketingMission />
       <StrategyOverview />
       <MarketTerritories />
       <CrossSellStrategy />
       <ByonShowcase />
-      <FooterSection />
-    </div>
+    </>
   );
 };
 
