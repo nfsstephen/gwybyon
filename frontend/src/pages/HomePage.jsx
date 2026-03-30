@@ -11,7 +11,6 @@ const HomePage = () => {
       <HeroValue />
       <HeroValueLight />
       <MarketingMission />
-      <StrategyOverview />
       <MarketTerritories />
       <CrossSellStrategy />
     </>
