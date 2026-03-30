@@ -406,6 +406,50 @@ const ServicesAndPricingPage = () => {
                   <td className="sp-matrix-count sp-matrix-count-full sp-matrix-border-right">5 of 5</td>
                   <td className="sp-matrix-count sp-matrix-count-full">5 of 5</td>
                 </tr>
+
+                {/* Website Services Group */}
+                <tr className="sp-matrix-group-header">
+                  <td colSpan={4}>
+                    <Globe size={16} />
+                    <span>Website Services</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="sp-matrix-feature">Managed Hosting, SSL & Security</td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                  <td className="sp-matrix-check sp-matrix-border-right"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                </tr>
+                <tr>
+                  <td className="sp-matrix-feature">Content Updates / Month</td>
+                  <td className="sp-matrix-text">2</td>
+                  <td className="sp-matrix-text sp-matrix-border-right">4</td>
+                  <td className="sp-matrix-text sp-matrix-text-highlight">Unlimited</td>
+                </tr>
+                <tr>
+                  <td className="sp-matrix-feature">Schema Markup Monitoring</td>
+                  <td className="sp-matrix-x"><X size={18} /></td>
+                  <td className="sp-matrix-check sp-matrix-border-right"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                </tr>
+                <tr>
+                  <td className="sp-matrix-feature">Core Web Vitals Optimization</td>
+                  <td className="sp-matrix-x"><X size={18} /></td>
+                  <td className="sp-matrix-check sp-matrix-border-right"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                </tr>
+                <tr>
+                  <td className="sp-matrix-feature">Advanced Local SEO</td>
+                  <td className="sp-matrix-x"><X size={18} /></td>
+                  <td className="sp-matrix-check sp-matrix-border-right"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                </tr>
+                <tr>
+                  <td className="sp-matrix-feature">A/B Testing for Conversions</td>
+                  <td className="sp-matrix-x"><X size={18} /></td>
+                  <td className="sp-matrix-check sp-matrix-border-right"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -414,81 +458,6 @@ const ServicesAndPricingPage = () => {
             <Link to="/subscribe#tier-selection" className="v2-build-cta" data-testid="cta-matrix-subscribe">
               Choose Your Service Tier <ArrowRight size={16} />
             </Link>
-          </div>
-
-          {/* Other Services — existing 3 columns preserved */}
-          <div className="sp-market-block" data-testid="sp-other-services">
-            <div className="sp-market-label sp-market-services">
-              <Layers size={16} />
-              <span>Additional Services (All Territories)</span>
-            </div>
-            <div className="sp-matrix-wrapper">
-              <table className="sp-matrix-table" data-testid="sp-matrix-table">
-                <thead>
-                  <tr>
-                    <th className="sp-matrix-feature-col"></th>
-                    <th className="sp-matrix-tier-col" data-testid="sp-matrix-foundation-head">
-                      <div className="sp-matrix-tier-label">Tier 1</div>
-                      <div className="sp-matrix-tier-name">Foundation</div>
-                    </th>
-                    <th className="sp-matrix-tier-col sp-matrix-tier-popular" data-testid="sp-matrix-growth-head">
-                      <div className="sp-matrix-pop-badge">Most Popular</div>
-                      <div className="sp-matrix-tier-label">Tier 2</div>
-                      <div className="sp-matrix-tier-name">Growth</div>
-                    </th>
-                    <th className="sp-matrix-tier-col sp-matrix-tier-authority" data-testid="sp-matrix-authority-head">
-                      <div className="sp-matrix-tier-label">Tier 3</div>
-                      <div className="sp-matrix-tier-name">Authority</div>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {/* Website Services Group */}
-                  <tr className="sp-matrix-group-header">
-                    <td colSpan={4}>
-                      <Globe size={16} />
-                      <span>Website Services</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="sp-matrix-feature">Managed Hosting, SSL & Security</td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                  </tr>
-                  <tr>
-                    <td className="sp-matrix-feature">Content Updates / Month</td>
-                    <td className="sp-matrix-text">2</td>
-                    <td className="sp-matrix-text">4</td>
-                    <td className="sp-matrix-text sp-matrix-text-highlight">Unlimited</td>
-                  </tr>
-                  <tr>
-                    <td className="sp-matrix-feature">Schema Markup Monitoring</td>
-                    <td className="sp-matrix-x"><X size={18} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                  </tr>
-                  <tr>
-                    <td className="sp-matrix-feature">Core Web Vitals Optimization</td>
-                    <td className="sp-matrix-x"><X size={18} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                  </tr>
-                  <tr>
-                    <td className="sp-matrix-feature">Advanced Local SEO</td>
-                    <td className="sp-matrix-x"><X size={18} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                  </tr>
-                  <tr>
-                    <td className="sp-matrix-feature">A/B Testing for Conversions</td>
-                    <td className="sp-matrix-x"><X size={18} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
           </div>
 
           {/* Activation Fee removed — replaced by per-county pricing */}
