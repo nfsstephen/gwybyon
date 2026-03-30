@@ -56,6 +56,15 @@
   padding: 0 16px;
 }
 
+.si-tabs-instruction {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #64748b;
+  font-weight: 500;
+  margin: 0 0 8px;
+  letter-spacing: 0.2px;
+}
+
 .si-tabs {
   display: flex;
   flex-wrap: wrap;

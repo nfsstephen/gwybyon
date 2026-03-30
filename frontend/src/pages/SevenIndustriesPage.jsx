@@ -182,6 +182,7 @@ export default function SevenIndustriesPage() {
       {/* Industry Selector Tabs */}
       <section className="si-tabs-section">
         <div className="si-tabs-wrapper">
+          <p className="si-tabs-instruction">Select your industry below to see how we solve your specific challenges.</p>
           <div className="si-tabs" data-testid="industry-tabs">
             {INDUSTRIES.map(ind => {
               const Icon = ind.icon;
