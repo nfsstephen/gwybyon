@@ -122,6 +122,54 @@
   border-color: rgba(148, 163, 184, 0.5);
 }
 
+
+/* Next Step CTA */
+.ftp-next-step {
+  padding: 60px 24px 80px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+}
+
+.ftp-next-step-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.ftp-next-step-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.ftp-next-step-text {
+  font-size: 1rem;
+  color: #475569;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.ftp-next-step-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: #0d9488;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.ftp-next-step-btn:hover {
+  background: #0f766e;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(13, 148, 136, 0.3);
+  color: #fff;
+}
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
   .ftp-hero { padding: 60px 20px 48px; }

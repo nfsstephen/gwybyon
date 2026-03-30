@@ -42,6 +42,21 @@ export default function FiveToolsPage() {
         title="How Each Tool Works"
         subtitle="Each tool targets a specific factor in Google's local ranking algorithm. Together, they give you complete visibility and control over your local search presence."
       />
+
+      {/* Next Step CTA */}
+      <section className="ftp-next-step">
+        <div className="ftp-next-step-inner">
+          <h3 className="ftp-next-step-title">What's Next?</h3>
+          <p className="ftp-next-step-text">
+            Now that you understand the five tools that drive your search rankings, 
+            learn about the marketing website that serves as the foundation of your 
+            entire online presence.
+          </p>
+          <Link to="/web-service-v2" className="ftp-next-step-btn" data-testid="ftp-cta-webservices">
+            Explore Web Services <ArrowRight size={16} />
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }
