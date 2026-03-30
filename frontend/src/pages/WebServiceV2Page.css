@@ -757,8 +757,8 @@
 
 /* ===== CTA ===== */
 .v2-cta {
-  background: var(--v2-dark);
-  padding: 80px 20px;
+  background: #f8fafc;
+  padding: 40px 20px 60px;
   text-align: center;
 }
 
