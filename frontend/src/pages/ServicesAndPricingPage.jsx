@@ -330,8 +330,7 @@ const ServicesAndPricingPage = () => {
           <div className="sp-section-badge"><BarChart3 size={14} /> GeoGrid Tool Access</div>
           <h2 className="sp-matrix-title">Five Tools. Two Market Types.</h2>
           <p className="sp-matrix-desc">
-            Your market territory determines which tools are available. Small markets require less 
-            firepower to dominate. Large markets demand the full arsenal.
+            Market Territory size affects pricing.
           </p>
 
           <div className="v2-cta-below sp-matrix-cta">
