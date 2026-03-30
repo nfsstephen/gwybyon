@@ -96,7 +96,7 @@ const MarketingMission = () => {
               <div className="mm-approach-step">02</div>
               <h4>Market Designation</h4>
               <p>
-                Within your invitation, we designate whether your territory is a 
+                When you select your territory, our system automatically designates it as a 
                 <strong> large market</strong> or <strong>small market</strong> area. This designation 
                 is based on customer base size, competition density, and the effort required to achieve 
                 top search rankings.
