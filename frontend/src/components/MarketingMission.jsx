@@ -106,10 +106,10 @@ const MarketingMission = () => {
               <div className="mm-approach-step">03</div>
               <h4>Fair Pricing</h4>
               <p>
-                If you've been designated a small market customer, you'll find a checkbox on our pricing 
-                page: <strong>"Designated Small Market Customer."</strong> Checking that box gives you a 
-                50% discount on all pricing. Because your market requires less effort to dominate — and 
-                our pricing reflects that honestly.
+                When you select your market territory, the system automatically determines whether 
+                you're in a large or small market area. Small market customers receive a 75% discount 
+                on all pricing. Because your market requires less effort to dominate — and our pricing 
+                reflects that honestly.
               </p>
             </div>
           </div>
