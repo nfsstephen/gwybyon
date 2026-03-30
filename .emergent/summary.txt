@@ -1,54 +1,59 @@
-<analysis>**original_problem_statement**: Modify an existing Gateway AI Systems website to refine marketing copy, pricing UI, and build a robust, interactive subscription checkout flow. Specifically, integrate a Business Details form, implement a Highcharts drill-down map with auto-selection and multi-selection of counties based on user input, and migrate the backend database from MongoDB to Supabase.
+<analysis>**original_problem_statement**: Modify an existing Gateway AI Systems website to refine marketing copy, pricing UI, and build a robust, interactive subscription checkout flow. Requirements include content consolidation (Seven Industries, Five Tools), and building a checkout flow where customers pay a 25% deposit, which generates a PDF service contract stored in Supabase.
 
 **User's preferred language**: English (INSTRUCT next agent to respond in English only)
 
-**what currently exists?**: A React/FastAPI application with a complex, interactive Highcharts map for territory selection (State -> County drilldown) that auto-centers based on a typed city. The backend was just migrated from MongoDB to Supabase (PostgreSQL). The site is gated by a password page which is currently failing.
+**what currently exists?**: A React/FastAPI application using Supabase (PostgreSQL) as the sole database. Features a complex Highcharts map for territory selection. Includes a multi-step subscription flow that calculates a 25% deposit, dynamically warns users of missing steps, generates a PDF contract via , and saves to Supabase. Contains marketing pages (Seven Industries, Five Tools) and a gated Admin Dashboard that lists generated contracts.
 
 **Last working item**:
-    - Last item agent was working: Diagnosing and fixing the site password gate () which broke immediately after the backend migration from MongoDB to Supabase.
-    - Status: IN PROGRESS
-    - Agent Testing Done: N (Agent checked backend logs just before the session ended, but did not apply a fix).
-    - Which testing method agent to use?: manual testing by curl () and screenshot tool to verify frontend access.
-    - User Testing Done: N
+    - Last item agent was working: Making the FastAPI backend startup bulletproof against Supabase asyncpg/SQLAlchemy connection failures on Railway, ensuring the main application stays online even if the admin dashboard DB connections fail.
+    - Status: COMPLETED (Verified by user upon Railway deployment).
+    - Agent Testing Done: Y
+    - Which testing method agent to use?: manual testing by curl and screenshot tool.
+    - User Testing Done: Y
 
 **All Pending/In progress Issue list**:
-  Issue 1: Site password gate () is failing/returning false after Supabase migration (P0)
+  Issue 1: 🟡 Admin Dashboard SQLAlchemy/asyncpg connection is flaky on Railway (P1)
   
   Issues Detail:
   - Issue 1: 
-     - Attempted fixes: Agent checked  logs. Logs indicated the server started with the Supabase database successfully, but there was a warning: . The auth route was not yet investigated.
-     - Next debug checklist: Check  to ensure the authentication routes () are correctly included and reading . During the rewrite of  for Supabase, the auth routes may have been accidentally dropped or misconfigured.
-     - Why fix this issue and what will be achieved with the fix? The user is completely locked out of the preview app. Fixing this restores access so remaining features can be tested.
-     - Status: IN PROGRESS
-     - Is recurring issue? N
-     - Should Test frontend/backend/both after fix? both
+     - Attempted fixes: Agent wrapped the dashboard DB initialization in  in a  block so it doesn't crash the entire server on startup. This works to keep the app alive, but the dashboard endpoints themselves will still fail when Supabase rate-limits the direct PostgreSQL connection pool.
+     - Next debug checklist: Refactor  and  to completely remove SQLAlchemy/asyncpg and replace it with the Supabase Python REST client (which is already used successfully by  and ).
+     - Why fix this issue and what will be achieved with the fix? It will stabilize the Admin Dashboard on Railway and prevent Circuit breaker open: Too many authentication errors.
+     - Status: NOT STARTED
+     - Is recurring issue? Y
+     - Should Test frontend/backend/both after fix? backend
      - Blocked on other issue: None
 
 **In progress Task List**:
-  None (MongoDB to Supabase migration is mostly complete, pending the bug fix above).
+  None.
 
 **Upcoming and Future Tasks**
     Upcoming Tasks:
-    - Task 1: Connect Stripe to the Subscribe page payment flow. Priority: P0. *Note: MUST use  for Stripe integration.*
-    - Task 2: Replace demo county map data with real Florida county data (verify if Highcharts implementation fully satisfies this). Priority: P1.
+    - Task 1: 🔴 Connect Stripe to the Subscribe page payment flow for the 25% deposit. Phase 1 of payment. (MUST use ). Priority: P0.
+    - Task 2: 🟡 Migrate Dashboard DB connections from SQLAlchemy/asyncpg to the Supabase REST Python client. Priority: P1.
+    - Task 3: 🟡 Build Customer Portal (Allow customer to log in, view their contract, and pay the remaining balance). Priority: P1.
     
     Future Tasks:
-    - Task 3: Secure Admin dashboard credentials. Priority: P1.
-    - Task 4: Dormant code audit (clean up unused Token backend code). Priority: P2.
-    - Task 5: PDF exports, email notifications, analytics. Priority: P2.
+    - Task 4: 🟢 Email notifications (Send auto-generated PDF contracts to admin and customer upon deposit). Priority: P2.
+    - Task 5: 🟢 Add a 30-day countdown timer for balance payments with admin dashboard reminders. Priority: P2.
+    - Task 6: 🟢 Replace demo county map data with real Florida county data. Priority: P2.
 
 **Completed work in this session**
-  - Added Step 2: Business Details form (Name, Address, City, Zip, Phone, Country) to the Subscribe page.
-  - Replaced static SVG county map with an interactive Highcharts Map Drilldown component ().
-  - Implemented multi-territory selection on the Highcharts map with dynamic pricing updates in the invoice.
-  - Implemented auto-geocoding (Nominatim API): Typing a City in Step 2 auto-drills the map to the correct state and auto-selects the matching county.
-  - MongoDB → PostgreSQL (Supabase) migration (DONE). Replaced , , , and  to use Supabase via REST/Python client.
+  - Fixed site password gate () missing  prefix (DONE).
+  - Updated Subscribe form: Added State & Industry Type dropdowns, removed Country & Phone, adjusted required fields (DONE).
+  - Consolidated 7 individual BigMarket industry pages into a single  with tabs (DONE).
+  - Extracted Five Tools section from Web Services into its own  and updated copy (DONE).
+  - Created Supabase  and  tables (DONE).
+  - Built backend logic to calculate 25% deposit and generate PDF contracts using  (DONE).
+  - Updated Subscribe invoice UI with dynamic step-completion warning banners (DONE).
+  - Added real Contracts tab to the Admin Dashboard to view/download generated PDFs (DONE).
+  - Fixed multiple Railway deployment blockers (out-of-sync , rogue  pip package, and asyncpg startup crashes) (DONE).
 
 **Earlier issues found/mentioned but not fixed**
    None.
 
 **Known issue recurrence from previous fork**
-  - Issue recurrence in previous fork: None
+  - Issue recurrence in previous fork: None.
   - Recurrence count: 0
   - Status: NOT STARTED
 
@@ -56,69 +61,215 @@
 
 
 **Key Technical Concepts**
-React frontend, FastAPI backend. Heavy use of  and Highcharts React wrapper. Complex state management using  and  in Highcharts to prevent re-renders that break click handlers. Supabase PostgreSQL database managed via Supabase Python client.
+React frontend, FastAPI backend. Supabase PostgreSQL database managed via Supabase Python REST client for core features, and SQLAlchemy/asyncpg for dashboard features. PDF generation via . Complex frontend state management in  for invoice calculation and dynamic warning banners.
 
 **key DB schema**
-  - : Migrated from Mongo to Supabase
-  - : Migrated from Mongo to Supabase
-  - : Migrated from Mongo to Supabase
+  - : id, contract_number, business_name, email, selected_territories, tier_id, total_due, deposit_amount, balance_remaining, status.
+  - : id, contract_id, amount, status.
 
 **changes in tech stack**
-  - **MongoDB removed entirely**. App now strictly uses Supabase (PostgreSQL).
-  - Highcharts and  added for frontend mapping.
+  - Added  for backend PDF generation.
 
 **All files of reference**
-  - : Updated with Step 2 business details and passing  prop to the map.
-  - : Created in this session. Handles US State -> County drilldown, geocoding, and multi-selection logic.
-  - : Rewritten to remove MongoDB startup/shutdown and integrate Supabase.
-  - : Rewritten to use Supabase client.
-  -  & : Rewritten for Supabase compatibility.
+  - : Contains the updated business form, dynamic invoice banners, and deposit calculation logic.
+  - : Handles contract creation, deposit recording, and PDF generation.
+  - : Updated to include a Contracts tab fetching real data.
+  - : Startup logic significantly modified to prevent SQLAlchemy crashes from taking down the main app.
+  -  & : Newly created consolidated marketing pages.
 
 **Areas that need refactoring**
-  - : The file has grown complex (~430 lines) with geocoding, Highcharts options, and event handling.
+  -  and : Must be refactored to remove SQLAlchemy and  completely, replacing them with the standard Supabase Python client (, etc.) to fix Railway connection limits.
 
 **key api endpoints**
-  -  (Currently broken/failing)
-  - 
+  - : Create a new contract.
+  - : Record a 25% deposit.
+  - : Download contract PDF.
+  - : List all contracts (used by admin dashboard).
 
 **Critical Info for New Agent**
-  - **Site Access is Broken:** The rewrite of  during the Supabase migration likely broke or dropped the authentication endpoints. Fix this immediately as P0 so the app can be viewed.
-  - **Highcharts Quirks:** The previous agent spent extensive time debugging Highcharts click events. Do not use  on the HighchartsReact component, and be careful with  definitions at the series level versus the chart level, as they can cause overlapping geometries that block click events.
-  - **Stripe is Next:** Once the password gate is fixed, Stripe integration is the next requested task.
+  - **Deployment Blocker Warning:** Do NOT add  to . It requires a private pip index that the user's Railway deployment does not have access to, causing deployments to fail. If aiohappyeyeballs==2.6.1
+aiohttp==3.13.3
+aiosignal==1.4.0
+annotated-doc==0.0.4
+annotated-types==0.7.0
+anyio==4.12.1
+asyncpg==0.30.0
+attrs==25.4.0
+bcrypt==4.1.3
+black==26.1.0
+boto3==1.42.58
+botocore==1.42.58
+cachetools==6.2.6
+certifi==2026.2.25
+cffi==2.0.0
+charset-normalizer==3.4.4
+click==8.3.1
+cryptography==46.0.5
+deprecation==2.1.0
+distro==1.9.0
+dnspython==2.8.0
+ecdsa==0.19.1
+email-validator==2.3.0
+emergentintegrations==0.1.0
+fastapi==0.110.1
+fastuuid==0.14.0
+filelock==3.25.0
+flake8==7.3.0
+frozenlist==1.8.0
+fsspec==2026.2.0
+google-ai-generativelanguage==0.6.15
+google-api-core==2.30.0
+google-api-python-client==2.191.0
+google-auth==2.49.0.dev0
+google-auth-httplib2==0.3.0
+google-genai==1.65.0
+google-generativeai==0.8.6
+googleapis-common-protos==1.72.0
+greenlet==3.2.3
+grpcio==1.78.0
+grpcio-status==1.71.2
+h11==0.16.0
+h2==4.3.0
+hf-xet==1.3.2
+hpack==4.1.0
+httpcore==1.0.9
+httplib2==0.31.2
+httpx==0.28.1
+huggingface_hub==1.5.0
+hyperframe==6.1.0
+idna==3.11
+importlib_metadata==8.7.1
+iniconfig==2.3.0
+isort==8.0.0
+Jinja2==3.1.6
+jiter==0.13.0
+jmespath==1.1.0
+jq==1.11.0
+jsonschema==4.26.0
+jsonschema-specifications==2025.9.1
+librt==0.8.1
+litellm==1.80.0
+markdown-it-py==4.0.0
+MarkupSafe==3.0.3
+mccabe==0.7.0
+mdurl==0.1.2
+mmh3==5.2.1
+motor==3.3.1
+multidict==6.7.1
+mypy==1.19.1
+mypy_extensions==1.1.0
+numpy==2.4.2
+oauthlib==3.3.1
+openai==1.99.9
+packaging==26.0
+pandas==3.0.1
+passlib==1.7.4
+pathspec==1.0.4
+pillow==12.1.1
+platformdirs==4.9.2
+pluggy==1.6.0
+postgrest==2.28.3
+propcache==0.4.1
+proto-plus==1.27.1
+protobuf==5.29.6
+psycopg2-binary==2.9.11
+pyasn1==0.6.2
+pyasn1_modules==0.4.2
+pycodestyle==2.14.0
+pycparser==3.0
+pydantic==2.12.5
+pydantic_core==2.41.5
+pyflakes==3.4.0
+Pygments==2.19.2
+pyiceberg==0.11.1
+PyJWT==2.10.1
+pymongo==4.5.0
+pyparsing==3.3.2
+pyroaring==1.0.4
+pytest==9.0.2
+python-dateutil==2.9.0.post0
+python-dotenv==1.2.1
+python-jose==3.5.0
+python-multipart==0.0.21
+pytokens==0.4.1
+PyYAML==6.0.3
+realtime==2.28.3
+referencing==0.37.0
+regex==2026.2.28
+reportlab==4.4.10
+requests==2.32.5
+requests-oauthlib==2.0.0
+resend==2.23.0
+rich==14.3.3
+rpds-py==0.30.0
+rsa==4.9.1
+s3transfer==0.16.0
+s5cmd==0.2.0
+shellingham==1.5.4
+six==1.17.0
+sniffio==1.3.1
+SQLAlchemy==2.0.41
+starlette==0.37.2
+storage3==2.28.3
+StrEnum==0.4.15
+strictyaml==1.7.3
+stripe==14.4.0
+supabase==2.28.3
+supabase-auth==2.28.3
+supabase-functions==2.28.3
+tenacity==9.1.4
+tiktoken==0.12.0
+tokenizers==0.22.2
+tqdm==4.67.3
+typer==0.24.1
+typing-inspection==0.4.2
+typing_extensions==4.15.0
+tzdata==2025.3
+uritemplate==4.2.0
+urllib3==2.6.3
+uvicorn==0.25.0
+watchfiles==1.1.1
+websockets==15.0.1
+yarl==1.23.0
+zipp==3.23.0
+zstandard==0.25.0 re-adds it, remove it before concluding tasks.
+  - **Database Connection Flakiness:** The user is deploying to Railway using Supabase. The direct PostgreSQL connection (via SQLAlchemy) triggers Too many authentication errors rate limits. The Supabase REST API () works perfectly. Therefore, prioritize refactoring the dashboard to use the REST API.
+  - **Stripe is Next:** The 25% deposit flow is visually built; the next step is wiring it to Stripe.
 
 **documents and test reports created in this job**
   -  (Updated)
+  -  (Created/Updated)
 
 **Last 10 User Messages and any pending HUMAN messages** 
- 1. User: Asked for Highcharts drilldown map replacing Leaflet. (Done)
- 2. User: Asked for multiple territory selection on the map. (Done)
- 3. User: Asked for map to auto-drill and auto-select based on City typed in Step 2. (Done)
- 4. User: Reported Levy city opens but doesn't auto-select. (Done)
- 5. User: Asked which database is being used, provided Supabase URL and requested API key location. (Answered)
- 6. User: Provided Supabase service role key.
- 7. User: Provided Supabase anon key.
- 8. User: Requested to move all MongoDB data to Supabase and remove MongoDB entirely. (Done)
- 9. User: Provided Transaction pooler string for Supabase. (Implemented)
- 10. User: Reported on the preview password gate, 123 does not provide access? (Pending/Broken)
+ 1. User: Reported another Railway crash (Circuit breaker open).
+ 2. Agent: Diagnosed as Supabase pooler rejecting asyncpg. Modified  to fail dashboard routes gracefully without crashing the app.
+ 3. User: changed the database url and it crashed again.
+ 4. Agent: Stripped  and further decoupled the dashboard DB init from the uvicorn startup event.
+ 5. User: can you sent me the correct database url again
+ 6. Agent: Provided the clean DB URL.
+ 7. User: Provided screenshot of it still crashing during import.
+ 8. Agent: Completely rewrote the startup event to catch  and skip dashboard loading entirely if it fails, ensuring main app stays up.
+ 9. User: so the problem is on the supabase? ... seems to be working now. add the REST refactor to the to do list.
+ 10. User: Confirmed readiness to fork. (No pending tasks for this exact moment, proceed with Stripe or the REST refactor based on priority).
 
 **Project Health Check:**
-  Broken (Frontend password gate is rejecting valid passwords, locking users out).
+  Functional. Mocked (Admin dashboard uses mocked data except for the new Contracts tab).
 
 **3rd Party Integrations** 
-  - Highcharts Maps (Frontend Map UI)
+  - Supabase (Database) — requires User API Key
   - OpenStreetMap/Nominatim API (Geocoding)
-  - Supabase (Database) — requires User API Key (Already configured in )
+  - Highcharts (Map UI)
   - Stripe (Payments) — upcoming, will require User API Key
 
 **Testing status**
-  - Testing agent used after significant changes: NO
-  - Troubleshoot agent used after agent stuck in loop: YES (Diagnosed Highcharts click event bugs)
+  - Testing agent used after significant changes: NO (Relied on manual testing and Railway deployment feedback).
+  - Troubleshoot agent used after agent stuck in loop: NO
   - Test files created: None
-  - Known regressions: Site password gate is failing.
+  - Known regressions: None, though Dashboard may be inaccessible on Railway if Supabase connection pool is exhausted.
 
 **Credentials to test flow:**
   - Site password: 
-  - Admin password: 
+  - Admin login:  / 
 
 **What agent forgot to execute**
-  - The agent forgot to test the application's entry point (password gate) immediately after completely rewriting  and removing MongoDB.</analysis>
+  - None. All requested features and debugging steps were completed. Email PDF delivery and customer portals were intentionally pushed to the backlog by the user.</analysis>
