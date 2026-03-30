@@ -31,52 +31,55 @@ app.include_router(chat_router, prefix="/api")
 app.include_router(status_router, prefix="/api")
 app.include_router(contracts_router, prefix="/api")
 
-# Dashboard routes require PostgreSQL - only load if DATABASE_URL is configured
-_dashboard_loaded = False
-if os.environ.get("DATABASE_URL"):
-    try:
-        from routes.dashboard_auth import router as dashboard_auth_router
-        from routes.dashboard_admin import router as dashboard_admin_router
-        from routes.dashboard_client import router as dashboard_client_router
-        from routes.dashboard_technical import router as dashboard_technical_router
-        from routes.dashboard_config import router as dashboard_config_router
-        app.include_router(dashboard_auth_router, prefix="/api")
-        app.include_router(dashboard_admin_router, prefix="/api")
-        app.include_router(dashboard_client_router, prefix="/api")
-        app.include_router(dashboard_technical_router, prefix="/api")
-        app.include_router(dashboard_config_router, prefix="/api")
-        _dashboard_loaded = True
-        logger.info("Dashboard routes loaded")
-    except Exception as e:
-        logger.warning(f"Dashboard routes skipped: {e}")
-else:
-    logger.info("Dashboard routes skipped - DATABASE_URL not configured")
+# Dashboard routes — now use Supabase REST client (no SQLAlchemy/asyncpg)
+try:
+    from routes.dashboard_auth import router as dashboard_auth_router
+    from routes.dashboard_admin import router as dashboard_admin_router
+    from routes.dashboard_client import router as dashboard_client_router
+    from routes.dashboard_technical import router as dashboard_technical_router
+    from routes.dashboard_config import router as dashboard_config_router
+    app.include_router(dashboard_auth_router, prefix="/api")
+    app.include_router(dashboard_admin_router, prefix="/api")
+    app.include_router(dashboard_client_router, prefix="/api")
+    app.include_router(dashboard_technical_router, prefix="/api")
+    app.include_router(dashboard_config_router, prefix="/api")
+    logger.info("Dashboard routes loaded (Supabase REST)")
+except Exception as e:
+    logger.warning(f"Dashboard routes skipped: {e}")
 
 
 @app.on_event("startup")
-async def init_dashboard_db():
-    if not _dashboard_loaded:
-        return
+async def seed_dashboard_users():
+    """Seed default dashboard users via Supabase REST API."""
     try:
-        from supabase_db import engine, Base, AsyncSessionLocal
-        from models.dashboard import User
-        from sqlalchemy import select
         import bcrypt
-        async with engine.begin() as conn:
-            await conn.run_sync(Base.metadata.create_all)
-        async with AsyncSessionLocal() as session:
-            for email, password, name, role in [
-                ("admin@geogrid.com", "admin123", "Admin User", "admin"),
-                ("client@geogrid.com", "client123", "Demo Client", "client"),
-                ("tech@geogrid.com", "tech123", "Tech User", "technical"),
-            ]:
-                existing = await session.execute(select(User).where(User.email == email))
-                if not existing.scalar_one_or_none():
-                    pw_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-                    session.add(User(email=email, password_hash=pw_hash, full_name=name, role=role))
-            await session.commit()
-        logger.info("Dashboard DB initialized and users seeded")
-    except Exception:
-        logger.warning("Dashboard DB init failed - dashboard login may not work")
+        import uuid
+        from database import supabase
 
-logger.info("Server started with Supabase database")
+        seed_users = [
+            ("admin@geogrid.com", "admin123", "Admin User", "admin"),
+            ("client@geogrid.com", "client123", "Demo Client", "client"),
+            ("tech@geogrid.com", "tech123", "Tech User", "technical"),
+        ]
+
+        for email, password, name, role in seed_users:
+            existing = supabase.table("users").select("id").eq("email", email).execute()
+            if not existing.data:
+                pw_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+                supabase.table("users").insert({
+                    "id": str(uuid.uuid4()),
+                    "email": email,
+                    "password_hash": pw_hash,
+                    "full_name": name,
+                    "role": role,
+                    "is_active": True,
+                }).execute()
+                logger.info(f"Seeded dashboard user: {email}")
+            else:
+                logger.info(f"Dashboard user exists: {email}")
+
+        logger.info("Dashboard user seeding complete")
+    except Exception as e:
+        logger.warning(f"Dashboard user seeding skipped: {e}")
+
+logger.info("Server started with Supabase REST database")

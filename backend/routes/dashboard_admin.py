@@ -1,49 +1,31 @@
 import random
 from fastapi import APIRouter, Depends
-from sqlalchemy import select, desc
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import selectinload
 from pydantic import BaseModel
-
-from supabase_db import get_db
-from models.dashboard import User, BusinessProfile
+from database import supabase
 from routes.dashboard_auth import require_role
 
 router = APIRouter(prefix="/dashboard", tags=["dashboard-admin"])
 
+TABLE_USERS = "users"
+
 
 @router.get("/admin/clients")
-async def admin_list_clients(
-    user: User = Depends(require_role("admin")),
-    db: AsyncSession = Depends(get_db)
-):
-    result = await db.execute(
-        select(User)
-        .options(selectinload(User.business_profiles))
-        .where(User.role == "client")
-        .order_by(desc(User.created_at))
-    )
-    clients = result.scalars().all()
+async def admin_list_clients(user: dict = Depends(require_role("admin"))):
+    try:
+        result = supabase.table(TABLE_USERS).select("*").eq("role", "client").order("created_at", desc=True).execute()
+        clients = result.data or []
+    except Exception:
+        clients = []
+
     return {
         "clients": [
             {
-                "id": c.id,
-                "email": c.email,
-                "full_name": c.full_name,
-                "is_active": c.is_active,
-                "created_at": c.created_at.isoformat() if c.created_at else None,
-                "business_profiles": [
-                    {
-                        "id": bp.id,
-                        "business_name": bp.business_name,
-                        "local_authority_score": bp.local_authority_score,
-                        "subscription_tier": bp.subscription_tier,
-                        "subscription_status": bp.subscription_status,
-                        "city": bp.city,
-                        "state": bp.state,
-                        "category": bp.category,
-                    } for bp in c.business_profiles
-                ]
+                "id": c["id"],
+                "email": c["email"],
+                "full_name": c["full_name"],
+                "is_active": c.get("is_active", True),
+                "created_at": c.get("created_at"),
+                "business_profiles": [],
             } for c in clients
         ]
     }
@@ -57,11 +39,7 @@ class QuickScanRequest(BaseModel):
 
 
 @router.post("/admin/quick-scan")
-async def admin_quick_scan(
-    req: QuickScanRequest,
-    user: User = Depends(require_role("admin")),
-    db: AsyncSession = Depends(get_db)
-):
+async def admin_quick_scan(req: QuickScanRequest, user: dict = Depends(require_role("admin"))):
     score = random.randint(15, 85)
     grid_data = []
     for row in range(5):
