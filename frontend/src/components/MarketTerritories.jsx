@@ -1,5 +1,6 @@
 import React from 'react';
-import { Shield, MapPin, Crown, Mail, Clock, Users, Ban, TrendingUp, CheckCircle, XCircle, ArrowDown, Lock, AlertTriangle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Shield, MapPin, Crown, Mail, Clock, Users, Ban, TrendingUp, CheckCircle, XCircle, ArrowDown, ArrowRight, Lock, AlertTriangle } from 'lucide-react';
 import './MarketTerritories.css';
 
 const MarketTerritories = () => {
@@ -176,6 +177,11 @@ const MarketTerritories = () => {
             territories because we believe the only way to truly serve our customers is to guarantee 
             that we're fighting <em>for</em> them, not profiting from the fight <em>between</em> them.
           </p>
+        </div>
+        <div className="mt-closing-cta">
+          <Link to="/seven-industries" className="mt-cta-btn" data-testid="mt-cta-industries">
+            Select Your Industry to See Your Solution <ArrowRight size={16} />
+          </Link>
         </div>
       </div>
     </section>
