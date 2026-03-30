@@ -451,12 +451,6 @@ const ServicesAndPricingPage = () => {
                     </td>
                   </tr>
                   <tr>
-                    <td className="sp-matrix-feature">New Build or Rebuild</td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                  </tr>
-                  <tr>
                     <td className="sp-matrix-feature">Managed Hosting, SSL & Security</td>
                     <td className="sp-matrix-check"><Check size={22} /></td>
                     <td className="sp-matrix-check"><Check size={22} /></td>
@@ -490,70 +484,6 @@ const ServicesAndPricingPage = () => {
                     <td className="sp-matrix-feature">A/B Testing for Conversions</td>
                     <td className="sp-matrix-x"><X size={18} /></td>
                     <td className="sp-matrix-check"><Check size={22} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                  </tr>
-
-                  {/* BYON & Communication Group */}
-                  <tr className="sp-matrix-group-header">
-                    <td colSpan={4}>
-                      <Phone size={16} />
-                      <span>BYON Team Communication</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="sp-matrix-feature">Managed BYON Phone Lines</td>
-                    <td className="sp-matrix-text">2 lines</td>
-                    <td className="sp-matrix-text">2 lines</td>
-                    <td className="sp-matrix-text">2 lines</td>
-                  </tr>
-                  <tr>
-                    <td className="sp-matrix-feature">Business/Personal Call Separation</td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                  </tr>
-                  <tr>
-                    <td className="sp-matrix-feature">Call Control & Scam Protection</td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                  </tr>
-
-                  {/* Territory & Support Group */}
-                  <tr className="sp-matrix-group-header">
-                    <td colSpan={4}>
-                      <Shield size={16} />
-                      <span>Territory & Support</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="sp-matrix-feature">Exclusive Territory Rights</td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                  </tr>
-                  <tr>
-                    <td className="sp-matrix-feature">Performance Reports</td>
-                    <td className="sp-matrix-text">Monthly</td>
-                    <td className="sp-matrix-text">Monthly</td>
-                    <td className="sp-matrix-text">Monthly</td>
-                  </tr>
-                  <tr>
-                    <td className="sp-matrix-feature">Strategy Review Calls</td>
-                    <td className="sp-matrix-x"><X size={18} /></td>
-                    <td className="sp-matrix-text">Quarterly</td>
-                    <td className="sp-matrix-text sp-matrix-text-highlight">Monthly</td>
-                  </tr>
-                  <tr>
-                    <td className="sp-matrix-feature">Dedicated Account Manager</td>
-                    <td className="sp-matrix-x"><X size={18} /></td>
-                    <td className="sp-matrix-x"><X size={18} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                  </tr>
-                  <tr>
-                    <td className="sp-matrix-feature">Priority Same-Day Support</td>
-                    <td className="sp-matrix-x"><X size={18} /></td>
-                    <td className="sp-matrix-x"><X size={18} /></td>
                     <td className="sp-matrix-check"><Check size={22} /></td>
                   </tr>
                 </tbody>
