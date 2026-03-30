@@ -8,7 +8,6 @@ import MarketTerritories from '../components/MarketTerritories';
 const HomePage = () => {
   return (
     <>
-      <HeroValue />
       <HeroValueLight />
       <MarketingMission />
       <MarketTerritories />
