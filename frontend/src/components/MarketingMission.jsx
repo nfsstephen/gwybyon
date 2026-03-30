@@ -8,7 +8,7 @@ const MarketingMission = () => {
       <div className="mm-container">
         <div className="mm-badge">OUR MISSION</div>
         <h2 className="mm-title">
-          Websites Were Built to Advertise.<br />
+          Websites Are Built to Advertise.<br />
           <span className="mm-accent">It's Time Someone Remembered That.</span>
         </h2>
         <p className="mm-subtitle">

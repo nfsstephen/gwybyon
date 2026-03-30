@@ -10,7 +10,7 @@ const HeroValueLight = () => {
           <span className="hvl-label">WHY GATEWAY AI SYSTEMS</span>
           <h1 className="hvl-title">
             Stop Overpaying for Websites<br />
-            <span className="hvl-title-accent">That Do Not Deliver the Potential They Should.</span>
+            <span className="hvl-title-accent">That Do Not Deliver.</span>
           </h1>
           <p className="hvl-subtitle">
             We built a better model — one that costs less, performs more, 
