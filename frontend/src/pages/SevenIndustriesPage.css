@@ -6,7 +6,7 @@
 /* ===== Hero ===== */
 .si-hero {
   background: #0b1120;
-  padding: 80px 24px 64px;
+  padding: 80px 24px 40px;
   text-align: center;
 }
 
@@ -62,6 +62,7 @@
   color: #0F172A;
   font-weight: 700;
   margin: 0 0 12px;
+  padding-top: 20px;
   letter-spacing: 0.3px;
 }
 
