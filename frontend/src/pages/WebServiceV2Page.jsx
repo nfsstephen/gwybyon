@@ -75,11 +75,6 @@ const WebServiceV2Page = () => {
               <p>Google answers local searches directly in the Map Pack — showing your phone number, directions, and reviews. Users call or navigate without ever visiting your site. If you're measuring "website traffic," you're measuring the wrong thing.</p>
             </div>
           </div>
-          <div className="v2-problem-cta">
-            <Link to="/subscribe" className="v2-geohero-btn-primary" data-testid="v2-problem-cta">
-              Get Started <ArrowRight size={18} />
-            </Link>
-          </div>
         </div>
       </section>
       <section className="v2-shift" data-testid="v2-shift">
@@ -131,13 +126,6 @@ const WebServiceV2Page = () => {
       <section className="v2-cta">
         <div className="v2-container">
           <div className="v2-cta-inner">
-            <Shield size={40} className="v2-cta-icon" />
-            <h2>The Complete Package for Local Market Dominance</h2>
-            <p>
-              Website. Search engine visibility. Field team management. 
-              Three solutions, one vendor, exclusive territories. 
-              Everything a local service company needs to win.
-            </p>
             <div className="v2-cta-btns">
               <Link to="/services-pricing" className="v2-btn-primary" data-testid="v2-cta-geogrid">
                 Let's Get Started <ArrowRight size={18} />
