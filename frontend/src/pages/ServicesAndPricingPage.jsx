@@ -324,7 +324,7 @@ const ServicesAndPricingPage = () => {
         </div>
       </section>
 
-      {/* ===== Five Tools by Market Territory ===== */}
+      {/* ===== GeoGrid Tool Access ===== */}
       <section className="sp-matrix" data-testid="sp-comparison-matrix">
         <div className="sp-container">
           <div className="sp-section-badge"><BarChart3 size={14} /> GeoGrid Tool Access</div>
@@ -340,128 +340,77 @@ const ServicesAndPricingPage = () => {
             </Link>
           </div>
 
-          {/* Small Market Territory */}
-          <div className="sp-market-block" data-testid="sp-small-market-tools">
-            <div className="sp-market-label sp-market-small">
-              <MapPin size={16} />
-              <span>Small Market Territory</span>
-            </div>
-            <div className="sp-matrix-wrapper">
-              <table className="sp-matrix-table sp-matrix-2col">
-                <thead>
-                  <tr>
-                    <th className="sp-matrix-feature-col"></th>
-                    <th className="sp-matrix-tier-col" data-testid="sp-small-standard-head">
-                      <div className="sp-matrix-tier-name">Standard</div>
-                    </th>
-                    <th className="sp-matrix-tier-col sp-matrix-tier-popular" data-testid="sp-small-premium-head">
-                      <div className="sp-matrix-pop-badge">Recommended</div>
-                      <div className="sp-matrix-tier-name">Premium</div>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="sp-matrix-group-header">
-                    <td colSpan={3}>
-                      <MapPin size={16} />
-                      <span>GeoGrid Tools (5-Tool Suite)</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="sp-matrix-feature">Geo-Health Scanner<span className="sp-matrix-detail">Local Authority Score & heat map analysis</span></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                  </tr>
-                  <tr>
-                    <td className="sp-matrix-feature">Entity-Sync Dashboard<span className="sp-matrix-detail">NAP sync across Google, Apple, Bing & 60+ directories</span></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                  </tr>
-                  <tr>
-                    <td className="sp-matrix-feature">Neighborhood Content Engine<span className="sp-matrix-detail">AI-powered hyper-local content generation</span></td>
-                    <td className="sp-matrix-x"><X size={18} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                  </tr>
-                  <tr>
-                    <td className="sp-matrix-feature">Review Magnet<span className="sp-matrix-detail">Automated SMS & email review generation</span></td>
-                    <td className="sp-matrix-x"><X size={18} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                  </tr>
-                  <tr>
-                    <td className="sp-matrix-feature">ROI Tracker<span className="sp-matrix-detail">Map Views, Direction Requests, Phone Calls</span></td>
-                    <td className="sp-matrix-text">Basic</td>
-                    <td className="sp-matrix-text sp-matrix-text-highlight">Advanced</td>
-                  </tr>
-                  <tr className="sp-matrix-tool-count">
-                    <td className="sp-matrix-feature"><strong>Active GeoGrid Tools</strong></td>
-                    <td className="sp-matrix-count">2 of 5</td>
-                    <td className="sp-matrix-count sp-matrix-count-full">5 of 5</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          {/* Large Market Territory */}
-          <div className="sp-market-block" data-testid="sp-large-market-tools">
-            <div className="sp-market-label sp-market-large">
-              <Crown size={16} />
-              <span>Large Market Territory</span>
-            </div>
-            <div className="sp-matrix-wrapper">
-              <table className="sp-matrix-table sp-matrix-2col">
-                <thead>
-                  <tr>
-                    <th className="sp-matrix-feature-col"></th>
-                    <th className="sp-matrix-tier-col" data-testid="sp-large-standard-head">
-                      <div className="sp-matrix-tier-name">Standard</div>
-                    </th>
-                    <th className="sp-matrix-tier-col sp-matrix-tier-popular" data-testid="sp-large-premium-head">
-                      <div className="sp-matrix-pop-badge">Recommended</div>
-                      <div className="sp-matrix-tier-name">Premium</div>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="sp-matrix-group-header">
-                    <td colSpan={3}>
-                      <MapPin size={16} />
-                      <span>GeoGrid Tools (5-Tool Suite)</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="sp-matrix-feature">Geo-Health Scanner<span className="sp-matrix-detail">Local Authority Score & heat map analysis</span></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                  </tr>
-                  <tr>
-                    <td className="sp-matrix-feature">Entity-Sync Dashboard<span className="sp-matrix-detail">NAP sync across Google, Apple, Bing & 60+ directories</span></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                  </tr>
-                  <tr>
-                    <td className="sp-matrix-feature">Neighborhood Content Engine<span className="sp-matrix-detail">AI-powered hyper-local content generation</span></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                  </tr>
-                  <tr>
-                    <td className="sp-matrix-feature">Review Magnet<span className="sp-matrix-detail">Automated SMS & email review generation</span></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                    <td className="sp-matrix-check"><Check size={22} /></td>
-                  </tr>
-                  <tr>
-                    <td className="sp-matrix-feature">ROI Tracker<span className="sp-matrix-detail">Map Views, Direction Requests, Phone Calls</span></td>
-                    <td className="sp-matrix-text sp-matrix-text-highlight">Advanced</td>
-                    <td className="sp-matrix-text sp-matrix-text-highlight">Advanced</td>
-                  </tr>
-                  <tr className="sp-matrix-tool-count">
-                    <td className="sp-matrix-feature"><strong>Active GeoGrid Tools</strong></td>
-                    <td className="sp-matrix-count sp-matrix-count-full">5 of 5</td>
-                    <td className="sp-matrix-count sp-matrix-count-full">5 of 5</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <div className="sp-matrix-wrapper">
+            <table className="sp-matrix-table sp-matrix-split" data-testid="sp-matrix-table">
+              <thead>
+                <tr className="sp-matrix-market-row">
+                  <th className="sp-matrix-feature-col"></th>
+                  <th className="sp-matrix-market-header sp-market-header-small" colSpan={2}>
+                    <MapPin size={14} /> Small Market Territory
+                  </th>
+                  <th className="sp-matrix-market-header sp-market-header-large">
+                    <Crown size={14} /> Large Market Territory
+                  </th>
+                </tr>
+                <tr>
+                  <th className="sp-matrix-feature-col"></th>
+                  <th className="sp-matrix-tier-col" data-testid="sp-small-standard-head">
+                    <div className="sp-matrix-tier-name">Standard</div>
+                  </th>
+                  <th className="sp-matrix-tier-col sp-matrix-tier-small-premium" data-testid="sp-small-premium-head">
+                    <div className="sp-matrix-tier-name">Premium</div>
+                  </th>
+                  <th className="sp-matrix-tier-col sp-matrix-tier-large" data-testid="sp-large-head">
+                    <div className="sp-matrix-pop-badge">All 5 Tools</div>
+                    <div className="sp-matrix-tier-name">Full Suite</div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="sp-matrix-group-header">
+                  <td colSpan={4}>
+                    <MapPin size={16} />
+                    <span>GeoGrid Tools (5-Tool Suite)</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="sp-matrix-feature">Geo-Health Scanner<span className="sp-matrix-detail">Local Authority Score & heat map analysis</span></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                  <td className="sp-matrix-check sp-matrix-border-right"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                </tr>
+                <tr>
+                  <td className="sp-matrix-feature">Entity-Sync Dashboard<span className="sp-matrix-detail">NAP sync across Google, Apple, Bing & 60+ directories</span></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                  <td className="sp-matrix-check sp-matrix-border-right"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                </tr>
+                <tr>
+                  <td className="sp-matrix-feature">Neighborhood Content Engine<span className="sp-matrix-detail">AI-powered hyper-local content generation</span></td>
+                  <td className="sp-matrix-x"><X size={18} /></td>
+                  <td className="sp-matrix-check sp-matrix-border-right"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                </tr>
+                <tr>
+                  <td className="sp-matrix-feature">Review Magnet<span className="sp-matrix-detail">Automated SMS & email review generation</span></td>
+                  <td className="sp-matrix-x"><X size={18} /></td>
+                  <td className="sp-matrix-check sp-matrix-border-right"><Check size={22} /></td>
+                  <td className="sp-matrix-check"><Check size={22} /></td>
+                </tr>
+                <tr>
+                  <td className="sp-matrix-feature">ROI Tracker<span className="sp-matrix-detail">Map Views, Direction Requests, Phone Calls</span></td>
+                  <td className="sp-matrix-text">Basic</td>
+                  <td className="sp-matrix-text sp-matrix-text-highlight sp-matrix-border-right">Advanced</td>
+                  <td className="sp-matrix-text sp-matrix-text-highlight">Advanced</td>
+                </tr>
+                <tr className="sp-matrix-tool-count">
+                  <td className="sp-matrix-feature"><strong>Active GeoGrid Tools</strong></td>
+                  <td className="sp-matrix-count">2 of 5</td>
+                  <td className="sp-matrix-count sp-matrix-count-full sp-matrix-border-right">5 of 5</td>
+                  <td className="sp-matrix-count sp-matrix-count-full">5 of 5</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
 
           {/* Other Services — existing 3 columns preserved */}
