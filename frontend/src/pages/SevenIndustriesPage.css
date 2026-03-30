@@ -58,11 +58,11 @@
 
 .si-tabs-instruction {
   text-align: center;
-  font-size: 0.95rem;
-  color: #64748b;
-  font-weight: 500;
-  margin: 0 0 8px;
-  letter-spacing: 0.2px;
+  font-size: 1.05rem;
+  color: #0F172A;
+  font-weight: 700;
+  margin: 0 0 12px;
+  letter-spacing: 0.3px;
 }
 
 .si-tabs {
