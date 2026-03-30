@@ -147,7 +147,7 @@ const ServicesAndPricingPage = () => {
             </p>
             <ol>
               <li><strong>Where is my time best spent?</strong> Doing something I have no knowledge of, or letting professionals continue to provide the service while I focus on running my business?</li>
-              <li><strong>If this company is offering me a website at half the price of my previous provider, why didn't they call me first and cut their price?</strong></li>
+              <li><strong>If this new company is offering me a website service at half the price of my present provider, why didn't my present provider call me first and cut their price?</strong></li>
               <li><strong>What happens when something breaks?</strong> Will I know how to fix it, or will I be searching YouTube at midnight hoping for answers?</li>
               <li><strong>Is "cheap" really cheaper?</strong> A website that doesn't convert visitors into customers costs you money every day it's live.</li>
             </ol>
