@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
-import { Check, ShoppingCart, AlertCircle, CreditCard, ChevronRight, Globe, RefreshCw, MapPin, FileText, Download } from 'lucide-react';
+import { Check, ShoppingCart, AlertCircle, CreditCard, ChevronRight, Globe, RefreshCw, MapPin, FileText, Download, Crown } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import HighchartsMapDrilldown from '../components/HighchartsMapDrilldown';
 import './SubscribePage.css';
@@ -26,9 +26,9 @@ const WEBSITE_OPTIONS = [
 ];
 
 const TIERS = [
-  { id: 'foundation', tier: 1, name: 'Foundation', monthlyPrice: 497 },
-  { id: 'growth', tier: 2, name: 'Growth', monthlyPrice: 797, popular: true },
-  { id: 'authority', tier: 3, name: 'Authority', monthlyPrice: 1297 },
+  { id: 'small-standard', market: 'small', name: 'Standard', monthlyPrice: 100, tools: '2 of 5' },
+  { id: 'small-premium', market: 'small', name: 'Premium', monthlyPrice: 200, tools: '5 of 5', popular: true },
+  { id: 'large-full', market: 'large', name: 'Full Suite', monthlyPrice: 400, tools: '5 of 5' },
 ];
 
 const CONTINENTAL_STATES = [
@@ -407,32 +407,70 @@ export default function SubscribePage() {
 
             {/* Step 3: Tier Selection */}
             <h2 className="sub-section-label">3. Select Your Service Tier</h2>
-            <div className="sub-tiers">
-              {TIERS.map(svc => {
-                const isSelected = selectedTier === svc.id;
-                return (
-                  <button
-                    key={svc.id}
-                    data-testid={`tier-select-${svc.id}`}
-                    className={`sub-tier-card ${isSelected ? 'selected' : ''} ${svc.popular ? 'popular' : ''}`}
-                    onClick={() => setSelectedTier(isSelected ? null : svc.id)}
-                  >
-                    {svc.popular && <span className="sub-popular-badge">Most Popular</span>}
-                    <div className="sub-tier-top">
-                      <div className="sub-tier-check">
-                        {isSelected ? <Check size={18} /> : <div className="sub-tier-circle" />}
+
+            <div className="sub-tier-group">
+              <div className="sub-tier-group-label sub-tier-group-small">
+                <MapPin size={14} /> Small Market Territory
+              </div>
+              <div className="sub-tiers sub-tiers-2col">
+                {TIERS.filter(s => s.market === 'small').map(svc => {
+                  const isSelected = selectedTier === svc.id;
+                  return (
+                    <button
+                      key={svc.id}
+                      data-testid={`tier-select-${svc.id}`}
+                      className={`sub-tier-card ${isSelected ? 'selected' : ''} ${svc.popular ? 'popular' : ''}`}
+                      onClick={() => setSelectedTier(isSelected ? null : svc.id)}
+                    >
+                      {svc.popular && <span className="sub-popular-badge">Recommended</span>}
+                      <div className="sub-tier-top">
+                        <div className="sub-tier-check">
+                          {isSelected ? <Check size={18} /> : <div className="sub-tier-circle" />}
+                        </div>
+                        <div>
+                          <div className="sub-tier-label">{svc.tools} Tools</div>
+                          <div className="sub-tier-name">{svc.name}</div>
+                        </div>
+                        <div className="sub-tier-price">
+                          ${svc.monthlyPrice.toLocaleString()}<span>/mo</span>
+                        </div>
                       </div>
-                      <div>
-                        <div className="sub-tier-label">Tier {svc.tier}</div>
-                        <div className="sub-tier-name">{svc.name}</div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="sub-tier-group">
+              <div className="sub-tier-group-label sub-tier-group-large">
+                <Crown size={14} /> Large Market Territory
+              </div>
+              <div className="sub-tiers sub-tiers-1col">
+                {TIERS.filter(s => s.market === 'large').map(svc => {
+                  const isSelected = selectedTier === svc.id;
+                  return (
+                    <button
+                      key={svc.id}
+                      data-testid={`tier-select-${svc.id}`}
+                      className={`sub-tier-card ${isSelected ? 'selected' : ''}`}
+                      onClick={() => setSelectedTier(isSelected ? null : svc.id)}
+                    >
+                      <div className="sub-tier-top">
+                        <div className="sub-tier-check">
+                          {isSelected ? <Check size={18} /> : <div className="sub-tier-circle" />}
+                        </div>
+                        <div>
+                          <div className="sub-tier-label">{svc.tools} Tools</div>
+                          <div className="sub-tier-name">{svc.name}</div>
+                        </div>
+                        <div className="sub-tier-price">
+                          ${svc.monthlyPrice.toLocaleString()}<span>/mo</span>
+                        </div>
                       </div>
-                      <div className="sub-tier-price">
-                        ${svc.monthlyPrice.toLocaleString()}<span>/mo</span>
-                      </div>
-                    </div>
-                  </button>
-                );
-              })}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
           </div>
@@ -501,7 +539,7 @@ export default function SubscribePage() {
                       <div className="sub-invoice-tier-block" data-testid="invoice-line-plan">
                         <div className="sub-invoice-line">
                           <div>
-                            <div className="sub-line-name">{selectedService.name} Plan (Tier {selectedService.tier})</div>
+                            <div className="sub-line-name">{selectedService.market === 'small' ? 'Small Market' : 'Large Market'} — {selectedService.name}</div>
                             <div className="sub-line-type">Monthly Recurring</div>
                           </div>
                           <div className="sub-line-amount">${selectedService.monthlyPrice.toLocaleString()}/mo</div>
