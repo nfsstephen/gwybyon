@@ -16,15 +16,6 @@ const Footer = () => {
             </div>
           </div>
           <div className="footer-column">
-            <h4>Information</h4>
-            <ul className="footer-links">
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">Truck Stop</a></li>
-              <li><a href="#">Parking Lot Control</a></li>
-              <li><a href="#">Fuel Lane Control</a></li>
-            </ul>
-          </div>
-          <div className="footer-column">
             <h4>Contact Us</h4>
             <ul className="footer-links">
               <li><a href="tel:(386)266-0925">(386)266-0925</a></li>
