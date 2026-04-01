@@ -140,8 +140,9 @@ def build_pdf(contract: dict) -> bytes:
     subtitle_style = ParagraphStyle("Sub", parent=styles["Normal"], fontSize=10, textColor=muted, spaceAfter=16)
     heading_style = ParagraphStyle("H2", parent=styles["Heading2"], fontSize=13, textColor=dark, spaceBefore=18, spaceAfter=8)
     body_style = ParagraphStyle("Body", parent=styles["Normal"], fontSize=10, textColor=dark, leading=15)
-    small_style = ParagraphStyle("Small", parent=styles["Normal"], fontSize=9, textColor=muted, leading=13)
     label_style = ParagraphStyle("Label", parent=styles["Normal"], fontSize=9, textColor=muted, spaceAfter=2)
+    terms_heading_style = ParagraphStyle("TermsH", parent=styles["Heading1"], fontSize=16, textColor=dark, spaceBefore=6, spaceAfter=10)
+    terms_body_style = ParagraphStyle("TermsBody", parent=styles["Normal"], fontSize=11, textColor=dark, leading=17, spaceBefore=3, spaceAfter=3)
 
     elements = []
 
@@ -161,7 +162,26 @@ def build_pdf(contract: dict) -> bytes:
     else:
         dt = created
     elements.append(Paragraph(f"Date: {dt.strftime('%B %d, %Y')}", body_style))
-    elements.append(Spacer(1, 12))
+    elements.append(Spacer(1, 14))
+
+    # ── TERMS & CONDITIONS (prominent, at the top) ──
+    elements.append(HRFlowable(width="100%", thickness=2, color=dark))
+    elements.append(Spacer(1, 8))
+    elements.append(Paragraph("TERMS &amp; CONDITIONS", terms_heading_style))
+    terms = [
+        "<b>1.</b> The 25% deposit reserves the selected market territories exclusively for the client.",
+        "<b>2.</b> Upon receipt of deposit, Gateway AI Systems will begin development of the client's website and GeoGrid tools.",
+        "<b>3.</b> The completed website and tools will be delivered for client review and approval.",
+        "<b>4.</b> The remaining 75% balance is due upon client approval of delivered services.",
+        "<b>5.</b> Monthly recurring charges begin after the complimentary first month.",
+        "<b>6.</b> Territory exclusivity is maintained for the duration of the active subscription.",
+        "<b>7.</b> Failure to remit balance payment within the specified timeframe may result in territory release and service suspension.",
+    ]
+    for t in terms:
+        elements.append(Paragraph(t, terms_body_style))
+    elements.append(Spacer(1, 8))
+    elements.append(HRFlowable(width="100%", thickness=2, color=dark))
+    elements.append(Spacer(1, 16))
 
     # Business Info
     elements.append(Paragraph("CLIENT INFORMATION", label_style))
@@ -245,21 +265,6 @@ def build_pdf(contract: dict) -> bytes:
     ]))
     elements.append(pay_table)
     elements.append(Spacer(1, 20))
-
-    # Terms
-    elements.append(Paragraph("TERMS & CONDITIONS", heading_style))
-    terms = [
-        "1. The 25% deposit reserves the selected market territories exclusively for the client.",
-        "2. Upon receipt of deposit, Gateway AI Systems will begin development of the client's website and GeoGrid tools.",
-        "3. The completed website and tools will be delivered for client review and approval.",
-        "4. The remaining 75% balance is due upon client approval of delivered services.",
-        "5. Monthly recurring charges begin after the complimentary first month.",
-        "6. Territory exclusivity is maintained for the duration of the active subscription.",
-        "7. Failure to remit balance payment within the specified timeframe may result in territory release and service suspension.",
-    ]
-    for t in terms:
-        elements.append(Paragraph(t, small_style))
-    elements.append(Spacer(1, 24))
 
     # Signature area
     elements.append(HRFlowable(width="100%", thickness=0.5, color=HexColor("#e2e8f0")))
