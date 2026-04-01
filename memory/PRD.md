@@ -70,7 +70,7 @@ Home | Seven Industries | Five Tools | Web Services | Services & Pricing | Subsc
 - [x] Refactored: deleted 7 old BigMarket pages, unused components/CSS
 - [x] Dynamic territory pricing from Supabase `territory_pricings` table (Apr 1, 2026) — Invoice fetches per-county price based on county+industry from DB instead of hardcoded $300
 - [x] Category + category_business_mapping integration (Apr 1, 2026) — Industry dropdown populated from `category` table, fallback pricing from `category_business_mapping` when no territory-specific price exists
-- [x] Full territory_pricings population (Apr 1, 2026) — Joined territories(67) × category(4) × type(3) = 804 rows in territory_pricings with prices from category_business_mapping. Industry dropdown reverted to original hardcoded options.
+- [x] Full territory_pricings population (Apr 1, 2026) — Joined territories × category × category_business_mapping where territory.type = cbm.type. 268 rows (21 small × 4 cats + 15 medium × 4 cats + 31 large × 4 cats). Industry dropdown updated with all 12 DB categories.
 
 ## Backlog (Prioritized)
 ### P0
