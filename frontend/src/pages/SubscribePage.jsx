@@ -131,35 +131,22 @@ export default function SubscribePage() {
     }
   }, []);
 
-  // Fetch territory pricing from Supabase when counties, industry, or tier changes
+  // Fetch territory pricing from Supabase when counties or industry changes
   useEffect(() => {
     if (selectedCounties.length === 0 || !businessDetails.industry) {
       setCountyPrices({});
       return;
     }
 
-    const industryLabels = {
-      'well-septic': 'Well & Septic Co.',
-      'plumbers': 'Plumber',
-      'electricians': 'Electricians',
-      'air-heating': 'Air & Heating Co.',
-      'pest-control': 'Pest Control Service',
-      'real-estate': 'Real Estate Brokers',
-      'roofing': 'Roofing Co.',
-    };
-
-    const category = industryLabels[businessDetails.industry] || businessDetails.industry;
+    // Industry dropdown value IS the category name from DB
+    const category = businessDetails.industry;
     const countyNamesList = selectedCounties.map(id => countyNames[id] || id);
-
-    // Determine category_type from selected tier
-    const tierToType = { 'small-standard': 'small', 'small-premium': 'medium', 'large-full': 'large' };
-    const category_type = selectedTier ? (tierToType[selectedTier] || null) : null;
 
     setPricingLoading(true);
     fetch(`${API_URL}/api/contracts/territory-pricing`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ counties: countyNamesList, category, category_type, state: businessDetails.state || 'Florida' }),
+      body: JSON.stringify({ counties: countyNamesList, category, state: businessDetails.state || 'Florida' }),
     })
       .then(res => res.json())
       .then(data => {
@@ -172,7 +159,7 @@ export default function SubscribePage() {
       })
       .catch(() => setCountyPrices({}))
       .finally(() => setPricingLoading(false));
-  }, [selectedCounties, businessDetails.industry, selectedTier, countyNames, businessDetails.state, API_URL]);
+  }, [selectedCounties, businessDetails.industry, countyNames, businessDetails.state, API_URL]);
 
   const getCountyPrice = (countyId) => {
     const price = countyPrices[countyId];
@@ -208,16 +195,6 @@ export default function SubscribePage() {
     setDepositLoading(true);
     setDepositError(null);
     try {
-      const industryLabels = {
-        'well-septic': 'Well & Septic Co.',
-        'plumbers': 'Plumber',
-        'electricians': 'Electricians',
-        'air-heating': 'Air & Heating Co.',
-        'pest-control': 'Pest Control Service',
-        'real-estate': 'Real Estate Brokers',
-        'roofing': 'Roofing Co.',
-      };
-
       const payload = {
         business_name: businessDetails.name,
         business_address: businessDetails.address,
@@ -225,7 +202,7 @@ export default function SubscribePage() {
         business_state: businessDetails.state,
         business_zip: businessDetails.zip,
         business_email: businessDetails.email || '',
-        industry: industryLabels[businessDetails.industry] || businessDetails.industry,
+        industry: businessDetails.industry,
         selected_territories: selectedCounties.map(id => ({ id, name: countyNames[id] || id, price: countyPrices[id] ?? 0 })),
         territory_count: selectedCounties.length,
         tier_id: selectedService.id,
@@ -446,13 +423,18 @@ export default function SubscribePage() {
                   required
                 >
                   <option value="">Select Industry</option>
-                  <option value="well-septic">Well &amp; Septic Co.</option>
-                  <option value="plumbers">Plumbers</option>
-                  <option value="electricians">Electricians</option>
-                  <option value="air-heating">Air &amp; Heating Co.</option>
-                  <option value="pest-control">Pest Control Services</option>
-                  <option value="real-estate">Real Estate Brokers</option>
-                  <option value="roofing">Roofing Co.</option>
+                  <option value="Plumber">Plumber</option>
+                  <option value="Salon">Salon</option>
+                  <option value="Carpenter">Carpenter</option>
+                  <option value="Laundry Service">Laundry Service</option>
+                  <option value="Air and Heating co.">Air and Heating co.</option>
+                  <option value="Pest Control Service">Pest Control Service</option>
+                  <option value="Consultancy">Consultancy</option>
+                  <option value="Well & Septic Co.">Well &amp; Septic Co.</option>
+                  <option value="Real Estate Broker">Real Estate Broker</option>
+                  <option value="Electricians">Electricians</option>
+                  <option value="Roofing co.">Roofing co.</option>
+                  <option value="Event Decoration">Event Decoration</option>
                 </select>
               </div>
             </div>

@@ -50,7 +50,7 @@ class TerritoryPricingRequest(BaseModel):
 
 @router.post("/territory-pricing")
 async def get_territory_pricing(req: TerritoryPricingRequest):
-    """Look up territory pricing from territory_pricings (joined data from territories + category + category_business_mapping)."""
+    """Look up territory pricing from territory_pricings (joined from territories + category + category_business_mapping)."""
     prices = {}
 
     if not req.counties or not req.category:
@@ -58,33 +58,26 @@ async def get_territory_pricing(req: TerritoryPricingRequest):
 
     # Normalize category
     cat_lower = req.category.strip().lower()
-    cat_base = cat_lower.rstrip('s') if cat_lower.endswith('s') else cat_lower
-
-    # Normalize category_type
-    type_lower = (req.category_type or "").strip().lower() if req.category_type else None
 
     # Fetch pricing rows from territory_pricings
     tp_result = supabase.table("territory_pricings").select("county, category, category_type, amount").execute()
     tp_rows = tp_result.data or []
 
-    # Build lookup keyed by (county, category, category_type)
+    # Build lookup keyed by (county, category)
     tp_lookup = {}
     for row in tp_rows:
         county_key = (row.get("county") or "").strip().lower()
         row_cat = (row.get("category") or "").strip().lower()
-        row_cat_base = row_cat.rstrip('s') if row_cat.endswith('s') else row_cat
-        row_type = (row.get("category_type") or "").strip().lower()
-        tp_lookup[(county_key, row_cat_base, row_type)] = row.get("amount", 0)
+        tp_lookup[(county_key, row_cat)] = {
+            "amount": row.get("amount", 0),
+            "category_type": row.get("category_type", ""),
+        }
 
     # Match each requested county
     for county_name in req.counties:
         county_key = county_name.strip().lower()
-        if type_lower:
-            price = tp_lookup.get((county_key, cat_base, type_lower))
-        else:
-            # No type specified — try small as default
-            price = tp_lookup.get((county_key, cat_base, "small"))
-        prices[county_name] = price
+        match = tp_lookup.get((county_key, cat_lower))
+        prices[county_name] = match["amount"] if match else None
 
     return {"prices": prices}
 
