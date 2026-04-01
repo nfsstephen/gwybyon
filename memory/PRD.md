@@ -32,7 +32,11 @@ Home | Seven Industries | Five Tools | Web Services | Services & Pricing | Subsc
 - `contracts` — business info, territories, tier, pricing, deposit/balance, status
 - `deposits` — payment records linked to contracts
 - `chat_messages`, `chat_sessions`, `status_checks` — migrated from MongoDB
-- Dashboard tables (via SQLAlchemy): users, business_profiles, etc.
+- `territories` — 67 Florida counties (county, state, country)
+- `category` — industry categories with type (small/medium/large), e.g., Plumber, Electricians, Pest Control Service, Well & Septic Co.
+- `category_business_mapping` — FK to category, maps each category+type to a base price
+- `territory_pricings` — territory-specific pricing overrides (county + category + category_type → amount)
+- Dashboard tables (via Supabase REST): users, business_profiles, etc.
 
 ## Admin Dashboard
 - URL: /dashboard/login
@@ -65,6 +69,7 @@ Home | Seven Industries | Five Tools | Web Services | Services & Pricing | Subsc
 - [x] Railway deployment fixes (env vars, route prefixes, graceful startup)
 - [x] Refactored: deleted 7 old BigMarket pages, unused components/CSS
 - [x] Dynamic territory pricing from Supabase `territory_pricings` table (Apr 1, 2026) — Invoice fetches per-county price based on county+industry from DB instead of hardcoded $300
+- [x] Category + category_business_mapping integration (Apr 1, 2026) — Industry dropdown populated from `category` table, fallback pricing from `category_business_mapping` when no territory-specific price exists
 
 ## Backlog (Prioritized)
 ### P0
