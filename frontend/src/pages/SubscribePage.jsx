@@ -76,8 +76,17 @@ export default function SubscribePage() {
   const [depositLoading, setDepositLoading] = useState(false);
   const [contractResult, setContractResult] = useState(null);
   const [depositError, setDepositError] = useState(null);
+  const [dbCategories, setDbCategories] = useState([]);
 
   const API_URL = process.env.REACT_APP_BACKEND_URL;
+
+  // Fetch categories from DB on mount
+  useEffect(() => {
+    fetch(`${API_URL}/api/contracts/categories`)
+      .then(res => res.json())
+      .then(data => setDbCategories(data.categories || []))
+      .catch(() => setDbCategories([]));
+  }, [API_URL]);
 
   useEffect(() => {
     saveState({ websiteChoice, serviceType, businessDetails, selectedCounties, countyNames, selectedTier, countyPrices });
@@ -122,35 +131,29 @@ export default function SubscribePage() {
     }
   }, []);
 
-  // Fetch territory pricing from Supabase when counties or industry changes
+  // Fetch territory pricing from Supabase when counties, industry, or tier changes
   useEffect(() => {
     if (selectedCounties.length === 0 || !businessDetails.industry) {
       setCountyPrices({});
       return;
     }
 
-    const industryLabels = {
-      'well-septic': 'Well & Septic',
-      'plumbers': 'Plumbers',
-      'electricians': 'Electricians',
-      'air-heating': 'Air & Heating',
-      'pest-control': 'Pest Control',
-      'real-estate': 'Real Estate',
-      'roofing': 'Roofing',
-    };
-
-    const category = industryLabels[businessDetails.industry] || businessDetails.industry;
+    // Use the DB category name directly (industry value IS the category name from DB)
+    const category = businessDetails.industry;
     const countyNamesList = selectedCounties.map(id => countyNames[id] || id);
+
+    // Determine category_type from selected tier
+    const tierToType = { 'small-standard': 'small', 'small-premium': 'medium', 'large-full': 'large' };
+    const category_type = selectedTier ? (tierToType[selectedTier] || null) : null;
 
     setPricingLoading(true);
     fetch(`${API_URL}/api/contracts/territory-pricing`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ counties: countyNamesList, category, state: businessDetails.state || 'Florida' }),
+      body: JSON.stringify({ counties: countyNamesList, category, category_type, state: businessDetails.state || 'Florida' }),
     })
       .then(res => res.json())
       .then(data => {
-        // Map back: countyId -> price using countyNames as bridge
         const priceMap = {};
         for (const id of selectedCounties) {
           const name = countyNames[id] || id;
@@ -160,7 +163,7 @@ export default function SubscribePage() {
       })
       .catch(() => setCountyPrices({}))
       .finally(() => setPricingLoading(false));
-  }, [selectedCounties, businessDetails.industry, countyNames, businessDetails.state, API_URL]);
+  }, [selectedCounties, businessDetails.industry, selectedTier, countyNames, businessDetails.state, API_URL]);
 
   const getCountyPrice = (countyId) => {
     const price = countyPrices[countyId];
@@ -196,16 +199,6 @@ export default function SubscribePage() {
     setDepositLoading(true);
     setDepositError(null);
     try {
-      const industryLabels = {
-        'well-septic': 'Well & Septic Co.',
-        'plumbers': 'Plumbers',
-        'electricians': 'Electricians',
-        'air-heating': 'Air & Heating Co.',
-        'pest-control': 'Pest Control Services',
-        'real-estate': 'Real Estate Brokers',
-        'roofing': 'Roofing Co.',
-      };
-
       const payload = {
         business_name: businessDetails.name,
         business_address: businessDetails.address,
@@ -213,7 +206,7 @@ export default function SubscribePage() {
         business_state: businessDetails.state,
         business_zip: businessDetails.zip,
         business_email: businessDetails.email || '',
-        industry: industryLabels[businessDetails.industry] || businessDetails.industry,
+        industry: businessDetails.industry,
         selected_territories: selectedCounties.map(id => ({ id, name: countyNames[id] || id, price: countyPrices[id] ?? 0 })),
         territory_count: selectedCounties.length,
         tier_id: selectedService.id,
@@ -434,13 +427,17 @@ export default function SubscribePage() {
                   required
                 >
                   <option value="">Select Industry</option>
-                  <option value="well-septic">Well &amp; Septic Co.</option>
-                  <option value="plumbers">Plumbers</option>
-                  <option value="electricians">Electricians</option>
-                  <option value="air-heating">Air &amp; Heating Co.</option>
-                  <option value="pest-control">Pest Control Services</option>
-                  <option value="real-estate">Real Estate Brokers</option>
-                  <option value="roofing">Roofing Co.</option>
+                  {dbCategories.length > 0
+                    ? dbCategories.map(cat => (
+                        <option key={cat.name} value={cat.name}>{cat.name}</option>
+                      ))
+                    : <>
+                        <option value="Well & Septic Co.">Well &amp; Septic Co.</option>
+                        <option value="Plumber">Plumber</option>
+                        <option value="Electricians">Electricians</option>
+                        <option value="Pest Control Service">Pest Control Service</option>
+                      </>
+                  }
                 </select>
               </div>
             </div>

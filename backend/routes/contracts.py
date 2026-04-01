@@ -10,44 +10,96 @@ import io
 router = APIRouter(prefix="/contracts", tags=["contracts"])
 
 
+@router.get("/categories")
+async def get_categories():
+    """Fetch categories joined with category_business_mapping to get pricing by type."""
+    cats = supabase.table("category").select("*").execute()
+    cat_rows = cats.data or []
+
+    cbm = supabase.table("category_business_mapping").select("*").execute()
+    cbm_rows = cbm.data or []
+
+    # Build lookup: category_id -> mapping data
+    cbm_by_cid = {}
+    for row in cbm_rows:
+        cbm_by_cid[row["cid"]] = {"type": row["type"], "price": row["price"], "mapping_id": row["id"]}
+
+    # Group by category name, merge in pricing
+    grouped = {}
+    for cat in cat_rows:
+        name = cat["name"]
+        if name not in grouped:
+            grouped[name] = {"name": name, "types": []}
+        mapping = cbm_by_cid.get(cat["id"], {})
+        grouped[name]["types"].append({
+            "category_id": cat["id"],
+            "type": cat["type"],
+            "price": mapping.get("price"),
+            "mapping_id": mapping.get("mapping_id"),
+        })
+
+    return {"categories": list(grouped.values())}
+
+
 class TerritoryPricingRequest(BaseModel):
     counties: list[str]
     category: str
+    category_type: Optional[str] = None
     state: Optional[str] = "Florida"
 
 
 @router.post("/territory-pricing")
 async def get_territory_pricing(req: TerritoryPricingRequest):
-    """Look up territory pricing from the territory_pricings table by county + category."""
+    """Look up territory pricing. Uses territory_pricings first, falls back to category_business_mapping."""
     prices = {}
 
     if not req.counties or not req.category:
         return {"prices": prices}
 
-    # Normalize category: strip, lowercase for flexible matching
+    # Normalize category
     cat_lower = req.category.strip().lower()
-    # Strip trailing 's' for plural handling (e.g., "Electricians" -> "Electrician")
     cat_base = cat_lower.rstrip('s') if cat_lower.endswith('s') else cat_lower
 
-    # Fetch all pricing rows for the given state
-    result = supabase.table("territory_pricings").select("county, category, amount").execute()
-    rows = result.data or []
+    # 1. Fetch territory-specific pricing from territory_pricings
+    tp_result = supabase.table("territory_pricings").select("county, category, category_type, amount").execute()
+    tp_rows = tp_result.data or []
 
-    # Build a lookup: normalize county and category for matching
-    lookup = {}
-    for row in rows:
+    tp_lookup = {}
+    for row in tp_rows:
         county_key = (row.get("county") or "").strip().lower()
         row_cat = (row.get("category") or "").strip().lower()
         row_cat_base = row_cat.rstrip('s') if row_cat.endswith('s') else row_cat
-        lookup[(county_key, row_cat_base)] = row.get("amount", 0)
+        tp_lookup[(county_key, row_cat_base)] = row.get("amount", 0)
 
-    # Match each requested county
+    # 2. Fetch fallback pricing from category + category_business_mapping
+    fallback_price = None
+    if req.category_type:
+        cats = supabase.table("category").select("id, name, type").execute()
+        cat_rows = cats.data or []
+        # Find matching category id
+        cat_type_lower = req.category_type.strip().lower()
+        matched_cat_id = None
+        for cat in cat_rows:
+            c_name = (cat.get("name") or "").strip().lower()
+            c_base = c_name.rstrip('s') if c_name.endswith('s') else c_name
+            if c_base == cat_base and cat.get("type", "").strip().lower() == cat_type_lower:
+                matched_cat_id = cat["id"]
+                break
+
+        if matched_cat_id:
+            cbm = supabase.table("category_business_mapping").select("price").eq("cid", matched_cat_id).execute()
+            if cbm.data:
+                fallback_price = cbm.data[0].get("price")
+
+    # 3. Match each requested county
     for county_name in req.counties:
         county_key = county_name.strip().lower()
-        price = lookup.get((county_key, cat_base))
-        prices[county_name] = price  # None if not found
+        price = tp_lookup.get((county_key, cat_base))
+        if price is None and fallback_price is not None:
+            price = fallback_price
+        prices[county_name] = price
 
-    return {"prices": prices}
+    return {"prices": prices, "fallback_price": fallback_price}
 
 
 @router.get("/")
