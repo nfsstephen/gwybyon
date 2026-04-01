@@ -423,18 +423,13 @@ export default function SubscribePage() {
                   required
                 >
                   <option value="">Select Industry</option>
-                  <option value="Plumber">Plumber</option>
-                  <option value="Salon">Salon</option>
-                  <option value="Carpenter">Carpenter</option>
-                  <option value="Laundry Service">Laundry Service</option>
-                  <option value="Air and Heating co.">Air and Heating co.</option>
-                  <option value="Pest Control Service">Pest Control Service</option>
-                  <option value="Consultancy">Consultancy</option>
                   <option value="Well & Septic Co.">Well &amp; Septic Co.</option>
-                  <option value="Real Estate Broker">Real Estate Broker</option>
+                  <option value="Plumbers">Plumbers</option>
                   <option value="Electricians">Electricians</option>
-                  <option value="Roofing co.">Roofing co.</option>
-                  <option value="Event Decoration">Event Decoration</option>
+                  <option value="Air & Heating Co.">Air &amp; Heating Co.</option>
+                  <option value="Pest Control Services">Pest Control Services</option>
+                  <option value="Real Estate Brokers">Real Estate Brokers</option>
+                  <option value="Roofing Co.">Roofing Co.</option>
                 </select>
               </div>
             </div>
