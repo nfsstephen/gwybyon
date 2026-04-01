@@ -318,13 +318,13 @@ function ContractsTab() {
   }, []);
 
   const handleDownloadPdf = (contractId) => {
-    window.open(`${process.env.REACT_APP_BACKEND_URL}/api/contracts/${contractId}/pdf`, '_blank');
+    window.open(`${process.env.REACT_APP_BACKEND_URL}/api/contracts/${contractId}/pdf?t=${Date.now()}`, '_blank');
   };
 
   if (loading) return <div style={{ padding: 40, textAlign: 'center', color: theme.textMuted }}>Loading contracts...</div>;
   if (contracts.length === 0) return <div style={{ padding: 40, textAlign: 'center', color: theme.textMuted }}>No contracts yet.</div>;
 
-  const previewUrl = previewId ? `${process.env.REACT_APP_BACKEND_URL}/api/contracts/${previewId}/pdf` : null;
+  const previewUrl = previewId ? `${process.env.REACT_APP_BACKEND_URL}/api/contracts/${previewId}/pdf?t=${Date.now()}` : null;
   const previewContract = previewId ? contracts.find(c => c.id === previewId) : null;
 
   return (
