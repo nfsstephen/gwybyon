@@ -387,7 +387,12 @@ async def download_contract_pdf(contract_id: str):
     return StreamingResponse(
         io.BytesIO(pdf_bytes),
         media_type="application/pdf",
-        headers={"Content-Disposition": f"attachment; filename=GW-Contract-{contract['contract_number']}.pdf"}
+        headers={
+            "Content-Disposition": f"inline; filename=GW-Contract-{contract['contract_number']}.pdf",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Pragma": "no-cache",
+            "Expires": "0",
+        }
     )
 
 
