@@ -71,10 +71,17 @@ export default function SubscribePage() {
   const [selectedCounties, setSelectedCounties] = useState(saved.selectedCounties ?? []);
   const [countyNames, setCountyNames] = useState(saved.countyNames ?? {});
   const [selectedTier, setSelectedTier] = useState(saved.selectedTier ?? null);
+  const [countyPrices, setCountyPrices] = useState(saved.countyPrices ?? {});
+  const [pricingLoading, setPricingLoading] = useState(false);
+  const [depositLoading, setDepositLoading] = useState(false);
+  const [contractResult, setContractResult] = useState(null);
+  const [depositError, setDepositError] = useState(null);
+
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
-    saveState({ websiteChoice, serviceType, businessDetails, selectedCounties, countyNames, selectedTier });
-  }, [websiteChoice, serviceType, businessDetails, selectedCounties, countyNames, selectedTier]);
+    saveState({ websiteChoice, serviceType, businessDetails, selectedCounties, countyNames, selectedTier, countyPrices });
+  }, [websiteChoice, serviceType, businessDetails, selectedCounties, countyNames, selectedTier, countyPrices]);
 
   const handleBusinessChange = (field, value) => {
     setBusinessDetails(prev => ({ ...prev, [field]: value }));
@@ -115,11 +122,57 @@ export default function SubscribePage() {
     }
   }, []);
 
-  const TERRITORY_PRICE = 300;
+  // Fetch territory pricing from Supabase when counties or industry changes
+  useEffect(() => {
+    if (selectedCounties.length === 0 || !businessDetails.industry) {
+      setCountyPrices({});
+      return;
+    }
+
+    const industryLabels = {
+      'well-septic': 'Well & Septic',
+      'plumbers': 'Plumbers',
+      'electricians': 'Electricians',
+      'air-heating': 'Air & Heating',
+      'pest-control': 'Pest Control',
+      'real-estate': 'Real Estate',
+      'roofing': 'Roofing',
+    };
+
+    const category = industryLabels[businessDetails.industry] || businessDetails.industry;
+    const countyNamesList = selectedCounties.map(id => countyNames[id] || id);
+
+    setPricingLoading(true);
+    fetch(`${API_URL}/api/contracts/territory-pricing`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ counties: countyNamesList, category, state: businessDetails.state || 'Florida' }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        // Map back: countyId -> price using countyNames as bridge
+        const priceMap = {};
+        for (const id of selectedCounties) {
+          const name = countyNames[id] || id;
+          priceMap[id] = data.prices?.[name] ?? null;
+        }
+        setCountyPrices(priceMap);
+      })
+      .catch(() => setCountyPrices({}))
+      .finally(() => setPricingLoading(false));
+  }, [selectedCounties, businessDetails.industry, countyNames, businessDetails.state, API_URL]);
+
+  const getCountyPrice = (countyId) => {
+    const price = countyPrices[countyId];
+    return price != null ? price : null;
+  };
 
   const countyTotal = useMemo(() => {
-    return selectedCounties.length * TERRITORY_PRICE;
-  }, [selectedCounties]);
+    return selectedCounties.reduce((sum, id) => {
+      const price = countyPrices[id];
+      return sum + (price != null ? price : 0);
+    }, 0);
+  }, [selectedCounties, countyPrices]);
 
   const invoice = useMemo(() => {
     let monthlyTotal = 0;
@@ -133,12 +186,6 @@ export default function SubscribePage() {
 
     return { monthlyTotal, websiteTotal: websitePrice, countyTotal, dueToday, depositAmount, balanceRemaining };
   }, [selectedService, websitePrice, countyTotal]);
-
-  const [depositLoading, setDepositLoading] = useState(false);
-  const [contractResult, setContractResult] = useState(null);
-  const [depositError, setDepositError] = useState(null);
-
-  const API_URL = process.env.REACT_APP_BACKEND_URL;
 
   const invoiceReady = selectedWebsite && serviceType && selectedCounties.length > 0 && selectedService;
   const businessReady = businessDetails.name && businessDetails.address && businessDetails.city && businessDetails.state && businessDetails.zip && businessDetails.industry;
@@ -167,7 +214,7 @@ export default function SubscribePage() {
         business_zip: businessDetails.zip,
         business_email: businessDetails.email || '',
         industry: industryLabels[businessDetails.industry] || businessDetails.industry,
-        selected_territories: selectedCounties.map(id => ({ id, name: countyNames[id] || id })),
+        selected_territories: selectedCounties.map(id => ({ id, name: countyNames[id] || id, price: countyPrices[id] ?? 0 })),
         territory_count: selectedCounties.length,
         tier_id: selectedService.id,
         tier_name: selectedService.name,
@@ -175,7 +222,7 @@ export default function SubscribePage() {
         website_service: selectedWebsite.label,
         website_type: serviceType,
         website_price: websitePrice,
-        territory_price_each: TERRITORY_PRICE,
+        territory_price_each: 0,
         territory_total: countyTotal,
         total_due: invoice.dueToday,
         monthly_recurring: selectedService.monthlyPrice,
@@ -515,15 +562,25 @@ export default function SubscribePage() {
                         <div className="sub-invoice-territory-label">
                           <MapPin size={14} />
                           <span>Market Territories ({selectedCounties.length})</span>
+                          {pricingLoading && <span className="sub-pricing-loading"> Loading prices...</span>}
                         </div>
+                        {!businessDetails.industry && (
+                          <div className="sub-invoice-notice" style={{ margin: '4px 0 8px' }}>
+                            <AlertCircle size={14} />
+                            <span>Select an industry to load territory pricing</span>
+                          </div>
+                        )}
                         {selectedCounties.map(id => {
                           const displayName = countyNames[id] || id;
+                          const price = getCountyPrice(id);
                           return (
                             <div key={id} className="sub-invoice-territory-item" data-testid={`invoice-county-${id}`}>
                               <div>
                                 <span className="sub-invoice-county-name">{displayName}</span>
                               </div>
-                              <span className="sub-invoice-county-price">${TERRITORY_PRICE.toLocaleString()}</span>
+                              <span className="sub-invoice-county-price">
+                                {price != null ? `$${price.toLocaleString()}` : '—'}
+                              </span>
                             </div>
                           );
                         })}

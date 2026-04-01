@@ -10,6 +10,46 @@ import io
 router = APIRouter(prefix="/contracts", tags=["contracts"])
 
 
+class TerritoryPricingRequest(BaseModel):
+    counties: list[str]
+    category: str
+    state: Optional[str] = "Florida"
+
+
+@router.post("/territory-pricing")
+async def get_territory_pricing(req: TerritoryPricingRequest):
+    """Look up territory pricing from the territory_pricings table by county + category."""
+    prices = {}
+
+    if not req.counties or not req.category:
+        return {"prices": prices}
+
+    # Normalize category: strip, lowercase for flexible matching
+    cat_lower = req.category.strip().lower()
+    # Strip trailing 's' for plural handling (e.g., "Electricians" -> "Electrician")
+    cat_base = cat_lower.rstrip('s') if cat_lower.endswith('s') else cat_lower
+
+    # Fetch all pricing rows for the given state
+    result = supabase.table("territory_pricings").select("county, category, amount").execute()
+    rows = result.data or []
+
+    # Build a lookup: normalize county and category for matching
+    lookup = {}
+    for row in rows:
+        county_key = (row.get("county") or "").strip().lower()
+        row_cat = (row.get("category") or "").strip().lower()
+        row_cat_base = row_cat.rstrip('s') if row_cat.endswith('s') else row_cat
+        lookup[(county_key, row_cat_base)] = row.get("amount", 0)
+
+    # Match each requested county
+    for county_name in req.counties:
+        county_key = county_name.strip().lower()
+        price = lookup.get((county_key, cat_base))
+        prices[county_name] = price  # None if not found
+
+    return {"prices": prices}
+
+
 @router.get("/")
 async def list_contracts():
     result = supabase.table("contracts").select("*").order("created_at", desc=True).execute()

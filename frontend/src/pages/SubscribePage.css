@@ -301,6 +301,13 @@
   font-size: 0.8rem;
 }
 
+.sub-pricing-loading {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-style: italic;
+  margin-left: 4px;
+}
+
 /* ===== Tier Selection Cards ===== */
 .sub-tiers {
   display: flex;
