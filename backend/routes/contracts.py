@@ -50,7 +50,7 @@ class TerritoryPricingRequest(BaseModel):
 
 @router.post("/territory-pricing")
 async def get_territory_pricing(req: TerritoryPricingRequest):
-    """Look up territory pricing. Uses territory_pricings first, falls back to category_business_mapping."""
+    """Look up territory pricing from territory_pricings (joined data from territories + category + category_business_mapping)."""
     prices = {}
 
     if not req.counties or not req.category:
@@ -60,46 +60,33 @@ async def get_territory_pricing(req: TerritoryPricingRequest):
     cat_lower = req.category.strip().lower()
     cat_base = cat_lower.rstrip('s') if cat_lower.endswith('s') else cat_lower
 
-    # 1. Fetch territory-specific pricing from territory_pricings
+    # Normalize category_type
+    type_lower = (req.category_type or "").strip().lower() if req.category_type else None
+
+    # Fetch pricing rows from territory_pricings
     tp_result = supabase.table("territory_pricings").select("county, category, category_type, amount").execute()
     tp_rows = tp_result.data or []
 
+    # Build lookup keyed by (county, category, category_type)
     tp_lookup = {}
     for row in tp_rows:
         county_key = (row.get("county") or "").strip().lower()
         row_cat = (row.get("category") or "").strip().lower()
         row_cat_base = row_cat.rstrip('s') if row_cat.endswith('s') else row_cat
-        tp_lookup[(county_key, row_cat_base)] = row.get("amount", 0)
+        row_type = (row.get("category_type") or "").strip().lower()
+        tp_lookup[(county_key, row_cat_base, row_type)] = row.get("amount", 0)
 
-    # 2. Fetch fallback pricing from category + category_business_mapping
-    fallback_price = None
-    if req.category_type:
-        cats = supabase.table("category").select("id, name, type").execute()
-        cat_rows = cats.data or []
-        # Find matching category id
-        cat_type_lower = req.category_type.strip().lower()
-        matched_cat_id = None
-        for cat in cat_rows:
-            c_name = (cat.get("name") or "").strip().lower()
-            c_base = c_name.rstrip('s') if c_name.endswith('s') else c_name
-            if c_base == cat_base and cat.get("type", "").strip().lower() == cat_type_lower:
-                matched_cat_id = cat["id"]
-                break
-
-        if matched_cat_id:
-            cbm = supabase.table("category_business_mapping").select("price").eq("cid", matched_cat_id).execute()
-            if cbm.data:
-                fallback_price = cbm.data[0].get("price")
-
-    # 3. Match each requested county
+    # Match each requested county
     for county_name in req.counties:
         county_key = county_name.strip().lower()
-        price = tp_lookup.get((county_key, cat_base))
-        if price is None and fallback_price is not None:
-            price = fallback_price
+        if type_lower:
+            price = tp_lookup.get((county_key, cat_base, type_lower))
+        else:
+            # No type specified — try small as default
+            price = tp_lookup.get((county_key, cat_base, "small"))
         prices[county_name] = price
 
-    return {"prices": prices, "fallback_price": fallback_price}
+    return {"prices": prices}
 
 
 @router.get("/")

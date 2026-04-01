@@ -138,8 +138,17 @@ export default function SubscribePage() {
       return;
     }
 
-    // Use the DB category name directly (industry value IS the category name from DB)
-    const category = businessDetails.industry;
+    const industryLabels = {
+      'well-septic': 'Well & Septic Co.',
+      'plumbers': 'Plumber',
+      'electricians': 'Electricians',
+      'air-heating': 'Air & Heating Co.',
+      'pest-control': 'Pest Control Service',
+      'real-estate': 'Real Estate Brokers',
+      'roofing': 'Roofing Co.',
+    };
+
+    const category = industryLabels[businessDetails.industry] || businessDetails.industry;
     const countyNamesList = selectedCounties.map(id => countyNames[id] || id);
 
     // Determine category_type from selected tier
@@ -199,6 +208,16 @@ export default function SubscribePage() {
     setDepositLoading(true);
     setDepositError(null);
     try {
+      const industryLabels = {
+        'well-septic': 'Well & Septic Co.',
+        'plumbers': 'Plumber',
+        'electricians': 'Electricians',
+        'air-heating': 'Air & Heating Co.',
+        'pest-control': 'Pest Control Service',
+        'real-estate': 'Real Estate Brokers',
+        'roofing': 'Roofing Co.',
+      };
+
       const payload = {
         business_name: businessDetails.name,
         business_address: businessDetails.address,
@@ -206,7 +225,7 @@ export default function SubscribePage() {
         business_state: businessDetails.state,
         business_zip: businessDetails.zip,
         business_email: businessDetails.email || '',
-        industry: businessDetails.industry,
+        industry: industryLabels[businessDetails.industry] || businessDetails.industry,
         selected_territories: selectedCounties.map(id => ({ id, name: countyNames[id] || id, price: countyPrices[id] ?? 0 })),
         territory_count: selectedCounties.length,
         tier_id: selectedService.id,
@@ -427,17 +446,13 @@ export default function SubscribePage() {
                   required
                 >
                   <option value="">Select Industry</option>
-                  {dbCategories.length > 0
-                    ? dbCategories.map(cat => (
-                        <option key={cat.name} value={cat.name}>{cat.name}</option>
-                      ))
-                    : <>
-                        <option value="Well & Septic Co.">Well &amp; Septic Co.</option>
-                        <option value="Plumber">Plumber</option>
-                        <option value="Electricians">Electricians</option>
-                        <option value="Pest Control Service">Pest Control Service</option>
-                      </>
-                  }
+                  <option value="well-septic">Well &amp; Septic Co.</option>
+                  <option value="plumbers">Plumbers</option>
+                  <option value="electricians">Electricians</option>
+                  <option value="air-heating">Air &amp; Heating Co.</option>
+                  <option value="pest-control">Pest Control Services</option>
+                  <option value="real-estate">Real Estate Brokers</option>
+                  <option value="roofing">Roofing Co.</option>
                 </select>
               </div>
             </div>
