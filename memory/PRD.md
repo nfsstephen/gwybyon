@@ -47,6 +47,7 @@ Home | Seven Industries | Five Tools | Web Services | Services & Pricing | Subsc
 - `POST /api/contracts/create` — Create new contract
 - `POST /api/contracts/{id}/deposit` — Record deposit payment
 - `GET /api/contracts/{id}/pdf` — Download contract PDF
+- `POST /api/contracts/territory-pricing` — Look up territory pricing by county + category from `territory_pricings` table
 - `POST /api/dashboard/auth/login` — Dashboard login
 
 ## What's Been Implemented
@@ -63,6 +64,7 @@ Home | Seven Industries | Five Tools | Web Services | Services & Pricing | Subsc
 - [x] Independent invoice warning banners
 - [x] Railway deployment fixes (env vars, route prefixes, graceful startup)
 - [x] Refactored: deleted 7 old BigMarket pages, unused components/CSS
+- [x] Dynamic territory pricing from Supabase `territory_pricings` table (Apr 1, 2026) — Invoice fetches per-county price based on county+industry from DB instead of hardcoded $300
 
 ## Backlog (Prioritized)
 ### P0
@@ -95,4 +97,4 @@ Home | Seven Industries | Five Tools | Web Services | Services & Pricing | Subsc
 - ADMIN_PASSWORD
 - JWT_SECRET
 
-*Last Updated: Mar 27, 2026*
+*Last Updated: Apr 1, 2026*
