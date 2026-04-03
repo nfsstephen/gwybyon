@@ -12,31 +12,32 @@ router = APIRouter(prefix="/contracts", tags=["contracts"])
 
 @router.get("/categories")
 async def get_categories():
-    """Fetch categories joined with category_business_mapping to get pricing by type."""
+    """Fetch categories joined with DefaultPricing and county_type to get pricing by type."""
     cats = supabase.table("category").select("*").execute()
     cat_rows = cats.data or []
 
-    cbm = supabase.table("category_business_mapping").select("*").execute()
-    cbm_rows = cbm.data or []
+    county_types = supabase.table("county_type").select("*").execute()
+    ct_rows = county_types.data or []
 
-    # Build lookup: category_id -> mapping data
-    cbm_by_cid = {}
-    for row in cbm_rows:
-        cbm_by_cid[row["cid"]] = {"type": row["type"], "price": row["price"], "mapping_id": row["id"]}
+    dp = supabase.table("DefaultPricing").select("*").execute()
+    dp_rows = dp.data or []
 
-    # Group by category name, merge in pricing
+    # Build type name lookup
+    type_names = {ct["id"]: ct["name"] for ct in ct_rows}
+
+    # Group pricing by category
     grouped = {}
     for cat in cat_rows:
-        name = cat["name"]
-        if name not in grouped:
-            grouped[name] = {"name": name, "types": []}
-        mapping = cbm_by_cid.get(cat["id"], {})
-        grouped[name]["types"].append({
-            "category_id": cat["id"],
-            "type": cat["type"],
-            "price": mapping.get("price"),
-            "mapping_id": mapping.get("mapping_id"),
-        })
+        grouped[cat["id"]] = {"name": cat["name"], "types": []}
+
+    for row in dp_rows:
+        cid = row["CategoryId"]
+        if cid in grouped:
+            grouped[cid]["types"].append({
+                "category_id": cid,
+                "type": type_names.get(row["TypeId"], ""),
+                "price": row["Price"],
+            })
 
     return {"categories": list(grouped.values())}
 
@@ -44,40 +45,34 @@ async def get_categories():
 class TerritoryPricingRequest(BaseModel):
     counties: list[str]
     category: str
-    category_type: Optional[str] = None
     state: Optional[str] = "Florida"
 
 
 @router.post("/territory-pricing")
 async def get_territory_pricing(req: TerritoryPricingRequest):
-    """Look up territory pricing from territory_pricings (joined from territories + category + category_business_mapping)."""
+    """Look up territory pricing from territory_pricings."""
     prices = {}
 
     if not req.counties or not req.category:
         return {"prices": prices}
 
-    # Normalize category
     cat_lower = req.category.strip().lower()
 
-    # Fetch pricing rows from territory_pricings
-    tp_result = supabase.table("territory_pricings").select("county, category, category_type, amount").execute()
+    # Fetch pricing rows
+    tp_result = supabase.table("territory_pricings").select("county, category, amount").execute()
     tp_rows = tp_result.data or []
 
-    # Build lookup keyed by (county, category)
+    # Build lookup: (county, category) -> amount
     tp_lookup = {}
     for row in tp_rows:
         county_key = (row.get("county") or "").strip().lower()
         row_cat = (row.get("category") or "").strip().lower()
-        tp_lookup[(county_key, row_cat)] = {
-            "amount": row.get("amount", 0),
-            "category_type": row.get("category_type", ""),
-        }
+        tp_lookup[(county_key, row_cat)] = row.get("amount", 0)
 
-    # Match each requested county
     for county_name in req.counties:
         county_key = county_name.strip().lower()
-        match = tp_lookup.get((county_key, cat_lower))
-        prices[county_name] = match["amount"] if match else None
+        price = tp_lookup.get((county_key, cat_lower))
+        prices[county_name] = price
 
     return {"prices": prices}
 
