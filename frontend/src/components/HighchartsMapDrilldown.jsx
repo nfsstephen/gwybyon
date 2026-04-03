@@ -49,7 +49,7 @@ async function geocodeCity(city) {
   return null;
 }
 
-export default function HighchartsMapDrilldown({ country, city, selectedCounties, onToggleCounty }) {
+export default function HighchartsMapDrilldown({ country, city, selectedCounties, onToggleCounty, takenCounties }) {
   const containerRef = useRef(null);
   const chartInstanceRef = useRef(null);
   const [drillLevel, setDrillLevel] = useState('country');
@@ -59,12 +59,14 @@ export default function HighchartsMapDrilldown({ country, city, selectedCounties
   const countyCache = useRef({});
   const toggleRef = useRef(onToggleCounty);
   const selectedRef = useRef(selectedCounties);
+  const takenRef = useRef(takenCounties);
   const geocodeDebounce = useRef(null);
   const lastGeocodedCity = useRef('');
   const currentDrilledState = useRef('');
 
   useEffect(() => { toggleRef.current = onToggleCounty; }, [onToggleCounty]);
   useEffect(() => { selectedRef.current = selectedCounties; }, [selectedCounties]);
+  useEffect(() => { takenRef.current = takenCounties || new Set(); }, [takenCounties]);
 
   const loadCountyMap = useCallback(async (stateCode) => {
     if (countyCache.current[stateCode]) return countyCache.current[stateCode];
@@ -193,11 +195,14 @@ export default function HighchartsMapDrilldown({ country, city, selectedCounties
       const props = feat.properties || {};
       const hcKey = props['hc-key'] || '';
       const isSelected = selectedRef.current.includes(hcKey) || hcKey === autoSelectKey;
+      const isTaken = takenRef.current && takenRef.current.has(hcKey);
       return {
         'hc-key': hcKey,
         name: props.name || '',
-        value: isSelected ? 2 : 1,
-        color: isSelected ? '#16a34a' : undefined,
+        value: isTaken ? 3 : isSelected ? 2 : 1,
+        color: isTaken ? '#991b1b' : isSelected ? '#16a34a' : undefined,
+        taken: isTaken,
+        className: isTaken ? 'taken-territory' : '',
       };
     });
 
@@ -247,7 +252,7 @@ export default function HighchartsMapDrilldown({ country, city, selectedCounties
           click: function (e) {
             const key = e.point['hc-key'];
             const name = e.point.name;
-            if (key) {
+            if (key && !e.point.options.taken) {
               toggleRef.current(key, name);
               // Visual feedback: toggle color
               const nowSelected = !selectedRef.current.includes(key);
@@ -258,7 +263,7 @@ export default function HighchartsMapDrilldown({ country, city, selectedCounties
             }
           },
         },
-        tooltip: { headerFormat: '', pointFormat: '<b>{point.name}</b><br/>Click to select/deselect' },
+        tooltip: { headerFormat: '', pointFormat: '<b>{point.name}</b>{#if point.taken}<br/><span style="color:#ef4444;font-weight:bold">TERRITORY TAKEN</span>{/if}{#unless point.taken}<br/>Click to select/deselect{/unless}' },
       }],
     });
 

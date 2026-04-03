@@ -72,6 +72,12 @@
   border-radius: 0 0 10px 10px;
 }
 
+/* Taken territory cursor */
+.hc-map-container .highcharts-point.taken-territory {
+  cursor: not-allowed !important;
+  opacity: 0.7;
+}
+
 /* Unsupported country */
 .hc-map-unsupported {
   display: flex;

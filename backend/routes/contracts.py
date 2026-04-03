@@ -10,6 +10,28 @@ import io
 router = APIRouter(prefix="/contracts", tags=["contracts"])
 
 
+
+@router.get("/taken-territories")
+async def get_taken_territories(industry: str = ""):
+    """Return county IDs/names already locked by existing contracts for a given industry."""
+    if not industry:
+        return {"taken": []}
+
+    result = supabase.table("contracts").select("selected_territories, industry, status").execute()
+    contracts = result.data or []
+
+    taken = []
+    industry_lower = industry.strip().lower()
+    for c in contracts:
+        c_industry = (c.get("industry") or "").strip().lower()
+        if c_industry == industry_lower and c.get("status") in ("pending_deposit", "deposit_paid", "active"):
+            territories = c.get("selected_territories") or []
+            for t in territories:
+                taken.append({"id": t.get("id", ""), "name": t.get("name", "")})
+
+    return {"taken": taken}
+
+
 @router.get("/categories")
 async def get_categories():
     """Fetch categories joined with DefaultPricing and county_type to get pricing by type."""

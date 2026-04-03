@@ -77,8 +77,21 @@ export default function SubscribePage() {
   const [contractResult, setContractResult] = useState(null);
   const [depositError, setDepositError] = useState(null);
   const [dbCategories, setDbCategories] = useState([]);
+  const [takenTerritories, setTakenTerritories] = useState([]);
 
   const API_URL = process.env.REACT_APP_BACKEND_URL;
+
+  // Fetch taken territories when industry changes
+  useEffect(() => {
+    if (!businessDetails.industry) {
+      setTakenTerritories([]);
+      return;
+    }
+    fetch(`${API_URL}/api/contracts/taken-territories?industry=${encodeURIComponent(businessDetails.industry)}`)
+      .then(res => res.json())
+      .then(data => setTakenTerritories(data.taken || []))
+      .catch(() => setTakenTerritories([]));
+  }, [businessDetails.industry, API_URL]);
 
   // Fetch categories from DB on mount
   useEffect(() => {
@@ -120,7 +133,12 @@ export default function SubscribePage() {
     }
   };
 
+  const takenIds = useMemo(() => new Set(takenTerritories.map(t => t.id)), [takenTerritories]);
+
   const handleToggleCounty = useCallback((countyId, countyName) => {
+    // Block if this county is already taken for this industry
+    if (takenIds.has(countyId)) return;
+
     setSelectedCounties(prev =>
       prev.includes(countyId)
         ? prev.filter(id => id !== countyId)
@@ -129,7 +147,7 @@ export default function SubscribePage() {
     if (countyName) {
       setCountyNames(prev => ({ ...prev, [countyId]: countyName }));
     }
-  }, []);
+  }, [takenIds]);
 
   // Fetch territory pricing from Supabase when counties or industry changes
   useEffect(() => {
@@ -439,6 +457,7 @@ export default function SubscribePage() {
               city={businessDetails.city}
               selectedCounties={selectedCounties}
               onToggleCounty={handleToggleCounty}
+              takenCounties={takenIds}
             />
 
             {/* Step 3: Tier Selection */}
