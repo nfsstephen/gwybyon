@@ -107,6 +107,12 @@ export default function SubscribePage() {
 
   const handleBusinessChange = (field, value) => {
     setBusinessDetails(prev => ({ ...prev, [field]: value }));
+    // Clear all territory selections when state changes — counties from old state are invalid
+    if (field === 'state') {
+      setSelectedCounties([]);
+      setCountyNames({});
+      setCountyPrices({});
+    }
   };
 
   const selectedService = TIERS.find(s => s.id === selectedTier);
