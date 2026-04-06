@@ -66,7 +66,24 @@ export default function HighchartsMapDrilldown({ country, city, selectedCounties
 
   useEffect(() => { toggleRef.current = onToggleCounty; }, [onToggleCounty]);
   useEffect(() => { selectedRef.current = selectedCounties; }, [selectedCounties]);
-  useEffect(() => { takenRef.current = takenCounties || new Set(); }, [takenCounties]);
+  useEffect(() => {
+    takenRef.current = takenCounties || new Set();
+    // Update existing chart points when taken data arrives
+    const chart = chartInstanceRef.current;
+    if (chart && chart.series && chart.series[0] && drillLevel === 'county') {
+      chart.series[0].points.forEach(point => {
+        const key = point['hc-key'];
+        const isTaken = takenRef.current.has(key);
+        const isSelected = selectedRef.current.includes(key);
+        if (isTaken && point.color !== '#991b1b') {
+          point.update({ color: '#991b1b', taken: true, value: 3 }, false);
+        } else if (!isTaken && !isSelected && point.options.taken) {
+          point.update({ color: null, taken: false, value: 1 }, false);
+        }
+      });
+      chart.redraw();
+    }
+  }, [takenCounties, drillLevel]);
 
   const loadCountyMap = useCallback(async (stateCode) => {
     if (countyCache.current[stateCode]) return countyCache.current[stateCode];
