@@ -31,11 +31,22 @@ function resolveStateCode(input) {
   return null;
 }
 
-async function geocodeCity(city) {
+const STATE_CODE_TO_NAME = Object.fromEntries(
+  Object.entries(STATE_NAME_TO_CODE).map(([name, code]) => [code, name.replace(/\b\w/g, c => c.toUpperCase())])
+);
+
+async function geocodeCity(city, stateContext) {
   if (!city || city.trim().length < 2) return null;
   try {
+    // Append state context to disambiguate city names (e.g., "Union" → "Union, Florida, USA")
+    let query = city;
+    if (stateContext) {
+      // Convert abbreviation (e.g., "FL") to full name (e.g., "Florida") for better Nominatim results
+      const fullStateName = STATE_CODE_TO_NAME[stateContext.toLowerCase()] || stateContext;
+      query = `${city}, ${fullStateName}, USA`;
+    }
     const res = await fetch(
-      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(city)}&countrycodes=us&limit=1&addressdetails=1`,
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=us&limit=1&addressdetails=1`,
       { headers: { 'Accept-Language': 'en' } }
     );
     const data = await res.json();
@@ -49,7 +60,7 @@ async function geocodeCity(city) {
   return null;
 }
 
-export default function HighchartsMapDrilldown({ country, city, selectedCounties, onToggleCounty, takenCounties }) {
+export default function HighchartsMapDrilldown({ country, city, state: stateProp, selectedCounties, onToggleCounty, takenCounties }) {
   const containerRef = useRef(null);
   const chartInstanceRef = useRef(null);
   const [drillLevel, setDrillLevel] = useState('country');
@@ -341,7 +352,7 @@ export default function HighchartsMapDrilldown({ country, city, selectedCounties
       }
 
       // Geocode the city
-      const result = await geocodeCity(trimmedCity);
+      const result = await geocodeCity(trimmedCity, stateProp);
       if (result && result.stateCode) {
         if (currentDrilledState.current !== result.stateCode) {
           setAutoStateInfo(`${trimmedCity} → ${result.stateName}`);
@@ -351,7 +362,7 @@ export default function HighchartsMapDrilldown({ country, city, selectedCounties
     }, 900);
 
     return () => { if (geocodeDebounce.current) clearTimeout(geocodeDebounce.current); };
-  }, [city, drillIntoState]);
+  }, [city, stateProp, drillIntoState]);
 
   const handleDrillUp = useCallback(() => {
     if (!containerRef.current) return;

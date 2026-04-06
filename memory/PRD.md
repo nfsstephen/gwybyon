@@ -66,6 +66,7 @@ Home | Seven Industries | Five Tools | Web Services | Services & Pricing | Subsc
 - [x] 25% Deposit flow (contract creation, Supabase storage, PDF generation)
 - [x] Contracts tab on Admin Dashboard (real data)
 - [x] Independent invoice warning banners
+- [x] Map geocoding state-scoping fix (Apr 6, 2026) — City searches now append the selected state name to Nominatim queries, preventing ambiguous results (e.g., "Union" resolving to Illinois instead of Florida)
 - [x] Railway deployment fixes (env vars, route prefixes, graceful startup)
 - [x] Refactored: deleted 7 old BigMarket pages, unused components/CSS
 - [x] Dynamic territory pricing from Supabase `territory_pricings` table (Apr 1, 2026) — Invoice fetches per-county price based on county+industry from DB instead of hardcoded $300
@@ -103,4 +104,4 @@ Home | Seven Industries | Five Tools | Web Services | Services & Pricing | Subsc
 - ADMIN_PASSWORD
 - JWT_SECRET
 
-*Last Updated: Apr 1, 2026*
+*Last Updated: Apr 6, 2026*

@@ -455,6 +455,7 @@ export default function SubscribePage() {
             <HighchartsMapDrilldown
               country="USA"
               city={businessDetails.city}
+              state={businessDetails.state}
               selectedCounties={selectedCounties}
               onToggleCounty={handleToggleCounty}
               takenCounties={takenIds}
