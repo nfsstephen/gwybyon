@@ -66,24 +66,47 @@ export default function HighchartsMapDrilldown({ country, city, selectedCounties
 
   useEffect(() => { toggleRef.current = onToggleCounty; }, [onToggleCounty]);
   useEffect(() => { selectedRef.current = selectedCounties; }, [selectedCounties]);
+
+  // Reusable function to apply taken colors to existing chart points
+  const applyTakenColors = useCallback(() => {
+    const chart = chartInstanceRef.current;
+    if (!chart || !chart.series || !chart.series[0]) return;
+    const taken = takenRef.current;
+    if (!taken || taken.size === 0) return;
+    let changed = false;
+    chart.series[0].points.forEach(point => {
+      const key = point['hc-key'];
+      const isTaken = taken.has(key);
+      const isSelected = selectedRef.current.includes(key);
+      if (isTaken && point.color !== '#991b1b') {
+        point.update({ color: '#991b1b', taken: true, value: 3 }, false);
+        changed = true;
+      } else if (!isTaken && !isSelected && point.options && point.options.taken) {
+        point.update({ color: null, taken: false, value: 1 }, false);
+        changed = true;
+      }
+    });
+    if (changed) chart.redraw();
+  }, []);
+
+  // When taken data arrives, update immediately + retry after a short delay
   useEffect(() => {
     takenRef.current = takenCounties || new Set();
-    // Update existing chart points when taken data arrives
-    const chart = chartInstanceRef.current;
-    if (chart && chart.series && chart.series[0] && drillLevel === 'county') {
-      chart.series[0].points.forEach(point => {
-        const key = point['hc-key'];
-        const isTaken = takenRef.current.has(key);
-        const isSelected = selectedRef.current.includes(key);
-        if (isTaken && point.color !== '#991b1b') {
-          point.update({ color: '#991b1b', taken: true, value: 3 }, false);
-        } else if (!isTaken && !isSelected && point.options.taken) {
-          point.update({ color: null, taken: false, value: 1 }, false);
-        }
-      });
-      chart.redraw();
+    applyTakenColors();
+    // Retry after a delay in case the map is still rendering
+    const timer = setTimeout(applyTakenColors, 500);
+    const timer2 = setTimeout(applyTakenColors, 1500);
+    return () => { clearTimeout(timer); clearTimeout(timer2); };
+  }, [takenCounties, applyTakenColors]);
+
+  // When drill level changes to state (county view), apply taken colors after chart settles
+  useEffect(() => {
+    if (drillLevel === 'state') {
+      const timer = setTimeout(applyTakenColors, 300);
+      const timer2 = setTimeout(applyTakenColors, 1000);
+      return () => { clearTimeout(timer); clearTimeout(timer2); };
     }
-  }, [takenCounties, drillLevel]);
+  }, [drillLevel, applyTakenColors]);
 
   const loadCountyMap = useCallback(async (stateCode) => {
     if (countyCache.current[stateCode]) return countyCache.current[stateCode];
