@@ -236,8 +236,9 @@ export default function HighchartsMapDrilldown({ country, city, state: stateProp
       }
     }
 
-    // Auto-select the matched county if not already selected
-    if (autoSelectKey && !selectedRef.current.includes(autoSelectKey)) {
+    // Auto-select the matched county if not already selected AND not taken by another business
+    const isTakenTerritory = autoSelectKey && takenRef.current && takenRef.current.has(autoSelectKey);
+    if (autoSelectKey && !selectedRef.current.includes(autoSelectKey) && !isTakenTerritory) {
       const countyName = features.find(f => f.properties['hc-key'] === autoSelectKey)?.properties?.name || '';
       toggleRef.current(autoSelectKey, countyName);
     }
@@ -245,7 +246,7 @@ export default function HighchartsMapDrilldown({ country, city, state: stateProp
     const countyData = features.map(feat => {
       const props = feat.properties || {};
       const hcKey = props['hc-key'] || '';
-      const isSelected = selectedRef.current.includes(hcKey) || hcKey === autoSelectKey;
+      const isSelected = selectedRef.current.includes(hcKey) || (hcKey === autoSelectKey && !isTakenTerritory);
       const isTaken = takenRef.current && takenRef.current.has(hcKey);
       return {
         'hc-key': hcKey,
