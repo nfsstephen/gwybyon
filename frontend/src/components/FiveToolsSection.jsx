@@ -45,108 +45,10 @@ const FiveToolsSection = ({ title, subtitle }) => {
             </div>
           </div>
 
-          {/* Tool 2: Entity-Sync Dashboard */}
-          <div className="ft-feature-row ft-feature-reverse" data-testid="five-tools-entity-sync">
+          {/* Tool 2: ROI Tracker */}
+          <div className="ft-feature-row ft-feature-reverse" data-testid="five-tools-roi-tracker">
             <div className="ft-feature-content">
               <div className="ft-feature-number">02</div>
-              <h3>Entity-Sync Dashboard</h3>
-              <p>
-                Your "Digital Twin" — a single portal to manage the version of your business that Google, 
-                Apple Maps, Bing, and 60+ directories show the world. Keep your Name, Address, and Phone (NAP) 
-                perfectly synced everywhere simultaneously. In entity-based search, your map presence matters 
-                more than your website.
-              </p>
-              <ul className="ft-feature-bullets">
-                <li><Check size={16} /> Sync across Google, Apple Maps, Bing</li>
-                <li><Check size={16} /> 60+ directory listings managed</li>
-                <li><Check size={16} /> Automatic mismatch detection</li>
-              </ul>
-            </div>
-            <div className="ft-feature-visual">
-              <div className="ft-visual-card">
-                <div className="ft-sync-lines">
-                  <div className="ft-sync-source">Your Business</div>
-                  <div className="ft-sync-arrows">
-                    <div className="ft-sync-target">Google</div>
-                    <div className="ft-sync-target">Apple Maps</div>
-                    <div className="ft-sync-target">Bing</div>
-                    <div className="ft-sync-target">60+ More</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Tool 3: Neighborhood Content Engine */}
-          <div className="ft-feature-row" data-testid="five-tools-content-engine">
-            <div className="ft-feature-content">
-              <div className="ft-feature-number">03</div>
-              <h3>Neighborhood Content Engine</h3>
-              <p>
-                AI-powered tool that generates hyper-local content mentioning specific nearby landmarks, 
-                neighborhoods, and community touchpoints. This signals geographic relevance to search 
-                engines in a way generic content never can.
-              </p>
-              <ul className="ft-feature-bullets">
-                <li><Check size={16} /> AI-generated local content updates</li>
-                <li><Check size={16} /> Landmark & neighborhood mentions</li>
-                <li><Check size={16} /> Automated publishing schedule</li>
-              </ul>
-            </div>
-            <div className="ft-feature-visual">
-              <div className="ft-visual-card">
-                <div className="ft-content-preview">
-                  <div className="ft-content-line ft-content-title"></div>
-                  <div className="ft-content-line"></div>
-                  <div className="ft-content-line"></div>
-                  <div className="ft-content-highlight">
-                    <MapPin size={12} />
-                    <span>"Serving coffee near Westside High School stadium"</span>
-                  </div>
-                  <div className="ft-content-line"></div>
-                  <div className="ft-content-line ft-content-short"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Tool 4: The Review Magnet */}
-          <div className="ft-feature-row ft-feature-reverse" data-testid="five-tools-review-magnet">
-            <div className="ft-feature-content">
-              <div className="ft-feature-number">04</div>
-              <h3>The Review Magnet</h3>
-              <p>
-                Automated SMS and email sequences that prompt customers to leave reviews specifically 
-                mentioning your service and location. These geo-tagged reviews are rocket fuel for 
-                local search algorithms.
-              </p>
-              <ul className="ft-feature-bullets">
-                <li><Check size={16} /> Automated review request sequences</li>
-                <li><Check size={16} /> Location-specific review prompts</li>
-                <li><Check size={16} /> Multi-platform review management</li>
-              </ul>
-            </div>
-            <div className="ft-feature-visual">
-              <div className="ft-visual-card">
-                <div className="ft-review-mock">
-                  <div className="ft-review-stars">
-                    {[1,2,3,4,5].map(s => (
-                      <svg key={s} viewBox="0 0 24 24" fill="#F59E0B" width="18" height="18">
-                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                      </svg>
-                    ))}
-                  </div>
-                  <p className="ft-review-text">"Best auto repair near downtown Oak Park. Fixed my brakes the same day!"</p>
-                  <span className="ft-review-author">— Verified Customer</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Tool 5: ROI Tracker */}
-          <div className="ft-feature-row" data-testid="five-tools-roi-tracker">
-            <div className="ft-feature-content">
-              <div className="ft-feature-number">05</div>
               <h3>ROI Tracker</h3>
               <p>
                 Forget confusing website analytics. Our simplified dashboard shows the metrics that 
@@ -190,6 +92,104 @@ const FiveToolsSection = ({ title, subtitle }) => {
                 <div className="ft-roi-label">
                   <TrendingUp size={14} />
                   <span>+137% Direction Requests</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Tool 3: The Review Magnet */}
+          <div className="ft-feature-row" data-testid="five-tools-review-magnet">
+            <div className="ft-feature-content">
+              <div className="ft-feature-number">03</div>
+              <h3>The Review Magnet</h3>
+              <p>
+                Automated SMS and email sequences that prompt customers to leave reviews specifically 
+                mentioning your service and location. These geo-tagged reviews are rocket fuel for 
+                local search algorithms.
+              </p>
+              <ul className="ft-feature-bullets">
+                <li><Check size={16} /> Automated review request sequences</li>
+                <li><Check size={16} /> Location-specific review prompts</li>
+                <li><Check size={16} /> Multi-platform review management</li>
+              </ul>
+            </div>
+            <div className="ft-feature-visual">
+              <div className="ft-visual-card">
+                <div className="ft-review-mock">
+                  <div className="ft-review-stars">
+                    {[1,2,3,4,5].map(s => (
+                      <svg key={s} viewBox="0 0 24 24" fill="#F59E0B" width="18" height="18">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                      </svg>
+                    ))}
+                  </div>
+                  <p className="ft-review-text">"Best auto repair near downtown Oak Park. Fixed my brakes the same day!"</p>
+                  <span className="ft-review-author">— Verified Customer</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Tool 4: Neighborhood Content Engine */}
+          <div className="ft-feature-row ft-feature-reverse" data-testid="five-tools-content-engine">
+            <div className="ft-feature-content">
+              <div className="ft-feature-number">04</div>
+              <h3>Neighborhood Content Engine</h3>
+              <p>
+                AI-powered tool that generates hyper-local content mentioning specific nearby landmarks, 
+                neighborhoods, and community touchpoints. This signals geographic relevance to search 
+                engines in a way generic content never can.
+              </p>
+              <ul className="ft-feature-bullets">
+                <li><Check size={16} /> AI-generated local content updates</li>
+                <li><Check size={16} /> Landmark & neighborhood mentions</li>
+                <li><Check size={16} /> Automated publishing schedule</li>
+              </ul>
+            </div>
+            <div className="ft-feature-visual">
+              <div className="ft-visual-card">
+                <div className="ft-content-preview">
+                  <div className="ft-content-line ft-content-title"></div>
+                  <div className="ft-content-line"></div>
+                  <div className="ft-content-line"></div>
+                  <div className="ft-content-highlight">
+                    <MapPin size={12} />
+                    <span>"Serving coffee near Westside High School stadium"</span>
+                  </div>
+                  <div className="ft-content-line"></div>
+                  <div className="ft-content-line ft-content-short"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Tool 5: Entity-Sync Dashboard */}
+          <div className="ft-feature-row" data-testid="five-tools-entity-sync">
+            <div className="ft-feature-content">
+              <div className="ft-feature-number">05</div>
+              <h3>Entity-Sync Dashboard</h3>
+              <p>
+                Your "Digital Twin" — a single portal to manage the version of your business that Google, 
+                Apple Maps, Bing, and 60+ directories show the world. Keep your Name, Address, and Phone (NAP) 
+                perfectly synced everywhere simultaneously. In entity-based search, your map presence matters 
+                more than your website.
+              </p>
+              <ul className="ft-feature-bullets">
+                <li><Check size={16} /> Sync across Google, Apple Maps, Bing</li>
+                <li><Check size={16} /> 60+ directory listings managed</li>
+                <li><Check size={16} /> Automatic mismatch detection</li>
+              </ul>
+            </div>
+            <div className="ft-feature-visual">
+              <div className="ft-visual-card">
+                <div className="ft-sync-lines">
+                  <div className="ft-sync-source">Your Business</div>
+                  <div className="ft-sync-arrows">
+                    <div className="ft-sync-target">Google</div>
+                    <div className="ft-sync-target">Apple Maps</div>
+                    <div className="ft-sync-target">Bing</div>
+                    <div className="ft-sync-target">60+ More</div>
+                  </div>
                 </div>
               </div>
             </div>

@@ -23,10 +23,10 @@ export default function FiveToolsPage() {
           </p>
           <div className="ftp-hero-tools">
             <div className="ftp-tool-pill"><Crosshair size={15} /> Geo-Health Scanner</div>
-            <div className="ftp-tool-pill"><Settings size={15} /> Entity-Sync Dashboard</div>
-            <div className="ftp-tool-pill"><FileText size={15} /> Content Engine</div>
-            <div className="ftp-tool-pill"><Star size={15} /> Review Magnet</div>
             <div className="ftp-tool-pill"><BarChart3 size={15} /> ROI Tracker</div>
+            <div className="ftp-tool-pill"><Star size={15} /> Review Magnet</div>
+            <div className="ftp-tool-pill"><FileText size={15} /> Content Engine</div>
+            <div className="ftp-tool-pill"><Settings size={15} /> Entity-Sync Dashboard</div>
           </div>
           <div className="ftp-hero-cta">
             <Link to="/subscribe" className="ftp-btn-primary" data-testid="ftp-subscribe-btn">
