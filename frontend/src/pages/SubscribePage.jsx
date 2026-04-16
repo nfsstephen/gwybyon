@@ -545,7 +545,7 @@ export default function SubscribePage() {
               {(!selectedService && !selectedWebsite && selectedCounties.length === 0) ? (
                 <div className="sub-invoice-empty">
                   <ShoppingCart size={32} />
-                  <p>Select services or territories to build your invoice</p>
+                  <p>Complete all three sections to build final invoice. Only 25% payment required to reserve your market areas. Final payment not required until you approve the product you receive and publish.</p>
                   <div className="sub-invoice-notice">
                     <AlertCircle size={14} />
                     <span>Select a website service to continue</span>
