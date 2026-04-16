@@ -288,7 +288,7 @@ export default function SubscribePage() {
       {/* Header */}
       <section className="sub-header">
         <div className="sub-container">
-          <h1 className="sub-title">Subscribe to Our Services</h1>
+          <h1 className="sub-title">Subscribe to Our Services — Grow your Business</h1>
           <p className="sub-subtitle">
             Select your options below to build your order. Your subscription includes exclusive
             territory rights, website services, GeoGrid tools, and BYON communication lines.
