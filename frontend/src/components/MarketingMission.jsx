@@ -87,9 +87,7 @@ const MarketingMission = () => {
               <div className="mm-approach-step">01</div>
               <h4>Invitation Only</h4>
               <p>
-                Our customers are selected, not solicited. You'll receive an invitation email 
-                because we've identified an open territory in your industry and market area.
-                Remember — we work with one business per industry per territory.
+                Our customers are selected, not solicited. We hope that makes you feel important because you are, at least to us. You have received an invitation email because we've identified your company as a "Local Authority" but yet because of an inadequate website you are not recognized as such. We work with one business per industry per territory, using that process we can guarantee you will begin to attract the customers that have been looking for you all along.
               </p>
             </div>
             <div className="mm-approach-card">
