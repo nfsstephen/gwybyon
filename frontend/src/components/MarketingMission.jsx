@@ -80,7 +80,7 @@ const MarketingMission = () => {
         <div className="mm-approach">
           <div className="mm-approach-header">
             <Mail size={24} />
-            <h3>How It Works</h3>
+            <h3>How our Business Model works</h3>
           </div>
           <div className="mm-approach-grid">
             <div className="mm-approach-card">
