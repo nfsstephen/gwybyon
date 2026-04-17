@@ -92,12 +92,9 @@ const MarketingMission = () => {
             </div>
             <div className="mm-approach-card">
               <div className="mm-approach-step">02</div>
-              <h4>Market Designation</h4>
+              <h4>Exclusive Market Territory</h4>
               <p>
-                When you select your territory, our system automatically designates it as a 
-                <strong> large market</strong> or <strong>small market</strong> area. This designation 
-                is based on customer base size, competition density, and the effort required to achieve 
-                top search rankings.
+                By purchasing the rights to an exclusive market territory, you have purchased our commitment to your success. You will have received our promise that we will work for you and you alone. To promote the "Local Authority" badge that you have earned in your industry. Search engine results can only promise one company the top of page view. We will be working to get you there.
               </p>
             </div>
             <div className="mm-approach-card">
