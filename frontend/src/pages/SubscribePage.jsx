@@ -333,6 +333,9 @@ export default function SubscribePage() {
                         <span className="sub-suboption-label">{opt.buildLabel}</span>
                         <span className="sub-suboption-price">${opt.buildPrice}</span>
                       </button>
+                      <p className="sub-upgrade-explainer" data-testid={`upgrade-explainer-${opt.id}`}>
+                        ONCE basic build or rebuild accepted any upgrades later only have a set cost of:
+                      </p>
                       <button
                         data-testid={`website-${opt.id}-upgrade`}
                         className={`sub-website-suboption ${isUpgradeSelected ? 'active' : ''}`}
