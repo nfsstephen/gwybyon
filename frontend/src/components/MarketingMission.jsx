@@ -99,7 +99,7 @@ const MarketingMission = () => {
             </div>
             <div className="mm-approach-card">
               <div className="mm-approach-step">03</div>
-              <h4>Results Based Pricing</h4>
+              <h4>Fair Results Based Pricing</h4>
               <p>
                 As stated earlier in the page, websites are about marketing. It is fair for you to expect results for your marketing costs. Your marketing costs should be fair. Why should small market customers pay Large market prices? In marketing it is not the labor that costs it is the expertise, knowing what delivers results. You deserve that and we commit to deliver results. Results that can be measured, and the tools to make those measurements.
               </p>
