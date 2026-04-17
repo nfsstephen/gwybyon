@@ -33,6 +33,40 @@ async def get_taken_territories(industry: str = ""):
     return {"taken": taken}
 
 
+@router.get("/region-colors")
+async def get_region_colors(state: str = ""):
+    """Return county → region color mapping for a given state.
+    Requires territories.region_id FK to Region table."""
+    if not state:
+        return {"colors": {}}
+    try:
+        # Fetch territories for the given state that have a region_id
+        territories = supabase.table("territories").select("county, region_id").eq("state", state).not_.is_("region_id", "null").execute()
+        t_rows = territories.data or []
+        if not t_rows:
+            return {"colors": {}}
+
+        # Fetch all regions
+        regions = supabase.table("Region").select("id, name, color").execute()
+        region_map = {r["id"]: r for r in (regions.data or [])}
+
+        # Build county → color mapping
+        colors = {}
+        for t in t_rows:
+            region = region_map.get(t.get("region_id"))
+            if region:
+                county_name = (t.get("county") or "").strip()
+                colors[county_name.lower()] = {
+                    "color": region["color"],
+                    "region": region["name"]
+                }
+        return {"colors": colors}
+    except Exception:
+        # region_id column may not exist yet — return empty gracefully
+        return {"colors": {}}
+
+
+
 @router.get("/categories")
 async def get_categories():
     """Fetch categories joined with DefaultPricing and county_type to get pricing by type."""

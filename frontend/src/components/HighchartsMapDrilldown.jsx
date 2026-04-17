@@ -68,6 +68,7 @@ export default function HighchartsMapDrilldown({ country, city, state: stateProp
   const [autoStateInfo, setAutoStateInfo] = useState('');
   const [loadingCounty, setLoadingCounty] = useState(false);
   const countyCache = useRef({});
+  const regionColorsCache = useRef({});
   const toggleRef = useRef(onToggleCounty);
   const selectedRef = useRef(selectedCounties);
   const takenRef = useRef(takenCounties);
@@ -219,6 +220,20 @@ export default function HighchartsMapDrilldown({ country, city, state: stateProp
       return;
     }
 
+    // Fetch region colors for this state
+    let regionColors = regionColorsCache.current[stateName] || {};
+    if (!regionColorsCache.current[stateName]) {
+      try {
+        const API_URL = process.env.REACT_APP_BACKEND_URL;
+        const res = await fetch(`${API_URL}/api/contracts/region-colors?state=${encodeURIComponent(stateName)}`);
+        const data = await res.json();
+        regionColors = data.colors || {};
+        regionColorsCache.current[stateName] = regionColors;
+      } catch (e) {
+        console.error('Region colors fetch error:', e);
+      }
+    }
+
     const features = mapData.objects
       ? Object.values(mapData.objects)[0]?.geometries || []
       : [];
@@ -246,14 +261,19 @@ export default function HighchartsMapDrilldown({ country, city, state: stateProp
     const countyData = features.map(feat => {
       const props = feat.properties || {};
       const hcKey = props['hc-key'] || '';
+      const countyName = (props.name || '').toLowerCase();
       const isSelected = selectedRef.current.includes(hcKey) || (hcKey === autoSelectKey && !isTakenTerritory);
       const isTaken = takenRef.current && takenRef.current.has(hcKey);
+      const regionInfo = regionColors[countyName];
+      const regionColor = regionInfo ? regionInfo.color : undefined;
       return {
         'hc-key': hcKey,
         name: props.name || '',
         value: isTaken ? 3 : isSelected ? 2 : 1,
-        color: isTaken ? '#991b1b' : isSelected ? '#16a34a' : undefined,
+        color: isTaken ? '#991b1b' : isSelected ? '#16a34a' : regionColor,
         taken: isTaken,
+        regionColor: regionColor,
+        regionName: regionInfo ? regionInfo.region : '',
         className: isTaken ? 'taken-territory' : '',
       };
     });
@@ -306,16 +326,17 @@ export default function HighchartsMapDrilldown({ country, city, state: stateProp
             const name = e.point.name;
             if (key && !e.point.options.taken) {
               toggleRef.current(key, name);
-              // Visual feedback: toggle color
+              // Visual feedback: toggle color (restore region color on deselect)
               const nowSelected = !selectedRef.current.includes(key);
+              const restoreColor = e.point.options.regionColor || null;
               e.point.update({
-                color: nowSelected ? '#16a34a' : null,
+                color: nowSelected ? '#16a34a' : restoreColor,
                 value: nowSelected ? 2 : 1,
               });
             }
           },
         },
-        tooltip: { headerFormat: '', pointFormat: '<b>{point.name}</b>{#if point.taken}<br/><span style="color:#ef4444;font-weight:bold">TERRITORY TAKEN</span>{/if}{#unless point.taken}<br/>Click to select/deselect{/unless}' },
+        tooltip: { headerFormat: '', pointFormat: '<b>{point.name}</b>{#if point.regionName}<br/><span style="color:#94a3b8">Region: {point.regionName}</span>{/if}{#if point.taken}<br/><span style="color:#ef4444;font-weight:bold">TERRITORY TAKEN</span>{/if}{#unless point.taken}<br/>Click to select/deselect{/unless}' },
       }],
     });
 
