@@ -99,12 +99,9 @@ const MarketingMission = () => {
             </div>
             <div className="mm-approach-card">
               <div className="mm-approach-step">03</div>
-              <h4>Fair Pricing</h4>
+              <h4>Results Based Pricing</h4>
               <p>
-                When you select your market territory, the system automatically determines whether 
-                you're in a large or small market area. Small market customers receive a 75% discount 
-                on all pricing. Because your market requires less effort to dominate — and our pricing 
-                reflects that honestly.
+                As stated earlier in the page, websites are about marketing. It is fair for you to expect results for your marketing costs. Your marketing costs should be fair. Why should small market customers pay Large market prices? In marketing it is not the labor that costs it is the expertise, knowing what delivers results. You deserve that and we commit to deliver results. Results that can be measured, and the tools to make those measurements.
               </p>
             </div>
           </div>
