@@ -11,7 +11,7 @@ const WEBSITE_OPTIONS = [
     icon: Globe,
     description: 'Brand new website from scratch',
     buildLabel: 'Build',
-    buildPrice: 150,
+    buildPrice: 250,
     upgradePrice: 50,
   },
   {
@@ -20,7 +20,7 @@ const WEBSITE_OPTIONS = [
     icon: RefreshCw,
     description: 'Rebuild your existing website',
     buildLabel: 'Rebuild',
-    buildPrice: 300,
+    buildPrice: 450,
     upgradePrice: 150,
   },
 ];
