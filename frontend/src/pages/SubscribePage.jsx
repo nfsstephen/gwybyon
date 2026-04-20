@@ -51,16 +51,24 @@ const CONTINENTAL_STATES = [
 ];
 
 const STORAGE_KEY = 'gwybyon_subscribe';
+const APP_VERSION = '2.1';
 
 function loadState() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : {};
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    // Clear stale cache when app version changes
+    if (parsed._v !== APP_VERSION) {
+      localStorage.removeItem(STORAGE_KEY);
+      return {};
+    }
+    return parsed;
   } catch { return {}; }
 }
 
 function saveState(state) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...state, _v: APP_VERSION }));
 }
 
 export default function SubscribePage() {
