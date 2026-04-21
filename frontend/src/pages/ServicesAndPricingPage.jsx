@@ -350,11 +350,11 @@ const ServicesAndPricingPage = () => {
                   <th className="sp-matrix-feature-col"></th>
                   <th className="sp-matrix-tier-col" data-testid="sp-small-standard-head">
                     <div className="sp-matrix-tier-name">Standard</div>
-                    <div className="sp-matrix-tier-price">$100<span>/mo</span></div>
+                    <div className="sp-matrix-tier-price">$200<span>/mo</span></div>
                   </th>
                   <th className="sp-matrix-tier-col sp-matrix-tier-small-premium" data-testid="sp-small-premium-head">
                     <div className="sp-matrix-tier-name">Premium</div>
-                    <div className="sp-matrix-tier-price">$200<span>/mo</span></div>
+                    <div className="sp-matrix-tier-price">$300<span>/mo</span></div>
                   </th>
                   <th className="sp-matrix-tier-col sp-matrix-tier-large" data-testid="sp-large-head">
                     <div className="sp-matrix-pop-badge">All 5 Tools</div>

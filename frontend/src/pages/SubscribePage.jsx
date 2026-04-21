@@ -26,8 +26,8 @@ const WEBSITE_OPTIONS = [
 ];
 
 const TIERS = [
-  { id: 'small-standard', market: 'small', name: 'Standard', monthlyPrice: 100, tools: '2 of 5' },
-  { id: 'small-premium', market: 'small', name: 'Premium', monthlyPrice: 200, tools: '5 of 5', popular: true },
+  { id: 'small-standard', market: 'small', name: 'Standard', monthlyPrice: 200, tools: '2 of 5' },
+  { id: 'small-premium', market: 'small', name: 'Premium', monthlyPrice: 300, tools: '5 of 5', popular: true },
   { id: 'large-full', market: 'large', name: 'Full Suite', monthlyPrice: 400, tools: '5 of 5' },
 ];
 
@@ -51,7 +51,7 @@ const CONTINENTAL_STATES = [
 ];
 
 const STORAGE_KEY = 'gwybyon_subscribe';
-const APP_VERSION = '2.1';
+const APP_VERSION = '2.2';
 
 function loadState() {
   try {
