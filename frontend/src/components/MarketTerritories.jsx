@@ -111,7 +111,7 @@ const MarketTerritories = () => {
             <div className="mt-step-number">01</div>
             <div className="mt-step-icon"><Users size={28} /></div>
             <h4>Define Industries</h4>
-            <p>We have identified SEVEN high-value local industries where businesses need both search visibility (GeoGrid) and field team management (BYON). Each industry gets its own territory map.</p>
+            <p>We have identified EIGHT high-value local industries where businesses need both search visibility (GeoGrid) and field team management (BYON). Each industry gets its own territory map.</p>
             <ul className="mt-industry-list">
               <li>Well Drilling</li>
               <li>Septic Tank Installation & Service</li>
