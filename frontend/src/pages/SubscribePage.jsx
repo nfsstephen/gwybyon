@@ -432,6 +432,10 @@ export default function SubscribePage() {
             <p className="sub-market-intro">
               Enter your business details below. Your city and state will automatically load the territory map where you can select the counties you want to claim as your exclusive market areas.
             </p>
+            <p className="sub-region-promo" data-testid="region-promo-text">
+              Purchase every county in a region and receive a <strong>25% discount</strong> plus the 
+              option to <strong>split your territory cost into 12 monthly payments</strong> on your contract.
+            </p>
             <div className="sub-business-form" data-testid="business-details-form">
               <div className="sub-business-field">
                 <label htmlFor="biz-name">Business Name</label>
@@ -683,6 +687,12 @@ export default function SubscribePage() {
                           <div className="sub-invoice-discount-row" data-testid="region-discount-row">
                             <span>Region Group Discount (25%)</span>
                             <span>-${regionDiscountTotal.toLocaleString()}</span>
+                          </div>
+                        )}
+                        {completeRegions.size > 0 && (
+                          <div className="sub-invoice-region-benefit" data-testid="region-benefit-note">
+                            Full region purchase unlocks <strong>25% discount</strong> and the option to 
+                            <strong> break your territory payment into 12 monthly installments</strong> on your contract.
                           </div>
                         )}
                         <div className="sub-invoice-territory-total-row">

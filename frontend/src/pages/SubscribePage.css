@@ -1268,6 +1268,29 @@
   color: #059669;
 }
 
+.sub-invoice-region-benefit {
+  font-size: 0.75rem;
+  color: #0d9488;
+  background: #f0fdfa;
+  border: 1px solid #99f6e4;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin: 8px 0 4px 22px;
+  line-height: 1.5;
+}
+
+.sub-region-promo {
+  font-size: 0.9rem;
+  color: #0d9488;
+  background: #f0fdfa;
+  border-left: 3px solid #0d9488;
+  padding: 10px 14px;
+  margin: 0 0 20px 0;
+  border-radius: 0 6px 6px 0;
+  line-height: 1.6;
+}
+
+
 
 
 /* Territory total row — at bottom of county list */
