@@ -35,32 +35,7 @@ const STATE_CODE_TO_NAME = Object.fromEntries(
   Object.entries(STATE_NAME_TO_CODE).map(([name, code]) => [code, name.replace(/\b\w/g, c => c.toUpperCase())])
 );
 
-async function geocodeCity(city, stateContext) {
-  if (!city || city.trim().length < 2) return null;
-  try {
-    // Append state context to disambiguate city names (e.g., "Union" → "Union, Florida, USA")
-    let query = city;
-    if (stateContext) {
-      // Convert abbreviation (e.g., "FL") to full name (e.g., "Florida") for better Nominatim results
-      const fullStateName = STATE_CODE_TO_NAME[stateContext.toLowerCase()] || stateContext;
-      query = `${city}, ${fullStateName}, USA`;
-    }
-    const res = await fetch(
-      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=us&limit=1&addressdetails=1`,
-      { headers: { 'Accept-Language': 'en' } }
-    );
-    const data = await res.json();
-    if (data && data.length > 0 && data[0].address) {
-      const state = data[0].address.state;
-      if (state) return { stateName: state, stateCode: resolveStateCode(state), displayName: data[0].display_name };
-    }
-  } catch (e) {
-    console.error('Geocode error:', e);
-  }
-  return null;
-}
-
-export default function HighchartsMapDrilldown({ country, city, state: stateProp, selectedCounties, onToggleCounty, takenCounties }) {
+export default function HighchartsMapDrilldown({ country, state: stateProp, selectedCounties, onToggleCounty, takenCounties }) {
   const containerRef = useRef(null);
   const chartInstanceRef = useRef(null);
   const [drillLevel, setDrillLevel] = useState('country');
@@ -72,8 +47,6 @@ export default function HighchartsMapDrilldown({ country, city, state: stateProp
   const toggleRef = useRef(onToggleCounty);
   const selectedRef = useRef(selectedCounties);
   const takenRef = useRef(takenCounties);
-  const geocodeDebounce = useRef(null);
-  const lastGeocodedCity = useRef('');
   const currentDrilledState = useRef('');
 
   useEffect(() => { toggleRef.current = onToggleCounty; }, [onToggleCounty]);
@@ -210,7 +183,7 @@ export default function HighchartsMapDrilldown({ country, city, state: stateProp
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const drillIntoState = useCallback(async (stateCode, stateName, autoSelectCountyName) => {
+  const drillIntoState = useCallback(async (stateCode, stateName) => {
     setLoadingCounty(true);
     setActiveState(stateName);
 
@@ -238,31 +211,11 @@ export default function HighchartsMapDrilldown({ country, city, state: stateProp
       ? Object.values(mapData.objects)[0]?.geometries || []
       : [];
 
-    // Find the county to auto-select (match by name, case-insensitive)
-    let autoSelectKey = null;
-    if (autoSelectCountyName) {
-      const searchName = autoSelectCountyName.toLowerCase().trim();
-      const match = features.find(feat => {
-        const name = (feat.properties?.name || '').toLowerCase();
-        return name === searchName || name.startsWith(searchName) || searchName.startsWith(name);
-      });
-      if (match) {
-        autoSelectKey = match.properties['hc-key'];
-      }
-    }
-
-    // Auto-select the matched county if not already selected AND not taken by another business
-    const isTakenTerritory = autoSelectKey && takenRef.current && takenRef.current.has(autoSelectKey);
-    if (autoSelectKey && !selectedRef.current.includes(autoSelectKey) && !isTakenTerritory) {
-      const countyName = features.find(f => f.properties['hc-key'] === autoSelectKey)?.properties?.name || '';
-      toggleRef.current(autoSelectKey, countyName);
-    }
-
     const countyData = features.map(feat => {
       const props = feat.properties || {};
       const hcKey = props['hc-key'] || '';
       const countyName = (props.name || '').toLowerCase();
-      const isSelected = selectedRef.current.includes(hcKey) || (hcKey === autoSelectKey && !isTakenTerritory);
+      const isSelected = selectedRef.current.includes(hcKey);
       const isTaken = takenRef.current && takenRef.current.has(hcKey);
       const regionInfo = regionColors[countyName];
       const regionColor = regionInfo ? regionInfo.color : undefined;
@@ -346,51 +299,23 @@ export default function HighchartsMapDrilldown({ country, city, state: stateProp
     setLoadingCounty(false);
   }, [loadCountyMap]);
 
-  // Auto-drill when city changes: geocode city → resolve state → drill into state
+  // Auto-drill when state prop changes: directly drill into the selected state
   useEffect(() => {
-    if (geocodeDebounce.current) clearTimeout(geocodeDebounce.current);
+    if (!stateProp || stateProp.trim().length < 2) return;
 
-    if (!city || city.trim().length < 2) {
-      setAutoStateInfo('');
-      return;
-    }
+    const stateCode = resolveStateCode(stateProp);
+    if (!stateCode) return;
+    if (currentDrilledState.current === stateCode) return;
 
-    const trimmedCity = city.trim();
-    if (trimmedCity === lastGeocodedCity.current) return;
-
-    geocodeDebounce.current = setTimeout(async () => {
-      lastGeocodedCity.current = trimmedCity;
-
-      // First check if the city IS a state name directly
-      const directCode = resolveStateCode(trimmedCity);
-      if (directCode) {
-        const stateName = Object.keys(STATE_NAME_TO_CODE).find(k => STATE_NAME_TO_CODE[k] === directCode) || trimmedCity;
-        const capitalizedName = stateName.replace(/\b\w/g, c => c.toUpperCase());
-        if (currentDrilledState.current !== directCode) {
-          setAutoStateInfo(`Auto-loaded: ${capitalizedName}`);
-          drillIntoState(directCode, capitalizedName, trimmedCity);
-        }
-        return;
-      }
-
-      // Geocode the city
-      const result = await geocodeCity(trimmedCity, stateProp);
-      if (result && result.stateCode) {
-        if (currentDrilledState.current !== result.stateCode) {
-          setAutoStateInfo(`${trimmedCity} → ${result.stateName}`);
-          drillIntoState(result.stateCode, result.stateName, trimmedCity);
-        }
-      }
-    }, 900);
-
-    return () => { if (geocodeDebounce.current) clearTimeout(geocodeDebounce.current); };
-  }, [city, stateProp, drillIntoState]);
+    const stateName = STATE_CODE_TO_NAME[stateCode] || stateProp;
+    setAutoStateInfo(`Viewing: ${stateName}`);
+    drillIntoState(stateCode, stateName);
+  }, [stateProp, drillIntoState]);
 
   const handleDrillUp = useCallback(() => {
     if (!containerRef.current) return;
 
     currentDrilledState.current = '';
-    lastGeocodedCity.current = '';
     setAutoStateInfo('');
 
     // Destroy county chart and recreate US chart
@@ -499,7 +424,7 @@ export default function HighchartsMapDrilldown({ country, city, state: stateProp
         ) : (
           <span className="hc-status-hint">
             <MapPin size={14} />
-            {city ? 'Locating your area...' : 'Enter your city in Step 2 or click a state to drill down'}
+            {loadingCounty ? 'Loading counties...' : 'Select a state in Step 2 or click a state to drill down'}
           </span>
         )}
       </div>

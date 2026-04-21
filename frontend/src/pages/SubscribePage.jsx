@@ -430,7 +430,7 @@ export default function SubscribePage() {
             {/* Step 2: Business Details & Market Areas */}
             <h2 className="sub-section-label" id="step-business">2. Business Details & Market Areas</h2>
             <p className="sub-market-intro">
-              Enter your business details below. Your city and state will automatically load the territory map where you can select the counties you want to claim as your exclusive market areas.
+              Enter your business details below. Your state will automatically load the territory map where you can select the counties you want to claim as your exclusive market areas.
             </p>
             <p className="sub-region-promo" data-testid="region-promo-text">
               Purchase every county in a region and receive a <strong>25% discount</strong> plus the 
@@ -536,7 +536,6 @@ export default function SubscribePage() {
 
             <HighchartsMapDrilldown
               country="USA"
-              city={businessDetails.city}
               state={businessDetails.state}
               selectedCounties={selectedCounties}
               onToggleCounty={handleToggleCounty}
