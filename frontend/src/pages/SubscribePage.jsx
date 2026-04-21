@@ -523,7 +523,8 @@ export default function SubscribePage() {
                   required
                 >
                   <option value="">Select Industry</option>
-                  <option value="Well & Septic Co.">Well &amp; Septic Co.</option>
+                  <option value="Well Drilling">Well Drilling</option>
+                  <option value="Septic Tank Installation & Service">Septic Tank Installation &amp; Service</option>
                   <option value="Plumbers">Plumbers</option>
                   <option value="Electricians">Electricians</option>
                   <option value="Air & Heating Co.">Air &amp; Heating Co.</option>

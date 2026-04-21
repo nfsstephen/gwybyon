@@ -113,7 +113,8 @@ const MarketTerritories = () => {
             <h4>Define Industries</h4>
             <p>We have identified SEVEN high-value local industries where businesses need both search visibility (GeoGrid) and field team management (BYON). Each industry gets its own territory map.</p>
             <ul className="mt-industry-list">
-              <li>Well & Septic Companies</li>
+              <li>Well Drilling</li>
+              <li>Septic Tank Installation & Service</li>
               <li>Plumbing Companies</li>
               <li>Electrical Companies</li>
               <li>Air & Heating Companies</li>
@@ -179,7 +180,7 @@ const MarketTerritories = () => {
           </p>
         </div>
         <div className="mt-closing-cta">
-          <Link to="/seven-industries" className="mt-cta-btn" data-testid="mt-cta-industries">
+          <Link to="/eight-industries" className="mt-cta-btn" data-testid="mt-cta-industries">
             Select Your Industry to See Your Solution <ArrowRight size={16} />
           </Link>
         </div>

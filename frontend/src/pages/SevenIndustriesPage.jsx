@@ -5,24 +5,46 @@ import './SevenIndustriesPage.css';
 
 const INDUSTRIES = [
   {
-    id: 'well-septic',
-    name: 'Well & Septic Co.',
+    id: 'well-drilling',
+    name: 'Well Drilling',
     icon: Droplets,
     color: '#0369a1',
     accent: '#e0f2fe',
-    heroText: 'Homeowners don\'t think about their well or septic system until something goes wrong — and when it does, they search immediately.',
-    searchProblem: 'When a septic system backs up or a well pump fails, homeowners grab their phone and search "septic service near me." If your company isn\'t in the top 3 results, you don\'t exist. Your competitors who invest in local search optimization are getting those emergency calls — and those are high-ticket jobs.',
+    heroText: 'Homeowners don\'t think about their well system until something goes wrong — and when it does, they search immediately.',
+    searchProblem: 'When a well pump fails or water quality drops, homeowners grab their phone and search "well drilling near me." If your company isn\'t in the top 3 results, you don\'t exist. Your competitors who invest in local search optimization are getting those emergency calls — and those are high-ticket jobs.',
     teamProblem: 'Your technicians are in the field all day responding to emergencies. They use personal phones to coordinate with dispatch, call customers, and receive job updates. You have no visibility into those communications and no way to protect them from scam calls.',
     geogridBenefits: [
-      { title: 'Emergency Search Dominance', desc: 'Rank at the top for "septic emergency near me," "well pump repair," and other high-intent searches.' },
+      { title: 'Emergency Search Dominance', desc: 'Rank at the top for "well drilling near me," "well pump repair," and other high-intent searches.' },
       { title: 'Google Business Optimization', desc: 'Accurate service areas, hours, emergency availability, and trust-building reviews.' },
-      { title: 'Neighborhood-Level Targeting', desc: 'Optimize for specific rural areas where well and septic services are concentrated.' },
+      { title: 'Neighborhood-Level Targeting', desc: 'Optimize for specific rural areas where well services are concentrated.' },
       { title: 'Competitor Monitoring', desc: 'Track where competitors rank and identify gaps in their coverage.' },
     ],
     byonBenefits: [
       { title: 'Emergency Dispatch Line', desc: 'Technicians receive emergency calls on their business line — dispatch can reach them instantly.' },
       { title: 'Customer Communication Control', desc: 'All customer-facing calls go through the business line. Number stays with you.' },
       { title: 'Location & Route Tracking', desc: 'Know where your crews are in real-time. Optimize routing between calls.' },
+      { title: 'After-Hours Separation', desc: 'Business line forwards to on-call staff. Technicians get their personal time back.' },
+    ],
+  },
+  {
+    id: 'septic',
+    name: 'Septic Tank Installation & Service',
+    icon: Droplets,
+    color: '#1e6b8a',
+    accent: '#dbeafe',
+    heroText: 'When a septic system backs up or needs replacement, homeowners need a trusted professional immediately — and they search locally.',
+    searchProblem: 'When a septic system backs up, homeowners search "septic service near me" or "septic tank installation." If your company isn\'t in the top 3 results, you don\'t exist. Your competitors who invest in local search optimization are getting those emergency calls — and those are high-ticket jobs.',
+    teamProblem: 'Your crews are in the field handling installations and emergency pumping calls. They use personal phones to coordinate with dispatch, call customers, and receive job updates. You have no visibility into those communications and no way to protect them from scam calls.',
+    geogridBenefits: [
+      { title: 'Emergency Search Dominance', desc: 'Rank at the top for "septic emergency near me," "septic tank installation," and other high-intent searches.' },
+      { title: 'Google Business Optimization', desc: 'Accurate service areas, hours, emergency availability, and trust-building reviews.' },
+      { title: 'Neighborhood-Level Targeting', desc: 'Optimize for specific rural and suburban areas where septic systems are most common.' },
+      { title: 'Competitor Monitoring', desc: 'Track where competitors rank and identify gaps in their coverage.' },
+    ],
+    byonBenefits: [
+      { title: 'Emergency Dispatch Line', desc: 'Crews receive emergency calls on their business line — dispatch can reach them instantly.' },
+      { title: 'Customer Communication Control', desc: 'All customer-facing calls go through the business line. Number stays with you.' },
+      { title: 'Location & Route Tracking', desc: 'Know where your crews are in real-time. Optimize routing between jobs.' },
       { title: 'After-Hours Separation', desc: 'Business line forwards to on-call staff. Technicians get their personal time back.' },
     ],
   },
@@ -160,18 +182,18 @@ const INDUSTRIES = [
   },
 ];
 
-export default function SevenIndustriesPage() {
+export default function EightIndustriesPage() {
   const [activeIndustry, setActiveIndustry] = useState(INDUSTRIES[0].id);
   const current = INDUSTRIES.find(i => i.id === activeIndustry);
 
   return (
-    <div className="si-page" data-testid="seven-industries-page">
+    <div className="si-page" data-testid="eight-industries-page">
 
       {/* Hero */}
       <section className="si-hero">
         <div className="si-hero-inner">
           <span className="si-hero-badge">WHO WE SERVE</span>
-          <h1 className="si-hero-title">Seven Industries.<br />Two Problems. One Vendor.</h1>
+          <h1 className="si-hero-title">Eight Industries.<br />Two Problems. One Vendor.</h1>
           <p className="si-hero-subtitle">
             Every service business faces the same challenge: being found when customers search,
             and managing team communications as you scale. We solve both — exclusively for your territory.
