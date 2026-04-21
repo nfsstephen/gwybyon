@@ -35,35 +35,42 @@ async def get_taken_territories(industry: str = ""):
 
 @router.get("/region-colors")
 async def get_region_colors(state: str = ""):
-    """Return county → region color mapping for a given state.
+    """Return county → region color mapping and region group totals for a given state.
     Requires territories.region_id FK to Region table."""
     if not state:
-        return {"colors": {}}
+        return {"colors": {}, "region_groups": {}}
     try:
         # Fetch territories for the given state that have a region_id
         territories = supabase.table("territories").select("county, region_id").eq("state", state).not_.is_("region_id", "null").execute()
         t_rows = territories.data or []
         if not t_rows:
-            return {"colors": {}}
+            return {"colors": {}, "region_groups": {}}
 
         # Fetch all regions
         regions = supabase.table("Region").select("id, name, color").execute()
         region_map = {r["id"]: r for r in (regions.data or [])}
 
-        # Build county → color mapping
+        # Build county → color mapping and region groups
         colors = {}
+        region_groups = {}
         for t in t_rows:
             region = region_map.get(t.get("region_id"))
             if region:
                 county_name = (t.get("county") or "").strip()
-                colors[county_name.lower()] = {
+                county_lower = county_name.lower()
+                colors[county_lower] = {
                     "color": region["color"],
                     "region": region["name"]
                 }
-        return {"colors": colors}
+                rname = region["name"]
+                if rname not in region_groups:
+                    region_groups[rname] = {"color": region["color"], "counties": []}
+                region_groups[rname]["counties"].append(county_lower)
+
+        return {"colors": colors, "region_groups": region_groups}
     except Exception:
         # region_id column may not exist yet — return empty gracefully
-        return {"colors": {}}
+        return {"colors": {}, "region_groups": {}}
 
 
 

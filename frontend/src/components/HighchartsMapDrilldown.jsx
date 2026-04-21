@@ -270,7 +270,7 @@ export default function HighchartsMapDrilldown({ country, city, state: stateProp
         'hc-key': hcKey,
         name: props.name || '',
         value: isTaken ? 3 : isSelected ? 2 : 1,
-        color: isTaken ? '#991b1b' : isSelected ? '#16a34a' : regionColor,
+        color: isTaken ? '#991b1b' : isSelected ? '#FF8C00' : regionColor,
         taken: isTaken,
         regionColor: regionColor,
         regionName: regionInfo ? regionInfo.region : '',
@@ -330,7 +330,7 @@ export default function HighchartsMapDrilldown({ country, city, state: stateProp
               const nowSelected = !selectedRef.current.includes(key);
               const restoreColor = e.point.options.regionColor || null;
               e.point.update({
-                color: nowSelected ? '#16a34a' : restoreColor,
+                color: nowSelected ? '#FF8C00' : restoreColor,
                 value: nowSelected ? 2 : 1,
               });
             }

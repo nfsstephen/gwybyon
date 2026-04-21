@@ -86,6 +86,8 @@ export default function SubscribePage() {
   const [depositError, setDepositError] = useState(null);
   const [dbCategories, setDbCategories] = useState([]);
   const [takenTerritories, setTakenTerritories] = useState([]);
+  const [regionGroups, setRegionGroups] = useState({});
+  const [regionColors, setRegionColors] = useState({});
 
   const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -108,6 +110,24 @@ export default function SubscribePage() {
       .then(data => setDbCategories(data.categories || []))
       .catch(() => setDbCategories([]));
   }, [API_URL]);
+
+  // Fetch region groups when state changes (for region discount calculation)
+  useEffect(() => {
+    if (!businessDetails.state) {
+      setRegionGroups({});
+      setRegionColors({});
+      return;
+    }
+    const stateCode = businessDetails.state.toLowerCase();
+    const stateName = { al:'Alabama',az:'Arizona',ar:'Arkansas',ca:'California',co:'Colorado',ct:'Connecticut',de:'Delaware',fl:'Florida',ga:'Georgia',id:'Idaho',il:'Illinois',in:'Indiana',ia:'Iowa',ks:'Kansas',ky:'Kentucky',la:'Louisiana',me:'Maine',md:'Maryland',ma:'Massachusetts',mi:'Michigan',mn:'Minnesota',ms:'Mississippi',mo:'Missouri',mt:'Montana',ne:'Nebraska',nv:'Nevada',nh:'New Hampshire',nj:'New Jersey',nm:'New Mexico',ny:'New York',nc:'North Carolina',nd:'North Dakota',oh:'Ohio',ok:'Oklahoma',or:'Oregon',pa:'Pennsylvania',ri:'Rhode Island',sc:'South Carolina',sd:'South Dakota',tn:'Tennessee',tx:'Texas',ut:'Utah',vt:'Vermont',va:'Virginia',wa:'Washington',wv:'West Virginia',wi:'Wisconsin',wy:'Wyoming' }[stateCode] || businessDetails.state;
+    fetch(`${API_URL}/api/contracts/region-colors?state=${encodeURIComponent(stateName)}`)
+      .then(res => res.json())
+      .then(data => {
+        setRegionGroups(data.region_groups || {});
+        setRegionColors(data.colors || {});
+      })
+      .catch(() => { setRegionGroups({}); setRegionColors({}); });
+  }, [businessDetails.state, API_URL]);
 
   useEffect(() => {
     saveState({ websiteChoice, serviceType, businessDetails, selectedCounties, countyNames, selectedTier, countyPrices });
@@ -198,12 +218,53 @@ export default function SubscribePage() {
     return price != null ? price : null;
   };
 
+  // Determine which regions are fully selected (all counties in that region are selected)
+  const completeRegions = useMemo(() => {
+    if (Object.keys(regionGroups).length === 0 || selectedCounties.length === 0) return new Set();
+    // Build a set of selected county names (lowercase)
+    const selectedNames = new Set(
+      selectedCounties.map(id => (countyNames[id] || '').toLowerCase().trim()).filter(Boolean)
+    );
+    const complete = new Set();
+    for (const [regionName, group] of Object.entries(regionGroups)) {
+      const regionCounties = group.counties || [];
+      if (regionCounties.length > 0 && regionCounties.every(c => selectedNames.has(c))) {
+        complete.add(regionName);
+      }
+    }
+    return complete;
+  }, [regionGroups, selectedCounties, countyNames]);
+
+  // Check if a county belongs to a complete region (eligible for 25% discount)
+  const getCountyRegion = (countyId) => {
+    const name = (countyNames[countyId] || '').toLowerCase().trim();
+    const info = regionColors[name];
+    return info ? info.region : null;
+  };
+
+  const isCountyDiscounted = (countyId) => {
+    const region = getCountyRegion(countyId);
+    return region && completeRegions.has(region);
+  };
+
   const countyTotal = useMemo(() => {
     return selectedCounties.reduce((sum, id) => {
       const price = countyPrices[id];
-      return sum + (price != null ? price : 0);
+      if (price == null) return sum;
+      const discounted = isCountyDiscounted(id);
+      return sum + (discounted ? Math.round(price * 0.75) : price);
     }, 0);
-  }, [selectedCounties, countyPrices]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedCounties, countyPrices, completeRegions]);
+
+  const regionDiscountTotal = useMemo(() => {
+    return selectedCounties.reduce((sum, id) => {
+      const price = countyPrices[id];
+      if (price == null || !isCountyDiscounted(id)) return sum;
+      return sum + Math.round(price * 0.25);
+    }, 0);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedCounties, countyPrices, completeRegions]);
 
   const invoice = useMemo(() => {
     let monthlyTotal = 0;
@@ -599,17 +660,31 @@ export default function SubscribePage() {
                         {selectedCounties.map(id => {
                           const displayName = countyNames[id] || id;
                           const price = getCountyPrice(id);
+                          const discounted = isCountyDiscounted(id);
+                          const discountedPrice = discounted && price != null ? Math.round(price * 0.75) : price;
+                          const region = getCountyRegion(id);
                           return (
                             <div key={id} className="sub-invoice-territory-item" data-testid={`invoice-county-${id}`}>
                               <div>
                                 <span className="sub-invoice-county-name">{displayName}</span>
+                                {discounted && <span className="sub-invoice-discount-badge" data-testid={`discount-badge-${id}`}>-25%</span>}
                               </div>
                               <span className="sub-invoice-county-price">
-                                {price != null ? `$${price.toLocaleString()}` : '—'}
+                                {price != null ? (
+                                  discounted ? (
+                                    <><s className="sub-price-struck">${price.toLocaleString()}</s> ${discountedPrice.toLocaleString()}</>
+                                  ) : `$${price.toLocaleString()}`
+                                ) : '—'}
                               </span>
                             </div>
                           );
                         })}
+                        {regionDiscountTotal > 0 && (
+                          <div className="sub-invoice-discount-row" data-testid="region-discount-row">
+                            <span>Region Group Discount (25%)</span>
+                            <span>-${regionDiscountTotal.toLocaleString()}</span>
+                          </div>
+                        )}
                         <div className="sub-invoice-territory-total-row">
                           <span>Territory Total</span>
                           <span>${countyTotal.toLocaleString()}</span>

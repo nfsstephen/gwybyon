@@ -1238,6 +1238,37 @@
   font-size: 0.8rem;
 }
 
+.sub-invoice-discount-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #059669;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-radius: 4px;
+  padding: 1px 5px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.sub-price-struck {
+  color: #94a3b8;
+  text-decoration: line-through;
+  font-weight: 400;
+  margin-right: 4px;
+  font-size: 0.75rem;
+}
+
+.sub-invoice-discount-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0 2px 22px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #059669;
+}
+
+
 
 /* Territory total row — at bottom of county list */
 .sub-invoice-territory-total-row {
