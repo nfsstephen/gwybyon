@@ -100,7 +100,7 @@ async def get_categories():
             grouped[cid]["types"].append({
                 "category_id": cid,
                 "type": type_names.get(row["TypeId"], ""),
-                "price": row["Price"],
+                "price": row.get("CountyPrice") if row.get("CountyPrice") is not None else row["Price"],
             })
 
     return {"categories": list(grouped.values())}
@@ -114,29 +114,44 @@ class TerritoryPricingRequest(BaseModel):
 
 @router.post("/territory-pricing")
 async def get_territory_pricing(req: TerritoryPricingRequest):
-    """Look up territory pricing from territory_pricings."""
+    """Look up territory pricing from DefaultPricing.CountyPrice using county type + category."""
     prices = {}
 
     if not req.counties or not req.category:
         return {"prices": prices}
 
-    cat_lower = req.category.strip().lower()
+    # Get category ID
+    cat_result = supabase.table("category").select("id, name").execute()
+    cat_map = {c["name"].strip().lower(): c["id"] for c in (cat_result.data or [])}
+    cat_id = cat_map.get(req.category.strip().lower())
+    if not cat_id:
+        return {"prices": prices}
 
-    # Fetch pricing rows
-    tp_result = supabase.table("territory_pricings").select("county, category, amount").execute()
-    tp_rows = tp_result.data or []
+    # Get DefaultPricing rows for this category
+    dp_result = supabase.table("DefaultPricing").select("TypeId, Price, CountyPrice").eq("CategoryId", cat_id).execute()
+    dp_rows = dp_result.data or []
+    # Build type_id -> price lookup (prefer CountyPrice, fall back to Price)
+    type_price = {}
+    for row in dp_rows:
+        price = row.get("CountyPrice") if row.get("CountyPrice") is not None else row.get("Price", 0)
+        type_price[row["TypeId"]] = price
 
-    # Build lookup: (county, category) -> amount
-    tp_lookup = {}
-    for row in tp_rows:
-        county_key = (row.get("county") or "").strip().lower()
-        row_cat = (row.get("category") or "").strip().lower()
-        tp_lookup[(county_key, row_cat)] = row.get("amount", 0)
+    # Get county types for requested state
+    state = req.state or "Florida"
+    terr_result = supabase.table("territories").select("county, type").eq("state", state).execute()
+    county_type_map = {}
+    for t in (terr_result.data or []):
+        county_key = (t.get("county") or "").strip().lower()
+        county_type_map[county_key] = t.get("type")
 
+    # Look up price for each county
     for county_name in req.counties:
         county_key = county_name.strip().lower()
-        price = tp_lookup.get((county_key, cat_lower))
-        prices[county_name] = price
+        county_type = county_type_map.get(county_key)
+        if county_type and county_type in type_price:
+            prices[county_name] = type_price[county_type]
+        else:
+            prices[county_name] = None
 
     return {"prices": prices}
 
