@@ -11,9 +11,15 @@ class PasswordVerify(BaseModel):
 
 @router.post("/verify-site")
 async def verify_site_password(body: PasswordVerify):
-    return {"valid": body.password == os.environ['SITE_PASSWORD']}
+    site_pw = os.environ.get('SITE_PASSWORD')
+    if not site_pw:
+        return {"valid": False, "error": "SITE_PASSWORD not configured"}
+    return {"valid": body.password == site_pw}
 
 
 @router.post("/verify-admin")
 async def verify_admin_password(body: PasswordVerify):
-    return {"valid": body.password == os.environ['ADMIN_PASSWORD']}
+    admin_pw = os.environ.get('ADMIN_PASSWORD')
+    if not admin_pw:
+        return {"valid": False, "error": "ADMIN_PASSWORD not configured"}
+    return {"valid": body.password == admin_pw}

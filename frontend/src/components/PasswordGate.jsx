@@ -33,10 +33,11 @@ const PasswordGate = ({ children }) => {
         setIsAuthenticated(true);
         setError('');
       } else {
-        setError('Incorrect password. Please try again.');
+        setError(data.error || 'Incorrect password. Please try again.');
       }
-    } catch {
-      setError('Unable to verify password. Please try again.');
+    } catch (err) {
+      console.error('Password verification failed:', err);
+      setError('Unable to connect to the server. Please check your connection and try again.');
     }
   };
 
