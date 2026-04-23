@@ -100,7 +100,7 @@ async def get_categories():
             grouped[cid]["types"].append({
                 "category_id": cid,
                 "type": type_names.get(row["TypeId"], ""),
-                "price": row.get("CountyPrice") if row.get("CountyPrice") is not None else row["Price"],
+                "price": row["Price"],
             })
 
     return {"categories": list(grouped.values())}
@@ -128,13 +128,12 @@ async def get_territory_pricing(req: TerritoryPricingRequest):
         return {"prices": prices}
 
     # Get DefaultPricing rows for this category
-    dp_result = supabase.table("DefaultPricing").select("TypeId, Price, CountyPrice").eq("CategoryId", cat_id).execute()
+    dp_result = supabase.table("DefaultPricing").select("TypeId, Price").eq("CategoryId", cat_id).execute()
     dp_rows = dp_result.data or []
-    # Build type_id -> price lookup (prefer CountyPrice, fall back to Price)
+    # Build type_id -> price lookup
     type_price = {}
     for row in dp_rows:
-        price = row.get("CountyPrice") if row.get("CountyPrice") is not None else row.get("Price", 0)
-        type_price[row["TypeId"]] = price
+        type_price[row["TypeId"]] = row.get("Price", 0)
 
     # Get county types for requested state
     state = req.state or "Florida"
