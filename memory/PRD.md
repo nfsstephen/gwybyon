@@ -107,6 +107,6 @@ Home | Seven Industries | Five Tools | Web Services | Services & Pricing | Subsc
 *Last Updated: Apr 18, 2026*
 
 ## Post-Fork Checklist (MUST verify after every fork)
-- [ ] Cache-control meta tags present in `/app/frontend/public/index.html` (no-cache, no-store, must-revalidate)
+- [ ] Cache-busting code present in `/app/frontend/public/index.html` — includes: meta tags (no-cache, no-store, must-revalidate), cache API clearing script, service worker unregister script. DO NOT REMOVE THESE.
 - [ ] `APP_VERSION` in `/app/frontend/src/pages/SubscribePage.jsx` is current — bump if prices or saved state shape changed
 - [ ] `emergentintegrations` is NOT in `/app/backend/requirements.txt` (breaks Railway deploy)

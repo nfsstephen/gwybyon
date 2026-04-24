@@ -13,6 +13,20 @@
     />
     <title>Gateway AI Systems</title>
     <script type="text/javascript">
+      // Force cache bust: clear old caches on every page load
+      if ('caches' in window) {
+        caches.keys().then(function(names) {
+          for (var i = 0; i < names.length; i++) caches.delete(names[i]);
+        });
+      }
+      // Unregister any stale service workers
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          for (var i = 0; i < registrations.length; i++) registrations[i].unregister();
+        });
+      }
+    </script>
+    <script type="text/javascript">
       (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
