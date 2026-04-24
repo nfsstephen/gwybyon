@@ -30,7 +30,7 @@ export default function SiteRoutes({ scrolled }) {
         <Route path="/seven-industries" element={<Navigate to="/eight-industries" replace />} />
       </Routes>
       <Footer />
-      <ChatWidget />
+      {/* <ChatWidget /> */}
     </div>
   );
 }
