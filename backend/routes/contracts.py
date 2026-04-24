@@ -114,26 +114,37 @@ class TerritoryPricingRequest(BaseModel):
 
 @router.post("/territory-pricing")
 async def get_territory_pricing(req: TerritoryPricingRequest):
-    """Look up territory pricing from DefaultPricing.CountyPrice using county type + category."""
+    """Look up territory pricing from DefaultPricing using county type.
+    Uses category-specific pricing if available, otherwise falls back to any pricing for that type."""
     prices = {}
 
-    if not req.counties or not req.category:
+    if not req.counties:
         return {"prices": prices}
 
-    # Get category ID
-    cat_result = supabase.table("category").select("id, name").execute()
-    cat_map = {c["name"].strip().lower(): c["id"] for c in (cat_result.data or [])}
-    cat_id = cat_map.get(req.category.strip().lower())
-    if not cat_id:
-        return {"prices": prices}
+    # Get category ID if category is provided
+    cat_id = None
+    if req.category:
+        cat_result = supabase.table("category").select("id, name").execute()
+        cat_map = {c["name"].strip().lower(): c["id"] for c in (cat_result.data or [])}
+        cat_id = cat_map.get(req.category.strip().lower())
 
-    # Get DefaultPricing rows for this category
-    dp_result = supabase.table("DefaultPricing").select("TypeId, Price").eq("CategoryId", cat_id).execute()
+    # Get ALL DefaultPricing rows
+    dp_result = supabase.table("DefaultPricing").select("TypeId, CategoryId, Price").execute()
     dp_rows = dp_result.data or []
-    # Build type_id -> price lookup
-    type_price = {}
+
+    # Build category-specific and fallback type_id -> price lookups
+    type_price_specific = {}
+    type_price_fallback = {}
     for row in dp_rows:
-        type_price[row["TypeId"]] = row.get("Price", 0)
+        tid = row["TypeId"]
+        price = row.get("Price", 0)
+        if cat_id and row["CategoryId"] == cat_id:
+            type_price_specific[tid] = price
+        if tid not in type_price_fallback:
+            type_price_fallback[tid] = price
+
+    # Use category-specific pricing if available, otherwise fallback
+    type_price = type_price_specific if type_price_specific else type_price_fallback
 
     # Get county types for requested state
     state_abbr_to_name = {
@@ -156,7 +167,7 @@ async def get_territory_pricing(req: TerritoryPricingRequest):
         county_key = (t.get("county") or "").strip().lower()
         county_type_map[county_key] = t.get("type")
 
-    # Look up price for each county
+    # Look up price for each county based on its type
     for county_name in req.counties:
         county_key = county_name.strip().lower()
         county_type = county_type_map.get(county_key)
