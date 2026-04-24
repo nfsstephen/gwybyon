@@ -91,7 +91,7 @@ const MarketTerritories = () => {
           <AlertTriangle size={28} className="mt-conflict-icon" />
           <h4>Our Conflict of Interest Guarantee</h4>
           <p>
-            We <strong>cannot</strong> work for your competitor. It's not just policy — it's in our contract. 
+            We <strong>cannot</strong> work for your competitor. 
             Once you claim your territory, we are legally bound to refuse service to any competing business 
             in your industry within your geographic zone. Your success becomes our only option.
           </p>
