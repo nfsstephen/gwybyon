@@ -183,15 +183,14 @@ export default function SubscribePage() {
     }
   }, [takenIds]);
 
-  // Fetch territory pricing from Supabase when counties or industry changes
+  // Fetch territory pricing when counties or industry changes
   useEffect(() => {
-    if (selectedCounties.length === 0 || !businessDetails.industry) {
+    if (selectedCounties.length === 0) {
       setCountyPrices({});
       return;
     }
 
-    // Industry dropdown value IS the category name from DB
-    const category = businessDetails.industry;
+    const category = businessDetails.industry || '';
     const countyNamesList = selectedCounties.map(id => countyNames[id] || id);
 
     setPricingLoading(true);
@@ -655,12 +654,6 @@ export default function SubscribePage() {
                           <span>Market Territories ({selectedCounties.length})</span>
                           {pricingLoading && <span className="sub-pricing-loading"> Loading prices...</span>}
                         </div>
-                        {!businessDetails.industry && (
-                          <div className="sub-invoice-notice" style={{ margin: '4px 0 8px' }}>
-                            <AlertCircle size={14} />
-                            <span>Select an industry to load territory pricing</span>
-                          </div>
-                        )}
                         {selectedCounties.map(id => {
                           const displayName = countyNames[id] || id;
                           const price = getCountyPrice(id);
