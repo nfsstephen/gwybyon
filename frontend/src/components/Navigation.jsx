@@ -45,6 +45,7 @@ const Navigation = ({ scrolled }) => {
             <li><Link to="/five-tools" className={isActive('/five-tools')} onClick={closeMobileMenu}>Five Tools</Link></li>
             <li><Link to="/web-service-v2" className={isActive('/web-service-v2')} onClick={closeMobileMenu}>Web Services</Link></li>
             <li><Link to="/services-pricing" className={isActive('/services-pricing')} onClick={closeMobileMenu}>Services & Pricing</Link></li>
+            <li><Link to="/contact" className={isActive('/contact')} onClick={closeMobileMenu}>Contact Us</Link></li>
 
             <li className="nav-subscribe">
               <Link to="/subscribe" className="subscribe-btn" onClick={closeMobileMenu} data-testid="nav-subscribe-btn">
