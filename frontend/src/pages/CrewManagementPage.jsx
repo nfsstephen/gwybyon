@@ -54,17 +54,23 @@ const CrewManagementPage = () => {
         <div className="cmt-container cmt-hero-inner">
           <span className="cmt-eyebrow" data-testid="cmt-hero-eyebrow">
             <Sparkles size={14} />
-            NEW · CREW MANAGEMENT TOOL
+            CREW MANAGEMENT TOOL
           </span>
+
+          <div className="cmt-sst-banner" data-testid="cmt-sst-banner">
+            <span className="cmt-sst-line"></span>
+            <span className="cmt-sst-text">A Single Source of Truth</span>
+            <span className="cmt-sst-line"></span>
+          </div>
+
           <h1 className="cmt-hero-title">
-            Your Website Is Already Your <span className="cmt-accent">Best Marketing Tool.</span>
-            <br />
-            Now Make It Your <span className="cmt-accent-bold">Mission Control.</span>
+            One schedule everyone trusts —<br />
+            the <span className="cmt-accent">office</span>, the <span className="cmt-accent">crew</span>, and the <span className="cmt-accent-bold">customer.</span>
           </h1>
           <p className="cmt-hero-sub">
-            Schedule once. Inform everyone. Stop juggling phone calls, group texts,
-            and "where is the crew?" voicemails. One shared schedule keeps the office,
-            your crews, and your customers on the same page — automatically.
+            Your website becomes mission control. When the schedule changes, the truck knows,
+            the homeowner knows, and the office stops repeating itself. No more group texts.
+            No more sticky notes. No more "where's the rig?" voicemails. Just <strong>one source of truth</strong> — visible to whoever needs it.
           </p>
 
           <div className="cmt-hero-ctas">
@@ -127,7 +133,7 @@ const CrewManagementPage = () => {
             </div>
 
             <div className="cmt-diagram-caption">
-              One schedule. Three views. Real-time sync.
+              One schedule. Three views. <strong>One source of truth.</strong>
             </div>
           </div>
         </div>
@@ -183,11 +189,13 @@ const CrewManagementPage = () => {
           <div className="cmt-section-head">
             <span className="cmt-section-label">THE FIX</span>
             <h2 className="cmt-section-title">
-              One schedule. <span className="cmt-accent">Three views.</span> Everybody on the same page.
+              One schedule. <span className="cmt-accent">Three views.</span> <span className="cmt-accent-bold">One source of truth.</span>
             </h2>
             <p className="cmt-section-sub">
-              The Crew Management Tool lives inside your Gateway website. No new app to download.
-              No new login your crew will forget. Just a single source of truth — visible to whoever needs to see it.
+              The Crew Management Tool lives inside your Gateway website — so the schedule
+              the office sets is the <em>same</em> schedule the crew runs and the <em>same</em> schedule
+              the customer sees. No copies. No "did you get my text?" No version drift.
+              When one person updates a job, everyone is updated.
             </p>
           </div>
 

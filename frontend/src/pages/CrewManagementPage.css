@@ -117,6 +117,54 @@
   margin-bottom: 22px;
 }
 
+/* === A SINGLE SOURCE OF TRUTH banner === */
+.cmt-sst-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin: 4px auto 28px;
+  max-width: 900px;
+}
+.cmt-sst-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(13, 148, 136, 0.45) 50%,
+    transparent 100%
+  );
+  max-width: 220px;
+}
+.cmt-sst-text {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-style: italic;
+  color: #0F172A;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  position: relative;
+  background: linear-gradient(180deg, transparent 60%, rgba(13, 148, 136, 0.18) 60%, rgba(13, 148, 136, 0.18) 90%, transparent 90%);
+  padding: 0 8px;
+}
+.cmt-sst-text::before,
+.cmt-sst-text::after {
+  content: '"';
+  color: #0D9488;
+  font-size: 1.6rem;
+  font-weight: 800;
+  font-style: normal;
+  margin: 0 4px;
+  opacity: 0.7;
+}
+
+@media (max-width: 640px) {
+  .cmt-sst-text { font-size: 1.15rem; white-space: normal; text-align: center; }
+  .cmt-sst-line { max-width: 60px; }
+}
+
 .cmt-hero-title {
   font-size: 3.1rem;
   font-weight: 800;
