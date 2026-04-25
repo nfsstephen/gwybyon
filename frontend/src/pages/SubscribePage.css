@@ -259,6 +259,44 @@
   color: #94a3b8;
 }
 
+.sub-map-industry-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #0F172A;
+  border: 1px solid #1e293b;
+  border-radius: 10px 10px 0 0;
+  padding: 14px 20px;
+  margin-top: 24px;
+  margin-bottom: 0;
+}
+
+.sub-map-industry-bar label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+.sub-map-industry-bar select {
+  flex: 1;
+  max-width: 320px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #334155;
+  background: #1e293b;
+  color: #f1f5f9;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sub-map-industry-bar select:focus {
+  outline: none;
+  border-color: #0d9488;
+}
+
+
 .sub-business-row {
   display: flex;
   gap: 16px;

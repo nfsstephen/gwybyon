@@ -512,26 +512,27 @@ export default function SubscribePage() {
                   onChange={e => handleBusinessChange('email', e.target.value)}
                 />
               </div>
-              <div className="sub-business-field">
-                <label htmlFor="biz-industry">Industry Type</label>
-                <select
-                  id="biz-industry"
-                  data-testid="business-industry-select"
-                  value={businessDetails.industry}
-                  onChange={e => handleBusinessChange('industry', e.target.value)}
-                  required
-                >
-                  <option value="">Select Industry</option>
-                  <option value="Well Drilling">Well Drilling</option>
-                  <option value="Septic Tank Installation & Service">Septic Tank Installation &amp; Service</option>
-                  <option value="Plumbers">Plumbers</option>
-                  <option value="Electricians">Electricians</option>
-                  <option value="Air & Heating Co.">Air &amp; Heating Co.</option>
-                  <option value="Pest Control Services">Pest Control Services</option>
-                  <option value="Real Estate Brokers">Real Estate Brokers</option>
-                  <option value="Roofing Co.">Roofing Co.</option>
-                </select>
-              </div>
+            </div>
+
+            {/* Industry selector attached to map */}
+            <div className="sub-map-industry-bar" data-testid="map-industry-bar">
+              <label htmlFor="biz-industry">Viewing Territory Map for:</label>
+              <select
+                id="biz-industry"
+                data-testid="business-industry-select"
+                value={businessDetails.industry}
+                onChange={e => handleBusinessChange('industry', e.target.value)}
+              >
+                <option value="">Select Industry</option>
+                <option value="Well Drilling">Well Drilling</option>
+                <option value="Septic Tank Installation &amp; Service">Septic Tank Installation &amp; Service</option>
+                <option value="Plumbers">Plumbers</option>
+                <option value="Electricians">Electricians</option>
+                <option value="Air &amp; Heating Co.">Air &amp; Heating Co.</option>
+                <option value="Pest Control Services">Pest Control Services</option>
+                <option value="Real Estate Brokers">Real Estate Brokers</option>
+                <option value="Roofing Co.">Roofing Co.</option>
+              </select>
             </div>
 
             <HighchartsMapDrilldown
