@@ -225,15 +225,27 @@ export default function HighchartsMapDrilldown({ country, state: stateProp, sele
       const isTaken = takenRef.current && takenRef.current.has(hcKey);
       const regionInfo = regionColors[countyName];
       const regionColor = regionInfo ? regionInfo.color : undefined;
+      const regionStatus = regionInfo ? regionInfo.status : null;
+      const isReserved = regionStatus === 'reserved';
+
+      // Reserved counties get a muted version of their color
+      let displayColor = regionColor;
+      if (isReserved && regionColor) {
+        // Create muted version: blend with gray at 40% opacity
+        displayColor = regionColor + '55'; // hex alpha for ~33% opacity
+      }
+
       return {
         'hc-key': hcKey,
         name: props.name || '',
-        value: isTaken ? 3 : isSelected ? 2 : 1,
-        color: isTaken ? '#991b1b' : isSelected ? '#b0f50b' : regionColor,
+        value: isTaken ? 3 : isReserved ? 4 : isSelected ? 2 : 1,
+        color: isTaken ? '#991b1b' : isSelected ? '#b0f50b' : displayColor,
         taken: isTaken,
+        reserved: isReserved,
         regionColor: regionColor,
         regionName: regionInfo ? regionInfo.region : '',
-        className: isTaken ? 'taken-territory' : '',
+        regionStatus: regionStatus,
+        className: isTaken ? 'taken-territory' : isReserved ? 'reserved-territory' : '',
       };
     });
 
@@ -283,7 +295,7 @@ export default function HighchartsMapDrilldown({ country, state: stateProp, sele
           click: function (e) {
             const key = e.point['hc-key'];
             const name = e.point.name;
-            if (key && !e.point.options.taken) {
+            if (key && !e.point.options.taken && !e.point.options.reserved) {
               toggleRef.current(key, name);
               // Visual feedback: toggle color (restore region color on deselect)
               const nowSelected = !selectedRef.current.includes(key);
@@ -295,7 +307,7 @@ export default function HighchartsMapDrilldown({ country, state: stateProp, sele
             }
           },
         },
-        tooltip: { headerFormat: '', pointFormat: '<b>{point.name}</b>{#if point.regionName}<br/><span style="color:#94a3b8">Region: {point.regionName}</span>{/if}{#if point.taken}<br/><span style="color:#ef4444;font-weight:bold">TERRITORY TAKEN</span>{/if}{#unless point.taken}<br/>Click to select/deselect{/unless}' },
+        tooltip: { headerFormat: '', pointFormat: '<b>{point.name}</b>{#if point.regionName}<br/><span style="color:#94a3b8">Region: {point.regionName}</span>{/if}{#if point.regionStatus}<br/><span style="color:#f59e0b;font-weight:bold">STATUS: {point.regionStatus}</span>{/if}{#if point.taken}<br/><span style="color:#ef4444;font-weight:bold">TERRITORY TAKEN</span>{/if}{#if point.reserved}<br/><span style="color:#f59e0b;font-weight:bold">RESERVED — Pending Deposit</span>{/if}{#unless point.taken}{#unless point.reserved}<br/>Click to select/deselect{/unless}{/unless}' },
       }],
     });
 

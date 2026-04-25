@@ -51,7 +51,7 @@ const CONTINENTAL_STATES = [
 ];
 
 const STORAGE_KEY = 'gwybyon_subscribe';
-const APP_VERSION = '2.2';
+const APP_VERSION = '2.3';
 
 function loadState() {
   try {
@@ -701,7 +701,7 @@ export default function SubscribePage() {
                   )}
                   {territorySubmitted && (
                     <p className="sub-new-territory-confirmation" data-testid="territory-submitted-msg">
-                      Territory "{newTerritoryName}" has been created for the <strong>{businessDetails.industry}</strong> industry. Your selected counties are now part of this territory. The map will reflect the new region coloring.
+                      Territory "{newTerritoryName}" has been <strong>reserved</strong> for the <strong>{businessDetails.industry}</strong> industry. Your selected counties are now held pending deposit. The territory will be confirmed once the 25% deposit is received.
                     </p>
                   )}
                 </div>

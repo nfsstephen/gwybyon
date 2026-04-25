@@ -78,6 +78,15 @@
   opacity: 0.7;
 }
 
+/* Reserved territory — muted with diagonal stripe pattern */
+.hc-map-container .highcharts-point.reserved-territory {
+  cursor: not-allowed !important;
+  opacity: 0.6;
+  stroke-dasharray: 4 2;
+  stroke-width: 1.5px;
+  stroke: #f59e0b;
+}
+
 /* Unsupported country */
 .hc-map-unsupported {
   display: flex;

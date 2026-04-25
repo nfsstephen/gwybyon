@@ -38,7 +38,7 @@ async def get_region_colors(state: str = "", category: str = ""):
     """Return county → region color mapping and region group totals for a given state.
     When category (industry) is provided, returns industry-specific regions first,
     then fills in with default (null category_id) regions for uncovered counties.
-    Requires territories.region_id FK to Region table."""
+    Includes status (reserved/confirmed/null) for each county and region group."""
     if not state:
         return {"colors": {}, "region_groups": {}}
     try:
@@ -50,13 +50,13 @@ async def get_region_colors(state: str = "", category: str = ""):
             cat_id = cat_map.get(category.strip().lower())
 
         # Fetch territories for the given state that have a region_id
-        territories = supabase.table("territories").select("county, region_id, category_id").eq("state", state).not_.is_("region_id", "null").execute()
+        territories = supabase.table("territories").select("county, region_id, category_id, status").eq("state", state).not_.is_("region_id", "null").execute()
         t_rows = territories.data or []
         if not t_rows:
             return {"colors": {}, "region_groups": {}}
 
-        # Fetch all regions (with category_id)
-        regions = supabase.table("Region").select("id, name, color, category_id").execute()
+        # Fetch all regions (with category_id and status)
+        regions = supabase.table("Region").select("id, name, color, category_id, status").execute()
         region_map = {r["id"]: r for r in (regions.data or [])}
 
         # Separate into industry-specific and default territory rows
@@ -81,13 +81,15 @@ async def get_region_colors(state: str = "", category: str = ""):
                 county_name = (t.get("county") or "").strip()
                 county_lower = county_name.lower()
                 covered_counties.add(county_lower)
+                territory_status = t.get("status") or region.get("status")
                 colors[county_lower] = {
                     "color": region["color"],
-                    "region": region["name"]
+                    "region": region["name"],
+                    "status": territory_status,
                 }
                 rname = region["name"]
                 if rname not in region_groups:
-                    region_groups[rname] = {"color": region["color"], "counties": []}
+                    region_groups[rname] = {"color": region["color"], "counties": [], "status": territory_status}
                 region_groups[rname]["counties"].append(county_lower)
 
         # Second pass: defaults for uncovered counties
@@ -100,11 +102,12 @@ async def get_region_colors(state: str = "", category: str = ""):
             if region:
                 colors[county_lower] = {
                     "color": region["color"],
-                    "region": region["name"]
+                    "region": region["name"],
+                    "status": None,
                 }
                 rname = region["name"]
                 if rname not in region_groups:
-                    region_groups[rname] = {"color": region["color"], "counties": []}
+                    region_groups[rname] = {"color": region["color"], "counties": [], "status": None}
                 region_groups[rname]["counties"].append(county_lower)
 
         return {"colors": colors, "region_groups": region_groups}
@@ -213,7 +216,8 @@ async def create_territory(req: CreateTerritoryRequest):
                 chosen_color = color
                 break
 
-        # Insert new Region row with category_id
+        # Insert new Region row with category_id — status = reserved
+        now_iso = datetime.now(timezone.utc).isoformat()
         region_result = supabase.table("Region").insert({
             "region_code": next_code,
             "name": req.name.strip(),
@@ -221,6 +225,8 @@ async def create_territory(req: CreateTerritoryRequest):
             "color": chosen_color,
             "state": state_full,
             "category_id": cat_id,
+            "status": "reserved",
+            "reserved_at": now_iso,
         }).execute()
 
         if not region_result.data:
@@ -248,7 +254,9 @@ async def create_territory(req: CreateTerritoryRequest):
             if matched_row:
                 # Update existing industry-specific row with new region_id
                 supabase.table("territories").update({
-                    "region_id": new_region_id
+                    "region_id": new_region_id,
+                    "status": "reserved",
+                    "reserved_at": now_iso,
                 }).eq("id", matched_row["id"]).execute()
                 county_results.append({"county": county_name, "action": "updated"})
             else:
@@ -268,6 +276,8 @@ async def create_territory(req: CreateTerritoryRequest):
                     "type": county_type,
                     "region_id": new_region_id,
                     "category_id": cat_id,
+                    "status": "reserved",
+                    "reserved_at": now_iso,
                 }).execute()
                 county_results.append({"county": county_name, "action": "created"})
 
@@ -281,6 +291,8 @@ async def create_territory(req: CreateTerritoryRequest):
                 "state": state_full,
                 "category": req.category.strip(),
                 "category_id": cat_id,
+                "status": "reserved",
+                "reserved_at": now_iso,
             },
             "counties": county_results,
         }
@@ -289,6 +301,42 @@ async def create_territory(req: CreateTerritoryRequest):
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to create territory: {str(e)}")
+
+
+@router.post("/confirm-territory/{region_id}")
+async def confirm_territory(region_id: int):
+    """Confirm a reserved territory (called after deposit is paid).
+    Updates Region and all its territory rows from 'reserved' to 'confirmed'."""
+    region = supabase.table("Region").select("id, status").eq("id", region_id).execute()
+    if not region.data:
+        raise HTTPException(status_code=404, detail="Region not found")
+    if region.data[0].get("status") != "reserved":
+        raise HTTPException(status_code=400, detail="Region is not in reserved status")
+
+    supabase.table("Region").update({"status": "confirmed"}).eq("id", region_id).execute()
+    supabase.table("territories").update({"status": "confirmed"}).eq("region_id", region_id).execute()
+
+    return {"success": True, "region_id": region_id, "status": "confirmed"}
+
+
+@router.post("/release-territory/{region_id}")
+async def release_territory(region_id: int):
+    """Release a reserved territory — deletes the industry-specific Region and territory rows,
+    restoring the map to its previous default state."""
+    region = supabase.table("Region").select("id, name, status, category_id").eq("id", region_id).execute()
+    if not region.data:
+        raise HTTPException(status_code=404, detail="Region not found")
+
+    region_data = region.data[0]
+    if region_data.get("status") not in ("reserved", None):
+        raise HTTPException(status_code=400, detail="Only reserved territories can be released")
+
+    # Delete industry-specific territory rows pointing to this region
+    supabase.table("territories").delete().eq("region_id", region_id).not_.is_("category_id", "null").execute()
+    # Delete the Region itself
+    supabase.table("Region").delete().eq("id", region_id).execute()
+
+    return {"success": True, "released_region": region_data.get("name", ""), "region_id": region_id}
 
 
 class TerritoryPricingRequest(BaseModel):

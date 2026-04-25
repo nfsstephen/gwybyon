@@ -11,32 +11,50 @@ Modify an existing Gateway AI Systems website to refine marketing copy, pricing 
 - **Map**: Highcharts with @highcharts/map-collection (US State → County drilldown)
 
 ## Navigation Structure
-Home | Seven Industries | Five Tools | Web Services | Services & Pricing | Subscribe
+Home | Eight Industries | Five Tools | Web Services | Services & Pricing | Contact Us | Subscribe
 
 ## Key Pages
-1. **Home** — Landing page
-2. **Seven Industries** — Consolidated tabbed page (Well & Septic, Plumbers, Electricians, Air & Heating, Pest Control, Real Estate, Roofing)
-3. **Five Tools** — GeoGrid platform tools (Geo-Health Scanner, Entity-Sync Dashboard, Content Engine, Review Magnet, ROI Tracker)
-4. **Web Services** — Hero: "Is Your Business Invisible across your entire market territory?", GeoGrid explanation, site construction/hosting/maintenance
+1. **Home** — Landing page with Domain Freedom section
+2. **Eight Industries** — Consolidated tabbed page (Well Drilling, Septic, Plumbers, Electricians, Air & Heating, Pest Control, Real Estate, Roofing)
+3. **Five Tools** — GeoGrid platform tools
+4. **Web Services** — Hero, GeoGrid explanation, site construction/hosting/maintenance
 5. **Services & Pricing** — Tier plans and pricing
-6. **Subscribe** — 3-step checkout: Website Service → Business Details & Market Areas → Service Tier → Invoice with 25% Deposit flow
+6. **Contact Us** — Cal.com scheduling embed with availability text
+7. **Subscribe** — 3-step checkout: Website Service → Business Details & Market Areas → Service Tier → Invoice with 25% Deposit flow
 
 ## Subscribe Page Flow
 - Step 1: Select Website Service (Build or Rebuild)
-- Step 2: Business Details (Name, Address, City, State dropdown — 48 continental states, Zip, Email optional, Industry Type dropdown) & Market Areas (Highcharts map, auto-drills by city)
-- Step 3: Select Service Tier (Starter, Growth, Dominance)
+- Step 2: Business Details (Name, Address, City, State dropdown — 48 continental states, Zip, Email optional, Industry Type dropdown attached above map) & Market Areas (Highcharts map, drills directly by state selection)
+- Create New Territory panel: industry-specific territory creation with two-step confirmation and reservation system
+- Step 3: Select Service Tier (Standard, Premium, Full Suite)
 - Invoice: Shows line items, total, 25% deposit, balance due, independent warning banners per step
-- Deposit: Creates contract in Supabase, records deposit, generates PDF, shows success with download
 
 ## Supabase Tables
 - `contracts` — business info, territories, tier, pricing, deposit/balance, status
 - `deposits` — payment records linked to contracts
-- `chat_messages`, `chat_sessions`, `status_checks` — migrated from MongoDB
-- `territories` — 67 Florida counties (county, state, country)
-- `category` — industry categories with type (small/medium/large), e.g., Plumber, Electricians, Pest Control Service, Well & Septic Co.
-- `category_business_mapping` — FK to category, maps each category+type to a base price
-- `territory_pricings` — territory-specific pricing overrides (county + category + category_type → amount)
+- `territories` — county, state, country, type (1=Small, 2=Same, 3=Large), region_id (FK to Region), category_id (FK to category, nullable), status (reserved/confirmed/null), reserved_at
+- `Region` — id, region_code, name, coverage_area, color, state, category_id (FK to category, nullable), status (reserved/confirmed/null), reserved_at
+- `category` — id, name (8 industries: Well Drilling, Plumbers, Electricians, Air & Heating Co., Pest Control Services, Real Estate Brokers, Roofing Co., Septic Tank Installation & Service)
+- `DefaultPricing` — TypeId, CategoryId, Price
+- `county_type` — id, name (Small/Same/Large)
 - Dashboard tables (via Supabase REST): users, business_profiles, etc.
+
+## Industry-Specific Territory System
+- Each industry has its own territory map. The same county can belong to different regions for different industries.
+- `category_id` on `territories` and `Region` tables enables per-industry territory/region assignments.
+- Existing rows with `category_id = null` are defaults shown for all industries.
+- Industry-specific rows (category_id set) override defaults for their industry only.
+- The `region-colors` endpoint accepts optional `category` param and returns industry-specific regions first, falling back to defaults for uncovered counties.
+
+## Territory Reservation System
+- When a user creates a new territory, it gets `status = "reserved"` with a `reserved_at` timestamp.
+- Reserved territories appear on the map with muted colors and dashed borders, blocking selection by others.
+- When the 25% deposit is paid, the territory is confirmed via `POST /api/contracts/confirm-territory/{region_id}`.
+- If the customer backs out, an admin can release the reservation via `POST /api/contracts/release-territory/{region_id}`, which deletes the industry-specific Region and territory rows, restoring the map to defaults.
+- Only reserved territories can be released. Confirmed territories are permanent.
+
+## Region Group Discount
+- If a user selects ALL counties within a region, a 25% discount is automatically applied to the invoice for those counties.
 
 ## Admin Dashboard
 - URL: /dashboard/login
@@ -51,44 +69,51 @@ Home | Seven Industries | Five Tools | Web Services | Services & Pricing | Subsc
 - `POST /api/contracts/create` — Create new contract
 - `POST /api/contracts/{id}/deposit` — Record deposit payment
 - `GET /api/contracts/{id}/pdf` — Download contract PDF
-- `POST /api/contracts/territory-pricing` — Look up territory pricing by county + category from `territory_pricings` table
+- `POST /api/contracts/territory-pricing` — Look up territory pricing by county + category
+- `GET /api/contracts/region-colors` — Get county→region color mapping (accepts state, category params)
+- `GET /api/contracts/taken-territories` — Get counties locked by paid contracts
+- `GET /api/contracts/categories` — Get all categories with pricing
+- `POST /api/contracts/create-territory` — Create new industry-specific territory (reserved)
+- `POST /api/contracts/confirm-territory/{region_id}` — Confirm reserved territory after deposit
+- `POST /api/contracts/release-territory/{region_id}` — Release reserved territory (admin)
 - `POST /api/dashboard/auth/login` — Dashboard login
 
 ## What's Been Implemented
-- [x] Highcharts drill-down map (State → County) with auto-geocoding by city
+- [x] Highcharts drill-down map (State → County) with direct state drill-in
 - [x] Multi-territory selection on map with dynamic pricing
 - [x] MongoDB → Supabase migration (complete)
-- [x] Business Details form with State dropdown (48 states), Industry Type dropdown (7 industries)
-- [x] Seven Industries consolidated page (tabbed)
-- [x] Five Tools page with hero
-- [x] Web Services page cleanup (removed redundant sections)
-- [x] Updated marketing copy (hero, problem section)
+- [x] Business Details form with State dropdown (48 states), Industry Type dropdown (8 industries)
+- [x] Eight Industries consolidated page (renamed from Seven)
+- [x] Five Tools page
+- [x] Web Services page
+- [x] Contact Us page with Cal.com embed
+- [x] Region color-coding on map based on Region table
+- [x] Region Group Discount (25% when all counties in a region selected)
 - [x] 25% Deposit flow (contract creation, Supabase storage, PDF generation)
-- [x] Contracts tab on Admin Dashboard (real data)
-- [x] Independent invoice warning banners
-- [x] Map geocoding state-scoping fix (Apr 6, 2026) — City searches now append the selected state name to Nominatim queries, preventing ambiguous results (e.g., "Union" resolving to Illinois instead of Florida)
-- [x] Railway deployment fixes (env vars, route prefixes, graceful startup)
-- [x] Refactored: deleted 7 old BigMarket pages, unused components/CSS
-- [x] Dynamic territory pricing from Supabase `territory_pricings` table (Apr 1, 2026) — Invoice fetches per-county price based on county+industry from DB instead of hardcoded $300
-- [x] Category + category_business_mapping integration (Apr 1, 2026) — Industry dropdown populated from `category` table, fallback pricing from `category_business_mapping` when no territory-specific price exists
-- [x] Full territory_pricings population (Apr 1, 2026) — Joined territories × category × category_business_mapping where territory.type = cbm.type. 268 rows (21 small × 4 cats + 15 medium × 4 cats + 31 large × 4 cats). Industry dropdown updated with all 12 DB categories.
+- [x] Admin Dashboard with contracts tab
+- [x] Domain Freedom section on homepage
+- [x] Microsoft Clarity analytics tracking
+- [x] Aggressive browser cache clearing in index.html
+- [x] Industry dropdown attached directly above map
+- [x] Create New Territory UI panel with industry validation
+- [x] Industry-specific territory system (category_id on Region + territories)
+- [x] Territory reservation system (reserved/confirmed status with muted map display)
+- [x] Two-step confirmation flow for territory creation
+- [x] Confirm/Release territory endpoints
+- [x] Map re-renders per-industry with category-aware color caching
 
 ## Backlog (Prioritized)
 ### P0
-- Stripe integration — wire real payments to deposit + balance buttons
+- Stripe integration — wire real payments to deposit + balance buttons (MUST use integration_playbook_expert_v2)
 - Customer Portal — login, view contract, pay balance, deadline tracking
 
 ### P1
-- Migrate dashboard from SQLAlchemy to Supabase REST client (eliminate direct PostgreSQL dependency)
-- Automated follow-up system — countdown timer on contracts (e.g., 30 days), balance-due reminders surfaced on admin dashboard
-- Email delivery — send contract PDF to customer + copy to admin (SendGrid/Resend)
-- Real Florida county data — verify Highcharts map accuracy
-- Secure admin dashboard credentials for production
+- Email delivery — send contract PDF to customer + copy to admin upon deposit
+- 30-day countdown timer for balance payments with admin dashboard reminders
 
 ### P2
 - PDF exports for territory reports
 - Analytics & reporting
-- Dormant code audit (unused Token backend code)
 
 ## Credentials
 - Site password: `123`
@@ -104,9 +129,9 @@ Home | Seven Industries | Five Tools | Web Services | Services & Pricing | Subsc
 - ADMIN_PASSWORD
 - JWT_SECRET
 
-*Last Updated: Apr 18, 2026*
+*Last Updated: Apr 25, 2026*
 
 ## Post-Fork Checklist (MUST verify after every fork)
-- [ ] Cache-busting code present in `/app/frontend/public/index.html` — includes: meta tags (no-cache, no-store, must-revalidate), cache API clearing script, service worker unregister script. DO NOT REMOVE THESE.
-- [ ] `APP_VERSION` in `/app/frontend/src/pages/SubscribePage.jsx` is current — bump if prices or saved state shape changed
+- [ ] Cache-busting code present in `/app/frontend/public/index.html`
+- [ ] `APP_VERSION` in `/app/frontend/src/pages/SubscribePage.jsx` is current (now 2.3) — bump if prices or saved state shape changed
 - [ ] `emergentintegrations` is NOT in `/app/backend/requirements.txt` (breaks Railway deploy)
