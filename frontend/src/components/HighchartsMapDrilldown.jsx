@@ -35,7 +35,7 @@ const STATE_CODE_TO_NAME = Object.fromEntries(
   Object.entries(STATE_NAME_TO_CODE).map(([name, code]) => [code, name.replace(/\b\w/g, c => c.toUpperCase())])
 );
 
-export default function HighchartsMapDrilldown({ country, state: stateProp, selectedCounties, onToggleCounty, takenCounties }) {
+export default function HighchartsMapDrilldown({ country, state: stateProp, selectedCounties, onToggleCounty, takenCounties, regionRefreshKey }) {
   const containerRef = useRef(null);
   const chartInstanceRef = useRef(null);
   const [drillLevel, setDrillLevel] = useState('country');
@@ -311,6 +311,18 @@ export default function HighchartsMapDrilldown({ country, state: stateProp, sele
     setAutoStateInfo(`Viewing: ${stateName}`);
     drillIntoState(stateCode, stateName);
   }, [stateProp, drillIntoState]);
+
+  // Re-fetch region colors and redraw when regionRefreshKey changes
+  useEffect(() => {
+    if (!regionRefreshKey) return;
+    const stateCode = currentDrilledState.current;
+    if (!stateCode) return;
+    const stateName = STATE_CODE_TO_NAME[stateCode] || stateCode;
+    // Clear the cached colors for this state so drillIntoState re-fetches
+    delete regionColorsCache.current[stateName];
+    drillIntoState(stateCode, stateName);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [regionRefreshKey]);
 
   const handleDrillUp = useCallback(() => {
     if (!containerRef.current) return;

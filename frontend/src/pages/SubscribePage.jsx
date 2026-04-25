@@ -83,11 +83,17 @@ export default function SubscribePage() {
   const [pricingLoading, setPricingLoading] = useState(false);
   const [depositLoading, setDepositLoading] = useState(false);
   const [contractResult, setContractResult] = useState(null);
+  const [createTerritory, setCreateTerritory] = useState(false);
+  const [newTerritoryName, setNewTerritoryName] = useState('');
+  const [territorySubmitted, setTerritorySubmitted] = useState(false);
   const [depositError, setDepositError] = useState(null);
   const [dbCategories, setDbCategories] = useState([]);
   const [takenTerritories, setTakenTerritories] = useState([]);
   const [regionGroups, setRegionGroups] = useState({});
   const [regionColors, setRegionColors] = useState({});
+  const [territoryLoading, setTerritoryLoading] = useState(false);
+  const [territoryError, setTerritoryError] = useState(null);
+  const [regionRefreshKey, setRegionRefreshKey] = useState(0);
 
   const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -182,6 +188,53 @@ export default function SubscribePage() {
       setCountyNames(prev => ({ ...prev, [countyId]: countyName }));
     }
   }, [takenIds]);
+
+  // Handle Create New Territory submission
+  const handleTerritorySubmit = useCallback(async () => {
+    if (!newTerritoryName.trim() || selectedCounties.length === 0) return;
+
+    setTerritoryLoading(true);
+    setTerritoryError(null);
+
+    const counties = selectedCounties.map(id => ({
+      name: countyNames[id] || id,
+      hc_key: id,
+    }));
+
+    try {
+      const res = await fetch(`${API_URL}/api/contracts/create-territory`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: newTerritoryName.trim(),
+          counties,
+          state: businessDetails.state || '',
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setTerritoryError(data.detail || 'Failed to create territory');
+        return;
+      }
+      setTerritorySubmitted(true);
+      // Refresh region colors on the map and in subscribe page
+      setRegionRefreshKey(prev => prev + 1);
+      const stateCode = (businessDetails.state || '').toLowerCase();
+      const stateNameMap = { al:'Alabama',az:'Arizona',ar:'Arkansas',ca:'California',co:'Colorado',ct:'Connecticut',de:'Delaware',fl:'Florida',ga:'Georgia',id:'Idaho',il:'Illinois',in:'Indiana',ia:'Iowa',ks:'Kansas',ky:'Kentucky',la:'Louisiana',me:'Maine',md:'Maryland',ma:'Massachusetts',mi:'Michigan',mn:'Minnesota',ms:'Mississippi',mo:'Missouri',mt:'Montana',ne:'Nebraska',nv:'Nevada',nh:'New Hampshire',nj:'New Jersey',nm:'New Mexico',ny:'New York',nc:'North Carolina',nd:'North Dakota',oh:'Ohio',ok:'Oklahoma',or:'Oregon',pa:'Pennsylvania',ri:'Rhode Island',sc:'South Carolina',sd:'South Dakota',tn:'Tennessee',tx:'Texas',ut:'Utah',vt:'Vermont',va:'Virginia',wa:'Washington',wv:'West Virginia',wi:'Wisconsin',wy:'Wyoming' };
+      const stateFull = stateNameMap[stateCode] || businessDetails.state;
+      fetch(`${API_URL}/api/contracts/region-colors?state=${encodeURIComponent(stateFull)}`)
+        .then(r => r.json())
+        .then(d => {
+          setRegionGroups(d.region_groups || {});
+          setRegionColors(d.colors || {});
+        })
+        .catch(() => {});
+    } catch {
+      setTerritoryError('Network error. Please try again.');
+    } finally {
+      setTerritoryLoading(false);
+    }
+  }, [newTerritoryName, selectedCounties, countyNames, businessDetails.state, API_URL]);
 
   // Fetch territory pricing when counties or industry changes
   useEffect(() => {
@@ -541,7 +594,79 @@ export default function SubscribePage() {
               selectedCounties={selectedCounties}
               onToggleCounty={handleToggleCounty}
               takenCounties={takenIds}
+              regionRefreshKey={regionRefreshKey}
             />
+
+            {/* Create New Territory Panel */}
+            <div className="sub-new-territory-panel" data-testid="new-territory-panel">
+              <label className="sub-new-territory-toggle" data-testid="create-territory-checkbox">
+                <input
+                  type="checkbox"
+                  checked={createTerritory}
+                  onChange={e => { setCreateTerritory(e.target.checked); setTerritorySubmitted(false); setTerritoryError(null); setNewTerritoryName(''); }}
+                />
+                <span className="sub-new-territory-checkmark" />
+                <span className="sub-new-territory-toggle-label">Create New Territory</span>
+              </label>
+              <p className="sub-new-territory-hint">
+                Any adjoining counties not already taken can be selected to form a new territory
+              </p>
+
+              {createTerritory && (
+                <div className="sub-new-territory-form" data-testid="new-territory-form">
+                  <div className="sub-new-territory-field">
+                    <label>New Territory Name</label>
+                    <input
+                      type="text"
+                      data-testid="new-territory-name-input"
+                      value={newTerritoryName}
+                      onChange={e => setNewTerritoryName(e.target.value)}
+                      placeholder="Bodacious Electrical"
+                    />
+                  </div>
+                  <p className="sub-new-territory-select-label">
+                    Select counties to add to your new territory
+                  </p>
+
+                  {selectedCounties.length > 0 && (
+                    <div className="sub-new-territory-counties" data-testid="new-territory-counties">
+                      {selectedCounties.map(id => (
+                        <span key={id} className="sub-new-territory-county-chip">
+                          {countyNames[id] || id}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  <label className="sub-new-territory-submit" data-testid="submit-territory-checkbox">
+                    <input
+                      type="checkbox"
+                      checked={territorySubmitted}
+                      onChange={e => {
+                        if (e.target.checked && !territorySubmitted) {
+                          handleTerritorySubmit();
+                        }
+                      }}
+                      disabled={!newTerritoryName.trim() || selectedCounties.length === 0 || territoryLoading || territorySubmitted}
+                    />
+                    <span className="sub-new-territory-checkmark" />
+                    <span className="sub-new-territory-submit-label">
+                      {territoryLoading ? 'SAVING...' : 'SUBMIT'}
+                    </span>
+                  </label>
+                  {territoryError && (
+                    <p className="sub-new-territory-error" data-testid="territory-error-msg" style={{ color: '#ef4444', marginTop: '0.5rem', fontSize: '0.85rem' }}>
+                      {territoryError}
+                    </p>
+                  )}
+                  {territorySubmitted && (
+                    <p className="sub-new-territory-confirmation" data-testid="territory-submitted-msg">
+                      Territory "{newTerritoryName}" has been created and saved. Your selected counties are now part of this territory. The map will reflect the new region coloring.
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
 
             {/* Step 3: Tier Selection */}
             <h2 className="sub-section-label" id="tier-selection">3. Select Your Service Tier</h2>

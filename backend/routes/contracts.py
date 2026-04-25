@@ -106,6 +106,130 @@ async def get_categories():
     return {"categories": list(grouped.values())}
 
 
+class CreateTerritoryRequest(BaseModel):
+    name: str
+    counties: list[dict]  # [{ "name": "Orange", "hc_key": "us-fl-095" }]
+    state: str  # Abbreviation like "FL" or full name like "Florida"
+
+
+# Color palette for auto-assigning to new custom territories
+TERRITORY_COLOR_PALETTE = [
+    "#e63946", "#457b9d", "#2a9d8f", "#e9c46a", "#f4a261",
+    "#264653", "#a8dadc", "#6d6875", "#b5838d", "#ffb4a2",
+    "#06d6a0", "#118ab2", "#ef476f", "#ffd166", "#073b4c",
+    "#588157", "#bc6c25", "#dda15e", "#606c38", "#283618",
+]
+
+
+@router.post("/create-territory")
+async def create_territory(req: CreateTerritoryRequest):
+    """Create a new custom territory: insert a Region row and assign counties to it."""
+    if not req.name or not req.name.strip():
+        raise HTTPException(status_code=400, detail="Territory name is required")
+    if not req.counties:
+        raise HTTPException(status_code=400, detail="At least one county is required")
+
+    # Resolve state to full name
+    state_abbr_to_name = {
+        'AL':'Alabama','AK':'Alaska','AZ':'Arizona','AR':'Arkansas','CA':'California',
+        'CO':'Colorado','CT':'Connecticut','DE':'Delaware','FL':'Florida','GA':'Georgia',
+        'HI':'Hawaii','ID':'Idaho','IL':'Illinois','IN':'Indiana','IA':'Iowa','KS':'Kansas',
+        'KY':'Kentucky','LA':'Louisiana','ME':'Maine','MD':'Maryland','MA':'Massachusetts',
+        'MI':'Michigan','MN':'Minnesota','MS':'Mississippi','MO':'Missouri','MT':'Montana',
+        'NE':'Nebraska','NV':'Nevada','NH':'New Hampshire','NJ':'New Jersey','NM':'New Mexico',
+        'NY':'New York','NC':'North Carolina','ND':'North Dakota','OH':'Ohio','OK':'Oklahoma',
+        'OR':'Oregon','PA':'Pennsylvania','RI':'Rhode Island','SC':'South Carolina',
+        'SD':'South Dakota','TN':'Tennessee','TX':'Texas','UT':'Utah','VT':'Vermont',
+        'VA':'Virginia','WA':'Washington','WV':'West Virginia','WI':'Wisconsin','WY':'Wyoming',
+    }
+    raw_state = req.state or ""
+    state_full = state_abbr_to_name.get(raw_state.upper(), raw_state)
+    if not state_full:
+        raise HTTPException(status_code=400, detail="Valid state is required")
+
+    try:
+        # Get the next region_code for this state
+        existing_regions = supabase.table("Region").select("region_code, color").eq("state", state_full).execute()
+        existing_data = existing_regions.data or []
+        max_code = max((r.get("region_code", 0) for r in existing_data), default=0)
+        next_code = max_code + 1
+
+        # Pick a color not already used in this state
+        used_colors = {r.get("color", "").lower() for r in existing_data}
+        chosen_color = "#888888"
+        for color in TERRITORY_COLOR_PALETTE:
+            if color.lower() not in used_colors:
+                chosen_color = color
+                break
+
+        # Insert new Region row
+        region_result = supabase.table("Region").insert({
+            "region_code": next_code,
+            "name": req.name.strip(),
+            "coverage_area": "Custom Territory",
+            "color": chosen_color,
+            "state": state_full,
+        }).execute()
+
+        if not region_result.data:
+            raise HTTPException(status_code=500, detail="Failed to create region")
+
+        new_region_id = region_result.data[0]["id"]
+
+        # For each county, upsert into territories table
+        county_results = []
+        for county_info in req.counties:
+            county_name = (county_info.get("name") or "").strip()
+            if not county_name:
+                continue
+
+            # Check if county already exists in territories for this state
+            # Use ilike with wildcards to handle trailing whitespace in DB
+            existing = supabase.table("territories").select("id, county, region_id").eq("state", state_full).ilike("county", f"{county_name}%").execute()
+
+            # Filter for exact match (trimmed) to avoid false positives
+            matched_row = None
+            for row in (existing.data or []):
+                if (row.get("county") or "").strip().lower() == county_name.lower():
+                    matched_row = row
+                    break
+
+            if matched_row:
+                # Update existing row with new region_id
+                row_id = matched_row["id"]
+                supabase.table("territories").update({
+                    "region_id": new_region_id
+                }).eq("id", row_id).execute()
+                county_results.append({"county": county_name, "action": "updated"})
+            else:
+                # Insert new territory row (default type=1 Small)
+                supabase.table("territories").insert({
+                    "county": county_name,
+                    "state": state_full,
+                    "country": "USA",
+                    "type": 1,
+                    "region_id": new_region_id,
+                }).execute()
+                county_results.append({"county": county_name, "action": "created"})
+
+        return {
+            "success": True,
+            "region": {
+                "id": new_region_id,
+                "name": req.name.strip(),
+                "color": chosen_color,
+                "region_code": next_code,
+                "state": state_full,
+            },
+            "counties": county_results,
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to create territory: {str(e)}")
+
+
 class TerritoryPricingRequest(BaseModel):
     counties: list[str]
     category: str
