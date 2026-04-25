@@ -374,7 +374,7 @@ export default function SubscribePage() {
 
             {/* Industry selector attached to map */}
             <div className="sub-map-industry-bar" data-testid="map-industry-bar">
-              <label htmlFor="biz-industry">Select Industry Territory Map:</label>
+              <label htmlFor="biz-industry">Select Industry Region Map:</label>
               <select
                 id="biz-industry"
                 data-testid="business-industry-select"
@@ -404,10 +404,10 @@ export default function SubscribePage() {
               }}>
                 <MapPin size={40} style={{ color: '#475569', marginBottom: '16px' }} />
                 <p style={{ fontSize: '1.1rem', fontWeight: 600, color: '#e2e8f0', marginBottom: '8px' }}>
-                  Select an industry above to view the territory map
+                  Select an industry above to view the region map
                 </p>
                 <p style={{ fontSize: '0.85rem', maxWidth: '420px', margin: '0 auto' }}>
-                  Each industry has its own exclusive territory map. Choose your industry first to see available counties and existing regions.
+                  Each industry has its own exclusive region map. Choose your industry first to see available counties and existing regions.
                 </p>
               </div>
             ) : (
@@ -422,7 +422,7 @@ export default function SubscribePage() {
                   letterSpacing: '0.5px',
                   borderRadius: '8px 8px 0 0',
                 }}>
-                  TERRITORY MAP: {businessDetails.industry.toUpperCase()}
+                  REGION MAP: {businessDetails.industry.toUpperCase()}
                 </div>
                 <HighchartsMapDrilldown
                   country="USA"

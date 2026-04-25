@@ -181,7 +181,7 @@ export const InvoiceSummary = ({
               <div className="sub-deposit-success-icon">
                 <Check size={24} />
               </div>
-              <h4>Territory Reserved!</h4>
+              <h4>Region Reserved!</h4>
               <p>Contract <strong>{contractResult.contract_number}</strong> has been created.</p>
               <div className="sub-deposit-summary">
                 <div className="sub-deposit-summary-line">
