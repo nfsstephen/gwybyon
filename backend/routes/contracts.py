@@ -6,6 +6,9 @@ from database import supabase
 from datetime import datetime, timezone
 import uuid
 import io
+import logging
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/contracts", tags=["contracts"])
 
@@ -111,8 +114,8 @@ async def get_region_colors(state: str = "", category: str = ""):
                 region_groups[rname]["counties"].append(county_lower)
 
         return {"colors": colors, "region_groups": region_groups}
-    except Exception:
-        # region_id column may not exist yet — return empty gracefully
+    except Exception as e:
+        logger.error(f"region-colors error for state={state}, category={category}: {e}")
         return {"colors": {}, "region_groups": {}}
 
 
@@ -264,9 +267,8 @@ async def create_territory(req: CreateTerritoryRequest):
                 default_row = supabase.table("territories").select("type").eq("state", state_full).is_("category_id", "null").ilike("county", f"{county_name}%").execute()
                 county_type = 1  # default Small
                 for dr in (default_row.data or []):
-                    if (dr.get("county", "") if "county" in dr else "").strip().lower() == county_name.lower() or True:
-                        county_type = dr.get("type", 1)
-                        break
+                    county_type = dr.get("type", 1)
+                    break
 
                 # Insert new industry-specific territory row
                 supabase.table("territories").insert({
@@ -328,7 +330,7 @@ async def release_territory(region_id: int):
         raise HTTPException(status_code=404, detail="Region not found")
 
     region_data = region.data[0]
-    if region_data.get("status") not in ("reserved", None):
+    if region_data.get("status") != "reserved":
         raise HTTPException(status_code=400, detail="Only reserved territories can be released")
 
     # Delete industry-specific territory rows pointing to this region
