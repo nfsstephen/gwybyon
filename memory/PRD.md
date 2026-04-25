@@ -11,16 +11,17 @@ Modify an existing Gateway AI Systems website to refine marketing copy, pricing 
 - **Map**: Highcharts with @highcharts/map-collection (US State → County drilldown)
 
 ## Navigation Structure
-Home | Eight Industries | Five Tools | Web Services | Services & Pricing | Contact Us | Subscribe
+Home | Crew Management Tool | Eight Industries | Five Tools | Web Services | Services & Pricing | Contact Us | Subscribe
 
 ## Key Pages
 1. **Home** — Landing page with Domain Freedom section
-2. **Eight Industries** — Consolidated tabbed page (Well Drilling, Septic, Plumbers, Electricians, Air & Heating, Pest Control, Real Estate, Roofing)
-3. **Five Tools** — GeoGrid platform tools
-4. **Web Services** — Hero, GeoGrid explanation, site construction/hosting/maintenance
-5. **Services & Pricing** — Tier plans and pricing
-6. **Contact Us** — Cal.com scheduling embed with availability text
-7. **Subscribe** — 3-step checkout: Website Service → Business Details & Market Areas → Service Tier → Invoice with 25% Deposit flow
+2. **Crew Management Tool** (`/crew-management`) — Marketing page positioning the website as "mission control": animated 3-way sync diagram (Owner ↔ Crew ↔ Customer), problem/solution/persona/ROI sections. Future P1 add-on backend feature.
+3. **Eight Industries** — Consolidated tabbed page (Well Drilling, Septic, Plumbers, Electricians, Air & Heating, Pest Control, Real Estate, Roofing)
+4. **Five Tools** — GeoGrid platform tools
+5. **Web Services** — Hero, GeoGrid explanation, site construction/hosting/maintenance
+6. **Services & Pricing** — Tier plans and pricing
+7. **Contact Us** — Cal.com scheduling embed with availability text
+8. **Subscribe** — 3-step checkout: Website Service → Business Details & Market Areas → Service Tier → Invoice with 25% Deposit flow
 
 ## Subscribe Page Flow
 - Step 1: Select Website Service (Build or Rebuild)

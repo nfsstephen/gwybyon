@@ -41,6 +41,7 @@ const Navigation = ({ scrolled }) => {
           </button>
           <ul className={`nav-menu ${mobileMenuOpen ? 'active' : ''}`}>
             <li><Link to="/" className={isActive('/')} onClick={closeMobileMenu}>Home</Link></li>
+            <li><Link to="/crew-management" className={isActive('/crew-management')} onClick={closeMobileMenu} data-testid="nav-crew-management">Crew Management Tool</Link></li>
             <li><Link to="/eight-industries" className={isActive('/eight-industries')} onClick={closeMobileMenu}>Eight Industries</Link></li>
             <li><Link to="/five-tools" className={isActive('/five-tools')} onClick={closeMobileMenu}>Five Tools</Link></li>
             <li><Link to="/web-service-v2" className={isActive('/web-service-v2')} onClick={closeMobileMenu}>Web Services</Link></li>

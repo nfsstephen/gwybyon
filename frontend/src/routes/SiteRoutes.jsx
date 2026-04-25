@@ -11,6 +11,7 @@ import ServicesAndPricingPage from '../pages/ServicesAndPricingPage';
 import SubscribePage from '../pages/SubscribePage';
 import AdminPreviewPage from '../pages/AdminPreviewPage';
 import ContactUsPage from '../pages/ContactUsPage';
+import CrewManagementPage from '../pages/CrewManagementPage';
 
 export default function SiteRoutes({ scrolled }) {
   return (
@@ -18,6 +19,7 @@ export default function SiteRoutes({ scrolled }) {
       <Navigation scrolled={scrolled} />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/crew-management" element={<CrewManagementPage />} />
         <Route path="/eight-industries" element={<EightIndustriesPage />} />
         <Route path="/five-tools" element={<FiveToolsPage />} />
         <Route path="/web-service-v2" element={<WebServiceV2Page />} />

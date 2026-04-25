@@ -3,400 +3,120 @@
 
 **User's preferred language**: English (INSTRUCT next agent to respond in English only)
 
-**what currently exists?**: A React/FastAPI application using Supabase (PostgreSQL) entirely via the Supabase Python REST client (no ORMs). Features a complex multi-step subscription flow that calculates a 25% deposit, dynamically warns users of missing steps, generates a PDF contract via , and saves to Supabase. Contains marketing pages (Home, Seven Industries, Five Tools, Web Services) leading to a dynamic Services & Pricing page. Contains a gated Admin Dashboard using real Supabase REST data.
+**what currently exists?**: A React/FastAPI application using Supabase (PostgreSQL) entirely via the Supabase Python REST client. Features a complex multi-step subscription flow with a modularized Subscribe Page and a Highcharts interactive map. The application now supports creating custom Regions (collections of counties) which are tied to specific industries (via ). Newly created regions are placed in a reserved status (rendered with a hatched/muted pattern on the map) pending a 25% deposit. The map is gated and will not display until an industry is explicitly selected.
 
 **Last working item**:
-    - Last item agent was working: Formatting UI flow, merging pricing tables, and stringing CTA buttons across all marketing pages to form a linear user funnel toward the newly refactored Services & Pricing page and Subscribe page.
-    - Status: COMPLETED
+    - Last item agent was working: Terminology UI update. The user clarified terminology: A Region is a collection of counties, and a Territory is a single county. The agent updated UI text strings in the recently built creation panel to say Create New Region instead of Create New Territory. 
+    - Status: USER VERIFICATION PENDING
     - Agent Testing Done: Y
-    - Which testing method agent to use? screenshot tool for frontend verification.
-    - User Testing Done: Y
+    - Which testing method agent to use? screenshot tool
+    - User Testing Done: N
 
 **All Pending/In progress Issue list**: 
-  None
+  None currently.
 
 **In progress Task List**: 
-  None
+  None currently.
 
 **Upcoming and Future Tasks**
     Upcoming Tasks:
-    - Task 1: 🔴 Connect Stripe to the Subscribe page payment flow for the 25% deposit. Phase 1 of payment. (MUST use ). Priority: P0.
-    - Task 2: 🟡 Build Customer Portal (Allow customer to log in, view their contract, and pay the remaining balance). Priority: P1.
+    - Task 1: 🔴 Connect Stripe to the Subscribe page payment flow for the 25% deposit. Auto-confirm reserved regions upon successful payment. (MUST use ). Priority: P0.
+    - Task 2: 🔴 Admin dashboard: manage/release reserved regions, set reservation timeline/expiry. Priority: P0.
+    - Task 3: 🟡 Build Customer Portal (Allow customer to log in, view their contract, and pay the remaining balance). Priority: P1.
     
     Future Tasks:
-    - Task 3: 🟢 Email notifications (Send auto-generated PDF contracts to admin and customer upon deposit). Priority: P2.
-    - Task 4: 🟢 Add a 30-day countdown timer for balance payments with admin dashboard reminders. Priority: P2.
-    - Task 5: 🟢 Replace demo county map data with real Florida county data. Priority: P2.
+    - Task 4: 🟢 Email notifications (Send auto-generated PDF contracts to admin and customer upon deposit). Priority: P2.
+    - Task 5: 🟢 Add a 30-day countdown timer for balance payments with admin dashboard reminders. Priority: P2.
 
 **Completed work in this session**
-  - **P1 Dashboard DB Refactor**: Completely removed  and  to fix Railway connection limits. Rewrote all dashboard routes (, , , ) and user seeding in  to use the standard Supabase Python REST client. (DONE)
-  - Extracted 5 marketing sections into a standalone React file () for the user to port to another project. (DONE)
-  - Created light-themed  for the homepage and deleted orphaned/dead frontend components. (DONE)
-  - Restructured  and  tier selections to use Small Market (Standard/Premium) and Large Market (Full Suite) headers. (DONE)
-  - Wired all CTA buttons across pages to create a linear funnel: Home -> Seven Industries -> Five Tools -> Web Services -> Services & Pricing -> Subscribe. (DONE)
-  - Cleaned up Footer component. (DONE)
-  - Removed , , and  from . (DONE)
+  - Built backend automation for creating custom regions (). (DONE)
+  - Made custom regions industry-specific by adding  to both  and  DB tables. (DONE)
+  - Implemented Reserved status for new regions. Added  and  to tables. Map renders reserved regions with a muted, hatched pattern and blocks selection. (DONE)
+  - Added backend endpoint to release reservations (). (DONE)
+  - Refactored  (reduced from 1005 lines to 460 lines) by breaking it into 6 modular components inside . (DONE)
+  - Map Gating: Map is hidden behind a prompt (Select Industry Territory Map) until an industry is selected. Shows a bold confirmation banner once selected. (DONE)
+  - Terminology fix: Changed UI text to use Region for a group of counties and Territory for a single county. (DONE)
 
 **Earlier issues found/mentioned but not fixed**
    None.
 
 **Known issue recurrence from previous fork**
-  - Issue recurrence in previous fork:  kept reappearing in  upon aiohappyeyeballs==2.6.1
-aiohttp==3.13.3
-aiosignal==1.4.0
-annotated-doc==0.0.4
-annotated-types==0.7.0
-anyio==4.12.1
-attrs==25.4.0
-bcrypt==4.1.3
-black==26.1.0
-boto3==1.42.58
-botocore==1.42.58
-cachetools==6.2.6
-certifi==2026.2.25
-cffi==2.0.0
-charset-normalizer==3.4.4
-click==8.3.1
-cryptography==46.0.5
-deprecation==2.1.0
-distro==1.9.0
-dnspython==2.8.0
-ecdsa==0.19.1
-email-validator==2.3.0
-emergentintegrations==0.1.0
-fastapi==0.110.1
-fastuuid==0.14.0
-filelock==3.25.0
-flake8==7.3.0
-frozenlist==1.8.0
-fsspec==2026.2.0
-google-ai-generativelanguage==0.6.15
-google-api-core==2.30.0
-google-api-python-client==2.191.0
-google-auth==2.49.0.dev0
-google-auth-httplib2==0.3.0
-google-genai==1.65.0
-google-generativeai==0.8.6
-googleapis-common-protos==1.72.0
-greenlet==3.2.3
-grpcio==1.78.0
-grpcio-status==1.71.2
-h11==0.16.0
-h2==4.3.0
-hf-xet==1.3.2
-hpack==4.1.0
-httpcore==1.0.9
-httplib2==0.31.2
-httpx==0.28.1
-huggingface_hub==1.5.0
-hyperframe==6.1.0
-idna==3.11
-importlib_metadata==8.7.1
-iniconfig==2.3.0
-isort==8.0.0
-Jinja2==3.1.6
-jiter==0.13.0
-jmespath==1.1.0
-jq==1.11.0
-jsonschema==4.26.0
-jsonschema-specifications==2025.9.1
-librt==0.8.1
-litellm==1.80.0
-markdown-it-py==4.0.0
-MarkupSafe==3.0.3
-mccabe==0.7.0
-mdurl==0.1.2
-mmh3==5.2.1
-motor==3.3.1
-multidict==6.7.1
-mypy==1.19.1
-mypy_extensions==1.1.0
-numpy==2.4.2
-oauthlib==3.3.1
-openai==1.99.9
-packaging==26.0
-pandas==3.0.1
-passlib==1.7.4
-pathspec==1.0.4
-pillow==12.1.1
-platformdirs==4.9.2
-pluggy==1.6.0
-postgrest==2.28.3
-propcache==0.4.1
-proto-plus==1.27.1
-protobuf==5.29.6
-psycopg2-binary==2.9.11
-pyasn1==0.6.2
-pyasn1_modules==0.4.2
-pycodestyle==2.14.0
-pycparser==3.0
-pydantic==2.12.5
-pydantic_core==2.41.5
-pyflakes==3.4.0
-Pygments==2.19.2
-pyiceberg==0.11.1
-PyJWT==2.10.1
-pymongo==4.5.0
-pyparsing==3.3.2
-pyroaring==1.0.4
-pytest==9.0.2
-python-dateutil==2.9.0.post0
-python-dotenv==1.2.1
-python-jose==3.5.0
-python-multipart==0.0.21
-pytokens==0.4.1
-PyYAML==6.0.3
-realtime==2.28.3
-referencing==0.37.0
-regex==2026.2.28
-reportlab==4.4.10
-requests==2.32.5
-requests-oauthlib==2.0.0
-resend==2.23.0
-rich==14.3.3
-rpds-py==0.30.0
-rsa==4.9.1
-s3transfer==0.16.0
-s5cmd==0.2.0
-shellingham==1.5.4
-six==1.17.0
-sniffio==1.3.1
-starlette==0.37.2
-storage3==2.28.3
-StrEnum==0.4.15
-strictyaml==1.7.3
-stripe==14.4.0
-supabase==2.28.3
-supabase-auth==2.28.3
-supabase-functions==2.28.3
-tenacity==9.1.4
-tiktoken==0.12.0
-tokenizers==0.22.2
-tqdm==4.67.3
-typer==0.24.1
-typing-inspection==0.4.2
-typing_extensions==4.15.0
-tzdata==2025.3
-uritemplate==4.2.0
-urllib3==2.6.3
-uvicorn==0.25.0
-watchfiles==1.1.1
-websockets==15.0.1
-yarl==1.23.0
-zipp==3.23.0
-zstandard==0.25.0, breaking the user's Railway deployment due to private index requirements.
-  - Recurrence count: 1
-  - Status: RESOLVED (Manually uninstalled by agent. NOTE: Be extremely careful if you run aiohappyeyeballs==2.6.1
-aiohttp==3.13.3
-aiosignal==1.4.0
-annotated-doc==0.0.4
-annotated-types==0.7.0
-anyio==4.12.1
-attrs==25.4.0
-bcrypt==4.1.3
-black==26.1.0
-boto3==1.42.58
-botocore==1.42.58
-cachetools==6.2.6
-certifi==2026.2.25
-cffi==2.0.0
-charset-normalizer==3.4.4
-click==8.3.1
-cryptography==46.0.5
-deprecation==2.1.0
-distro==1.9.0
-dnspython==2.8.0
-ecdsa==0.19.1
-email-validator==2.3.0
-emergentintegrations==0.1.0
-fastapi==0.110.1
-fastuuid==0.14.0
-filelock==3.25.0
-flake8==7.3.0
-frozenlist==1.8.0
-fsspec==2026.2.0
-google-ai-generativelanguage==0.6.15
-google-api-core==2.30.0
-google-api-python-client==2.191.0
-google-auth==2.49.0.dev0
-google-auth-httplib2==0.3.0
-google-genai==1.65.0
-google-generativeai==0.8.6
-googleapis-common-protos==1.72.0
-greenlet==3.2.3
-grpcio==1.78.0
-grpcio-status==1.71.2
-h11==0.16.0
-h2==4.3.0
-hf-xet==1.3.2
-hpack==4.1.0
-httpcore==1.0.9
-httplib2==0.31.2
-httpx==0.28.1
-huggingface_hub==1.5.0
-hyperframe==6.1.0
-idna==3.11
-importlib_metadata==8.7.1
-iniconfig==2.3.0
-isort==8.0.0
-Jinja2==3.1.6
-jiter==0.13.0
-jmespath==1.1.0
-jq==1.11.0
-jsonschema==4.26.0
-jsonschema-specifications==2025.9.1
-librt==0.8.1
-litellm==1.80.0
-markdown-it-py==4.0.0
-MarkupSafe==3.0.3
-mccabe==0.7.0
-mdurl==0.1.2
-mmh3==5.2.1
-motor==3.3.1
-multidict==6.7.1
-mypy==1.19.1
-mypy_extensions==1.1.0
-numpy==2.4.2
-oauthlib==3.3.1
-openai==1.99.9
-packaging==26.0
-pandas==3.0.1
-passlib==1.7.4
-pathspec==1.0.4
-pillow==12.1.1
-platformdirs==4.9.2
-pluggy==1.6.0
-postgrest==2.28.3
-propcache==0.4.1
-proto-plus==1.27.1
-protobuf==5.29.6
-psycopg2-binary==2.9.11
-pyasn1==0.6.2
-pyasn1_modules==0.4.2
-pycodestyle==2.14.0
-pycparser==3.0
-pydantic==2.12.5
-pydantic_core==2.41.5
-pyflakes==3.4.0
-Pygments==2.19.2
-pyiceberg==0.11.1
-PyJWT==2.10.1
-pymongo==4.5.0
-pyparsing==3.3.2
-pyroaring==1.0.4
-pytest==9.0.2
-python-dateutil==2.9.0.post0
-python-dotenv==1.2.1
-python-jose==3.5.0
-python-multipart==0.0.21
-pytokens==0.4.1
-PyYAML==6.0.3
-realtime==2.28.3
-referencing==0.37.0
-regex==2026.2.28
-reportlab==4.4.10
-requests==2.32.5
-requests-oauthlib==2.0.0
-resend==2.23.0
-rich==14.3.3
-rpds-py==0.30.0
-rsa==4.9.1
-s3transfer==0.16.0
-s5cmd==0.2.0
-shellingham==1.5.4
-six==1.17.0
-sniffio==1.3.1
-starlette==0.37.2
-storage3==2.28.3
-StrEnum==0.4.15
-strictyaml==1.7.3
-stripe==14.4.0
-supabase==2.28.3
-supabase-auth==2.28.3
-supabase-functions==2.28.3
-tenacity==9.1.4
-tiktoken==0.12.0
-tokenizers==0.22.2
-tqdm==4.67.3
-typer==0.24.1
-typing-inspection==0.4.2
-typing_extensions==4.15.0
-tzdata==2025.3
-uritemplate==4.2.0
-urllib3==2.6.3
-uvicorn==0.25.0
-watchfiles==1.1.1
-websockets==15.0.1
-yarl==1.23.0
-zipp==3.23.0
-zstandard==0.25.0 in the future to remove it before pushing).
+  - Issue recurrence in previous fork: Caching issues where users could not see new price/code changes. 
+  - Recurrence count: 2
+  - Status: RESOLVED (Aggressive browser cache clearing script is in . ALWAYS check/bump  in  if changing critical state shapes or pricing).
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
-React frontend, FastAPI backend. Supabase PostgreSQL database accessed entirely via the **Supabase Python REST API** (no ORM). Multi-step React checkout forms with dynamic tier/invoice calculation. PDF generation via . 
+React frontend, FastAPI backend. Supabase PostgreSQL database accessed entirely via the **Supabase Python REST API** (no ORM). Map uses Highcharts drilldown, now heavily dependent on  (Industry) and  (reserved vs confirmed). SubscribePage logic has been cleanly modularized into subcomponents.
 
 **key DB schema**
-  - : id, email, full_name, role, is_active (managed/seeded via Supabase REST)
-  - : id, contract_number, business_name, email, selected_territories, tier_id, total_due, deposit_amount, balance_remaining, status.
-  - : id, contract_id, amount, status.
+  - , 
+  -  (represents individual counties): county, state, type, , , , .
+  -  (represents county groupings): id, name, color, , , .
+  - : id, name.
+  - : TypeId, CategoryId, Price.
 
 **changes in tech stack**
-  - Eliminated  and  completely to prevent connection pooling errors.
+  - None.
 
 **All files of reference** 
-  -  & : The pricing tiers are now mapped out specifically for Market Size designations.
-  - : Handles deposit recording and PDF generation (where Stripe integration should likely connect).
-  - : Fully rewritten to use Supabase REST.
+  - : Updated with ,  (category aware), and .
+  - : Now a leaner parent component orchestrating state.
+  - : Newly created folder holding modular sections of the subscription form.
+  -  & : Handles reserved hatched patterns and blocks clicks on reserved counties.
+  - : Updated with recent architectural achievements and backlogs.
 
 **Areas that need refactoring**: 
-  - Cleaned extensively in this session (8 dead frontend files removed, ORM stripped from backend).
+  - None right now.  was successfully refactored in this session.
 
 **key api endpoints**
-  - : Create a new contract.
-  - : Record a 25% deposit.
-  - : Download contract PDF.
-  - : Admin/Client login.
+  - : Creates new reserved Region and territory rows tied to an industry.
+  - : Releases/deletes a reserved Region.
+  - : Get colors, region completion totals, and reservation status mapped by .
+  - : Calculate price based on county type.
 
 **Critical Info for New Agent** 
-  - **Railway Deployment Blocker Warning:** Do NOT allow  in . It requires a private pip index that the user's Railway deployment does not have access to. 
-  - **Database Pattern:** The entire backend now safely uses the Supabase Python REST client (). Do not re-introduce SQLAlchemy.
-  - **Stripe is Next:** The 25% deposit flow is visually built; the next step is wiring the actual transaction to Stripe Checkout.
+  - **Terminology Rule**: The user strictly defines a **Region as a collection of counties** and a **Territory as a single county**. UI text must follow this. The Database perfectly reflects this ( table vs  table).
+  - **Reserved Regions Flow**: Created regions are temporarily held in a reserved status pending Stripe payment. You will need to tie the successful Stripe payment to a backend hook that changes the region/territory  to confirmed.
+  - **Cache Busting**: You MUST bump  in  if changing pricing or critical state shapes.
+  - **Stripe is P0**: The application is finally ready for the 25% deposit payment flow. **You MUST use ** for Stripe.
+  - **Database Pattern**: The entire backend uses the Supabase Python REST client. Do not introduce an ORM.
 
 **documents and test reports created in this job**
-  - 
+  -  (Updated)
+  -  (Testing agent verified full E2E flow with 100% pass)
 
 **Last 10 User Messages and any pending HUMAN messages** 
- 1. User: Asked to change pricing table headers to Small Market (Standard/Premium) and Large Market (Full Suite).
- 2. User: Asked to change specific text regarding Market Territory.
- 3. User: Corrected the agent to only change the first sentence of the text.
- 4. User: Requested to move the CTA down the page.
- 5. User: Requested placeholder pricing (00, 00, 00) for the tiers.
- 6. User: Requested removal of several unrelated service blocks (New Build, BYON, Territory rights) from pricing page.
- 7. User: Asked to update Subscribe page tier selection to perfectly match the new Services & Pricing layout.
- 8. User: Wired Pricing CTA to point exactly to the new Subscribe tiers.
- 9. User: Asked to clean Footer, combine tables, and rewire Web Services/Five Tools CTAs to connect the funnel.
- 10. User: Confirmed readiness to fork for the Stripe build. (No pending tasks for this exact moment, proceed with P0 Stripe Integration).
+ 1. User: Chose to build backend automation for region creation first, holding off on Stripe.
+ 2. User: Clarified that new regions must be strictly tied to the selected industry (one county can be assigned to different industries).
+ 3. User: Requested a reserved status with hatched/muted map pattern for new regions pending deposit, to prevent others from claiming them.
+ 4. User: Instructed the agent to hold off on connecting deposits/admin panels and to focus on refactoring the codebase first.
+ 5. User: Requested changing the map dropdown text to Select Industry Territory Map and hiding the map entirely until an industry is chosen to prevent user errors.
+ 6. User: Asked if they should fork before pushing code.
+ 7. User: Asked for clarification on the push/fork order.
+ 8. User: Noticed they used the wrong terminology in the UI. Clarified that Region = collection of counties and Territory = county. Asked to correct UI strings. (Agent completed this, and the session ended).
 
 **Project Health Check:**
-  Functional. Smoothly navigating linear marketing funnel into checkout flow. Admin dashboard using real Supabase REST queries.
+  Healthy. Heavy refactoring successfully modularized the frontend. Testing agent passed all 14 tests on the backend reservation logic. 
 
 **3rd Party Integrations** 
   - Supabase (Database) — requires User API Key
-  - OpenStreetMap/Nominatim API (Geocoding)
   - Highcharts (Map UI)
+  - Cal.com (Scheduling iframe)
+  - Microsoft Clarity (Analytics)
   - Stripe (Payments) — upcoming, will require User API Key. **MUST use  for the integration.**
 
 **Testing status**
-  - Testing agent used after significant changes: NO (relied on Bash and manual Screenshots for UI updates and REST verification)
+  - Testing agent used after significant changes: YES
   - Troubleshoot agent used after agent stuck in loop: NO
-  - Test files created: None
+  - Test files created: None by main agent (testing agent used pytest internally)
   - Known regressions: None
 
 **Credentials to test flow:**
-  - Admin login:  / 
   - Site password: 
+  - Admin login:  / 
 
 **What agent forgot to execute**
-  - Nothing missed. Forked intentionally before undertaking complex P0 Stripe integration.</analysis>
+  - Nothing was missed. All requested refactoring, features, and text changes were completed perfectly.</analysis>
