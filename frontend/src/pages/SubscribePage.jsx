@@ -2,11 +2,12 @@ import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { MapPin } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import HighchartsMapDrilldown from '../components/HighchartsMapDrilldown';
-import { WEBSITE_OPTIONS, TIERS, STATE_NAME_MAP, loadState, saveState } from './subscribe/constants';
+import { WEBSITE_OPTIONS, TIERS, ADD_ONS, STATE_NAME_MAP, loadState, saveState } from './subscribe/constants';
 import { WebsiteSelection } from './subscribe/WebsiteSelection';
 import { BusinessForm } from './subscribe/BusinessForm';
 import { CreateTerritoryPanel } from './subscribe/CreateTerritoryPanel';
 import { TierSelection } from './subscribe/TierSelection';
+import { AddOnsSelection } from './subscribe/AddOnsSelection';
 import { InvoiceSummary } from './subscribe/InvoiceSummary';
 import './SubscribePage.css';
 
@@ -18,6 +19,7 @@ export default function SubscribePage() {
   const [selectedCounties, setSelectedCounties] = useState(saved.selectedCounties ?? []);
   const [countyNames, setCountyNames] = useState(saved.countyNames ?? {});
   const [selectedTier, setSelectedTier] = useState(saved.selectedTier ?? null);
+  const [selectedAddOns, setSelectedAddOns] = useState(saved.selectedAddOns ?? []);
   const [countyPrices, setCountyPrices] = useState(saved.countyPrices ?? {});
   const [pricingLoading, setPricingLoading] = useState(false);
   const [depositLoading, setDepositLoading] = useState(false);
@@ -77,8 +79,8 @@ export default function SubscribePage() {
   }, [businessDetails.state, businessDetails.industry, API_URL]);
 
   useEffect(() => {
-    saveState({ websiteChoice, serviceType, businessDetails, selectedCounties, countyNames, selectedTier, countyPrices });
-  }, [websiteChoice, serviceType, businessDetails, selectedCounties, countyNames, selectedTier, countyPrices]);
+    saveState({ websiteChoice, serviceType, businessDetails, selectedCounties, countyNames, selectedTier, selectedAddOns, countyPrices });
+  }, [websiteChoice, serviceType, businessDetails, selectedCounties, countyNames, selectedTier, selectedAddOns, countyPrices]);
 
   const handleBusinessChange = (field, value) => {
     setBusinessDetails(prev => ({ ...prev, [field]: value }));
@@ -91,6 +93,16 @@ export default function SubscribePage() {
 
   const selectedService = TIERS.find(s => s.id === selectedTier);
   const selectedWebsite = WEBSITE_OPTIONS.find(w => w.id === websiteChoice);
+  const selectedAddOnDetails = useMemo(
+    () => ADD_ONS.filter(a => selectedAddOns.includes(a.id)),
+    [selectedAddOns]
+  );
+
+  const handleToggleAddOn = useCallback((addOnId) => {
+    setSelectedAddOns(prev =>
+      prev.includes(addOnId) ? prev.filter(id => id !== addOnId) : [...prev, addOnId]
+    );
+  }, []);
 
   const websitePrice = useMemo(() => {
     if (!selectedWebsite || !serviceType) return 0;
@@ -458,6 +470,17 @@ export default function SubscribePage() {
             <h2 className="sub-section-label" id="tier-selection">3. Select Your Service Tier</h2>
             <TierSelection selectedTier={selectedTier} onSelectTier={setSelectedTier} />
 
+            {/* Step 4: Optional Add-On Tools */}
+            <h2 className="sub-section-label" id="addons-selection">4. Add-On Tools <span className="sub-section-label-tag">Optional</span></h2>
+            <p className="sub-market-intro">
+              Layer additional capability onto your subscription. These tools live inside your website and turn it into more than a marketing site — a single source of truth for your team and customers.
+            </p>
+            <AddOnsSelection
+              addOns={ADD_ONS}
+              selectedAddOns={selectedAddOns}
+              onToggle={handleToggleAddOn}
+            />
+
           </div>
 
           {/* Right: Invoice */}
@@ -476,6 +499,7 @@ export default function SubscribePage() {
             regionDiscountTotal={regionDiscountTotal}
             completeRegions={completeRegions}
             selectedService={selectedService}
+            selectedAddOns={selectedAddOnDetails}
             invoice={invoice}
             invoiceReady={invoiceReady}
             businessReady={businessReady}

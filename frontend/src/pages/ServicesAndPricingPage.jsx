@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   Shield, MapPin, Phone, Globe, Check, X, ArrowRight, Zap,
   Crown, Lock, TrendingUp, BarChart3, Search, Users, Layers,
-  Code, RefreshCw
+  Code, RefreshCw, CalendarClock, Sparkles, Plus
 } from 'lucide-react';
 import './ServicesAndPricingPage.css';
 import '../pages/WebServiceV2Page.css';
@@ -461,6 +461,88 @@ const ServicesAndPricingPage = () => {
           </div>
 
           {/* Activation Fee removed — replaced by per-county pricing */}
+        </div>
+      </section>
+
+      {/* ===== Add-On Tools ===== */}
+      <section className="sp-addons" data-testid="sp-addons-section">
+        <div className="sp-container">
+          <div className="sp-section-badge"><Plus size={14} /> Optional Add-Ons</div>
+          <h2 className="sp-section-title">More Than a Marketing Site.</h2>
+          <p className="sp-section-desc">
+            Layer additional capability onto any subscription tier. Add-on tools live inside your
+            website and turn it into a working business tool — not just a brochure.
+          </p>
+
+          <div className="sp-addon-grid" data-testid="sp-addon-grid">
+            {/* Crew Management Tool */}
+            <div className="sp-addon-card" data-testid="sp-addon-crew-management">
+              <div className="sp-addon-badge">
+                <Sparkles size={12} />
+                NEW
+              </div>
+
+              <div className="sp-addon-icon-wrap">
+                <CalendarClock size={32} />
+              </div>
+
+              <div className="sp-addon-tag">
+                <em>"A Single Source of Truth"</em>
+              </div>
+
+              <h3 className="sp-addon-title">Crew Management Tool</h3>
+
+              <p className="sp-addon-lede">
+                One shared schedule that lives inside your website. The office sets it, the crew
+                runs it, the customer sees it. Eliminates "where's the rig?" calls and keeps
+                everyone on the same page — automatically.
+              </p>
+
+              <ul className="sp-addon-features">
+                <li><Check size={16} /> Drag-and-drop scheduling for the office</li>
+                <li><Check size={16} /> Mobile-friendly job view for crews</li>
+                <li><Check size={16} /> Real-time arrival window for customers</li>
+                <li><Check size={16} /> Automatic email/text confirmations</li>
+                <li><Check size={16} /> Lives inside your existing site — no separate app</li>
+              </ul>
+
+              <div className="sp-addon-pricing">
+                <div className="sp-addon-pricing-row">
+                  <span className="sp-addon-pricing-label">Monthly</span>
+                  <span className="sp-addon-pricing-tbd">Pricing TBD</span>
+                </div>
+                <div className="sp-addon-pricing-row">
+                  <span className="sp-addon-pricing-label">Setup</span>
+                  <span className="sp-addon-pricing-tbd">Pricing TBD</span>
+                </div>
+                <p className="sp-addon-pricing-note">
+                  Pricing is being finalized. Add it to your subscription now to lock in early-access positioning.
+                </p>
+              </div>
+
+              <div className="sp-addon-ctas">
+                <Link to="/crew-management" className="sp-addon-btn-ghost" data-testid="sp-addon-learn-cta">
+                  Learn More <ArrowRight size={16} />
+                </Link>
+                <Link to="/subscribe#addons-selection" className="sp-addon-btn-primary" data-testid="sp-addon-add-cta">
+                  Add To My Subscription <ArrowRight size={16} />
+                </Link>
+              </div>
+            </div>
+
+            {/* Placeholder hint card for future add-ons */}
+            <div className="sp-addon-coming" data-testid="sp-addon-coming-soon">
+              <Plus size={28} />
+              <h4>More Add-Ons Coming</h4>
+              <p>
+                We're building additional optional tools that turn your website into a complete
+                business engine. Got an idea you'd love to see? Let us know.
+              </p>
+              <Link to="/contact" className="sp-addon-btn-ghost-sm" data-testid="sp-addon-suggest-cta">
+                Suggest A Tool <ArrowRight size={14} />
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 

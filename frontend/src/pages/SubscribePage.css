@@ -1539,3 +1539,225 @@
   color: #64748b;
   padding-top: 8px;
 }
+
+/* ============================================================
+   Step 4: Add-On Tools selection
+   ============================================================ */
+.sub-section-label-tag {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #0d9488;
+  background: rgba(13, 148, 136, 0.1);
+  border: 1px solid rgba(13, 148, 136, 0.25);
+  border-radius: 999px;
+  padding: 3px 10px;
+  margin-left: 10px;
+  vertical-align: middle;
+  text-transform: uppercase;
+}
+
+.sub-addons {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.sub-addon-card {
+  position: relative;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 22px 22px 20px;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+.sub-addon-card:hover {
+  border-color: rgba(13, 148, 136, 0.4);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+  transform: translateY(-2px);
+}
+.sub-addon-selected {
+  border-color: #0d9488;
+  box-shadow: 0 0 0 1px #0d9488 inset, 0 12px 30px rgba(13, 148, 136, 0.12);
+  background: linear-gradient(180deg, #ffffff 0%, #f0faf8 100%);
+}
+
+.sub-addon-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #fff;
+  background: #0d9488;
+  padding: 4px 9px;
+  border-radius: 999px;
+}
+
+.sub-addon-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.sub-addon-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 11px;
+  background: rgba(13, 148, 136, 0.1);
+  color: #0d9488;
+  border: 1px solid rgba(13, 148, 136, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sub-addon-title-block { flex: 1; min-width: 0; padding-right: 80px; }
+
+.sub-addon-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 4px;
+}
+
+.sub-addon-tagline {
+  font-size: 0.88rem;
+  color: #0d9488;
+  margin: 0;
+  font-family: 'Georgia', serif;
+}
+
+.sub-addon-desc {
+  font-size: 0.92rem;
+  color: #475569;
+  line-height: 1.6;
+  margin: 0 0 18px;
+}
+
+.sub-addon-pricing {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 12px 0;
+  margin-bottom: 18px;
+}
+
+.sub-addon-price-block {
+  flex: 1;
+  text-align: center;
+  padding: 0 14px;
+}
+
+.sub-addon-price-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #64748b;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.sub-addon-price-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.sub-addon-tbd {
+  color: #0d9488;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.sub-addon-price-divider {
+  width: 1px;
+  background: #e2e8f0;
+}
+
+.sub-addon-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.sub-addon-toggle {
+  flex: 1;
+  min-width: 200px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 18px;
+  background: #fff;
+  border: 1.5px solid #0d9488;
+  color: #0d9488;
+  border-radius: 9px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+.sub-addon-toggle:hover {
+  background: rgba(13, 148, 136, 0.06);
+  transform: translateY(-1px);
+}
+.sub-addon-toggle-on {
+  background: #0d9488;
+  color: #fff;
+}
+.sub-addon-toggle-on:hover {
+  background: #0b7e74;
+}
+
+.sub-addon-learn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #0d9488;
+  font-weight: 600;
+  font-size: 0.88rem;
+  text-decoration: none;
+  padding: 6px 4px;
+}
+.sub-addon-learn:hover { text-decoration: underline; }
+
+/* Invoice add-on block */
+.sub-invoice-addon-block {
+  margin-top: 4px;
+  padding-top: 14px;
+  border-top: 1px dashed #e2e8f0;
+}
+.sub-invoice-addon-header {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #0d9488;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.sub-line-amount-tbd {
+  color: #0d9488;
+  font-style: italic;
+  font-weight: 600;
+}
+.sub-invoice-addon-note {
+  font-size: 0.78rem;
+  color: #64748b;
+  font-style: italic;
+  line-height: 1.5;
+  margin: 8px 0 0;
+}
+

@@ -54,8 +54,12 @@ const CrewManagementPage = () => {
         <div className="cmt-container cmt-hero-inner">
           <span className="cmt-eyebrow" data-testid="cmt-hero-eyebrow">
             <Sparkles size={14} />
-            CREW MANAGEMENT TOOL
+            ADD-ON · CREW MANAGEMENT TOOL
           </span>
+
+          <p className="cmt-hero-subline" data-testid="cmt-addon-subline">
+            An optional layer for any Gateway AI Systems subscription — turn your marketing site into mission control.
+          </p>
 
           <div className="cmt-sst-banner" data-testid="cmt-sst-banner">
             <span className="cmt-sst-line"></span>
@@ -74,7 +78,7 @@ const CrewManagementPage = () => {
           </p>
 
           <div className="cmt-hero-ctas">
-            <Link to="/subscribe" className="cmt-btn cmt-btn-primary" data-testid="cmt-hero-cta-subscribe">
+            <Link to="/subscribe#addons-selection" className="cmt-btn cmt-btn-primary" data-testid="cmt-hero-cta-subscribe">
               Add It To My Subscription
               <ArrowRight size={16} />
             </Link>
@@ -357,12 +361,13 @@ const CrewManagementPage = () => {
             <Smartphone size={28} className="cmt-final-icon" />
             <h2>Ready to stop being your own dispatcher?</h2>
             <p>
-              The Crew Management Tool is rolling out as an add-on to your Gateway AI Systems
-              subscription. Get on the early-access list — your office (and your spouse) will thank you.
+              The Crew Management Tool is rolling out as an <strong>optional add-on</strong> to your
+              Gateway AI Systems subscription. Pricing is being finalized — add it to your subscription
+              now to lock in early-access positioning.
             </p>
             <div className="cmt-final-ctas">
-              <Link to="/subscribe" className="cmt-btn cmt-btn-primary cmt-btn-lg" data-testid="cmt-final-cta-subscribe">
-                Subscribe &amp; Reserve Crew Management
+              <Link to="/subscribe#addons-selection" className="cmt-btn cmt-btn-primary cmt-btn-lg" data-testid="cmt-final-cta-subscribe">
+                Subscribe &amp; Add Crew Management
                 <ArrowRight size={16} />
               </Link>
               <Link to="/contact" className="cmt-btn cmt-btn-ghost cmt-btn-lg" data-testid="cmt-final-cta-contact">

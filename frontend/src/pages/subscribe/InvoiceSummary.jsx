@@ -16,6 +16,7 @@ export const InvoiceSummary = ({
   regionDiscountTotal,
   completeRegions,
   selectedService,
+  selectedAddOns = [],
   invoice,
   invoiceReady,
   businessReady,
@@ -30,7 +31,7 @@ export const InvoiceSummary = ({
     <h2 className="sub-section-label">Your Invoice</h2>
 
     <div className="sub-invoice">
-      {(!selectedService && !selectedWebsite && selectedCounties.length === 0) ? (
+      {(!selectedService && !selectedWebsite && selectedCounties.length === 0 && selectedAddOns.length === 0) ? (
         <div className="sub-invoice-empty">
           <ShoppingCart size={32} />
           <p>Complete all three sections to build final invoice. Only 25% payment required to reserve your market areas. Final payment not required until you approve the product you receive and publish.</p>
@@ -118,6 +119,29 @@ export const InvoiceSummary = ({
                   <div className="sub-line-amount">${selectedService.monthlyPrice.toLocaleString()}/mo</div>
                 </div>
                 <p className="sub-invoice-free-month">First Month Free, to cover the learning curve of using the Tools.</p>
+              </div>
+            )}
+
+            {/* 4. Add-On Tools */}
+            {selectedAddOns.length > 0 && (
+              <div className="sub-invoice-addon-block" data-testid="invoice-addons-block">
+                <div className="sub-invoice-addon-header">
+                  <span>Add-On Tools</span>
+                </div>
+                {selectedAddOns.map(addon => (
+                  <div className="sub-invoice-line" key={addon.id} data-testid={`invoice-addon-${addon.id}`}>
+                    <div>
+                      <div className="sub-line-name">{addon.name}</div>
+                      <div className="sub-line-type">Optional Add-On</div>
+                    </div>
+                    <div className="sub-line-amount sub-line-amount-tbd">
+                      {addon.monthlyPrice == null ? 'TBD' : `$${addon.monthlyPrice}/mo`}
+                    </div>
+                  </div>
+                ))}
+                <p className="sub-invoice-addon-note">
+                  Add-on pricing is being finalized and will be quoted with your contract. Adding it now reserves it for early-access rollout.
+                </p>
               </div>
             )}
           </div>

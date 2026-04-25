@@ -1110,3 +1110,270 @@
   margin: 16px 32px 28px;
   width: calc(100% - 64px);
 }
+
+/* ============================================================
+   Add-On Tools section (Crew Management Tool, etc.)
+   ============================================================ */
+.sp-addons {
+  padding: 100px 24px;
+  background: linear-gradient(170deg, #ffffff 0%, #f0f7f6 60%, #e6f2f0 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.sp-addons::before {
+  content: '';
+  position: absolute;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  background: rgba(13, 148, 136, 0.12);
+  filter: blur(90px);
+  top: -200px;
+  right: -120px;
+  pointer-events: none;
+}
+
+.sp-addon-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  margin-top: 50px;
+  position: relative;
+  z-index: 1;
+}
+
+.sp-addon-card {
+  position: relative;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 36px 36px 32px;
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.sp-addon-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(13, 148, 136, 0.45);
+  box-shadow: 0 22px 48px rgba(15, 23, 42, 0.1);
+}
+
+.sp-addon-badge {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #fff;
+  background: #0d9488;
+  padding: 5px 11px;
+  border-radius: 999px;
+}
+
+.sp-addon-icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: rgba(13, 148, 136, 0.1);
+  border: 1px solid rgba(13, 148, 136, 0.3);
+  color: #0d9488;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.sp-addon-tag {
+  font-family: 'Georgia', serif;
+  font-size: 1rem;
+  color: #0d9488;
+  margin-bottom: 8px;
+  letter-spacing: 0.3px;
+}
+
+.sp-addon-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 12px;
+  letter-spacing: -0.3px;
+}
+
+.sp-addon-lede {
+  font-size: 1rem;
+  color: #475569;
+  line-height: 1.65;
+  margin: 0 0 20px;
+}
+
+.sp-addon-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 22px;
+}
+
+.sp-addon-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #334155;
+  line-height: 1.5;
+}
+
+.sp-addon-features li svg {
+  color: #0d9488;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.sp-addon-pricing {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 22px;
+}
+
+.sp-addon-pricing-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+}
+.sp-addon-pricing-row + .sp-addon-pricing-row {
+  border-top: 1px dashed #e2e8f0;
+}
+
+.sp-addon-pricing-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.sp-addon-pricing-tbd {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0d9488;
+  font-style: italic;
+}
+
+.sp-addon-pricing-note {
+  font-size: 0.78rem;
+  color: #64748b;
+  font-style: italic;
+  line-height: 1.5;
+  margin: 12px 0 0;
+}
+
+.sp-addon-ctas {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.sp-addon-btn-primary,
+.sp-addon-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  text-decoration: none;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.25s ease;
+  white-space: nowrap;
+}
+
+.sp-addon-btn-primary {
+  background: #0d9488;
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(13, 148, 136, 0.25);
+}
+.sp-addon-btn-primary:hover {
+  background: #0b7e74;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(13, 148, 136, 0.35);
+}
+
+.sp-addon-btn-ghost {
+  background: rgba(13, 148, 136, 0.06);
+  color: #0d9488;
+  border: 1px solid rgba(13, 148, 136, 0.3);
+}
+.sp-addon-btn-ghost:hover {
+  background: rgba(13, 148, 136, 0.12);
+  transform: translateY(-2px);
+}
+
+/* "Coming soon" placeholder */
+.sp-addon-coming {
+  background: #fff;
+  border: 1px dashed rgba(13, 148, 136, 0.4);
+  border-radius: 18px;
+  padding: 36px 30px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: #475569;
+}
+
+.sp-addon-coming svg {
+  color: #0d9488;
+  background: rgba(13, 148, 136, 0.08);
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(13, 148, 136, 0.25);
+  width: 56px;
+  height: 56px;
+}
+
+.sp-addon-coming h4 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.sp-addon-coming p {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  margin: 0 0 6px;
+}
+
+.sp-addon-btn-ghost-sm {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: rgba(13, 148, 136, 0.08);
+  color: #0d9488;
+  border: 1px solid rgba(13, 148, 136, 0.25);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+.sp-addon-btn-ghost-sm:hover {
+  background: rgba(13, 148, 136, 0.15);
+}
+
+@media (max-width: 968px) {
+  .sp-addon-grid { grid-template-columns: 1fr; }
+  .sp-addon-features { grid-template-columns: 1fr; }
+  .sp-addon-card { padding: 28px 24px; }
+}
+
