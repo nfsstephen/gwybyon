@@ -1,0 +1,159 @@
+.cmlogin-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: linear-gradient(170deg, #0f172a 0%, #134e4a 100%);
+  position: relative;
+  overflow: hidden;
+}
+.cmlogin-page::before {
+  content: '';
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  background: rgba(13, 148, 136, 0.18);
+  filter: blur(100px);
+  top: -180px;
+  left: -120px;
+  pointer-events: none;
+}
+
+.cmlogin-loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  background: #0f172a;
+}
+
+.cmlogin-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  border-radius: 18px;
+  padding: 42px 36px;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.cmlogin-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: rgba(13, 148, 136, 0.18);
+  border: 1px solid rgba(13, 148, 136, 0.4);
+  color: #5eead4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 18px;
+}
+
+.cmlogin-eyebrow {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #5eead4;
+  margin-bottom: 12px;
+}
+
+.cmlogin-title {
+  font-size: 1.7rem;
+  font-weight: 800;
+  margin: 0 0 8px;
+  letter-spacing: -0.3px;
+}
+
+.cmlogin-sub {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  margin: 0 0 28px;
+  line-height: 1.5;
+}
+
+.cmlogin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+
+.cmlogin-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.cmlogin-label input {
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.cmlogin-label input:focus {
+  outline: none;
+  border-color: #0d9488;
+  background: rgba(15, 23, 42, 0.85);
+}
+
+.cmlogin-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: rgba(220, 38, 38, 0.12);
+  border: 1px solid rgba(220, 38, 38, 0.4);
+  color: #fca5a5;
+  border-radius: 10px;
+  font-size: 0.88rem;
+}
+
+.cmlogin-btn {
+  margin-top: 6px;
+  padding: 13px 20px;
+  border-radius: 10px;
+  background: #0d9488;
+  border: none;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.cmlogin-btn:hover:not(:disabled) {
+  background: #0b7e74;
+  transform: translateY(-1px);
+}
+.cmlogin-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cmlogin-demo-hint {
+  margin-top: 20px;
+  font-size: 0.8rem;
+  color: #64748b;
+}
+.cmlogin-demo-hint strong {
+  color: #94a3b8;
+}

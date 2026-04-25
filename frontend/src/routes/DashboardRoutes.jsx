@@ -2,11 +2,15 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useDashboardAuth } from '../contexts/DashboardAuthContext';
 import { DashboardThemeProvider } from '../contexts/DashboardThemeContext';
+import { CmAuthProvider } from '../contexts/CmAuthContext';
 import DashboardLogin from '../pages/dashboard/DashboardLogin';
 import DashboardLayout from '../pages/dashboard/DashboardLayout';
 import ClientDashboard from '../pages/dashboard/ClientDashboard';
 import AdminDashboard from '../pages/dashboard/AdminDashboard';
 import TechnicalDashboard from '../pages/dashboard/TechnicalDashboard';
+import CmLogin from '../pages/crew/CmLogin';
+import CmDashboardLayout from '../pages/crew/CmDashboardLayout';
+import CmSchedule from '../pages/crew/CmSchedule';
 
 function ProtectedDashboard({ allowedRoles }) {
   const { user, loading } = useDashboardAuth();
@@ -41,6 +45,21 @@ export default function DashboardRoutes() {
         <Route path="/dashboard/technical/content" element={<TechnicalDashboard />} />
       </Route>
       <Route path="/dashboard" element={<Navigate to="/dashboard/login" replace />} />
+
+      {/* Crew Management Tool — separate auth (cm_users table) */}
+      <Route
+        path="/dashboard/crew/*"
+        element={
+          <CmAuthProvider>
+            <Routes>
+              <Route path="login" element={<CmLogin />} />
+              <Route path="" element={<CmDashboardLayout />}>
+                <Route index element={<CmSchedule />} />
+              </Route>
+            </Routes>
+          </CmAuthProvider>
+        }
+      />
     </Routes>
     </DashboardThemeProvider>
   );
