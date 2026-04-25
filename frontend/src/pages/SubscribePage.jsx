@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import { MapPin } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import HighchartsMapDrilldown from '../components/HighchartsMapDrilldown';
 import { WEBSITE_OPTIONS, TIERS, STATE_NAME_MAP, loadState, saveState } from './subscribe/constants';
@@ -373,14 +374,14 @@ export default function SubscribePage() {
 
             {/* Industry selector attached to map */}
             <div className="sub-map-industry-bar" data-testid="map-industry-bar">
-              <label htmlFor="biz-industry">Viewing Territory Map for:</label>
+              <label htmlFor="biz-industry">Select Industry Territory Map:</label>
               <select
                 id="biz-industry"
                 data-testid="business-industry-select"
                 value={businessDetails.industry}
                 onChange={e => handleBusinessChange('industry', e.target.value)}
               >
-                <option value="">Select Industry</option>
+                <option value="">— Choose Your Industry —</option>
                 <option value="Well Drilling">Well Drilling</option>
                 <option value="Septic Tank Installation &amp; Service">Septic Tank Installation &amp; Service</option>
                 <option value="Plumbers">Plumbers</option>
@@ -392,15 +393,48 @@ export default function SubscribePage() {
               </select>
             </div>
 
-            <HighchartsMapDrilldown
-              country="USA"
-              state={businessDetails.state}
-              selectedCounties={selectedCounties}
-              onToggleCounty={handleToggleCounty}
-              takenCounties={takenIds}
-              regionRefreshKey={regionRefreshKey}
-              category={businessDetails.industry}
-            />
+            {!businessDetails.industry ? (
+              <div className="sub-map-gate" data-testid="map-industry-gate" style={{
+                background: '#1e293b',
+                borderRadius: '0 0 10px 10px',
+                padding: '60px 24px',
+                textAlign: 'center',
+                color: '#94a3b8',
+                border: '2px dashed #334155',
+              }}>
+                <MapPin size={40} style={{ color: '#475569', marginBottom: '16px' }} />
+                <p style={{ fontSize: '1.1rem', fontWeight: 600, color: '#e2e8f0', marginBottom: '8px' }}>
+                  Select an industry above to view the territory map
+                </p>
+                <p style={{ fontSize: '0.85rem', maxWidth: '420px', margin: '0 auto' }}>
+                  Each industry has its own exclusive territory map. Choose your industry first to see available counties and existing regions.
+                </p>
+              </div>
+            ) : (
+              <>
+                <div className="sub-map-industry-confirm" data-testid="map-industry-confirm" style={{
+                  background: '#0f766e',
+                  color: '#ffffff',
+                  padding: '10px 16px',
+                  fontWeight: 700,
+                  fontSize: '0.95rem',
+                  textAlign: 'center',
+                  letterSpacing: '0.5px',
+                  borderRadius: '8px 8px 0 0',
+                }}>
+                  TERRITORY MAP: {businessDetails.industry.toUpperCase()}
+                </div>
+                <HighchartsMapDrilldown
+                  country="USA"
+                  state={businessDetails.state}
+                  selectedCounties={selectedCounties}
+                  onToggleCounty={handleToggleCounty}
+                  takenCounties={takenIds}
+                  regionRefreshKey={regionRefreshKey}
+                  category={businessDetails.industry}
+                />
+              </>
+            )}
 
             <CreateTerritoryPanel
               createTerritory={createTerritory}
