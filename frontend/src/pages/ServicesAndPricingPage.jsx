@@ -22,13 +22,13 @@ const ServicesAndPricingPage = () => {
           </div>
           <h1 className="sp-hero-title" data-testid="sp-hero-title">
             One Vendor.<br />
-            <span className="sp-highlight">Three Solutions.</span><br />
+            <span className="sp-highlight">Four Solutions.</span><br />
             Your Exclusive Territory.
           </h1>
           <p className="sp-hero-subtitle">
-            We don't just build websites. We deploy a complete local dominance system — 
-            search optimization, team communication, and exclusive territory protection — 
-            so you own your market, not just a URL.
+            We don't just build websites. We deploy a complete local dominance system —
+            search optimization, team communication, on-site crew coordination, and
+            exclusive territory protection — so you own your market, not just a URL.
           </p>
           <div className="sp-hero-stats">
             <div className="sp-stat">
@@ -37,7 +37,7 @@ const ServicesAndPricingPage = () => {
             </div>
             <div className="sp-stat-divider"></div>
             <div className="sp-stat">
-              <span className="sp-stat-num">3</span>
+              <span className="sp-stat-num">4</span>
               <span className="sp-stat-label">Integrated Solutions</span>
             </div>
             <div className="sp-stat-divider"></div>
@@ -264,25 +264,26 @@ const ServicesAndPricingPage = () => {
         </div>
       </section>
 
-      {/* What's Included — The Three Solutions */}
+      {/* What's Included — The Four Solutions */}
       <section className="sp-solutions" data-testid="sp-three-solutions">
         <div className="sp-container">
-          <div className="sp-section-badge"><Layers size={14} /> What Every Plan Includes</div>
-          <h2 className="sp-section-title">Three Solutions. One Monthly Investment.</h2>
+          <div className="sp-section-badge"><Layers size={14} /> What Your Subscription Can Include</div>
+          <h2 className="sp-section-title">Four Solutions. One Monthly Investment.</h2>
           <p className="sp-section-desc">
-            One package, three levels of service, designed to create the level of service that fits 
-            your needs and your budget. Solve your website, search results, and team communication 
-            needs all in one package from one vendor.
+            One package, three core levels of service plus an optional add-on, designed to create
+            the level of service that fits your needs and your budget. Solve your website,
+            search results, team communication, and on-site crew coordination needs all in one
+            package from one vendor.
             <br /><br />
-            You just choose the level of search dominance you want. Check 'The GeoGrid Advantage' 
+            You just choose the level of search dominance you want. Check 'The GeoGrid Advantage'
             to see how many tools we use to scale your results.
           </p>
-          <div className="sp-solutions-grid">
+          <div className="sp-solutions-grid sp-solutions-grid-4">
             <div className="sp-solution-card sp-sol-web">
               <div className="sp-sol-icon"><Globe size={32} /></div>
               <h3>High-Performance Website</h3>
               <p>
-                A website built (or rebuilt) for modern local search. Mobile-first, schema-optimized, 
+                A website built (or rebuilt) for modern local search. Mobile-first, schema-optimized,
                 and designed to convert visitors into customers. Includes managed hosting, SSL, daily backups, and CDN.
               </p>
               <ul>
@@ -295,7 +296,7 @@ const ServicesAndPricingPage = () => {
               <div className="sp-sol-icon"><MapPin size={32} /></div>
               <h3>The GeoGrid Advantage</h3>
               <p>
-                Our proprietary 5-tool suite that automates everything Google uses to rank local businesses. 
+                Our proprietary 5-tool suite that automates everything Google uses to rank local businesses.
                 Stop being invisible to customers three blocks away.
               </p>
               <ul>
@@ -310,7 +311,7 @@ const ServicesAndPricingPage = () => {
               <div className="sp-sol-icon"><Phone size={32} /></div>
               <h3>Seamless Team Communication</h3>
               <p>
-                Every plan includes 2 managed BYON phone lines. Give your field team a professional second line 
+                Every plan includes 2 managed BYON phone lines. Give your field team a professional second line
                 with call control, tracking, and scam protection — without touching their personal phones.
               </p>
               <ul>
@@ -319,6 +320,25 @@ const ServicesAndPricingPage = () => {
                 <li><Check size={14} /> Call control & whitelisting</li>
                 <li><Check size={14} /> Scam protection for employees</li>
               </ul>
+            </div>
+            <div className="sp-solution-card sp-sol-crew" data-testid="sp-solution-crew-management">
+              <div className="sp-sol-flag">Optional Add-On</div>
+              <div className="sp-sol-icon"><CalendarClock size={32} /></div>
+              <h3>Crew Management Tool</h3>
+              <p>
+                <em>"A Single Source of Truth."</em> One shared schedule that lives inside your website —
+                the office, the crew, and the customer all see the same plan. Your site stops being just
+                a brochure and becomes mission control.
+              </p>
+              <ul>
+                <li><Check size={14} /> Drag-and-drop schedule for the office</li>
+                <li><Check size={14} /> Mobile job view for crews</li>
+                <li><Check size={14} /> Real-time arrival window for customers</li>
+                <li><Check size={14} /> Automatic email/text confirmations</li>
+              </ul>
+              <Link to="/crew-management" className="sp-sol-link" data-testid="sp-sol-crew-link">
+                Learn more <ArrowRight size={14} />
+              </Link>
             </div>
           </div>
         </div>
