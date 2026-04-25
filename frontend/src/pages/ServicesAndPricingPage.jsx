@@ -308,14 +308,15 @@ const ServicesAndPricingPage = () => {
               </ul>
             </div>
             <div className="sp-solution-card sp-sol-byon">
+              <div className="sp-sol-flag">Optional Add-On</div>
               <div className="sp-sol-icon"><Phone size={32} /></div>
               <h3>Seamless Team Communication</h3>
               <p>
-                Every plan includes 2 managed BYON phone lines. Give your field team a professional second line
+                Add 2 managed BYON phone lines to your subscription. Give your field team a professional second line
                 with call control, tracking, and scam protection — without touching their personal phones.
               </p>
               <ul>
-                <li><Check size={14} /> 2 managed BYON lines included</li>
+                <li><Check size={14} /> 2 managed BYON lines</li>
                 <li><Check size={14} /> Business/personal call separation</li>
                 <li><Check size={14} /> Call control & whitelisting</li>
                 <li><Check size={14} /> Scam protection for employees</li>
