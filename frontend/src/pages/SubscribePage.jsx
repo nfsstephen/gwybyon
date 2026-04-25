@@ -93,6 +93,7 @@ export default function SubscribePage() {
   const [regionColors, setRegionColors] = useState({});
   const [territoryLoading, setTerritoryLoading] = useState(false);
   const [territoryError, setTerritoryError] = useState(null);
+  const [territoryConfirmed, setTerritoryConfirmed] = useState(false);
   const [regionRefreshKey, setRegionRefreshKey] = useState(0);
 
   const API_URL = process.env.REACT_APP_BACKEND_URL;
@@ -117,7 +118,7 @@ export default function SubscribePage() {
       .catch(() => setDbCategories([]));
   }, [API_URL]);
 
-  // Fetch region groups when state changes (for region discount calculation)
+  // Fetch region groups when state or industry changes (for region discount calculation)
   useEffect(() => {
     if (!businessDetails.state) {
       setRegionGroups({});
@@ -126,14 +127,15 @@ export default function SubscribePage() {
     }
     const stateCode = businessDetails.state.toLowerCase();
     const stateName = { al:'Alabama',az:'Arizona',ar:'Arkansas',ca:'California',co:'Colorado',ct:'Connecticut',de:'Delaware',fl:'Florida',ga:'Georgia',id:'Idaho',il:'Illinois',in:'Indiana',ia:'Iowa',ks:'Kansas',ky:'Kentucky',la:'Louisiana',me:'Maine',md:'Maryland',ma:'Massachusetts',mi:'Michigan',mn:'Minnesota',ms:'Mississippi',mo:'Missouri',mt:'Montana',ne:'Nebraska',nv:'Nevada',nh:'New Hampshire',nj:'New Jersey',nm:'New Mexico',ny:'New York',nc:'North Carolina',nd:'North Dakota',oh:'Ohio',ok:'Oklahoma',or:'Oregon',pa:'Pennsylvania',ri:'Rhode Island',sc:'South Carolina',sd:'South Dakota',tn:'Tennessee',tx:'Texas',ut:'Utah',vt:'Vermont',va:'Virginia',wa:'Washington',wv:'West Virginia',wi:'Wisconsin',wy:'Wyoming' }[stateCode] || businessDetails.state;
-    fetch(`${API_URL}/api/contracts/region-colors?state=${encodeURIComponent(stateName)}`)
+    const categoryParam = businessDetails.industry ? `&category=${encodeURIComponent(businessDetails.industry)}` : '';
+    fetch(`${API_URL}/api/contracts/region-colors?state=${encodeURIComponent(stateName)}${categoryParam}`)
       .then(res => res.json())
       .then(data => {
         setRegionGroups(data.region_groups || {});
         setRegionColors(data.colors || {});
       })
       .catch(() => { setRegionGroups({}); setRegionColors({}); });
-  }, [businessDetails.state, API_URL]);
+  }, [businessDetails.state, businessDetails.industry, API_URL]);
 
   useEffect(() => {
     saveState({ websiteChoice, serviceType, businessDetails, selectedCounties, countyNames, selectedTier, countyPrices });
@@ -191,7 +193,7 @@ export default function SubscribePage() {
 
   // Handle Create New Territory submission
   const handleTerritorySubmit = useCallback(async () => {
-    if (!newTerritoryName.trim() || selectedCounties.length === 0) return;
+    if (!newTerritoryName.trim() || selectedCounties.length === 0 || !businessDetails.industry) return;
 
     setTerritoryLoading(true);
     setTerritoryError(null);
@@ -209,6 +211,7 @@ export default function SubscribePage() {
           name: newTerritoryName.trim(),
           counties,
           state: businessDetails.state || '',
+          category: businessDetails.industry,
         }),
       });
       const data = await res.json();
@@ -222,7 +225,8 @@ export default function SubscribePage() {
       const stateCode = (businessDetails.state || '').toLowerCase();
       const stateNameMap = { al:'Alabama',az:'Arizona',ar:'Arkansas',ca:'California',co:'Colorado',ct:'Connecticut',de:'Delaware',fl:'Florida',ga:'Georgia',id:'Idaho',il:'Illinois',in:'Indiana',ia:'Iowa',ks:'Kansas',ky:'Kentucky',la:'Louisiana',me:'Maine',md:'Maryland',ma:'Massachusetts',mi:'Michigan',mn:'Minnesota',ms:'Mississippi',mo:'Missouri',mt:'Montana',ne:'Nebraska',nv:'Nevada',nh:'New Hampshire',nj:'New Jersey',nm:'New Mexico',ny:'New York',nc:'North Carolina',nd:'North Dakota',oh:'Ohio',ok:'Oklahoma',or:'Oregon',pa:'Pennsylvania',ri:'Rhode Island',sc:'South Carolina',sd:'South Dakota',tn:'Tennessee',tx:'Texas',ut:'Utah',vt:'Vermont',va:'Virginia',wa:'Washington',wv:'West Virginia',wi:'Wisconsin',wy:'Wyoming' };
       const stateFull = stateNameMap[stateCode] || businessDetails.state;
-      fetch(`${API_URL}/api/contracts/region-colors?state=${encodeURIComponent(stateFull)}`)
+      const categoryParam = businessDetails.industry ? `&category=${encodeURIComponent(businessDetails.industry)}` : '';
+      fetch(`${API_URL}/api/contracts/region-colors?state=${encodeURIComponent(stateFull)}${categoryParam}`)
         .then(r => r.json())
         .then(d => {
           setRegionGroups(d.region_groups || {});
@@ -234,7 +238,7 @@ export default function SubscribePage() {
     } finally {
       setTerritoryLoading(false);
     }
-  }, [newTerritoryName, selectedCounties, countyNames, businessDetails.state, API_URL]);
+  }, [newTerritoryName, selectedCounties, countyNames, businessDetails.state, businessDetails.industry, API_URL]);
 
   // Fetch territory pricing when counties or industry changes
   useEffect(() => {
@@ -595,6 +599,7 @@ export default function SubscribePage() {
               onToggleCounty={handleToggleCounty}
               takenCounties={takenIds}
               regionRefreshKey={regionRefreshKey}
+              category={businessDetails.industry}
             />
 
             {/* Create New Territory Panel */}
@@ -603,7 +608,7 @@ export default function SubscribePage() {
                 <input
                   type="checkbox"
                   checked={createTerritory}
-                  onChange={e => { setCreateTerritory(e.target.checked); setTerritorySubmitted(false); setTerritoryError(null); setNewTerritoryName(''); }}
+                  onChange={e => { setCreateTerritory(e.target.checked); setTerritorySubmitted(false); setTerritoryError(null); setTerritoryConfirmed(false); setNewTerritoryName(''); }}
                 />
                 <span className="sub-new-territory-checkmark" />
                 <span className="sub-new-territory-toggle-label">Create New Territory</span>
@@ -612,15 +617,24 @@ export default function SubscribePage() {
                 Any adjoining counties not already taken can be selected to form a new territory
               </p>
 
-              {createTerritory && (
+              {createTerritory && !businessDetails.industry && (
+                <p className="sub-new-territory-error" data-testid="territory-no-industry-warning" style={{ color: '#f4b400', marginTop: '0.5rem', fontSize: '0.85rem', fontWeight: 600 }}>
+                  Please select an industry above before creating a territory. Each territory is specific to an industry.
+                </p>
+              )}
+
+              {createTerritory && businessDetails.industry && (
                 <div className="sub-new-territory-form" data-testid="new-territory-form">
+                  <p className="sub-new-territory-industry-tag" data-testid="territory-industry-label" style={{ color: '#0d9488', fontWeight: 600, fontSize: '0.9rem', marginBottom: '0.75rem' }}>
+                    Creating territory for: {businessDetails.industry}
+                  </p>
                   <div className="sub-new-territory-field">
                     <label>New Territory Name</label>
                     <input
                       type="text"
                       data-testid="new-territory-name-input"
                       value={newTerritoryName}
-                      onChange={e => setNewTerritoryName(e.target.value)}
+                      onChange={e => { setNewTerritoryName(e.target.value); setTerritoryConfirmed(false); }}
                       placeholder="Bodacious Electrical"
                     />
                   </div>
@@ -638,22 +652,48 @@ export default function SubscribePage() {
                     </div>
                   )}
 
+                  {/* Step 1: SUBMIT checkbox — triggers confirmation */}
                   <label className="sub-new-territory-submit" data-testid="submit-territory-checkbox">
                     <input
                       type="checkbox"
-                      checked={territorySubmitted}
+                      checked={territoryConfirmed || territorySubmitted}
                       onChange={e => {
-                        if (e.target.checked && !territorySubmitted) {
-                          handleTerritorySubmit();
+                        if (e.target.checked) {
+                          setTerritoryConfirmed(true);
+                        } else {
+                          setTerritoryConfirmed(false);
                         }
                       }}
                       disabled={!newTerritoryName.trim() || selectedCounties.length === 0 || territoryLoading || territorySubmitted}
                     />
                     <span className="sub-new-territory-checkmark" />
-                    <span className="sub-new-territory-submit-label">
-                      {territoryLoading ? 'SAVING...' : 'SUBMIT'}
-                    </span>
+                    <span className="sub-new-territory-submit-label">SUBMIT</span>
                   </label>
+
+                  {/* Step 2: Confirmation — verify industry before saving */}
+                  {territoryConfirmed && !territorySubmitted && (
+                    <div className="sub-new-territory-confirm" data-testid="territory-confirm-panel" style={{ marginTop: '0.75rem', padding: '0.75rem', background: '#fef3c7', borderRadius: '0.5rem', border: '1px solid #f59e0b' }}>
+                      <p style={{ fontWeight: 600, color: '#92400e', fontSize: '0.9rem', marginBottom: '0.5rem' }}>
+                        Verify this new territory is for the <strong>"{businessDetails.industry}"</strong> industry.
+                      </p>
+                      <label className="sub-new-territory-submit" data-testid="confirm-industry-checkbox" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+                        <input
+                          type="checkbox"
+                          onChange={e => {
+                            if (e.target.checked) {
+                              handleTerritorySubmit();
+                            }
+                          }}
+                          disabled={territoryLoading}
+                        />
+                        <span className="sub-new-territory-checkmark" />
+                        <span className="sub-new-territory-submit-label" style={{ color: '#92400e' }}>
+                          {territoryLoading ? 'SAVING...' : 'CONFIRM & CREATE TERRITORY'}
+                        </span>
+                      </label>
+                    </div>
+                  )}
+
                   {territoryError && (
                     <p className="sub-new-territory-error" data-testid="territory-error-msg" style={{ color: '#ef4444', marginTop: '0.5rem', fontSize: '0.85rem' }}>
                       {territoryError}
@@ -661,7 +701,7 @@ export default function SubscribePage() {
                   )}
                   {territorySubmitted && (
                     <p className="sub-new-territory-confirmation" data-testid="territory-submitted-msg">
-                      Territory "{newTerritoryName}" has been created and saved. Your selected counties are now part of this territory. The map will reflect the new region coloring.
+                      Territory "{newTerritoryName}" has been created for the <strong>{businessDetails.industry}</strong> industry. Your selected counties are now part of this territory. The map will reflect the new region coloring.
                     </p>
                   )}
                 </div>

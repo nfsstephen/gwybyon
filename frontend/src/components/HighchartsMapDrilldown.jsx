@@ -35,7 +35,7 @@ const STATE_CODE_TO_NAME = Object.fromEntries(
   Object.entries(STATE_NAME_TO_CODE).map(([name, code]) => [code, name.replace(/\b\w/g, c => c.toUpperCase())])
 );
 
-export default function HighchartsMapDrilldown({ country, state: stateProp, selectedCounties, onToggleCounty, takenCounties, regionRefreshKey }) {
+export default function HighchartsMapDrilldown({ country, state: stateProp, selectedCounties, onToggleCounty, takenCounties, regionRefreshKey, category }) {
   const containerRef = useRef(null);
   const chartInstanceRef = useRef(null);
   const [drillLevel, setDrillLevel] = useState('country');
@@ -48,9 +48,11 @@ export default function HighchartsMapDrilldown({ country, state: stateProp, sele
   const selectedRef = useRef(selectedCounties);
   const takenRef = useRef(takenCounties);
   const currentDrilledState = useRef('');
+  const categoryRef = useRef(category);
 
   useEffect(() => { toggleRef.current = onToggleCounty; }, [onToggleCounty]);
   useEffect(() => { selectedRef.current = selectedCounties; }, [selectedCounties]);
+  useEffect(() => { categoryRef.current = category; }, [category]);
 
   // Reusable function to apply taken colors to existing chart points
   const applyTakenColors = useCallback(() => {
@@ -193,15 +195,19 @@ export default function HighchartsMapDrilldown({ country, state: stateProp, sele
       return;
     }
 
-    // Fetch region colors for this state
-    let regionColors = regionColorsCache.current[stateName] || {};
-    if (!regionColorsCache.current[stateName]) {
+    // Fetch region colors for this state + industry
+    // Cache key includes category so different industries have separate caches
+    const currentCategory = categoryRef.current || '';
+    const cacheKey = `${stateName}__${currentCategory}`;
+    let regionColors = regionColorsCache.current[cacheKey] || {};
+    if (!regionColorsCache.current[cacheKey]) {
       try {
         const API_URL = process.env.REACT_APP_BACKEND_URL;
-        const res = await fetch(`${API_URL}/api/contracts/region-colors?state=${encodeURIComponent(stateName)}`);
+        const categoryParam = currentCategory ? `&category=${encodeURIComponent(currentCategory)}` : '';
+        const res = await fetch(`${API_URL}/api/contracts/region-colors?state=${encodeURIComponent(stateName)}${categoryParam}`);
         const data = await res.json();
         regionColors = data.colors || {};
-        regionColorsCache.current[stateName] = regionColors;
+        regionColorsCache.current[cacheKey] = regionColors;
       } catch (e) {
         console.error('Region colors fetch error:', e);
       }
@@ -312,14 +318,29 @@ export default function HighchartsMapDrilldown({ country, state: stateProp, sele
     drillIntoState(stateCode, stateName);
   }, [stateProp, drillIntoState]);
 
+  // Re-drill when industry (category) changes to show industry-specific regions
+  useEffect(() => {
+    const stateCode = currentDrilledState.current;
+    if (!stateCode) return;
+    const stateName = STATE_CODE_TO_NAME[stateCode] || stateCode;
+    // Clear cache for old and new category to force re-fetch
+    Object.keys(regionColorsCache.current).forEach(key => {
+      if (key.startsWith(stateName + '__')) delete regionColorsCache.current[key];
+    });
+    drillIntoState(stateCode, stateName);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [category]);
+
   // Re-fetch region colors and redraw when regionRefreshKey changes
   useEffect(() => {
     if (!regionRefreshKey) return;
     const stateCode = currentDrilledState.current;
     if (!stateCode) return;
     const stateName = STATE_CODE_TO_NAME[stateCode] || stateCode;
-    // Clear the cached colors for this state so drillIntoState re-fetches
-    delete regionColorsCache.current[stateName];
+    // Clear the cached colors for this state+category so drillIntoState re-fetches
+    const currentCategory = categoryRef.current || '';
+    const cacheKey = `${stateName}__${currentCategory}`;
+    delete regionColorsCache.current[cacheKey];
     drillIntoState(stateCode, stateName);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [regionRefreshKey]);

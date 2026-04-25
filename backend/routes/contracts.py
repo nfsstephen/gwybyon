@@ -34,30 +34,70 @@ async def get_taken_territories(industry: str = ""):
 
 
 @router.get("/region-colors")
-async def get_region_colors(state: str = ""):
+async def get_region_colors(state: str = "", category: str = ""):
     """Return county → region color mapping and region group totals for a given state.
+    When category (industry) is provided, returns industry-specific regions first,
+    then fills in with default (null category_id) regions for uncovered counties.
     Requires territories.region_id FK to Region table."""
     if not state:
         return {"colors": {}, "region_groups": {}}
     try:
+        # Resolve category to category_id
+        cat_id = None
+        if category:
+            cat_result = supabase.table("category").select("id, name").execute()
+            cat_map = {c["name"].strip().lower(): c["id"] for c in (cat_result.data or [])}
+            cat_id = cat_map.get(category.strip().lower())
+
         # Fetch territories for the given state that have a region_id
-        territories = supabase.table("territories").select("county, region_id").eq("state", state).not_.is_("region_id", "null").execute()
+        territories = supabase.table("territories").select("county, region_id, category_id").eq("state", state).not_.is_("region_id", "null").execute()
         t_rows = territories.data or []
         if not t_rows:
             return {"colors": {}, "region_groups": {}}
 
-        # Fetch all regions
-        regions = supabase.table("Region").select("id, name, color").execute()
+        # Fetch all regions (with category_id)
+        regions = supabase.table("Region").select("id, name, color, category_id").execute()
         region_map = {r["id"]: r for r in (regions.data or [])}
 
-        # Build county → color mapping and region groups
+        # Separate into industry-specific and default territory rows
+        industry_rows = []
+        default_rows = []
+        for t in t_rows:
+            t_cat = t.get("category_id")
+            if cat_id and t_cat == cat_id:
+                industry_rows.append(t)
+            elif t_cat is None:
+                default_rows.append(t)
+
+        # Industry-specific rows take priority; fill remaining from defaults
+        covered_counties = set()
         colors = {}
         region_groups = {}
-        for t in t_rows:
+
+        # First pass: industry-specific
+        for t in industry_rows:
             region = region_map.get(t.get("region_id"))
             if region:
                 county_name = (t.get("county") or "").strip()
                 county_lower = county_name.lower()
+                covered_counties.add(county_lower)
+                colors[county_lower] = {
+                    "color": region["color"],
+                    "region": region["name"]
+                }
+                rname = region["name"]
+                if rname not in region_groups:
+                    region_groups[rname] = {"color": region["color"], "counties": []}
+                region_groups[rname]["counties"].append(county_lower)
+
+        # Second pass: defaults for uncovered counties
+        for t in default_rows:
+            county_name = (t.get("county") or "").strip()
+            county_lower = county_name.lower()
+            if county_lower in covered_counties:
+                continue
+            region = region_map.get(t.get("region_id"))
+            if region:
                 colors[county_lower] = {
                     "color": region["color"],
                     "region": region["name"]
@@ -110,6 +150,7 @@ class CreateTerritoryRequest(BaseModel):
     name: str
     counties: list[dict]  # [{ "name": "Orange", "hc_key": "us-fl-095" }]
     state: str  # Abbreviation like "FL" or full name like "Florida"
+    category: str  # Industry name (e.g., "Well Drilling")
 
 
 # Color palette for auto-assigning to new custom territories
@@ -123,11 +164,21 @@ TERRITORY_COLOR_PALETTE = [
 
 @router.post("/create-territory")
 async def create_territory(req: CreateTerritoryRequest):
-    """Create a new custom territory: insert a Region row and assign counties to it."""
+    """Create a new custom territory for a specific industry:
+    insert a Region row and assign counties to it, both with category_id."""
     if not req.name or not req.name.strip():
         raise HTTPException(status_code=400, detail="Territory name is required")
     if not req.counties:
         raise HTTPException(status_code=400, detail="At least one county is required")
+    if not req.category or not req.category.strip():
+        raise HTTPException(status_code=400, detail="Industry (category) is required")
+
+    # Resolve category name to ID
+    cat_result = supabase.table("category").select("id, name").execute()
+    cat_map = {c["name"].strip().lower(): c["id"] for c in (cat_result.data or [])}
+    cat_id = cat_map.get(req.category.strip().lower())
+    if not cat_id:
+        raise HTTPException(status_code=400, detail=f"Unknown industry: {req.category}")
 
     # Resolve state to full name
     state_abbr_to_name = {
@@ -162,13 +213,14 @@ async def create_territory(req: CreateTerritoryRequest):
                 chosen_color = color
                 break
 
-        # Insert new Region row
+        # Insert new Region row with category_id
         region_result = supabase.table("Region").insert({
             "region_code": next_code,
             "name": req.name.strip(),
             "coverage_area": "Custom Territory",
             "color": chosen_color,
             "state": state_full,
+            "category_id": cat_id,
         }).execute()
 
         if not region_result.data:
@@ -176,18 +228,17 @@ async def create_territory(req: CreateTerritoryRequest):
 
         new_region_id = region_result.data[0]["id"]
 
-        # For each county, upsert into territories table
+        # For each county, create an industry-specific territory row
+        # (don't touch existing default rows — create new ones with category_id)
         county_results = []
         for county_info in req.counties:
             county_name = (county_info.get("name") or "").strip()
             if not county_name:
                 continue
 
-            # Check if county already exists in territories for this state
-            # Use ilike with wildcards to handle trailing whitespace in DB
-            existing = supabase.table("territories").select("id, county, region_id").eq("state", state_full).ilike("county", f"{county_name}%").execute()
+            # Check if an industry-specific row already exists for this county + category
+            existing = supabase.table("territories").select("id, county, region_id, category_id").eq("state", state_full).eq("category_id", cat_id).ilike("county", f"{county_name}%").execute()
 
-            # Filter for exact match (trimmed) to avoid false positives
             matched_row = None
             for row in (existing.data or []):
                 if (row.get("county") or "").strip().lower() == county_name.lower():
@@ -195,20 +246,28 @@ async def create_territory(req: CreateTerritoryRequest):
                     break
 
             if matched_row:
-                # Update existing row with new region_id
-                row_id = matched_row["id"]
+                # Update existing industry-specific row with new region_id
                 supabase.table("territories").update({
                     "region_id": new_region_id
-                }).eq("id", row_id).execute()
+                }).eq("id", matched_row["id"]).execute()
                 county_results.append({"county": county_name, "action": "updated"})
             else:
-                # Insert new territory row (default type=1 Small)
+                # Look up the county type from the default row
+                default_row = supabase.table("territories").select("type").eq("state", state_full).is_("category_id", "null").ilike("county", f"{county_name}%").execute()
+                county_type = 1  # default Small
+                for dr in (default_row.data or []):
+                    if (dr.get("county", "") if "county" in dr else "").strip().lower() == county_name.lower() or True:
+                        county_type = dr.get("type", 1)
+                        break
+
+                # Insert new industry-specific territory row
                 supabase.table("territories").insert({
                     "county": county_name,
                     "state": state_full,
                     "country": "USA",
-                    "type": 1,
+                    "type": county_type,
                     "region_id": new_region_id,
+                    "category_id": cat_id,
                 }).execute()
                 county_results.append({"county": county_name, "action": "created"})
 
@@ -220,6 +279,8 @@ async def create_territory(req: CreateTerritoryRequest):
                 "color": chosen_color,
                 "region_code": next_code,
                 "state": state_full,
+                "category": req.category.strip(),
+                "category_id": cat_id,
             },
             "counties": county_results,
         }
