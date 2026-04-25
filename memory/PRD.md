@@ -101,11 +101,14 @@ Home | Eight Industries | Five Tools | Web Services | Services & Pricing | Conta
 - [x] Two-step confirmation flow for territory creation
 - [x] Confirm/Release territory endpoints
 - [x] Map re-renders per-industry with category-aware color caching
+- [x] Refactored SubscribePage.jsx (1005→459 lines) into 6 modules: constants, WebsiteSelection, BusinessForm, CreateTerritoryPanel, TierSelection, InvoiceSummary
 
 ## Backlog (Prioritized)
 ### P0
 - Stripe integration — wire real payments to deposit + balance buttons (MUST use integration_playbook_expert_v2)
 - Customer Portal — login, view contract, pay balance, deadline tracking
+- Connect deposit payment to auto-confirm reserved territories
+- Admin dashboard: manage/release reserved territories, set reservation expiry timeline
 
 ### P1
 - Email delivery — send contract PDF to customer + copy to admin upon deposit
