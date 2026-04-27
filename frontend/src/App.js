@@ -4,6 +4,7 @@ import './App.css';
 import PasswordGate from './components/PasswordGate';
 import AdminChatPage from './pages/AdminChatPage';
 import AdminPreviewPage from './pages/AdminPreviewPage';
+import TrackPage from './pages/track/TrackPage';
 import { DashboardAuthProvider } from './contexts/DashboardAuthContext';
 import DashboardRoutes from './routes/DashboardRoutes';
 import SiteRoutes from './routes/SiteRoutes';
@@ -12,6 +13,7 @@ function AppContent({ scrolled }) {
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/admin');
   const isDashboard = location.pathname.startsWith('/dashboard');
+  const isTrack = location.pathname.startsWith('/track');
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -31,6 +33,14 @@ function AppContent({ scrolled }) {
       <DashboardAuthProvider>
         <DashboardRoutes />
       </DashboardAuthProvider>
+    );
+  }
+
+  if (isTrack) {
+    return (
+      <Routes>
+        <Route path="/track/:token" element={<TrackPage />} />
+      </Routes>
     );
   }
 
