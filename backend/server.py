@@ -28,6 +28,7 @@ from routes.contracts import router as contracts_router
 from routes.cm_auth import router as cm_auth_router
 from routes.cm_schedule import router as cm_schedule_router
 from routes.cm_public import router as cm_public_router
+from routes.cm_crud import router as cm_crud_router
 
 app.include_router(auth_router, prefix="/api")
 app.include_router(chat_router, prefix="/api")
@@ -36,6 +37,7 @@ app.include_router(contracts_router, prefix="/api")
 app.include_router(cm_auth_router, prefix="/api")
 app.include_router(cm_schedule_router, prefix="/api")
 app.include_router(cm_public_router, prefix="/api")
+app.include_router(cm_crud_router, prefix="/api")
 
 # Dashboard routes — now use Supabase REST client (no SQLAlchemy/asyncpg)
 try:

@@ -32,20 +32,17 @@ const CmDashboardLayout = () => {
             <LayoutDashboard size={16} />
             <span>Schedule</span>
           </NavLink>
-          <NavLink to="/dashboard/crew/jobs" className="cm-nav-link cm-nav-disabled" data-testid="cm-nav-jobs"
-                   onClick={(e) => e.preventDefault()}>
+          <NavLink to="/dashboard/crew/jobs" className="cm-nav-link" data-testid="cm-nav-jobs">
             <Briefcase size={16} />
-            <span>Jobs <em>· soon</em></span>
+            <span>Jobs</span>
           </NavLink>
-          <NavLink to="/dashboard/crew/customers" className="cm-nav-link cm-nav-disabled" data-testid="cm-nav-customers"
-                   onClick={(e) => e.preventDefault()}>
+          <NavLink to="/dashboard/crew/customers" className="cm-nav-link" data-testid="cm-nav-customers">
             <Users size={16} />
-            <span>Customers <em>· soon</em></span>
+            <span>Customers</span>
           </NavLink>
-          <NavLink to="/dashboard/crew/crews" className="cm-nav-link cm-nav-disabled" data-testid="cm-nav-crews"
-                   onClick={(e) => e.preventDefault()}>
+          <NavLink to="/dashboard/crew/crews" className="cm-nav-link" data-testid="cm-nav-crews">
             <HardHat size={16} />
-            <span>Crews <em>· soon</em></span>
+            <span>Crews</span>
           </NavLink>
         </nav>
 

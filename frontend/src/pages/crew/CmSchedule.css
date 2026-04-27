@@ -496,3 +496,386 @@
   .cm-week { display: flex; flex-direction: column; }
   .cm-day-col { min-height: auto; }
 }
+
+/* ============================================================
+   List pages (Crews, Customers, Jobs)
+   ============================================================ */
+.cm-list-page {}
+
+.cm-list-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.cm-list-sub {
+  color: #64748b;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  max-width: 600px;
+  margin: 6px 0 0;
+}
+
+.cm-search-row {
+  margin-bottom: 14px;
+}
+.cm-search-row input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 14px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 9px;
+  font-size: 0.95rem;
+  color: #0f172a;
+}
+.cm-search-row input:focus { outline: none; border-color: #0d9488; }
+
+.cm-new-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 16px;
+  background: #0d9488;
+  border: none;
+  color: #fff;
+  border-radius: 9px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+.cm-new-btn:hover { background: #0b7e74; transform: translateY(-1px); }
+
+.cm-empty-state {
+  background: #fff;
+  border: 1px dashed #cbd5e1;
+  border-radius: 14px;
+  padding: 50px 30px;
+  text-align: center;
+  color: #475569;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+}
+.cm-empty-state svg { color: #0d9488; }
+.cm-empty-state h3 { margin: 6px 0 0; color: #0f172a; font-size: 1.1rem; }
+.cm-empty-state p { margin: 0 0 16px; max-width: 420px; }
+
+/* Simple table */
+.cm-simple-table {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.cm-simple-table-head,
+.cm-simple-table-row {
+  display: flex;
+  gap: 16px;
+  padding: 12px 18px;
+  align-items: center;
+}
+.cm-simple-table-head {
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #64748b;
+  text-transform: uppercase;
+}
+.cm-simple-table-head > div,
+.cm-simple-table-row > div { flex: 1; min-width: 0; }
+.cm-simple-table-row {
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 0.92rem;
+  color: #334155;
+}
+.cm-simple-table-row:last-child { border-bottom: none; }
+.cm-simple-table-row:hover { background: #fafcfd; }
+
+.cm-cell-sub {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  margin-top: 2px;
+}
+.cm-muted { color: #94a3b8; }
+
+.cm-color-swatch-lg {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.cm-badge {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.cm-badge-green { background: rgba(34,197,94,0.12); color: #15803d; }
+.cm-badge-grey { background: rgba(100,116,139,0.12); color: #64748b; }
+
+.cm-btn-mini {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  margin-left: 6px;
+}
+.cm-btn-mini:hover { background: #f1f5f9; color: #0f172a; border-color: #cbd5e1; }
+.cm-btn-mini-danger { color: #b91c1c; border-color: rgba(220,38,38,0.25); }
+.cm-btn-mini-danger:hover { background: rgba(220,38,38,0.08); color: #991b1b; }
+
+.cm-status-select {
+  padding: 6px 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #0f172a;
+  cursor: pointer;
+}
+
+/* ============================================================
+   Modal (Visit + Crew + Customer)
+   ============================================================ */
+.cm-modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000;
+  padding: 24px;
+  animation: cmFadeIn 0.15s ease-out;
+}
+@keyframes cmFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.cm-modal {
+  background: #fff;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 640px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+  animation: cmSlideUp 0.18s ease-out;
+}
+.cm-modal-sm { max-width: 480px; }
+@keyframes cmSlideUp { from { transform: translateY(12px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.cm-modal-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 24px;
+  border-bottom: 1px solid #f1f5f9;
+}
+.cm-modal-head h2 { font-size: 1.1rem; font-weight: 800; margin: 0; color: #0f172a; }
+
+.cm-modal-close {
+  width: 32px; height: 32px;
+  background: transparent; border: none;
+  color: #64748b;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.cm-modal-close:hover { background: #f1f5f9; color: #0f172a; }
+
+.cm-modal-body {
+  padding: 20px 24px 22px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+
+.cm-form-row { display: flex; flex-direction: column; gap: 6px; }
+.cm-form-row label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #475569;
+  text-transform: uppercase;
+  display: flex; align-items: baseline; gap: 8px; justify-content: space-between;
+}
+.cm-form-row label span {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #94a3b8;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.cm-form-row input,
+.cm-form-row select,
+.cm-form-row textarea {
+  padding: 10px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  color: #0f172a;
+  background: #fff;
+  font-family: inherit;
+  transition: border-color 0.15s ease;
+}
+.cm-form-row input:focus,
+.cm-form-row select:focus,
+.cm-form-row textarea:focus { outline: none; border-color: #0d9488; box-shadow: 0 0 0 3px rgba(13,148,136,0.12); }
+.cm-form-row textarea { resize: vertical; }
+
+.cm-form-row-inline label {
+  display: inline-flex; flex-direction: row; align-items: center; gap: 8px;
+  font-size: 0.9rem; text-transform: none; letter-spacing: 0;
+  color: #0f172a; font-weight: 600;
+}
+
+.cm-form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+.cm-form-block {
+  padding: 14px;
+  background: #fafcfd;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+
+.cm-inline-fields {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+}
+.cm-inline-fields input:first-child { grid-column: 1 / -1; }
+
+.cm-tab-toggle {
+  display: inline-flex;
+  background: #f1f5f9;
+  border-radius: 8px;
+  padding: 3px;
+  gap: 2px;
+}
+.cm-tab-toggle button {
+  padding: 7px 14px;
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-weight: 600;
+  font-size: 0.82rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.cm-tab-toggle button.is-active { background: #0d9488; color: #fff; }
+.cm-tab-toggle-sm button { padding: 5px 10px; font-size: 0.76rem; }
+
+.cm-palette { display: flex; gap: 8px; flex-wrap: wrap; }
+.cm-palette-swatch {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.12s ease, border-color 0.12s ease;
+}
+.cm-palette-swatch:hover { transform: scale(1.1); }
+.cm-palette-swatch.is-selected { border-color: #0f172a; transform: scale(1.12); }
+
+.cm-form-error {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 12px;
+  background: rgba(220,38,38,0.08);
+  border: 1px solid rgba(220,38,38,0.25);
+  color: #b91c1c;
+  border-radius: 8px;
+  font-size: 0.86rem;
+}
+
+.cm-modal-actions {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 6px;
+  padding-top: 14px;
+  border-top: 1px solid #f1f5f9;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.cm-modal-actions-right { margin-left: auto; display: flex; gap: 8px; }
+
+.cm-btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 18px;
+  background: #0d9488;
+  border: none;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.12s ease;
+}
+.cm-btn-primary:hover:not(:disabled) { background: #0b7e74; transform: translateY(-1px); }
+.cm-btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.cm-btn-ghost {
+  padding: 10px 16px;
+  background: transparent;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.cm-btn-ghost:hover { background: #f1f5f9; }
+
+.cm-btn-danger {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 14px;
+  background: transparent;
+  border: 1px solid rgba(220,38,38,0.35);
+  color: #b91c1c;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+.cm-btn-danger:hover { background: rgba(220,38,38,0.08); }
+
+/* Clickable day slots in week view */
+.cm-day-empty-clickable,
+.cm-day-add {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 5px;
+  padding: 8px 10px;
+  background: transparent;
+  border: 1px dashed #cbd5e1;
+  border-radius: 7px;
+  color: #94a3b8;
+  font-weight: 600;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  width: 100%;
+}
+.cm-day-empty-clickable:hover,
+.cm-day-add:hover { background: rgba(13,148,136,0.06); color: #0d9488; border-color: rgba(13,148,136,0.35); }
+
+.cm-day-add { padding: 6px 8px; font-size: 0.72rem; margin-top: 2px; }
+
+/* Make the visit card act like a button */
+.cm-visit {
+  width: 100%;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.cm-visit:focus { outline: 2px solid rgba(13,148,136,0.4); outline-offset: 2px; }
+

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, Calendar, CalendarDays, RotateCw } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar, CalendarDays, RotateCw, Plus } from 'lucide-react';
 import { useCmAuth } from '../../contexts/CmAuthContext';
+import { VisitModal } from './VisitModal';
 import './CmSchedule.css';
 
 // --- helpers ---
@@ -32,8 +33,13 @@ const CmSchedule = () => {
   const [anchor, setAnchor] = useState(() => new Date());
   const [visits, setVisits] = useState([]);
   const [crews, setCrews] = useState([]);
+  const [customers, setCustomers] = useState([]);
+  const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Modal state
+  const [modal, setModal] = useState(null); // { mode: 'create'|'edit', initialStart?, visit? }
 
   // Compute the date range to query based on view + anchor
   const range = useMemo(() => {
@@ -54,14 +60,20 @@ const CmSchedule = () => {
     setLoading(true);
     setError(null);
     try {
-      const [vRes, cRes] = await Promise.all([
+      const [vRes, cRes, custRes, jRes] = await Promise.all([
         authedFetch(`/visits?start=${range.start.toISOString()}&end=${range.end.toISOString()}`),
         authedFetch('/crews'),
+        authedFetch('/customers'),
+        authedFetch('/jobs'),
       ]);
       const vData = await vRes.json();
       const cData = await cRes.json();
+      const custData = await custRes.json();
+      const jData = await jRes.json();
       setVisits(vData.visits || []);
       setCrews(cData.crews || []);
+      setCustomers(custData.customers || []);
+      setJobs(jData.jobs || []);
     } catch (err) {
       setError(err.message || 'Failed to load schedule');
     } finally {
@@ -151,6 +163,14 @@ const CmSchedule = () => {
           <button onClick={load} className="cm-icon-btn" title="Refresh" data-testid="cm-refresh">
             <RotateCw size={14} />
           </button>
+
+          <button
+            onClick={() => setModal({ mode: 'create', initialStart: new Date(new Date().setHours(9, 0, 0, 0)) })}
+            className="cm-new-btn"
+            data-testid="cm-new-visit-btn"
+          >
+            <Plus size={14} /> New Visit
+          </button>
         </div>
       </div>
 
@@ -171,16 +191,40 @@ const CmSchedule = () => {
       {loading ? (
         <div className="cm-loading">Loading schedule…</div>
       ) : view === 'week' ? (
-        <WeekView weekDays={weekDays} visitsByDay={visitsByDay} />
+        <WeekView
+          weekDays={weekDays}
+          visitsByDay={visitsByDay}
+          onDayClick={(d) => setModal({ mode: 'create', initialStart: new Date(new Date(d).setHours(9, 0, 0, 0)) })}
+          onVisitClick={(v) => setModal({ mode: 'edit', visit: v })}
+        />
       ) : (
-        <MonthView anchor={anchor} cells={monthCells} visitsByDay={visitsByMonthDay} onPickDay={(d) => { setAnchor(d); setView('week'); }} />
+        <MonthView
+          anchor={anchor}
+          cells={monthCells}
+          visitsByDay={visitsByMonthDay}
+          onPickDay={(d) => { setAnchor(d); setView('week'); }}
+        />
+      )}
+
+      {modal && (
+        <VisitModal
+          mode={modal.mode}
+          initialStart={modal.initialStart}
+          visit={modal.visit}
+          crews={crews}
+          customers={customers}
+          jobs={jobs}
+          onClose={() => setModal(null)}
+          onSaved={() => setModal(null)}
+          onRefreshLists={load}
+        />
       )}
     </div>
   );
 };
 
 // ---- WEEK VIEW (vertical day columns with hour-blocked event cards) ----
-const WeekView = ({ weekDays, visitsByDay }) => (
+const WeekView = ({ weekDays, visitsByDay, onDayClick, onVisitClick }) => (
   <div className="cm-week" data-testid="cm-week-view">
     {weekDays.map((d) => {
       const today = sameDay(d, new Date());
@@ -193,10 +237,29 @@ const WeekView = ({ weekDays, visitsByDay }) => (
           </div>
           <div className="cm-day-body">
             {dayVisits.length === 0 ? (
-              <div className="cm-day-empty">—</div>
-            ) : dayVisits.map((v) => (
-              <VisitCard key={v.id} visit={v} compact={false} />
-            ))}
+              <button
+                type="button"
+                className="cm-day-empty cm-day-empty-clickable"
+                onClick={() => onDayClick?.(d)}
+                data-testid={`cm-day-add-${d.toISOString().slice(0,10)}`}
+              >
+                <Plus size={14} /> Add visit
+              </button>
+            ) : (
+              <>
+                {dayVisits.map((v) => (
+                  <VisitCard key={v.id} visit={v} onClick={() => onVisitClick?.(v)} />
+                ))}
+                <button
+                  type="button"
+                  className="cm-day-add"
+                  onClick={() => onDayClick?.(d)}
+                  data-testid={`cm-day-add-${d.toISOString().slice(0,10)}`}
+                >
+                  <Plus size={12} /> Add
+                </button>
+              </>
+            )}
           </div>
         </div>
       );
@@ -251,12 +314,14 @@ const MonthView = ({ anchor, cells, visitsByDay, onPickDay }) => {
 };
 
 // ---- VISIT CARD (used in week view) ----
-const VisitCard = ({ visit }) => {
+const VisitCard = ({ visit, onClick }) => {
   const color = visit.crew_color || '#0d9488';
   return (
-    <div
+    <button
+      type="button"
       className="cm-visit"
       style={{ borderLeftColor: color }}
+      onClick={onClick}
       data-testid={`cm-visit-${visit.id}`}
     >
       <div className="cm-visit-time">
@@ -272,7 +337,7 @@ const VisitCard = ({ visit }) => {
       {visit.customer_address && (
         <div className="cm-visit-address">{visit.customer_address}</div>
       )}
-    </div>
+    </button>
   );
 };
 
