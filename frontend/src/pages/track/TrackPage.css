@@ -441,3 +441,54 @@
   .tp-step-line { display: none; }
   .tp-step { flex: 1 1 40%; }
 }
+
+/* ============================================================
+   EMBED MODE (?embed=1)
+   - No Gateway header, no Gateway footer
+   - Transparent outer background so host page shows through
+   - Small tenant greeting at the top of the hero
+   ============================================================ */
+html.tp-embed-mode,
+body.tp-embed-mode {
+  background: transparent !important;
+  margin: 0;
+  padding: 0;
+}
+
+body.tp-embed-mode #root {
+  background: transparent;
+}
+
+.tp-shell-embed {
+  background: transparent;
+  min-height: auto;
+}
+
+/* Slim the hero when embedded — no giant top space since we removed the header */
+.tp-shell-embed .tp-hero {
+  padding-top: 36px;
+}
+
+/* Tenant greeting shown only in embed (replaces the header brand + "Hi, John" chip) */
+.tp-embed-greet {
+  display: inline-block;
+  padding: 8px 16px;
+  background: rgba(13, 148, 136, 0.15);
+  border: 1px solid rgba(13, 148, 136, 0.35);
+  color: #5eead4;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  margin-bottom: 18px;
+}
+.tp-embed-greet strong {
+  color: #fff;
+  font-weight: 700;
+  margin-left: 2px;
+}
+
+/* Trim the bottom padding since the footer is gone */
+.tp-shell-embed .tp-section:last-of-type {
+  padding-bottom: 56px;
+}
+

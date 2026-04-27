@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import {
   CalendarClock, MapPin, AlertCircle, CheckCircle2, Clock,
   CalendarDays, Info, Sparkles
@@ -21,9 +21,23 @@ const STATUS_STEPS = [
 
 const TrackPage = () => {
   const { token } = useParams();
+  const [searchParams] = useSearchParams();
+  const isEmbed = searchParams.get('embed') === '1';
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // When embedded, set body background to transparent so host site shows through
+  useEffect(() => {
+    if (isEmbed) {
+      document.body.classList.add('tp-embed-mode');
+      document.documentElement.classList.add('tp-embed-mode');
+    }
+    return () => {
+      document.body.classList.remove('tp-embed-mode');
+      document.documentElement.classList.remove('tp-embed-mode');
+    };
+  }, [isEmbed]);
 
   useEffect(() => {
     let cancelled = false;
@@ -87,28 +101,35 @@ const TrackPage = () => {
   const { client, customer, job, visits, context } = data;
 
   return (
-    <div className="tp-shell" data-testid="track-page">
-      {/* Header */}
-      <header className="tp-header">
-        <div className="tp-header-inner">
-          <div className="tp-brand">
-            <div className="tp-brand-icon"><CalendarClock size={18} /></div>
-            <div>
-              <div className="tp-brand-name">{client.business_name}</div>
-              <div className="tp-brand-sub">Job Tracker</div>
+    <div className={`tp-shell ${isEmbed ? 'tp-shell-embed' : ''}`} data-testid="track-page">
+      {/* Header — hidden in embed mode (host site has its own header) */}
+      {!isEmbed && (
+        <header className="tp-header">
+          <div className="tp-header-inner">
+            <div className="tp-brand">
+              <div className="tp-brand-icon"><CalendarClock size={18} /></div>
+              <div>
+                <div className="tp-brand-name">{client.business_name}</div>
+                <div className="tp-brand-sub">Job Tracker</div>
+              </div>
             </div>
+            {customer?.full_name && (
+              <div className="tp-customer-chip">
+                <span>Hi, {customer.full_name.split(' ')[0]}</span>
+              </div>
+            )}
           </div>
-          {customer?.full_name && (
-            <div className="tp-customer-chip">
-              <span>Hi, {customer.full_name.split(' ')[0]}</span>
-            </div>
-          )}
-        </div>
-      </header>
+        </header>
+      )}
 
       {/* Hero: countdown + job title */}
       <section className="tp-hero">
         <div className="tp-hero-inner">
+          {isEmbed && customer?.full_name && (
+            <div className="tp-embed-greet" data-testid="tp-embed-greet">
+              Hi {customer.full_name.split(' ')[0]} — here's your job with <strong>{client.business_name}</strong>
+            </div>
+          )}
           <div className="tp-eyebrow">YOUR SCHEDULED JOB</div>
           <h1 className="tp-job-title" data-testid="tp-job-title">{job.title}</h1>
           {job.description && <p className="tp-job-desc">{job.description}</p>}
@@ -221,16 +242,18 @@ const TrackPage = () => {
         </section>
       )}
 
-      {/* Footer */}
-      <footer className="tp-footer" data-testid="tp-footer">
-        <div className="tp-footer-inner">
-          <div className="tp-footer-brand">{client.business_name}</div>
-          <div className="tp-footer-powered">
-            <Sparkles size={12} />
-            Powered by <a href="https://gwyai.com" target="_blank" rel="noreferrer">Gateway AI Systems</a> — A Single Source of Truth.
+      {/* Footer — hidden in embed mode (no Gateway attribution inside host site) */}
+      {!isEmbed && (
+        <footer className="tp-footer" data-testid="tp-footer">
+          <div className="tp-footer-inner">
+            <div className="tp-footer-brand">{client.business_name}</div>
+            <div className="tp-footer-powered">
+              <Sparkles size={12} />
+              Powered by <a href="https://gwyai.com" target="_blank" rel="noreferrer">Gateway AI Systems</a> — A Single Source of Truth.
+            </div>
           </div>
-        </div>
-      </footer>
+        </footer>
+      )}
     </div>
   );
 };
