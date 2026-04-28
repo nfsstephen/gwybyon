@@ -8,8 +8,6 @@ import './AudiencePicker.css';
  * staggered entrance animation, prominent headline.
  */
 const AudiencePicker = ({ audience, setAudience }) => {
-  const showFullPrompt = audience === 'all';
-
   const options = [
     {
       value: 'agency',
@@ -41,26 +39,17 @@ const AudiencePicker = ({ audience, setAudience }) => {
     <section className="ap-band" data-testid="audience-picker">
       <div className="ap-glow" aria-hidden />
       <div className="ap-container">
-        {showFullPrompt ? (
-          <div className="ap-prompt">
-            <span className="ap-eyebrow">START HERE</span>
-            <h2 className="ap-headline">
-              Which one is you?
-            </h2>
-            <p className="ap-sub">
-              Tap the box that fits your business. We'll tailor the rest of
-              this page to your situation — and stop wasting your time on the
-              two pitches that don't apply to you.
-            </p>
-          </div>
-        ) : (
-          <div className="ap-prompt ap-prompt-compact">
-            <span className="ap-eyebrow">CURRENTLY SHOWING</span>
-            <h2 className="ap-headline ap-headline-compact">
-              Wrong one? Switch below.
-            </h2>
-          </div>
-        )}
+        <div className="ap-prompt">
+          <span className="ap-eyebrow">START HERE</span>
+          <h2 className="ap-headline">
+            Which one is you?
+          </h2>
+          <p className="ap-sub">
+            Tap the box that fits your business. We'll tailor the rest of
+            this page to your situation — and stop wasting your time on the
+            two pitches that don't apply to you.
+          </p>
+        </div>
 
         <div className="ap-grid" role="radiogroup" aria-label="Choose your situation">
           {options.map(({ value, num, Icon, accent, headline, sub }, idx) => {
@@ -91,7 +80,7 @@ const AudiencePicker = ({ audience, setAudience }) => {
           })}
         </div>
 
-        {showFullPrompt ? (
+        {audience === 'all' ? (
           <div className="ap-hint">
             <ArrowDown size={14} className="ap-hint-arrow" />
             <span>or scroll on for the full overview</span>
