@@ -23,7 +23,6 @@ const HomePage = () => {
       <AudiencePicker
         audience={audience}
         setAudience={setAudience}
-        variant={showAll ? 'top' : 'compact'}
       />
       {showAgency && <HeroValueLight />}
       {showDiy && <HeroResultsCheck />}

@@ -1,65 +1,113 @@
 import React from 'react';
-import { Wrench, Building2, Sprout, ArrowRight } from 'lucide-react';
+import { Wrench, Building2, Sprout, ArrowRight, ArrowDown } from 'lucide-react';
 import './AudiencePicker.css';
 
 /**
- * The three-pill self-segmenter that sits above the heroes on the
- * default homepage. Clicking a pill collapses the other two heroes
- * and persists the choice (handled by the parent via setAudience).
+ * Three-pill self-segmenter that sits above the heroes on the homepage.
+ * Designed to be IMPOSSIBLE TO MISS — dark contrast band, numbered pills,
+ * staggered entrance animation, prominent headline.
  */
-const AudiencePicker = ({ audience, setAudience, variant = 'top' }) => {
+const AudiencePicker = ({ audience, setAudience }) => {
+  const showFullPrompt = audience === 'all';
+
   const options = [
-    { value: 'agency',  Icon: Building2, line1: 'I hired a website agency',     line2: 'and the rankings still aren\'t there' },
-    { value: 'diy',     Icon: Wrench,    line1: 'I built it myself',            line2: 'to save money — but no leads' },
-    { value: 'no-site', Icon: Sprout,    line1: "I don't have a website yet",   line2: 'or just a Facebook / Google page' },
+    {
+      value: 'agency',
+      num: '01',
+      Icon: Building2,
+      accent: '#2563eb',
+      headline: 'I hired a website agency',
+      sub: 'and the rankings still aren\'t there',
+    },
+    {
+      value: 'diy',
+      num: '02',
+      Icon: Wrench,
+      accent: '#d97706',
+      headline: 'I built it myself',
+      sub: 'to save money — but no leads',
+    },
+    {
+      value: 'no-site',
+      num: '03',
+      Icon: Sprout,
+      accent: '#0D9488',
+      headline: "I don't have a website yet",
+      sub: 'or just a Facebook / Google page',
+    },
   ];
 
-  const isCompact = variant === 'compact';
-
   return (
-    <div className={`ap-wrap ap-${variant}`} data-testid="audience-picker">
-      <div className="ap-prompt">
-        <span className="ap-eyebrow">SHOW ME WHAT FITS</span>
-        <h3 className="ap-headline">
-          Which describes your business right now?
-        </h3>
-      </div>
+    <section className="ap-band" data-testid="audience-picker">
+      <div className="ap-glow" aria-hidden />
+      <div className="ap-container">
+        {showFullPrompt ? (
+          <div className="ap-prompt">
+            <span className="ap-eyebrow">START HERE</span>
+            <h2 className="ap-headline">
+              Which one is you?
+            </h2>
+            <p className="ap-sub">
+              Tap the box that fits your business. We'll tailor the rest of
+              this page to your situation — and stop wasting your time on the
+              two pitches that don't apply to you.
+            </p>
+          </div>
+        ) : (
+          <div className="ap-prompt ap-prompt-compact">
+            <span className="ap-eyebrow">CURRENTLY SHOWING</span>
+            <h2 className="ap-headline ap-headline-compact">
+              Wrong one? Switch below.
+            </h2>
+          </div>
+        )}
 
-      <div className="ap-grid" role="radiogroup" aria-label="Choose your situation">
-        {options.map(({ value, Icon, line1, line2 }) => {
-          const isActive = audience === value;
-          return (
-            <button
-              key={value}
-              type="button"
-              role="radio"
-              aria-checked={isActive}
-              className={`ap-pill ${isActive ? 'is-active' : ''}`}
-              onClick={() => setAudience(value)}
-              data-testid={`audience-pick-${value}`}
-            >
-              <span className="ap-pill-icon"><Icon size={isCompact ? 18 : 22} /></span>
-              <span className="ap-pill-text">
-                <span className="ap-pill-line1">{line1}</span>
-                <span className="ap-pill-line2">{line2}</span>
-              </span>
-              <span className="ap-pill-arrow"><ArrowRight size={14} /></span>
-            </button>
-          );
-        })}
-      </div>
+        <div className="ap-grid" role="radiogroup" aria-label="Choose your situation">
+          {options.map(({ value, num, Icon, accent, headline, sub }, idx) => {
+            const isActive = audience === value;
+            return (
+              <button
+                key={value}
+                type="button"
+                role="radio"
+                aria-checked={isActive}
+                className={`ap-pill ${isActive ? 'is-active' : ''}`}
+                style={{ '--accent': accent, '--delay': `${idx * 90}ms` }}
+                onClick={() => setAudience(value)}
+                data-testid={`audience-pick-${value}`}
+              >
+                <span className="ap-pill-num">{num}</span>
+                <span className="ap-pill-icon">
+                  <Icon size={26} strokeWidth={2.2} />
+                </span>
+                <span className="ap-pill-text">
+                  <span className="ap-pill-line1">{headline}</span>
+                  <span className="ap-pill-line2">{sub}</span>
+                </span>
+                <span className="ap-pill-arrow"><ArrowRight size={18} strokeWidth={2.4} /></span>
+                {isActive && <span className="ap-pill-active-tag">SHOWING</span>}
+              </button>
+            );
+          })}
+        </div>
 
-      {audience !== 'all' && (
-        <button
-          type="button"
-          className="ap-reset"
-          onClick={() => setAudience('all')}
-          data-testid="audience-reset"
-        >
-          ← see all options
-        </button>
-      )}
-    </div>
+        {showFullPrompt ? (
+          <div className="ap-hint">
+            <ArrowDown size={14} className="ap-hint-arrow" />
+            <span>or scroll on for the full overview</span>
+          </div>
+        ) : (
+          <button
+            type="button"
+            className="ap-reset"
+            onClick={() => setAudience('all')}
+            data-testid="audience-reset"
+          >
+            ← see all three options
+          </button>
+        )}
+      </div>
+    </section>
   );
 };
 
