@@ -143,6 +143,7 @@ Home | Crew Management Tool | Eight Industries | Five Tools | Web Services | Ser
 ### P2
 - PDF exports for territory reports
 - Analytics & reporting
+- **Per-service profitability reporting (Crew Management)** — pair `cm_services.default_price_cents` with actual logged visit hours to surface each contractor's profit-per-service (e.g., "Pump Replacement jobs average 4.2 hrs / $X revenue"). Strong differentiator vs ServiceTitan. Queue after Stripe + real customer data lands.
 
 ## Credentials
 - Site password: `123`
