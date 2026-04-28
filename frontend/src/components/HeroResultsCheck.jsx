@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Phone, Target, Users, ArrowRight } from 'lucide-react';
+import { trackAudienceCta } from '../hooks/useAudience';
 import './HeroResultsCheck.css';
 
 /**
@@ -29,6 +30,7 @@ const HeroResultsCheck = () => {
           <Link
             to="/contact"
             className="hrc-cta"
+            onClick={() => trackAudienceCta('diy', 'free_ranking_check')}
             data-testid="hero-results-cta"
           >
             <Search size={16} />
