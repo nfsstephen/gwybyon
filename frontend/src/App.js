@@ -5,6 +5,7 @@ import PasswordGate from './components/PasswordGate';
 import AdminChatPage from './pages/AdminChatPage';
 import AdminPreviewPage from './pages/AdminPreviewPage';
 import TrackPage from './pages/track/TrackPage';
+import CrewManagementSheet from './pages/product-sheet/CrewManagementSheet';
 import { DashboardAuthProvider } from './contexts/DashboardAuthContext';
 import DashboardRoutes from './routes/DashboardRoutes';
 import SiteRoutes from './routes/SiteRoutes';
@@ -14,6 +15,7 @@ function AppContent({ scrolled }) {
   const isAdmin = location.pathname.startsWith('/admin');
   const isDashboard = location.pathname.startsWith('/dashboard');
   const isTrack = location.pathname.startsWith('/track');
+  const isProductSheet = location.pathname.startsWith('/product-sheet');
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -40,6 +42,14 @@ function AppContent({ scrolled }) {
     return (
       <Routes>
         <Route path="/track/:token" element={<TrackPage />} />
+      </Routes>
+    );
+  }
+
+  if (isProductSheet) {
+    return (
+      <Routes>
+        <Route path="/product-sheet/crew-management" element={<CrewManagementSheet />} />
       </Routes>
     );
   }
