@@ -1,5 +1,6 @@
 import React from 'react';
 import HeroValueLight from '../components/HeroValueLight';
+import HeroResultsCheck from '../components/HeroResultsCheck';
 import MarketingMission from '../components/MarketingMission';
 import MarketTerritories from '../components/MarketTerritories';
 import SingleSourceTruth from '../components/SingleSourceTruth';
@@ -8,6 +9,7 @@ const HomePage = () => {
   return (
     <>
       <HeroValueLight />
+      <HeroResultsCheck />
       <MarketingMission />
       <MarketTerritories />
       <SingleSourceTruth />

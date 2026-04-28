@@ -1,0 +1,261 @@
+/* ===== Hero Results Check (results-first reframe of HeroValueLight) ===== */
+.hrc-section {
+  padding: 90px 20px;
+  background: linear-gradient(170deg, #f8fafc 0%, #eef4f8 55%, #e2eef2 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hrc-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 80% 0%, rgba(13, 148, 136, 0.08) 0%, transparent 55%),
+    radial-gradient(ellipse at 10% 100%, rgba(37, 99, 235, 0.05) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.hrc-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.025) 1px, transparent 1px);
+  background-size: 64px 64px;
+  pointer-events: none;
+}
+
+.hrc-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* === Probe === */
+.hrc-probe {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.hrc-label {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #0D9488;
+  margin-bottom: 22px;
+  padding: 6px 18px;
+  border: 1px solid rgba(13, 148, 136, 0.25);
+  border-radius: 2px;
+  background: rgba(13, 148, 136, 0.06);
+}
+
+.hrc-title {
+  font-size: 2.9rem;
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.12;
+  margin-bottom: 22px;
+  letter-spacing: -0.5px;
+}
+
+.hrc-title-accent {
+  color: #0D9488;
+  font-style: italic;
+}
+
+.hrc-subtitle {
+  font-size: 1.08rem;
+  color: #475569;
+  line-height: 1.75;
+  max-width: 700px;
+  margin: 0 auto 32px;
+}
+.hrc-subtitle em {
+  color: #0F172A;
+  font-style: italic;
+  font-weight: 600;
+}
+
+/* === CTA === */
+.hrc-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 26px;
+  background: #0D9488;
+  color: #ffffff;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.2px;
+  box-shadow: 0 8px 24px rgba(13, 148, 136, 0.28);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.hrc-cta:hover {
+  background: #0b7d72;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(13, 148, 136, 0.36);
+}
+
+.hrc-cta-arrow {
+  transition: transform 0.18s ease;
+}
+.hrc-cta:hover .hrc-cta-arrow {
+  transform: translateX(3px);
+}
+
+.hrc-cta-sub {
+  margin: 14px auto 0;
+  font-size: 0.82rem;
+  color: #64748B;
+  max-width: 520px;
+  line-height: 1.55;
+}
+
+/* === Card Grid (mirrors HeroValueLight) === */
+.hrc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.hrc-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 32px 24px 28px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.hrc-card:hover {
+  border-color: rgba(13, 148, 136, 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+}
+
+.hrc-card-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.hrc-metric-ring {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+/* Color variants */
+.hrc-visual-rank   .hrc-metric-ring { background: rgba(13, 148, 136, 0.10); border: 1.5px solid rgba(13, 148, 136, 0.30); color: #0D9488; }
+.hrc-visual-leads  .hrc-metric-ring { background: rgba(37,  99, 235, 0.10); border: 1.5px solid rgba(37,  99, 235, 0.30); color: #2563eb; }
+.hrc-visual-conv   .hrc-metric-ring { background: rgba(217, 119,  6, 0.10); border: 1.5px solid rgba(217, 119,  6, 0.30); color: #d97706; }
+.hrc-visual-share  .hrc-metric-ring { background: rgba(124,  58, 237, 0.10); border: 1.5px solid rgba(124,  58, 237, 0.30); color: #7c3aed; }
+
+.hrc-metric {
+  font-size: 2.6rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -2px;
+  color: #2563eb;
+}
+.hrc-metric-unit {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-left: 4px;
+  text-transform: uppercase;
+}
+
+.hrc-metric-text {
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: 2.5px;
+  line-height: 1;
+}
+.hrc-visual-rank  .hrc-metric-text { color: #0D9488; }
+.hrc-visual-conv  .hrc-metric-text { color: #d97706; }
+.hrc-visual-share .hrc-metric-text { color: #7c3aed; }
+
+/* Mini bar chart icon for "Local Market Share" */
+.hrc-share-bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 20px;
+}
+.hrc-share-bar {
+  width: 5px;
+  background: #7c3aed;
+  border-radius: 1px;
+}
+.hrc-share-bar:nth-child(1) { height: 50%; opacity: 0.45; }
+.hrc-share-bar:nth-child(2) { height: 75%; opacity: 0.7; }
+.hrc-share-bar:nth-child(3) { height: 100%; opacity: 1; }
+
+.hrc-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 8px;
+}
+
+.hrc-card-text {
+  font-size: 0.85rem;
+  color: #64748B;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* === Bottom tagline === */
+.hrc-bottom-tag {
+  text-align: center;
+  margin-top: 48px;
+  font-size: 0.95rem;
+  font-style: italic;
+  color: #475569;
+  letter-spacing: 0.2px;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 18px 24px;
+  border-top: 1px solid rgba(13, 148, 136, 0.18);
+  border-bottom: 1px solid rgba(13, 148, 136, 0.18);
+}
+
+/* === Responsive === */
+@media (max-width: 1024px) {
+  .hrc-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .hrc-section { padding: 64px 16px; }
+  .hrc-title { font-size: 2.05rem; }
+  .hrc-subtitle { font-size: 1rem; }
+}
+
+@media (max-width: 520px) {
+  .hrc-grid { grid-template-columns: 1fr; max-width: 360px; }
+  .hrc-title { font-size: 1.65rem; }
+  .hrc-card { padding: 24px 20px; }
+  .hrc-cta { padding: 12px 22px; font-size: 0.9rem; }
+}
