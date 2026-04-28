@@ -32,3 +32,8 @@ cd /app/backend && python3 migrations/seed_cm_demo.py
 - `GET  /api/cm/jobs`           — list jobs
 - `GET  /api/cm/jobs/{id}`      — job detail + visits
 - `GET  /api/cm/visits?start=&end=&crew_id=` — visits in date range
+- `GET  /api/cm/track/{public_token}`  — PUBLIC (no auth) tokenized tracker data
+
+### Live demo public tracking tokens
+Sample job (John Smith — well drilling):
+  https://region-payment.preview.emergentagent.com/track/cc2ede64-1373-490e-a65d-01481792276b
