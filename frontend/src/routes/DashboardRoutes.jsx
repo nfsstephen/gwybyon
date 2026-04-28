@@ -14,6 +14,7 @@ import CmSchedule from '../pages/crew/CmSchedule';
 import CrewsPage from '../pages/crew/CrewsPage';
 import CustomersPage from '../pages/crew/CustomersPage';
 import JobsPage from '../pages/crew/JobsPage';
+import ServicesPage from '../pages/crew/ServicesPage';
 
 function ProtectedDashboard({ allowedRoles }) {
   const { user, loading } = useDashboardAuth();
@@ -61,6 +62,7 @@ export default function DashboardRoutes() {
                 <Route path="jobs" element={<JobsPage />} />
                 <Route path="customers" element={<CustomersPage />} />
                 <Route path="crews" element={<CrewsPage />} />
+                <Route path="services" element={<ServicesPage />} />
               </Route>
             </Routes>
           </CmAuthProvider>

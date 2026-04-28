@@ -40,7 +40,7 @@ def list_jobs(user: dict = Depends(get_cm_user), status_filter: Optional[str] = 
     q = (
         supabase.table("cm_jobs")
         .select(
-            "id, customer_id, title, description, status, public_token, "
+            "id, customer_id, service_id, title, description, status, public_token, "
             "created_at, completed_at"
         )
         .eq("client_id", user["client_id"])
@@ -50,7 +50,7 @@ def list_jobs(user: dict = Depends(get_cm_user), status_filter: Optional[str] = 
     res = q.order("created_at", desc=True).execute()
 
     jobs = res.data or []
-    # Attach customer name for convenience
+    # Attach customer name + service label for convenience
     if jobs:
         cust_ids = list({j["customer_id"] for j in jobs if j.get("customer_id")})
         cust_res = (
@@ -61,8 +61,24 @@ def list_jobs(user: dict = Depends(get_cm_user), status_filter: Optional[str] = 
             .execute()
         )
         cust_map = {c["id"]: c["full_name"] for c in (cust_res.data or [])}
+
+        svc_ids = list({j["service_id"] for j in jobs if j.get("service_id")})
+        svc_map = {}
+        if svc_ids:
+            svc_res = (
+                supabase.table("cm_services")
+                .select("id, name, color")
+                .in_("id", svc_ids)
+                .eq("client_id", user["client_id"])
+                .execute()
+            )
+            svc_map = {s["id"]: s for s in (svc_res.data or [])}
+
         for j in jobs:
             j["customer_name"] = cust_map.get(j.get("customer_id"))
+            svc = svc_map.get(j.get("service_id"))
+            j["service_name"] = svc["name"] if svc else None
+            j["service_color"] = svc["color"] if svc else None
     return {"jobs": jobs}
 
 
@@ -117,7 +133,7 @@ def list_visits(
     q = (
         supabase.table("cm_visits")
         .select(
-            "id, job_id, crew_id, title, start_at, end_at, status, "
+            "id, job_id, crew_id, service_id, title, start_at, end_at, status, "
             "notes_internal, notes_customer"
         )
         .eq("client_id", user["client_id"])
@@ -131,20 +147,24 @@ def list_visits(
     res = q.order("start_at").execute()
     visits = res.data or []
 
-    # Enrich with job + customer + crew info
+    # Enrich with job + customer + crew + service info
     if visits:
         job_ids = list({v["job_id"] for v in visits if v.get("job_id")})
         crew_ids = list({v["crew_id"] for v in visits if v.get("crew_id")})
+        # service ids come from BOTH the visit override and the parent job
+        visit_svc_ids = {v.get("service_id") for v in visits if v.get("service_id")}
 
         job_res = (
             supabase.table("cm_jobs")
-            .select("id, title, customer_id, status")
+            .select("id, title, customer_id, status, service_id")
             .in_("id", job_ids)
             .eq("client_id", user["client_id"])
             .execute()
         )
         jobs = job_res.data or []
         job_map = {j["id"]: j for j in jobs}
+        job_svc_ids = {j.get("service_id") for j in jobs if j.get("service_id")}
+        all_svc_ids = list(visit_svc_ids | job_svc_ids)
 
         cust_ids = list({j["customer_id"] for j in jobs if j.get("customer_id")})
         cust_map = {}
@@ -169,15 +189,31 @@ def list_visits(
             )
             crew_map = {c["id"]: c for c in (crew_res.data or [])}
 
+        svc_map = {}
+        if all_svc_ids:
+            svc_res = (
+                supabase.table("cm_services")
+                .select("id, name, color")
+                .in_("id", all_svc_ids)
+                .eq("client_id", user["client_id"])
+                .execute()
+            )
+            svc_map = {s["id"]: s for s in (svc_res.data or [])}
+
         for v in visits:
             j = job_map.get(v.get("job_id")) or {}
             c = cust_map.get(j.get("customer_id")) or {}
             cr = crew_map.get(v.get("crew_id")) or {}
+            # visit-level service wins; else fall back to parent job's service
+            effective_svc_id = v.get("service_id") or j.get("service_id")
+            svc = svc_map.get(effective_svc_id) or {}
             v["job_title"] = j.get("title")
             v["job_status"] = j.get("status")
             v["customer_name"] = c.get("full_name")
             v["customer_address"] = c.get("address")
             v["crew_name"] = cr.get("name")
             v["crew_color"] = cr.get("color")
+            v["service_name"] = svc.get("name")
+            v["service_color"] = svc.get("color")
 
     return {"visits": visits}

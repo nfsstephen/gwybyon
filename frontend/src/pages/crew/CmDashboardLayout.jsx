@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, NavLink, Navigate, useNavigate } from 'react-router-dom';
-import { CalendarClock, LogOut, LayoutDashboard, Users, Briefcase, HardHat } from 'lucide-react';
+import { CalendarClock, LogOut, LayoutDashboard, Users, Briefcase, HardHat, Wrench } from 'lucide-react';
 import { useCmAuth } from '../../contexts/CmAuthContext';
 import './CmSchedule.css';
 
@@ -43,6 +43,10 @@ const CmDashboardLayout = () => {
           <NavLink to="/dashboard/crew/crews" className="cm-nav-link" data-testid="cm-nav-crews">
             <HardHat size={16} />
             <span>Crews</span>
+          </NavLink>
+          <NavLink to="/dashboard/crew/services" className="cm-nav-link" data-testid="cm-nav-services">
+            <Wrench size={16} />
+            <span>Services</span>
           </NavLink>
         </nav>
 

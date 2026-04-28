@@ -19,12 +19,14 @@ load_dotenv()
 
 from database import supabase  # noqa: E402
 from routes.cm_auth import hash_password, verify_password  # noqa: E402
+from migrations.service_presets import get_preset  # noqa: E402
 
 DEMO_CLIENT_SLUG = "demo-client"
 DEMO_CLIENT_NAME = "Demo Client"
 DEMO_OWNER_EMAIL = "demo@gwyai.com"
 DEMO_OWNER_PASSWORD = os.environ.get("DEMO_OWNER_PASSWORD", "demo123")
 DEMO_OWNER_NAME = "Demo Owner"
+DEMO_INDUSTRY = "well_drilling"
 
 
 def upsert_client():
@@ -146,11 +148,13 @@ def upsert_customers(client_id):
     return customers
 
 
-def seed_jobs_and_visits(client_id, crews, customers):
+def seed_jobs_and_visits(client_id, crews, customers, services=None):
     """
     Creates jobs + visits idempotently. We key on (client_id, title) for jobs.
     Visits are created on a rolling 14-day window relative to today.
+    If `services` dict provided, jobs/visits are tagged with service_ids.
     """
+    services = services or {}
     # If demo jobs already exist, skip — keep idempotent (don't duplicate visits)
     res = (
         supabase.table("cm_jobs")
@@ -173,13 +177,14 @@ def seed_jobs_and_visits(client_id, crews, customers):
             "customer": "John Smith",
             "description": "New well drilling, 200ft target depth, 6\" casing.",
             "status": "scheduled",
+            "service": "Residential Well Drilling",
             "visits": [
-                {"crew": "Drill Rig 1", "title": "Drilling Day 1", "day": 7, "start": 8, "end": 17,
+                {"crew": "Drill Rig 1", "title": "Drilling Day 1", "service": "Residential Well Drilling", "day": 7, "start": 8, "end": 17,
                  "notes_internal": "Gate code 4521. Client will be on site.",
                  "notes_customer": "Drill rig arrives between 8-9 AM."},
-                {"crew": "Drill Rig 1", "title": "Drilling Day 2 + Casing", "day": 8, "start": 8, "end": 16,
+                {"crew": "Drill Rig 1", "title": "Drilling Day 2 + Casing", "service": "Well Casing / Grouting", "day": 8, "start": 8, "end": 16,
                  "notes_customer": "Casing installed day 2."},
-                {"crew": "Pump Install Crew", "title": "Pump & Pressure Tank Install", "day": 10, "start": 9, "end": 14,
+                {"crew": "Pump Install Crew", "title": "Pump & Pressure Tank Install", "service": "Pump & Pressure Tank Install", "day": 10, "start": 9, "end": 14,
                  "notes_customer": "Pump install in the morning."},
             ],
         },
@@ -188,8 +193,9 @@ def seed_jobs_and_visits(client_id, crews, customers):
             "customer": "Maria Garcia",
             "description": "Routine septic service.",
             "status": "scheduled",
+            "service": "Service Call / Diagnostic",
             "visits": [
-                {"crew": "Service Truck", "title": "Pump-out", "day": 0, "start": 10, "end": 12,
+                {"crew": "Service Truck", "title": "Pump-out", "service": "Service Call / Diagnostic", "day": 0, "start": 10, "end": 12,
                  "notes_customer": "Service truck arrives between 10-11 AM."},
             ],
         },
@@ -198,8 +204,9 @@ def seed_jobs_and_visits(client_id, crews, customers):
             "customer": "Robert Chen",
             "description": "Replace failed submersible pump.",
             "status": "scheduled",
+            "service": "Pump Replacement",
             "visits": [
-                {"crew": "Pump Install Crew", "title": "Pump replacement", "day": 2, "start": 8, "end": 13,
+                {"crew": "Pump Install Crew", "title": "Pump replacement", "service": "Pump Replacement", "day": 2, "start": 8, "end": 13,
                  "notes_customer": "Crew arrives 8-9 AM Wednesday."},
             ],
         },
@@ -208,10 +215,11 @@ def seed_jobs_and_visits(client_id, crews, customers):
             "customer": "Patricia Williams",
             "description": "Irrigation well for 5-acre property.",
             "status": "scheduled",
+            "service": "Irrigation Well Drilling",
             "visits": [
-                {"crew": "Drill Rig 1", "title": "Drilling", "day": 4, "start": 8, "end": 17,
+                {"crew": "Drill Rig 1", "title": "Drilling", "service": "Irrigation Well Drilling", "day": 4, "start": 8, "end": 17,
                  "notes_customer": "Friday — drill rig 8 AM."},
-                {"crew": "Pump Install Crew", "title": "Pump install", "day": 7, "start": 9, "end": 13,
+                {"crew": "Pump Install Crew", "title": "Pump install", "service": "Pump & Pressure Tank Install", "day": 7, "start": 9, "end": 13,
                  "notes_customer": "Monday week 2 — pump install."},
             ],
         },
@@ -230,6 +238,7 @@ def seed_jobs_and_visits(client_id, crews, customers):
                 "title": spec["title"],
                 "description": spec["description"],
                 "status": spec["status"],
+                "service_id": services.get(spec.get("service")),
             })
             .execute()
         )
@@ -239,6 +248,7 @@ def seed_jobs_and_visits(client_id, crews, customers):
                 "client_id": client_id,
                 "job_id": job_id,
                 "crew_id": crews[v["crew"]],
+                "service_id": services.get(v.get("service")),
                 "title": v["title"],
                 "start_at": at(v["day"], v["start"]),
                 "end_at": at(v["day"], v["end"]),
@@ -249,20 +259,103 @@ def seed_jobs_and_visits(client_id, crews, customers):
     print(f"  - jobs+visits seeded: {created} new (others already existed)")
 
 
+def upsert_services(client_id):
+    """Seed well-drilling preset services, then return {name: id} map."""
+    preset = get_preset(DEMO_INDUSTRY)
+    existing = (
+        supabase.table("cm_services")
+        .select("id, name")
+        .eq("client_id", client_id)
+        .execute()
+    )
+    existing_map = {r["name"]: r["id"] for r in (existing.data or [])}
+
+    to_insert = [
+        {"client_id": client_id, **row}
+        for row in preset
+        if row["name"] not in existing_map
+    ]
+    if to_insert:
+        inserted = supabase.table("cm_services").insert(to_insert).execute()
+        for r in (inserted.data or []):
+            existing_map[r["name"]] = r["id"]
+    print(f"  - services ready: {len(existing_map)} total ({len(to_insert)} new)")
+    return existing_map
+
+
+def backfill_service_on_existing(client_id, services):
+    """
+    For demo jobs/visits created before services existed, map their title to
+    the closest preset service so demos show color-coded cards out of the box.
+    """
+    # (job title fragment, service name)
+    job_hints = [
+        ("Residential Well", "Residential Well Drilling"),
+        ("Irrigation Well", "Irrigation Well Drilling"),
+        ("Pump Replacement", "Pump Replacement"),
+        ("Septic", "Service Call / Diagnostic"),
+    ]
+    visit_hints = [
+        ("Casing", "Well Casing / Grouting"),
+        ("Drilling", "Residential Well Drilling"),
+        ("Pump & Pressure Tank", "Pump & Pressure Tank Install"),
+        ("Pump install", "Pump & Pressure Tank Install"),
+        ("Pump replacement", "Pump Replacement"),
+        ("Pump-out", "Service Call / Diagnostic"),
+    ]
+
+    # Jobs missing service_id
+    jobs = (
+        supabase.table("cm_jobs")
+        .select("id, title, service_id")
+        .eq("client_id", client_id)
+        .is_("service_id", "null")
+        .execute()
+    )
+    updates_j = 0
+    for j in (jobs.data or []):
+        for hint, svc in job_hints:
+            if hint.lower() in j["title"].lower() and services.get(svc):
+                supabase.table("cm_jobs").update({"service_id": services[svc]}).eq("id", j["id"]).execute()
+                updates_j += 1
+                break
+
+    # Visits missing service_id
+    visits = (
+        supabase.table("cm_visits")
+        .select("id, title, service_id")
+        .eq("client_id", client_id)
+        .is_("service_id", "null")
+        .execute()
+    )
+    updates_v = 0
+    for v in (visits.data or []):
+        for hint, svc in visit_hints:
+            if hint.lower() in v["title"].lower() and services.get(svc):
+                supabase.table("cm_visits").update({"service_id": services[svc]}).eq("id", v["id"]).execute()
+                updates_v += 1
+                break
+    print(f"  - backfilled: {updates_j} jobs + {updates_v} visits with service_id")
+
+
 def main():
     print("Seeding Crew Management demo data...")
-    print("\n[1/4] Demo Client tenant")
+    print("\n[1/5] Demo Client tenant")
     client_id = upsert_client()
 
-    print("\n[2/4] Demo Owner login")
+    print("\n[2/5] Demo Owner login")
     upsert_owner(client_id)
 
-    print("\n[3/4] Crews and customers")
+    print("\n[3/5] Services catalog (well_drilling preset)")
+    services = upsert_services(client_id)
+
+    print("\n[4/5] Crews and customers")
     crews = upsert_crews(client_id)
     customers = upsert_customers(client_id)
 
-    print("\n[4/4] Jobs and visits (rolling 2-week window)")
-    seed_jobs_and_visits(client_id, crews, customers)
+    print("\n[5/5] Jobs and visits (rolling 2-week window)")
+    seed_jobs_and_visits(client_id, crews, customers, services)
+    backfill_service_on_existing(client_id, services)
 
     print("\n" + "=" * 50)
     print("Demo seeded successfully.")

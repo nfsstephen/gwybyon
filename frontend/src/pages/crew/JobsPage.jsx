@@ -13,6 +13,7 @@ const STATUS_OPTIONS = [
 const JobsPage = () => {
   const { authedFetch } = useCmAuth();
   const [jobs, setJobs] = useState([]);
+  const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [copiedId, setCopiedId] = useState(null);
@@ -20,9 +21,14 @@ const JobsPage = () => {
   const load = useCallback(async () => {
     setLoading(true); setError(null);
     try {
-      const r = await authedFetch('/jobs');
-      const d = await r.json();
-      setJobs(d.jobs || []);
+      const [jRes, sRes] = await Promise.all([
+        authedFetch('/jobs'),
+        authedFetch('/services'),
+      ]);
+      const jData = await jRes.json();
+      const sData = await sRes.json();
+      setJobs(jData.jobs || []);
+      setServices(sData.services || []);
     } catch (err) { setError(err.message); } finally { setLoading(false); }
   }, [authedFetch]);
 
@@ -31,6 +37,17 @@ const JobsPage = () => {
   const updateStatus = async (job, newStatus) => {
     try {
       const r = await authedFetch(`/jobs/${job.id}`, { method: 'PATCH', body: JSON.stringify({ status: newStatus }) });
+      if (!r.ok) { const d = await r.json().catch(() => ({})); throw new Error(d.detail || 'Failed'); }
+      load();
+    } catch (err) { alert(err.message); }
+  };
+
+  const updateService = async (job, newServiceId) => {
+    try {
+      const r = await authedFetch(`/jobs/${job.id}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ service_id: newServiceId || null }),
+      });
       if (!r.ok) { const d = await r.json().catch(() => ({})); throw new Error(d.detail || 'Failed'); }
       load();
     } catch (err) { alert(err.message); }
@@ -76,9 +93,10 @@ const JobsPage = () => {
           <div className="cm-simple-table-head">
             <div style={{ flex: 2 }}>Job</div>
             <div>Customer</div>
-            <div style={{ width: 160 }}>Status</div>
+            <div style={{ width: 180 }}>Service</div>
+            <div style={{ width: 140 }}>Status</div>
             <div style={{ width: 220, textAlign: 'right' }}>Tracking</div>
-            <div style={{ width: 80, textAlign: 'right' }}></div>
+            <div style={{ width: 60, textAlign: 'right' }}></div>
           </div>
           {jobs.map((j) => (
             <div key={j.id} className="cm-simple-table-row" data-testid={`cm-job-row-${j.id}`}>
@@ -87,7 +105,23 @@ const JobsPage = () => {
                 {j.description && <div className="cm-cell-sub">{j.description}</div>}
               </div>
               <div>{j.customer_name || <span className="cm-muted">—</span>}</div>
-              <div>
+              <div style={{ width: 180 }}>
+                <div className="cm-service-cell">
+                  {j.service_color && (
+                    <span className="cm-color-swatch-sm" style={{ background: j.service_color }} />
+                  )}
+                  <select
+                    value={j.service_id || ''}
+                    onChange={(e) => updateService(j, e.target.value)}
+                    className="cm-service-select"
+                    data-testid={`cm-job-service-${j.id}`}
+                  >
+                    <option value="">— None —</option>
+                    {services.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
+                  </select>
+                </div>
+              </div>
+              <div style={{ width: 140 }}>
                 <select value={j.status} onChange={(e) => updateStatus(j, e.target.value)}
                         className="cm-status-select" data-testid={`cm-job-status-${j.id}`}>
                   {STATUS_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
@@ -101,7 +135,7 @@ const JobsPage = () => {
                   <ExternalLink size={12}/> Preview
                 </a>
               </div>
-              <div style={{ width: 80, textAlign: 'right' }}>
+              <div style={{ width: 60, textAlign: 'right' }}>
                 <button className="cm-btn-mini cm-btn-mini-danger" onClick={() => handleDelete(j)}>
                   <Trash2 size={12}/>
                 </button>

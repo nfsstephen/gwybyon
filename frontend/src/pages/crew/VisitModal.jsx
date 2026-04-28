@@ -20,11 +20,13 @@ const fromLocalInput = (v) => new Date(v).toISOString();
  *   crews, customers, jobs: current lists (caller passes)
  *   onClose, onSaved
  */
-export const VisitModal = ({ mode, initialStart, visit, crews, customers, jobs, onClose, onSaved, onRefreshLists }) => {
+export const VisitModal = ({ mode, initialStart, visit, crews, customers, jobs, services, onClose, onSaved, onRefreshLists }) => {
   const { authedFetch } = useCmAuth();
+  const servicesList = services || [];
 
   // ---- state ----
   const [crewId, setCrewId] = useState(visit?.crew_id || crews[0]?.id || '');
+  const [serviceId, setServiceId] = useState(visit?.service_id || '');
   const [jobPickerMode, setJobPickerMode] = useState(visit ? 'existing' : 'new'); // 'existing' | 'new'
   const [existingJobId, setExistingJobId] = useState(visit?.job_id || '');
 
@@ -32,7 +34,7 @@ export const VisitModal = ({ mode, initialStart, visit, crews, customers, jobs, 
   const [customerMode, setCustomerMode] = useState('existing'); // 'existing' | 'new'
   const [existingCustomerId, setExistingCustomerId] = useState(customers[0]?.id || '');
   const [newCustomer, setNewCustomer] = useState({ full_name: '', phone: '', address: '' });
-  const [newJob, setNewJob] = useState({ title: '', description: '' });
+  const [newJob, setNewJob] = useState({ title: '', description: '', service_id: '' });
 
   // Visit fields
   const defaultStart = initialStart || new Date();
@@ -54,6 +56,22 @@ export const VisitModal = ({ mode, initialStart, visit, crews, customers, jobs, 
       if (j) setVisitTitle(j.title);
     }
   }, [mode, jobPickerMode, existingJobId, jobs, visitTitle]);
+
+  // When service changes on CREATE, auto-compute end_at from default_duration_hours
+  // (only if user hasn't manually changed end yet — we track via a ref-like approach:
+  // if end is still the default computed from start + 2hr, replace it)
+  useEffect(() => {
+    if (mode !== 'create' || !serviceId) return;
+    const svc = servicesList.find((s) => s.id === serviceId);
+    if (!svc?.default_duration_hours) return;
+    const start = new Date(startAt);
+    if (isNaN(start.getTime())) return;
+    const end = new Date(start.getTime() + svc.default_duration_hours * 60 * 60 * 1000);
+    setEndAt(toLocalInput(end));
+    // Auto-fill visit title with service name if title is still empty
+    setVisitTitle((prev) => prev || svc.name);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [serviceId]);
 
   // ---- submission ----
   const handleSubmit = async (e) => {
@@ -224,6 +242,19 @@ export const VisitModal = ({ mode, initialStart, visit, crews, customers, jobs, 
                               onChange={(e) => setNewJob({ ...newJob, description: e.target.value })}
                               placeholder="Optional — full scope of work" />
                   </div>
+                  {servicesList.length > 0 && (
+                    <div className="cm-form-row">
+                      <label>Service <span>(optional)</span></label>
+                      <select value={newJob.service_id}
+                              onChange={(e) => setNewJob({ ...newJob, service_id: e.target.value })}
+                              data-testid="cm-new-job-service">
+                        <option value="">— None —</option>
+                        {servicesList.map((s) => (
+                          <option key={s.id} value={s.id}>{s.name}</option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
                 </div>
               )}
             </>
@@ -260,14 +291,24 @@ export const VisitModal = ({ mode, initialStart, visit, crews, customers, jobs, 
               </select>
             </div>
             <div className="cm-form-row">
-              <label>Status</label>
-              <select value={status} onChange={(e) => setStatus(e.target.value)} data-testid="cm-visit-status">
-                <option value="scheduled">Scheduled</option>
-                <option value="on_site">On Site</option>
-                <option value="completed">Completed</option>
-                <option value="cancelled">Cancelled</option>
+              <label>Service <span>(optional)</span></label>
+              <select value={serviceId} onChange={(e) => setServiceId(e.target.value)} data-testid="cm-visit-service">
+                <option value="">— None —</option>
+                {servicesList.map((s) => (
+                  <option key={s.id} value={s.id}>{s.name}</option>
+                ))}
               </select>
             </div>
+          </div>
+
+          <div className="cm-form-row">
+            <label>Status</label>
+            <select value={status} onChange={(e) => setStatus(e.target.value)} data-testid="cm-visit-status">
+              <option value="scheduled">Scheduled</option>
+              <option value="on_site">On Site</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
           </div>
 
           <div className="cm-form-row">

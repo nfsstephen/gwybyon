@@ -35,6 +35,7 @@ const CmSchedule = () => {
   const [crews, setCrews] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [jobs, setJobs] = useState([]);
+  const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -60,20 +61,23 @@ const CmSchedule = () => {
     setLoading(true);
     setError(null);
     try {
-      const [vRes, cRes, custRes, jRes] = await Promise.all([
+      const [vRes, cRes, custRes, jRes, sRes] = await Promise.all([
         authedFetch(`/visits?start=${range.start.toISOString()}&end=${range.end.toISOString()}`),
         authedFetch('/crews'),
         authedFetch('/customers'),
         authedFetch('/jobs'),
+        authedFetch('/services'),
       ]);
       const vData = await vRes.json();
       const cData = await cRes.json();
       const custData = await custRes.json();
       const jData = await jRes.json();
+      const sData = await sRes.json();
       setVisits(vData.visits || []);
       setCrews(cData.crews || []);
       setCustomers(custData.customers || []);
       setJobs(jData.jobs || []);
+      setServices(sData.services || []);
     } catch (err) {
       setError(err.message || 'Failed to load schedule');
     } finally {
@@ -214,6 +218,7 @@ const CmSchedule = () => {
           crews={crews}
           customers={customers}
           jobs={jobs}
+          services={services}
           onClose={() => setModal(null)}
           onSaved={() => setModal(null)}
           onRefreshLists={load}
@@ -295,7 +300,7 @@ const MonthView = ({ anchor, cells, visitsByDay, onPickDay }) => {
                   <div
                     key={v.id}
                     className="cm-month-pill"
-                    style={{ background: v.crew_color || '#0d9488' }}
+                    style={{ background: v.service_color || v.crew_color || '#0d9488' }}
                     title={`${v.title} — ${v.customer_name || ''}`}
                   >
                     {fmtTime(v.start_at)} {v.crew_name}
@@ -315,7 +320,7 @@ const MonthView = ({ anchor, cells, visitsByDay, onPickDay }) => {
 
 // ---- VISIT CARD (used in week view) ----
 const VisitCard = ({ visit, onClick }) => {
-  const color = visit.crew_color || '#0d9488';
+  const color = visit.service_color || visit.crew_color || '#0d9488';
   return (
     <button
       type="button"
@@ -330,6 +335,9 @@ const VisitCard = ({ visit, onClick }) => {
       <div className="cm-visit-title">{visit.title}</div>
       <div className="cm-visit-meta">
         <span className="cm-visit-crew" style={{ color }}>{visit.crew_name}</span>
+        {visit.service_name && (
+          <span className="cm-visit-service" title="Service">· {visit.service_name}</span>
+        )}
       </div>
       {visit.customer_name && (
         <div className="cm-visit-customer">{visit.customer_name}</div>

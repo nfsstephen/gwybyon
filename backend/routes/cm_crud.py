@@ -111,12 +111,15 @@ class JobIn(BaseModel):
     title: str = Field(min_length=1, max_length=200)
     description: Optional[str] = None
     status: Optional[str] = "draft"
+    service_id: Optional[str] = None
 
 
 @router.post("/jobs")
 def create_job(body: JobIn, user: dict = Depends(require_role("owner", "dispatcher"))):
     # Validate customer belongs to this tenant
     _assert_owns("cm_customers", body.customer_id, user["client_id"])
+    if body.service_id:
+        _assert_owns("cm_services", body.service_id, user["client_id"])
     if body.status and body.status not in {"draft", "scheduled", "in_progress", "completed", "cancelled"}:
         raise HTTPException(status_code=400, detail="Invalid status")
     res = (
@@ -127,6 +130,7 @@ def create_job(body: JobIn, user: dict = Depends(require_role("owner", "dispatch
             "title": body.title,
             "description": body.description,
             "status": body.status or "draft",
+            "service_id": body.service_id,
         })
         .execute()
     )
@@ -137,6 +141,7 @@ class JobUpdate(BaseModel):
     title: Optional[str] = None
     description: Optional[str] = None
     status: Optional[str] = None
+    service_id: Optional[str] = None
 
 
 @router.patch("/jobs/{job_id}")
@@ -145,6 +150,8 @@ def update_job(job_id: str, body: JobUpdate, user: dict = Depends(require_role("
     updates = body.model_dump(exclude_unset=True)
     if "status" in updates and updates["status"] not in {"draft", "scheduled", "in_progress", "completed", "cancelled"}:
         raise HTTPException(status_code=400, detail="Invalid status")
+    if updates.get("service_id"):
+        _assert_owns("cm_services", updates["service_id"], user["client_id"])
     if updates.get("status") == "completed":
         updates["completed_at"] = datetime.now(timezone.utc).isoformat()
     res = supabase.table("cm_jobs").update(updates).eq("id", job_id).execute()
@@ -163,6 +170,7 @@ def delete_job(job_id: str, user: dict = Depends(require_role("owner"))):
 class VisitIn(BaseModel):
     job_id: str
     crew_id: Optional[str] = None
+    service_id: Optional[str] = None
     title: str = Field(min_length=1, max_length=200)
     start_at: str  # ISO
     end_at: str    # ISO
@@ -213,6 +221,7 @@ def create_visit(body: VisitIn, user: dict = Depends(require_role("owner", "disp
 
 class VisitUpdate(BaseModel):
     crew_id: Optional[str] = None
+    service_id: Optional[str] = None
     title: Optional[str] = None
     start_at: Optional[str] = None
     end_at: Optional[str] = None
@@ -227,6 +236,8 @@ def update_visit(visit_id: str, body: VisitUpdate, user: dict = Depends(require_
     updates = body.model_dump(exclude_unset=True)
     if "crew_id" in updates and updates["crew_id"]:
         _assert_owns("cm_crews", updates["crew_id"], user["client_id"])
+    if "service_id" in updates and updates["service_id"]:
+        _assert_owns("cm_services", updates["service_id"], user["client_id"])
     if "status" in updates and updates["status"] not in {"scheduled", "on_site", "completed", "cancelled"}:
         raise HTTPException(status_code=400, detail="Invalid status")
     new_start = updates.get("start_at", existing["start_at"])
