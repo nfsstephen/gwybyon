@@ -103,8 +103,33 @@ Home | Crew Management Tool | Eight Industries | Five Tools | Web Services | Ser
 - [x] Confirm/Release territory endpoints
 - [x] Map re-renders per-industry with category-aware color caching
 - [x] Refactored SubscribePage.jsx (1005→459 lines) into 6 modules: constants, WebsiteSelection, BusinessForm, CreateTerritoryPanel, TierSelection, InvoiceSummary
+- [x] Crew Management add-on — marketing page, multi-tenant backend (cm_clients, cm_users, cm_crews, cm_customers, cm_jobs, cm_visits), Owner Dashboard (`/dashboard/crew`), public tokenized Tracking page (`/track/:token`) with `?embed=1` iframe mode, printable Product Sheet
+- [x] **Services Catalog (Crew Management v2)** — per-tenant customizable service menu. New `cm_services` table. Jobs + visits accept optional `service_id` (visit overrides job). Industry-preset seeding (well_drilling, septic, plumbing, hvac, generic). Soft-delete/archive. Color-codes calendar cards + Jobs table. Internal only — never shown on public tracker. Full CRUD page at `/dashboard/crew/services`.
 
-## Backlog (Prioritized)
+## Crew Management — DB Schema (add-on)
+- `cm_clients` (id, contract_id, business_name, public_slug, timezone, industry, is_active, …)
+- `cm_users` (id, client_id, email, password_hash, full_name, role: owner|dispatcher|crew_member)
+- `cm_crews` (id, client_id, name, color, is_active)
+- `cm_crew_members` (crew_id, user_id)
+- `cm_customers` (id, client_id, full_name, email, phone, address, notes)
+- `cm_jobs` (id, client_id, customer_id, service_id nullable, title, description, status, public_token, public_token_expires_at, …)
+- `cm_visits` (id, client_id, job_id, crew_id, service_id nullable, title, start_at, end_at, status, notes_internal, notes_customer)
+- `cm_services` (id, client_id, name UNIQUE w/client, description, default_duration_hours, default_price_cents, color, icon, is_active, sort_order, …)
+
+## Crew Management API Endpoints
+- `POST /api/cm/auth/login` — JWT
+- `GET /api/cm/auth/me` — current user + client
+- `GET /api/cm/services` (+ `?include_inactive=true`) — list services
+- `GET /api/cm/services/industries` — preset industry choices
+- `POST /api/cm/services` — create
+- `PATCH /api/cm/services/{id}` — update
+- `DELETE /api/cm/services/{id}` (default soft-delete; `?hard=true` only if unreferenced)
+- `POST /api/cm/services/seed-defaults {industry}` — idempotent preset seed; persists industry on cm_clients
+- `GET /api/cm/crews|customers|jobs|visits` — tenant-scoped lists (jobs/visits enriched with service_name + service_color)
+- `POST|PATCH /api/cm/jobs` and `POST|PATCH /api/cm/visits` — accept optional `service_id`
+- `GET /api/cm/track/{public_token}` — PUBLIC tracker (never leaks service info)
+
+
 ### P0
 - Stripe integration — wire real payments to deposit + balance buttons (MUST use integration_playbook_expert_v2)
 - Customer Portal — login, view contract, pay balance, deadline tracking
@@ -133,7 +158,7 @@ Home | Crew Management Tool | Eight Industries | Five Tools | Web Services | Ser
 - ADMIN_PASSWORD
 - JWT_SECRET
 
-*Last Updated: Apr 25, 2026*
+*Last Updated: Apr 28, 2026*
 
 ## Post-Fork Checklist (MUST verify after every fork)
 - [ ] Cache-busting code present in `/app/frontend/public/index.html`

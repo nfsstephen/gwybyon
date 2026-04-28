@@ -13,10 +13,13 @@
 - Email: `demo@gwyai.com`
 - Password: `demo123`
 - Role: owner
-- Tenant: "Demo Client" (public_slug: `demo-client`)
+- Tenant: "Demo Client" (public_slug: `demo-client`, industry: `well_drilling`)
 
 This is a permanent demo tenant — usable for sales demonstrations
-without exposing real customer data.
+without exposing real customer data. Comes pre-seeded with:
+- 3 crews (Drill Rig 1, Pump Install Crew, Service Truck)
+- 4 customers + 4 jobs with a rolling 14-day schedule of visits
+- 7 services (well_drilling preset)
 
 ### Demo seed data refreshes
 Re-run anytime to refresh the rolling 14-day demo schedule:
