@@ -82,6 +82,9 @@ const CrewManagementPage = () => {
               Add It To My Subscription
               <ArrowRight size={16} />
             </Link>
+            <Link to="/product-sheet/crew-management" target="_blank" rel="noreferrer" className="cmt-btn cmt-btn-ghost" data-testid="cmt-hero-cta-productsheet">
+              Download the Product Sheet
+            </Link>
             <Link to="/contact" className="cmt-btn cmt-btn-ghost" data-testid="cmt-hero-cta-contact">
               Talk To Us First
             </Link>
@@ -369,6 +372,9 @@ const CrewManagementPage = () => {
               <Link to="/subscribe#addons-selection" className="cmt-btn cmt-btn-primary cmt-btn-lg" data-testid="cmt-final-cta-subscribe">
                 Subscribe &amp; Add Crew Management
                 <ArrowRight size={16} />
+              </Link>
+              <Link to="/product-sheet/crew-management" target="_blank" rel="noreferrer" className="cmt-btn cmt-btn-ghost cmt-btn-lg" data-testid="cmt-final-cta-productsheet">
+                Download the Product Sheet
               </Link>
               <Link to="/contact" className="cmt-btn cmt-btn-ghost cmt-btn-lg" data-testid="cmt-final-cta-contact">
                 Ask Questions First
