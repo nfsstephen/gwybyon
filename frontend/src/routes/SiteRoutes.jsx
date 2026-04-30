@@ -19,10 +19,6 @@ export default function SiteRoutes({ scrolled }) {
       <Navigation scrolled={scrolled} />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        {/* Audience-segmented landing pages — same homepage, hero filtered by URL */}
-        <Route path="/agency" element={<HomePage />} />
-        <Route path="/diy" element={<HomePage />} />
-        <Route path="/no-site" element={<HomePage />} />
         <Route path="/crew-management" element={<CrewManagementPage />} />
         <Route path="/eight-industries" element={<EightIndustriesPage />} />
         <Route path="/five-tools" element={<FiveToolsPage />} />
