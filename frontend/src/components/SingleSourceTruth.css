@@ -254,3 +254,20 @@
   .sst-phrase-text { font-size: 1.1rem; }
   .sst-title { font-size: 1.3rem; }
 }
+
+/* Aligned-objectives note */
+.sst-aligned {
+  max-width: 620px;
+  margin: 28px auto 18px;
+  padding: 14px 22px;
+  font-size: 0.9rem;
+  color: #cbd5e1;
+  text-align: center;
+  line-height: 1.6;
+  border-top: 1px solid rgba(94, 234, 212, 0.18);
+  border-bottom: 1px solid rgba(94, 234, 212, 0.18);
+}
+.sst-aligned strong {
+  color: #5eead4;
+  font-weight: 700;
+}

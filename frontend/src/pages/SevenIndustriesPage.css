@@ -182,8 +182,8 @@
 }
 
 .si-problem-team .si-problem-icon {
-  background: #ede9fe;
-  color: #7c3aed;
+  background: #ccfbf1;
+  color: #0d9488;
 }
 
 .si-problem-card h3 {
@@ -283,6 +283,68 @@
 
 .si-check-byon {
   color: #7c3aed;
+}
+
+.si-check-crew {
+  color: #0d9488;
+}
+
+/* === Aligned Objectives banner === */
+.si-aligned-banner {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  padding: 22px 26px;
+  margin: 28px 0 22px;
+  background: linear-gradient(135deg, #f0fdfa 0%, #ecfeff 100%);
+  border: 1px solid rgba(13, 148, 136, 0.30);
+  border-left: 4px solid #0d9488;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.06);
+}
+
+.si-aligned-icon {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0d9488;
+  color: #ffffff;
+  border-radius: 10px;
+  margin-top: 2px;
+}
+
+.si-aligned-text {
+  flex: 1;
+}
+
+.si-aligned-eyebrow {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #0d9488;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.si-aligned-text p {
+  font-size: 0.92rem;
+  color: #334155;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.si-aligned-text strong {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .si-aligned-banner { flex-direction: column; gap: 12px; padding: 18px; }
+  .si-aligned-text p { font-size: 0.88rem; }
 }
 
 .si-benefit-card strong {
