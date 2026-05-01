@@ -10,10 +10,8 @@ export const InvoiceSummary = ({
   countyNames,
   pricingLoading,
   getCountyPrice,
-  isCountyDiscounted,
   getCountyRegion,
   countyTotal,
-  regionDiscountTotal,
   completeRegions,
   selectedService,
   selectedAddOns = [],
@@ -71,34 +69,21 @@ export const InvoiceSummary = ({
                 {selectedCounties.map(id => {
                   const displayName = countyNames[id] || id;
                   const price = getCountyPrice(id);
-                  const discounted = isCountyDiscounted(id);
-                  const discountedPrice = discounted && price != null ? Math.round(price * 0.75) : price;
                   return (
                     <div key={id} className="sub-invoice-territory-item" data-testid={`invoice-county-${id}`}>
                       <div>
                         <span className="sub-invoice-county-name">{displayName}</span>
-                        {discounted && <span className="sub-invoice-discount-badge" data-testid={`discount-badge-${id}`}>-25%</span>}
                       </div>
                       <span className="sub-invoice-county-price">
-                        {price != null ? (
-                          discounted ? (
-                            <><s className="sub-price-struck">${price.toLocaleString()}</s> ${discountedPrice.toLocaleString()}</>
-                          ) : `$${price.toLocaleString()}`
-                        ) : '—'}
+                        {price != null ? `$${price.toLocaleString()}` : '—'}
                       </span>
                     </div>
                   );
                 })}
-                {regionDiscountTotal > 0 && (
-                  <div className="sub-invoice-discount-row" data-testid="region-discount-row">
-                    <span>Region Group Discount (25%)</span>
-                    <span>-${regionDiscountTotal.toLocaleString()}</span>
-                  </div>
-                )}
                 {completeRegions.size > 0 && (
                   <div className="sub-invoice-region-benefit" data-testid="region-benefit-note">
-                    Full region purchase unlocks <strong>25% discount</strong> and the option to 
-                    <strong> break your territory payment into 12 monthly installments</strong> on your contract.
+                    Full region purchase unlocks the option to
+                    <strong> split your territory payment into 10 monthly installments</strong> on your contract.
                   </div>
                 )}
                 <div className="sub-invoice-territory-total-row">

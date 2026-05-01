@@ -242,30 +242,13 @@ export default function SubscribePage() {
     return info ? info.region : null;
   };
 
-  const isCountyDiscounted = (countyId) => {
-    const region = getCountyRegion(countyId);
-    return region && completeRegions.has(region);
-  };
-
   const countyTotal = useMemo(() => {
     return selectedCounties.reduce((sum, id) => {
       const price = countyPrices[id];
       if (price == null) return sum;
-      const discounted = isCountyDiscounted(id);
-      return sum + (discounted ? Math.round(price * 0.75) : price);
+      return sum + price;
     }, 0);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedCounties, countyPrices, completeRegions]);
-
-  const regionDiscountTotal = useMemo(() => {
-    return selectedCounties.reduce((sum, id) => {
-      const price = countyPrices[id];
-      if (price == null) return sum;
-      const discounted = isCountyDiscounted(id);
-      return sum + (discounted ? Math.round(price * 0.25) : 0);
-    }, 0);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedCounties, countyPrices, completeRegions]);
+  }, [selectedCounties, countyPrices]);
 
   const invoice = useMemo(() => {
     const territoryTotal = countyTotal;
@@ -379,8 +362,8 @@ export default function SubscribePage() {
               Enter your business details below. Your state will automatically load the territory map where you can select the counties you want to claim as your exclusive market areas.
             </p>
             <p className="sub-region-promo" data-testid="region-promo-text">
-              Purchase every county in a region and receive a <strong>25% discount</strong> plus the 
-              option to <strong>split your territory cost into 12 monthly payments</strong> on your contract.
+              Purchase every county in a region and gain the option to{' '}
+              <strong>split your territory cost into 10 monthly payments</strong> on your contract.
             </p>
             <BusinessForm businessDetails={businessDetails} onChange={handleBusinessChange} />
 
@@ -493,10 +476,8 @@ export default function SubscribePage() {
             countyNames={countyNames}
             pricingLoading={pricingLoading}
             getCountyPrice={getCountyPrice}
-            isCountyDiscounted={isCountyDiscounted}
             getCountyRegion={getCountyRegion}
             countyTotal={countyTotal}
-            regionDiscountTotal={regionDiscountTotal}
             completeRegions={completeRegions}
             selectedService={selectedService}
             selectedAddOns={selectedAddOnDetails}
