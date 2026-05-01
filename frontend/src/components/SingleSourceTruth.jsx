@@ -64,11 +64,6 @@ const SingleSourceTruth = () => {
           </div>
         </div>
 
-        <div className="sst-aligned" data-testid="sst-aligned-note">
-          This is the product that joins our objectives together —
-          <strong> we don't make money when you stand still, we make money when you grow.</strong>
-        </div>
-
         <Link to="/crew-management" className="sst-cta" data-testid="sst-home-cta">
           See How It Works
           <ArrowRight size={18} />

@@ -1,0 +1,67 @@
+/* ===== Aligned Objectives Banner (shared) ===== */
+.aob-section {
+  padding: 40px 20px;
+  background: #ffffff;
+}
+
+.aob-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.aob-banner {
+  display: flex;
+  gap: 22px;
+  align-items: flex-start;
+  padding: 28px 32px;
+  background: linear-gradient(135deg, #f0fdfa 0%, #ecfeff 100%);
+  border: 1px solid rgba(13, 148, 136, 0.30);
+  border-left: 4px solid #0d9488;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(13, 148, 136, 0.06);
+}
+
+.aob-icon {
+  flex: 0 0 auto;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0d9488;
+  color: #ffffff;
+  border-radius: 12px;
+  margin-top: 2px;
+  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);
+}
+
+.aob-text { flex: 1; }
+
+.aob-eyebrow {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  color: #0d9488;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.aob-text p {
+  font-size: 0.98rem;
+  color: #334155;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.aob-text strong {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .aob-section { padding: 28px 16px; }
+  .aob-banner { flex-direction: column; gap: 14px; padding: 22px; }
+  .aob-icon { width: 44px; height: 44px; }
+  .aob-text p { font-size: 0.9rem; }
+}

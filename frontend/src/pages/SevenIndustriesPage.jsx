@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Droplets, Wrench, Zap, Thermometer, Bug, Home, HardHat, MapPin, CalendarClock, Shield, CheckCircle, ChevronRight, Scale } from 'lucide-react';
+import { Droplets, Wrench, Zap, Thermometer, Bug, Home, HardHat, MapPin, CalendarClock, Shield, CheckCircle, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import './SevenIndustriesPage.css';
+import AlignedObjectivesBanner from '../components/AlignedObjectivesBanner';
 
 const INDUSTRIES = [
   {
@@ -201,6 +202,9 @@ export default function EightIndustriesPage() {
         </div>
       </section>
 
+      {/* Aligned Objectives — universal frame for the entire page */}
+      <AlignedObjectivesBanner />
+
       {/* Industry Selector Tabs */}
       <section className="si-tabs-section">
         <div className="si-tabs-wrapper">
@@ -279,24 +283,6 @@ export default function EightIndustriesPage() {
                   </div>
                 </div>
               ))}
-            </div>
-          </div>
-
-          {/* Aligned Objectives banner — appears above Crew Management benefits */}
-          <div className="si-aligned-banner" data-testid="aligned-objectives-banner">
-            <div className="si-aligned-icon">
-              <Scale size={24} />
-            </div>
-            <div className="si-aligned-text">
-              <span className="si-aligned-eyebrow">OUR OBJECTIVES ARE ALIGNED</span>
-              <p>
-                This is the product that joins our objectives together.
-                As we help you grow your sales, we also grow the need for
-                our Crew Management Tool. <strong>We don't make money when
-                you stand still — we make money when you grow.</strong> Our
-                incentives are structurally aligned with yours, not just
-                promised to be.
-              </p>
             </div>
           </div>
 
