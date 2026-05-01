@@ -1,0 +1,121 @@
+/* ===== Our Business Model — three-commitment section ===== */
+.obm-section {
+  padding: 80px 20px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  position: relative;
+}
+
+.obm-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.obm-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: #0D9488;
+  padding: 6px 16px;
+  border: 1px solid rgba(13, 148, 136, 0.30);
+  border-radius: 2px;
+  background: rgba(13, 148, 136, 0.06);
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+
+.obm-title {
+  font-size: 2.3rem;
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.5px;
+  line-height: 1.18;
+  margin: 0 0 16px;
+}
+
+.obm-subtitle {
+  max-width: 680px;
+  margin: 0 auto 44px;
+  font-size: 1.05rem;
+  color: #475569;
+  line-height: 1.7;
+}
+
+.obm-approach {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 40px;
+  text-align: left;
+}
+
+.obm-approach-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #0D9488;
+  margin-bottom: 28px;
+}
+
+.obm-approach-header h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+}
+
+.obm-approach-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.obm-approach-card {
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 28px 24px;
+  transition: all 0.25s ease;
+}
+
+.obm-approach-card:hover {
+  border-color: #0D9488;
+  box-shadow: 0 8px 24px rgba(13, 148, 136, 0.08);
+  transform: translateY(-2px);
+}
+
+.obm-approach-step {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #0D9488;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.obm-approach-card h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 10px;
+}
+
+.obm-approach-card p {
+  font-size: 0.88rem;
+  color: #64748B;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.obm-approach-card strong { color: #0F172A; }
+
+@media (max-width: 900px) {
+  .obm-approach-grid { grid-template-columns: 1fr; }
+  .obm-approach { padding: 28px; }
+  .obm-title { font-size: 1.7rem; }
+}
+
+@media (max-width: 520px) {
+  .obm-section { padding: 56px 16px; }
+  .obm-title { font-size: 1.45rem; }
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Target, BookOpen, DollarSign, Mail, CheckCircle } from 'lucide-react';
+import { Target, BookOpen, DollarSign, CheckCircle } from 'lucide-react';
 import './MarketingMission.css';
 
 const MarketingMission = () => {
@@ -71,37 +71,6 @@ const MarketingMission = () => {
                 So why would we charge a small-market business the same as a large-market business? We wouldn't. 
                 The cost to our customers is based on the market potential and the effort required to deliver 
                 results — not the ego of the buyer and not a one-size-fits-all price tag.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* The Gateway Approach */}
-        <div className="mm-approach">
-          <div className="mm-approach-header">
-            <Mail size={24} />
-            <h3>How our Business Model works</h3>
-          </div>
-          <div className="mm-approach-grid">
-            <div className="mm-approach-card">
-              <div className="mm-approach-step">01</div>
-              <h4>Invitation Only</h4>
-              <p>
-                Our customers are selected, not solicited. We hope that makes you feel important because you are, at least to us. You have received an invitation email because we've identified your company as a "Local Authority" but yet because of an inadequate website you are not recognized as such. We work with one business per industry per territory, using that process we can guarantee you will begin to attract the customers that have been looking for you all along.
-              </p>
-            </div>
-            <div className="mm-approach-card">
-              <div className="mm-approach-step">02</div>
-              <h4>Exclusive Market Territory</h4>
-              <p>
-                By purchasing the rights to an exclusive market territory, you have purchased our commitment to your success. You will have received our promise that we will work for you and you alone. To promote the "Local Authority" badge that you have earned in your industry. Search engine results can only promise one company the top of page view. We will be working to get you there.
-              </p>
-            </div>
-            <div className="mm-approach-card">
-              <div className="mm-approach-step">03</div>
-              <h4>Fair Results Based Pricing</h4>
-              <p>
-                As stated earlier in the page, websites are about marketing. It is fair for you to expect results for your marketing costs. Your marketing costs should be fair. Why should small market customers pay Large market prices? In marketing it is not the labor that costs it is the expertise, knowing what delivers results. You deserve that and we commit to deliver results. Results that can be measured, and the tools to make those measurements.
               </p>
             </div>
           </div>
