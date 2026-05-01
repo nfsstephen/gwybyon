@@ -11,9 +11,11 @@ const OurBusinessModel = () => {
           How Gateway AI Systems Works
         </h2>
         <p className="obm-subtitle">
-          Three commitments that shape every customer relationship — and the
-          reason our customers don't have to compete with us, only with the
-          markets we help them win.
+          There's only one company in your county we can profit from — you.
+          When you buy your territory, you put us in the same boat: we don't
+          get paid by your competitors, we don't sell them the tools to beat
+          you, and the only way we make money is by making you the name that
+          shows up first.
         </p>
 
         <div className="obm-approach">
@@ -51,15 +53,17 @@ const OurBusinessModel = () => {
             </div>
             <div className="obm-approach-card">
               <div className="obm-approach-step">03</div>
-              <h4>Fair Results Based Pricing</h4>
+              <h4>Results Based Pricing</h4>
               <p>
-                Websites are about marketing. It is fair for you to expect
-                results for your marketing costs. Your marketing costs
-                should be fair. Why should small market customers pay large
-                market prices? In marketing it is not the labor that costs
-                — it is the expertise, knowing what delivers results. You
-                deserve that and we commit to deliver results. Results that
-                can be measured, and the tools to make those measurements.
+                You pay for marketing because you expect customers in return
+                — that is a fair expectation, and it's the only one we hold
+                ourselves to. So why does the industry charge a small-town
+                shop the same as a big-city competitor whose market is ten
+                times the size? In marketing, what costs isn't the labor —
+                it's the expertise. Knowing what actually delivers customers
+                in your specific market. We price our work based on the size
+                of your market and the effort it takes to win it. Then we
+                hand you the tools to see exactly what you're getting back.
               </p>
             </div>
           </div>
