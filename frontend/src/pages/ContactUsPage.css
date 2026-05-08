@@ -1,0 +1,161 @@
+/* ===== Contact Us Page ===== */
+.cu-page {
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+/* Hero / Message */
+.cu-hero {
+  background: #0F172A;
+  padding: 80px 20px 56px;
+}
+
+.cu-hero-inner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.cu-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: #0d9488;
+  background: rgba(13, 148, 136, 0.1);
+  border: 1px solid rgba(13, 148, 136, 0.25);
+  padding: 6px 14px;
+  border-radius: 100px;
+  margin-bottom: 20px;
+}
+
+.cu-title {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 28px;
+  letter-spacing: -0.5px;
+}
+
+.cu-message {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 4px solid #0d9488;
+  border-radius: 0 12px 12px 0;
+  padding: 28px 32px;
+  margin-bottom: 36px;
+}
+
+.cu-message p {
+  font-size: 1.05rem;
+  color: #cbd5e1;
+  line-height: 1.8;
+  margin: 0 0 16px 0;
+}
+
+.cu-message p:last-child {
+  margin-bottom: 0;
+}
+
+.cu-message strong {
+  color: #fff;
+}
+
+/* Hours Cards */
+.cu-hours {
+  display: flex;
+  gap: 20px;
+}
+
+.cu-hours-item {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 20px;
+  color: #94a3b8;
+}
+
+.cu-hours-item svg {
+  color: #0d9488;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.cu-hours-item strong {
+  display: block;
+  color: #fff;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+.cu-hours-item span {
+  font-size: 0.85rem;
+}
+
+/* Scheduler Section */
+.cu-scheduler {
+  padding: 56px 20px 80px;
+}
+
+.cu-scheduler-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.cu-scheduler-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0F172A;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.cu-cal-embed {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.cu-cal-embed iframe {
+  display: block;
+  border: none;
+  min-height: 600px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cu-hero {
+    padding: 56px 16px 40px;
+  }
+
+  .cu-title {
+    font-size: 1.7rem;
+  }
+
+  .cu-message {
+    padding: 20px;
+  }
+
+  .cu-message p {
+    font-size: 0.95rem;
+  }
+
+  .cu-hours {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .cu-scheduler {
+    padding: 40px 16px 60px;
+  }
+
+  .cu-cal-embed iframe {
+    min-height: 500px;
+  }
+}

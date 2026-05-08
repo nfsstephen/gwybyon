@@ -1,0 +1,49 @@
+{
+  "summary": "Tested territory pricing with 804 rows (67 counties × 4 categories × 3 types). All backend API tests passed (18/18). Frontend industry dropdown shows all 7 hardcoded options correctly. Tier selection works and updates invoice. Map county selection has CORS issue with third-party geocoding service (nominatim.openstreetmap.org).",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [
+      {
+        "flow": "Map geocoding",
+        "issue": "CORS error when calling nominatim.openstreetmap.org for city geocoding - prevents automatic state detection from city input",
+        "affected_selectors": [".highcharts-container"],
+        "priority": "LOW",
+        "note": "Third-party service issue, not core functionality. Users can still manually click on states to drill down to counties."
+      }
+    ],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_territory_pricing_804.py",
+    "/app/test_reports/pytest/pytest_results_804.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [
+    "/app/backend/tests/test_territory_pricing_804.py"
+  ],
+  "success_rate": {
+    "backend": "100% (18/18 tests passed)",
+    "frontend": "95% (tier selection, industry dropdown working; map geocoding has CORS issue)"
+  },
+  "test_credentials": "Site password: 123",
+  "seed_data_creation": "None - used existing Supabase data with 804 rows in territory_pricings",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "territory_pricings table has 804 rows (67 counties × 4 categories × 3 types). Pricing lookup uses (county, category, category_type) as key. Prices: Plumber(s=200,m=450,l=900), Pest Control Service(s=180,m=400,l=850), Well & Septic Co.(s=250,m=500,l=1000), Electricians(s=220,m=480,l=950). Frontend tier mapping: small-standard→small, small-premium→medium, large-full→large. Industry dropdown uses hardcoded slugs mapped to DB category names via industryLabels.",
+  "verified_features": [
+    "POST /api/contracts/territory-pricing with category_type=small for Electricians returns $220 for all counties",
+    "POST /api/contracts/territory-pricing with category_type=medium for Electricians returns $480",
+    "POST /api/contracts/territory-pricing with category_type=large for Plumber returns $900",
+    "POST /api/contracts/territory-pricing with category_type=small for Pest Control Service returns $180",
+    "POST /api/contracts/territory-pricing with category_type=small for Well & Septic Co. returns $250",
+    "GET /api/contracts/categories returns 4 categories with pricing by type",
+    "Frontend industry dropdown shows original hardcoded options (well-septic, plumbers, electricians, air-heating, pest-control, real-estate, roofing)",
+    "Tier selection updates invoice correctly (Standard=$100/mo, Premium=$200/mo, Full Suite=$400/mo)",
+    "Category normalization handles plural/singular forms (Plumbers→Plumber, Electrician→Electricians)"
+  ]
+}

@@ -1,0 +1,178 @@
+.ftp-page {
+  background: #f8f9fb;
+  color: #1e293b;
+}
+
+/* ===== Hero ===== */
+.ftp-hero {
+  background: #0b1120;
+  padding: 80px 24px 64px;
+  text-align: center;
+}
+
+.ftp-hero-inner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.ftp-hero-badge {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #14b8a6;
+  margin-bottom: 12px;
+}
+
+.ftp-hero-brand {
+  font-size: 3.4rem;
+  font-weight: 900;
+  color: #ef4444;
+  letter-spacing: -1px;
+  margin-bottom: 8px;
+}
+
+.ftp-hero-title {
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: #f1f5f9;
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+
+.ftp-geogrid-highlight {
+  color: #ef4444;
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+.ftp-hero-subtitle {
+  font-size: 1.05rem;
+  color: #94a3b8;
+  line-height: 1.7;
+  max-width: 620px;
+  margin: 0 auto 32px;
+}
+
+/* Tool Pills */
+.ftp-hero-tools {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 36px;
+}
+
+.ftp-tool-pill {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  border: 1px solid rgba(20, 184, 166, 0.3);
+  border-radius: 20px;
+  background: rgba(20, 184, 166, 0.08);
+  color: #5eead4;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* CTA Buttons */
+.ftp-hero-cta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.ftp-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: #0d9488;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.ftp-btn-primary:hover {
+  background: #0f766e;
+  transform: translateY(-1px);
+}
+
+.ftp-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  padding: 14px 28px;
+  color: #94a3b8;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 8px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.ftp-btn-ghost:hover {
+  color: #f1f5f9;
+  border-color: rgba(148, 163, 184, 0.5);
+}
+
+
+/* Next Step CTA */
+.ftp-next-step {
+  padding: 60px 24px 80px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+}
+
+.ftp-next-step-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.ftp-next-step-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.ftp-next-step-text {
+  font-size: 1rem;
+  color: #475569;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.ftp-next-step-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: #0d9488;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.ftp-next-step-btn:hover {
+  background: #0f766e;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(13, 148, 136, 0.3);
+  color: #fff;
+}
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .ftp-hero { padding: 60px 20px 48px; }
+  .ftp-hero-title { font-size: 1.8rem; }
+  .ftp-hero-cta { flex-direction: column; }
+}

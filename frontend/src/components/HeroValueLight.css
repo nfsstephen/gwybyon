@@ -1,0 +1,241 @@
+/* ===== Hero Value Light Theme ===== */
+.hvl-section {
+  padding: 80px 20px;
+  background: linear-gradient(170deg, #ffffff 0%, #f0f4f8 55%, #e8f0f4 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hvl-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(13, 148, 136, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 100%, rgba(13, 148, 136, 0.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hvl-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+.hvl-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Headline */
+.hvl-headline {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.hvl-label {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #0D9488;
+  margin-bottom: 20px;
+  padding: 6px 18px;
+  border: 1px solid rgba(13, 148, 136, 0.25);
+  border-radius: 2px;
+  background: rgba(13, 148, 136, 0.06);
+}
+
+.hvl-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.15;
+  margin-bottom: 18px;
+  letter-spacing: -0.5px;
+}
+
+.hvl-title-accent {
+  color: #0D9488;
+}
+
+.hvl-subtitle {
+  font-size: 1.1rem;
+  color: #64748B;
+  line-height: 1.7;
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+/* Card Grid */
+.hvl-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.hvl-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 32px 24px 28px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.hvl-card:hover {
+  border-color: rgba(13, 148, 136, 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* Card Visual / Metric */
+.hvl-card-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.hvl-metric-ring {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.hvl-metric-icon {
+  color: inherit;
+}
+
+/* Color variants */
+.hvl-visual-cost .hvl-metric-ring {
+  background: rgba(22, 163, 74, 0.1);
+  border: 1.5px solid rgba(22, 163, 74, 0.3);
+  color: #16a34a;
+}
+
+.hvl-visual-results .hvl-metric-ring {
+  background: rgba(37, 99, 235, 0.1);
+  border: 1.5px solid rgba(37, 99, 235, 0.3);
+  color: #2563eb;
+}
+
+.hvl-visual-tools .hvl-metric-ring {
+  background: rgba(217, 119, 6, 0.1);
+  border: 1.5px solid rgba(217, 119, 6, 0.3);
+  color: #d97706;
+}
+
+.hvl-visual-control .hvl-metric-ring {
+  background: rgba(13, 148, 136, 0.1);
+  border: 1.5px solid rgba(13, 148, 136, 0.3);
+  color: #0D9488;
+}
+
+.hvl-metric {
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -2px;
+}
+
+.hvl-visual-cost .hvl-metric { color: #16a34a; }
+.hvl-visual-results .hvl-metric { color: #2563eb; }
+
+.hvl-metric-unit {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.hvl-metric-text {
+  font-size: 2.4rem;
+  font-weight: 900;
+  letter-spacing: 4px;
+  line-height: 1;
+}
+
+.hvl-visual-tools .hvl-metric-text { color: #d97706; }
+.hvl-visual-control .hvl-metric-text { color: #0D9488; }
+
+/* Card Text */
+.hvl-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 8px;
+}
+
+.hvl-card-text {
+  font-size: 0.85rem;
+  color: #64748B;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .hvl-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .hvl-section {
+    padding: 60px 16px;
+  }
+
+  .hvl-title {
+    font-size: 2rem;
+  }
+
+  .hvl-subtitle {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .hvl-grid {
+    grid-template-columns: 1fr;
+    max-width: 360px;
+  }
+
+  .hvl-title {
+    font-size: 1.6rem;
+  }
+
+  .hvl-card {
+    padding: 24px 20px;
+  }
+
+  .hvl-metric {
+    font-size: 2.4rem;
+  }
+
+  .hvl-metric-text {
+    font-size: 2rem;
+  }
+}
