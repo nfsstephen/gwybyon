@@ -273,7 +273,7 @@ export default function SubscribePage() {
     setDepositLoading(true);
     setDepositError(null);
     try {
-      const res = await fetch(`${API_URL}/api/contracts/create`, {
+      const res = await fetch(`${API_URL}/api/payments/checkout/deposit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -296,28 +296,72 @@ export default function SubscribePage() {
           territory_total: countyTotal,
           total_due: invoice.dueToday,
           monthly_recurring: selectedService.monthlyPrice,
+          origin_url: window.location.origin,
         }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.detail || 'Contract creation failed');
+      if (!res.ok) throw new Error(data.detail || 'Payment initialization failed');
 
-      // Record deposit
-      const depRes = await fetch(`${API_URL}/api/contracts/${data.id}/deposit`, { method: 'POST' });
-      const depData = await depRes.json();
-      if (!depRes.ok) throw new Error(depData.detail || 'Deposit recording failed');
-
-      setContractResult({
-        contract_number: data.contract_number,
-        deposit_amount: data.deposit_amount,
-        balance_remaining: data.balance_remaining,
-        contract_id: data.id,
-      });
+      // Redirect to Stripe Checkout
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error('No checkout URL received');
+      }
     } catch (err) {
       setDepositError(err.message || 'Something went wrong. Please try again.');
-    } finally {
       setDepositLoading(false);
     }
   };
+
+  // Poll payment status after returning from Stripe
+  const pollPaymentStatus = useCallback(async (sessionId, attempts = 0) => {
+    const maxAttempts = 10;
+    if (attempts >= maxAttempts) {
+      setDepositError('Payment status check timed out. Please refresh the page.');
+      setDepositLoading(false);
+      return;
+    }
+    try {
+      const res = await fetch(`${API_URL}/api/payments/checkout/status/${sessionId}`);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.detail || 'Status check failed');
+
+      if (data.payment_status === 'paid') {
+        setContractResult({
+          contract_number: data.contract_number,
+          deposit_amount: data.deposit_amount,
+          balance_remaining: data.balance_remaining,
+          contract_id: data.contract_id,
+        });
+        setDepositLoading(false);
+        // Clear session_id from URL
+        window.history.replaceState({}, '', window.location.pathname);
+        return;
+      }
+      if (data.status === 'expired') {
+        setDepositError('Payment session expired. Please try again.');
+        setDepositLoading(false);
+        window.history.replaceState({}, '', window.location.pathname);
+        return;
+      }
+      // Keep polling
+      setTimeout(() => pollPaymentStatus(sessionId, attempts + 1), 2000);
+    } catch {
+      setDepositError('Error checking payment status. Please refresh.');
+      setDepositLoading(false);
+    }
+  }, [API_URL]);
+
+  // Check for Stripe return on mount
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const sessionId = params.get('session_id');
+    if (sessionId) {
+      setDepositLoading(true);
+      pollPaymentStatus(sessionId);
+    }
+  }, [pollPaymentStatus]);
 
   const handleDownloadPdf = () => {
     if (!contractResult?.contract_id) return;

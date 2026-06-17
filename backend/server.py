@@ -25,11 +25,13 @@ from routes.auth import router as auth_router
 from routes.chat import router as chat_router
 from routes.status import router as status_router
 from routes.contracts import router as contracts_router
+from routes.payments import router as payments_router
 
 app.include_router(auth_router, prefix="/api")
 app.include_router(chat_router, prefix="/api")
 app.include_router(status_router, prefix="/api")
 app.include_router(contracts_router, prefix="/api")
+app.include_router(payments_router, prefix="/api")
 
 # Dashboard routes — now use Supabase REST client (no SQLAlchemy/asyncpg)
 try:
