@@ -103,6 +103,15 @@ const DomainFreedom = () => {
             leave, you take your domain, your content, and your data with you. No fees. 
             No delays. No games. That's not a policy — that's a principle.
           </p>
+          <p className="df-promise-text">
+            However, because we know websites and know that Google has changed their algorithm
+            and are no longer using keywords as search criteria, we recognized that many business
+            websites were no longer working. So we took the initiative to locate and purchase the
+            domain name we thought you would need. We used that domain name to go ahead and build
+            the website you will need correctly for Google's new algorithm. So in effect, when you
+            purchase the new website, what you are really purchasing is the domain we saved for you
+            that you need.
+          </p>
           <Link to="/subscribe" className="df-cta" data-testid="domain-freedom-cta">
             Take Back Control <ArrowRight size={18} />
           </Link>
