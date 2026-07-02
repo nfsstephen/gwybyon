@@ -103,8 +103,8 @@ const DomainFreedom = () => {
             leave, you take your domain, your content, and your data with you. No fees. 
             No delays. No games. That's not a policy — that's a principle.
           </p>
-          <p className="df-promise-text">
-            However, because we know websites and know that Google has changed their algorithm
+          <p className="df-promise-text" style={{ marginTop: '1.25rem' }}>
+            <span style={{ fontSize: '1.15em', fontWeight: 700, color: '#f59e0b' }}>However,</span> because we know websites and know that Google has changed their algorithm
             and are no longer using keywords as search criteria, we recognized that many business
             websites were no longer working. So we took the initiative to locate and purchase the
             domain name we thought you would need. We used that domain name to go ahead and build
